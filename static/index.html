@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLEO · LOB Execution Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<div id="app">
+
+  <header id="topbar">
+    <div class="brand">
+      <span class="mark">◧</span>
+      <span class="name">CLEO</span>
+      <span class="sub">LOB Execution Lab</span>
+    </div>
+    <div class="top-right">
+      <span class="chip" id="modelChip">model · —</span>
+      <span class="chip" id="engineChip">engine · idle</span>
+      <span class="led" id="led"></span>
+    </div>
+  </header>
+
+  <aside id="rail">
+    <div class="ctl">
+      <h4>Preset</h4>
+      <div class="row">
+        <select id="preset">
+          <option value="calm">Calm market</option>
+          <option value="stressed">Stressed liquidity</option>
+          <option value="hft">Low-latency HFT</option>
+          <option value="impatient">Impatient AC (high λ)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ctl">
+      <h4>Execution task</h4>
+      <div class="row"><label>Parent order (SELL)</label>
+        <input id="qty" type="number" min="500" max="200000" step="500" value="10000"></div>
+      <div class="row"><label>Horizon T <em id="horizonV">60 s</em></label>
+        <input id="horizon" type="range" min="20" max="180" step="10" value="60"></div>
+      <div class="row"><label>Decision interval</label>
+        <select id="dt"><option>0.25</option><option selected>0.5</option><option>1.0</option></select></div>
+      <div class="row seed"><label>Seed</label>
+        <input id="seed" type="number" min="0" max="1000000" value="42">
+        <button id="dice" class="ghost" title="Random seed">⚂</button></div>
+    </div>
+
+    <div class="ctl">
+      <h4>Microstructure</h4>
+      <div class="row"><label>Order latency <em id="latencyV">10 ms</em></label>
+        <input id="latency" type="range" min="0" max="50" step="1" value="10"></div>
+      <div class="row"><label>Book resilience <em id="resilV">0.8</em></label>
+        <input id="resil" type="range" min="0" max="2" step="0.1" value="0.8"></div>
+      <div class="row"><label>Market-order rate <em id="mrateV">6 /s</em></label>
+        <input id="mrate" type="range" min="1" max="20" step="0.5" value="6"></div>
+    </div>
+
+    <div class="ctl">
+      <h4>Agents</h4>
+      <div class="row"><label>AC risk aversion λ</label>
+        <select id="lambda">
+          <option value="1e-7">1e-7 · patient</option>
+          <option value="1e-6" selected>1e-6 · balanced</option>
+          <option value="1e-5">1e-5 · urgent</option>
+          <option value="1e-4">1e-4 · dump</option>
+        </select></div>
+      <div class="row"><label>PPO model path</label>
+        <input id="modelPath" type="text" value="models/ppo_lob" spellcheck="false"></div>
+    </div>
+
+    <button id="runBtn" class="primary">Run head-to-head</button>
+    <p class="fine">Both agents liquidate the same parent order on markets built from the
+      same seed; paths diverge only through their own impact.</p>
+  </aside>
+
+  <main id="stage">
+
+    <section class="panel hero">
+      <div class="panel-head">
+        <h2>Liquidity canyon</h2>
+        <div class="transport">
+          <div class="seg" id="viewSeg">
+            <button id="viewBase" class="on">Almgren-Chriss</button>
+            <button id="viewRL">RL agent</button>
+          </div>
+          <button id="play" class="ghost" disabled>▶</button>
+          <select id="speed" disabled>
+            <option value="1">1×</option><option value="2">2×</option>
+            <option value="4" selected>4×</option><option value="8">8×</option>
+          </select>
+          <input id="scrub" type="range" min="0" max="1" step="0.01" value="0" disabled>
+          <span id="clock" class="mono">t = 0.0 s</span>
+          <button id="exportPng" class="ghost" disabled title="Save 3D view as PNG">PNG</button>
+        </div>
+      </div>
+      <div id="three-wrap">
+        <canvas id="gl"></canvas>
+        <div id="axisLegend" class="hidden">
+          <span><i class="k x"></i> time →</span>
+          <span><i class="k y"></i> cumulative depth ↑</span>
+          <span><i class="k z"></i> price (ticks vs arrival)</span>
+          <span><i class="sw bid"></i> bids</span>
+          <span><i class="sw ask"></i> asks</span>
+          <span><i class="sw fill"></i> fills</span>
+        </div>
+        <div id="emptyHero">
+          <div class="empty-inner">
+            <p class="eyebrow">simulation idle</p>
+            <h3>Two agents. One book. Same seed.</h3>
+            <p>Price-time priority matching with latency, market impact and book
+               resilience — an Almgren-Chriss schedule against a PPO policy.
+               Configure the market on the left, then run.</p>
+            <button id="heroRun" class="primary">Run head-to-head</button>
+          </div>
+        </div>
+        <div id="loading" class="hidden">
+          <div class="load-inner">
+            <span id="loadLabel">warming the book…</span>
+            <div class="bar"><i id="loadBar"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="scrollArea">
+
+    <section id="cards" class="cards hidden">
+      <div class="card"><span class="k">Arrival price</span><b id="cArrival" class="mono">—</b>
+        <span class="s" id="cArrivalS"></span></div>
+      <div class="card ac"><span class="k">Almgren-Chriss · shortfall</span><b id="cAC" class="mono">—</b>
+        <span class="s" id="cACS"></span></div>
+      <div class="card rl"><span class="k" id="cRLk">RL agent · shortfall</span><b id="cRL" class="mono">—</b>
+        <span class="s"><span id="cDelta" class="delta"></span></span></div>
+      <div class="card"><span class="k">Completion</span><b id="cFill" class="mono">—</b>
+        <span class="s" id="cFillS"></span></div>
+    </section>
+
+    <div class="grid2 hidden" id="row1">
+      <section class="panel">
+        <div class="panel-head"><h3>Execution trajectory</h3><span id="trajRead" class="readout"></span></div>
+        <canvas id="trajChart" class="chart"></canvas>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h3>Mid price &amp; fills</h3><span id="midRead" class="readout"></span></div>
+        <canvas id="midChart" class="chart"></canvas>
+      </section>
+    </div>
+
+    <div class="grid2 hidden" id="row2">
+      <section class="panel">
+        <div class="panel-head"><h3>Book depth · <span id="depthT" class="mono">t = 0.0 s</span></h3>
+          <span id="depthMeta" class="readout mono"></span></div>
+        <canvas id="depthChart" class="chart"></canvas>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h3>Fill tape</h3><span id="tapeMeta" class="readout mono"></span></div>
+        <ul id="tape" class="mono"></ul>
+      </section>
+    </div>
+
+    <section class="panel hidden" id="tablePanel">
+      <div class="panel-head"><h3>Cost &amp; slippage comparison</h3>
+        <button id="exportJson" class="ghost">Export JSON</button></div>
+      <div class="tbl-wrap"><table id="cmp"><thead></thead><tbody></tbody></table></div>
+    </section>
+
+    <footer id="foot">
+      <span><b>space</b> play · <b>←/→</b> step (<b>shift</b> ×10) · <b>b</b> switch book · drag to orbit · wheel to zoom · double-click to reset view</span>
+      <span>implementation shortfall vs arrival mid · positive bps = cost</span>
+    </footer>
+
+    </div><!-- /scrollArea -->
+
+  </main>
+</div>
+
+<div id="toast" class="hidden"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+        onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js';document.head.appendChild(s)"></script>
+<script src="/static/js/app.js" defer></script>
+</body>
+</html>
