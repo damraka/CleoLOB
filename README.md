@@ -69,7 +69,9 @@ app.py           # legacy Streamlit dashboard
 
 ## Screenshots
 
-<!-- Add: docs/canyon.png (3D view) and docs/overview.png (metrics + charts) -->
+![3D view](docs/4d-graph.png)
+
+
 
 ## Roadmap
 
