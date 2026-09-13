@@ -2,7 +2,7 @@
    Sections: dom/state · controls · run flow · data prep · three (3D canyon)
              canvas charts · tape/cards/table · playback · export · boot     */
 "use strict";
-console.log("CLEO ui v3");
+console.log("CLEO ui v4");
 
 /* ---------------------------------------------------------------- dom/state */
 const $ = (id) => document.getElementById(id);
@@ -12,14 +12,14 @@ const els = {
   qty: $("qty"), horizon: $("horizon"), horizonV: $("horizonV"), dt: $("dt"),
   seed: $("seed"), dice: $("dice"), latency: $("latency"), latencyV: $("latencyV"),
   resil: $("resil"), resilV: $("resilV"), mrate: $("mrate"), mrateV: $("mrateV"),
-  lambda: $("lambda"), modelPath: $("modelPath"),
+  lambda: $("lambda"), modelPath: $("modelPath"), baseline: $("baseline"),
   viewBase: $("viewBase"), viewRL: $("viewRL"),
   play: $("play"), speed: $("speed"), scrub: $("scrub"), clock: $("clock"),
   exportPng: $("exportPng"), exportJson: $("exportJson"),
   emptyHero: $("emptyHero"), loading: $("loading"),
   loadLabel: $("loadLabel"), loadBar: $("loadBar"), axisLegend: $("axisLegend"),
   cards: $("cards"), row1: $("row1"), row2: $("row2"), tablePanel: $("tablePanel"),
-  cArrival: $("cArrival"), cArrivalS: $("cArrivalS"), cAC: $("cAC"), cACS: $("cACS"),
+  cArrival: $("cArrival"), cArrivalS: $("cArrivalS"), cAC: $("cAC"), cACS: $("cACS"), cACk: $("cACk"),
   cRL: $("cRL"), cRLk: $("cRLk"), cDelta: $("cDelta"), cFill: $("cFill"), cFillS: $("cFillS"),
   trajChart: $("trajChart"), trajRead: $("trajRead"),
   midChart: $("midChart"), midRead: $("midRead"),
@@ -77,6 +77,7 @@ function readParams() {
     seed: +els.seed.value, latency_ms: +els.latency.value,
     resilience: +els.resil.value, market_rate: +els.mrate.value,
     risk_aversion: +els.lambda.value, model_path: els.modelPath.value.trim(),
+    baseline: els.baseline.value,
   };
 }
 
@@ -115,7 +116,7 @@ async function runPair() {
     do {
       await new Promise((res) => setTimeout(res, 220));
       job = await (await fetch(`/api/job/${job_id}`)).json();
-      const phase = job.phase === "rl" ? "RL agent" : "Almgren-Chriss baseline";
+      const phase = job.phase === "rl" ? "RL agent" : "baseline";
       const pct = (job.phase === "rl" ? 0.5 : 0) + (job.pct || 0) * 0.5;
       els.loadLabel.textContent = `simulating ${phase} · ${Math.round((job.pct || 0) * 100)}%`;
       els.loadBar.style.width = `${Math.round(pct * 100)}%`;
@@ -147,6 +148,7 @@ function onResult() {
   els.engineChip.textContent = "engine · done";
   const rlLabel = res.runs.rl.label;
   const isPPO = rlLabel.includes("PPO");
+  els.viewBase.textContent = res.runs.baseline.label;
   els.modelChip.textContent = isPPO ? "model · PPO loaded" : "model · heuristic fallback";
   els.modelChip.className = "chip " + (isPPO ? "good" : "warn");
   if (!isPPO) toast("No trained PPO model found — RL side is a heuristic. Train with: python train_rl.py");
@@ -562,7 +564,7 @@ function bindTimeChart(cv, readEl) {
     const b = state.prep.baseline.run.series, r = state.prep.rl.run.series;
     const bi = nearestIdx(b.t, t), ri = nearestIdx(r.t, t);
     readEl.textContent =
-      `t=${t.toFixed(1)}s · AC ${b.remaining[bi].toLocaleString()} · RL ${r.remaining[ri].toLocaleString()} left`;
+      `t=${t.toFixed(1)}s · ${SHORT_LABEL[state.result.runs.baseline.label] || "base"} ${b.remaining[bi].toLocaleString()} · RL ${r.remaining[ri].toLocaleString()} left`;
   });
   cv.addEventListener("mouseleave", () => (readEl.textContent = ""));
   cv.addEventListener("click", (e) => {
@@ -588,30 +590,39 @@ function renderTape() {
     : `<li class="empty-tape">No fills yet at this point of the timeline.</li>`;
 }
 
+const SHORT_LABEL = { "Almgren-Chriss": "AC", TWAP: "TWAP", VWAP: "VWAP", POV: "POV" };
+
 function renderCards() {
   const b = state.result.runs.baseline.raw, r = state.result.runs.rl.raw;
+  const bLabel = state.result.runs.baseline.label;
+  const bShort = SHORT_LABEL[bLabel] || bLabel;
+  els.cACk.textContent = `${bLabel} · effective shortfall`;
   els.cArrival.textContent = fmt$(b.arrival_price);
   els.cArrivalS.textContent = `seed ${state.result.params.seed} · T ${state.result.params.horizon}s`;
-  els.cAC.textContent = `${fmt(b.shortfall_bps)} bps`;
-  els.cACS.textContent = `vwap ${fmt$(b.vwap)} · ${b.children} children`;
-  els.cRLk.textContent = `${state.result.runs.rl.label.includes("PPO") ? "RL (PPO)" : "RL (heuristic)"} · shortfall`;
-  els.cRL.textContent = `${fmt(r.shortfall_bps)} bps`;
-  const d = b.shortfall_bps - r.shortfall_bps;
-  els.cDelta.textContent = `${d >= 0 ? "−" : "+"}${fmt(Math.abs(d))} bps vs AC`;
-  els.cDelta.className = "delta " + (d >= 0 ? "good" : "bad");
+  const comparable = Number.isFinite(b.effective_bps) && Number.isFinite(r.effective_bps);
+  els.cAC.textContent = Number.isFinite(b.effective_bps) ? `${fmt(b.effective_bps)} bps` : "Unpriced";
+  els.cACS.textContent = `vwap ${fmt$(b.vwap)} · ${b.status}`;
+  els.cRLk.textContent = `${state.result.runs.rl.label.includes("PPO") ? "RL (PPO)" : "RL (heuristic)"} · effective shortfall`;
+  els.cRL.textContent = Number.isFinite(r.effective_bps) ? `${fmt(r.effective_bps)} bps` : "Unpriced";
+  const d = comparable ? b.effective_bps - r.effective_bps : 0;
+  els.cDelta.textContent = comparable
+    ? `${d >= 0 ? "−" : "+"}${fmt(Math.abs(d))} bps vs ${bShort}`
+    : "Comparison invalid · insufficient terminal depth";
+  els.cDelta.className = "delta " + (comparable && d >= 0 ? "good" : "bad");
   els.cFill.textContent =
     `${Math.round((100 * b.filled) / b.target)}% · ${Math.round((100 * r.filled) / r.target)}%`;
-  els.cFillS.textContent = `AC ${fmt(b.duration)}s · RL ${fmt(r.duration)}s`;
+  els.cFillS.textContent = `${bShort} ${fmt(b.duration)}s · RL ${fmt(r.duration)}s`;
 }
 
 const TABLE_KEYS = ["Strategy", "Filled / Target", "Arrival Price", "Exec VWAP",
-  "Impl. Shortfall (bps)", "Total Cost ($)", "Child Orders", "Duration (s)"];
+  "Impl. Shortfall (bps)", "Effective IS (bps)", "Fees ($)", "Status", "Unpriced Leftover",
+  "Total Cost ($)", "Child Orders", "Duration (s)"];
 
 function renderTable() {
   els.cmp.tHead.innerHTML =
     "<tr>" + TABLE_KEYS.map((k) => `<th>${k}</th>`).join("") + "</tr>";
   const row = (rep, cls) =>
-    `<tr class="${cls}">` + TABLE_KEYS.map((k) => `<td>${rep[k]}</td>`).join("") + "</tr>";
+    `<tr class="${cls}">` + TABLE_KEYS.map((k) => `<td>${rep[k] == null ? "UNPRICED" : rep[k]}</td>`).join("") + "</tr>";
   els.cmp.tBodies[0].innerHTML =
     row(state.result.runs.baseline.report, "base") + row(state.result.runs.rl.report, "rl");
 }

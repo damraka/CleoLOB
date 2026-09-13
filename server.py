@@ -13,7 +13,7 @@ import threading
 import uuid
 import webbrowser
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Literal
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -38,6 +38,8 @@ class RunParams(BaseModel):
     market_rate: float = Field(6.0, ge=0.5, le=30)
     risk_aversion: float = Field(1e-6, ge=1e-9, le=1e-2)
     model_path: str = "models/ppo_lob"
+    baseline: Literal["ac", "twap", "vwap", "pov"] = "ac"
+    pov_rate: float = Field(0.3, gt=0.0, lt=1.0)
 
 
 JOBS: Dict[str, Dict[str, Any]] = {}

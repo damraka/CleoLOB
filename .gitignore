@@ -3,4 +3,9 @@ models/
 logs/
 __pycache__/
 *.pyc
-.DS_Store
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+data/public/
+results/*/
+!results/baselines-100seeds/

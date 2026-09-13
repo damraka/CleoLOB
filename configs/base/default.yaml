@@ -1,0 +1,25 @@
+schema_version: 1
+name: execution_foundations
+market:
+  tick_size: 0.01
+  lot_size: 1
+  limit_rate: 25.0
+  market_rate: 6.0
+  latency_base: 0.005
+  latency_jitter: 0.005
+execution:
+  quantity: 2000
+  horizon: 10.0
+  decision_dt: 0.5
+fees:
+  maker_bps: 0.0
+  taker_bps: 1.0
+risk:
+  max_order_qty: 1000
+evaluation:
+  agents: [twap, vwap, pov, ac]
+  reference: twap
+  seeds: [101, 102, 103]
+resources:
+  max_episodes: 200
+  max_runtime_seconds: 120.0

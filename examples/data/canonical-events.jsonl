@@ -1,0 +1,12 @@
+{"timestamp_ns":0,"sequence":100,"event_type":"SNAPSHOT","symbol":"DEMO","venue":"FABRICATED","orders":[{"order_id":"b1","side":"BUY","price_ticks":9999,"quantity":20},{"order_id":"b2","side":"BUY","price_ticks":9999,"quantity":10},{"order_id":"a1","side":"SELL","price_ticks":10001,"quantity":20}]}
+{"timestamp_ns":1000000,"sequence":101,"event_type":"ADD","symbol":"DEMO","venue":"FABRICATED","order_id":"a2","side":"SELL","price_ticks":10002,"quantity":15}
+{"timestamp_ns":1000000,"sequence":102,"event_type":"EXECUTE","symbol":"DEMO","venue":"FABRICATED","order_id":"a1","quantity":5}
+{"timestamp_ns":2000000,"sequence":103,"event_type":"CANCEL","symbol":"DEMO","venue":"FABRICATED","order_id":"b1","quantity":4}
+{"timestamp_ns":3000000,"sequence":104,"event_type":"MODIFY","symbol":"DEMO","venue":"FABRICATED","order_id":"b2","quantity":8}
+{"timestamp_ns":4000000,"sequence":105,"event_type":"MODIFY","symbol":"DEMO","venue":"FABRICATED","order_id":"b2","price_ticks":10000}
+{"timestamp_ns":5000000,"sequence":106,"event_type":"HALT","symbol":"DEMO","venue":"FABRICATED"}
+{"timestamp_ns":6000000,"sequence":107,"event_type":"DELETE","symbol":"DEMO","venue":"FABRICATED","order_id":"a2"}
+{"timestamp_ns":7000000,"sequence":108,"event_type":"RESUME","symbol":"DEMO","venue":"FABRICATED"}
+{"timestamp_ns":8000000,"sequence":109,"event_type":"EXECUTE","symbol":"DEMO","venue":"FABRICATED","order_id":"b2","quantity":2}
+{"timestamp_ns":8000000,"sequence":110,"event_type":"TRADE","symbol":"DEMO","venue":"FABRICATED","price_ticks":10000,"quantity":2}
+{"timestamp_ns":9000000,"sequence":111,"event_type":"ADD","symbol":"DEMO","venue":"FABRICATED","order_id":"a3","side":"SELL","price_ticks":10003,"quantity":12}

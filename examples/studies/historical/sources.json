@@ -1,0 +1,132 @@
+{
+  "provider": "Tardis.dev",
+  "purpose": "Internal research mechanics validation; raw data not redistributed",
+  "files": [
+    {
+      "bytes": 13307784,
+      "date": "2020-04-01",
+      "downloaded_at_utc": "2026-09-13T20:22:06.729758+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 175193850,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2020/04/01/ETH-PERPETUAL.csv.gz",
+      "kind": "book_snapshot_5",
+      "md5": "8b14aaeebc410ca241e583323fef1176",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "13307784",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:06 GMT",
+        "x-md5": "\"8b14aaeebc410ca241e583323fef1176\""
+      },
+      "schema_version": 1,
+      "sha256": "8fdbcda36a9307a6cf9813a41d6aef22c68f9a81e2d83baebab80126edf6b066",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2020/04/01/ETH-PERPETUAL.csv.gz"
+    },
+    {
+      "bytes": 15241954,
+      "date": "2020-05-01",
+      "downloaded_at_utc": "2026-09-13T20:22:12.283391+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 189810068,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2020/05/01/ETH-PERPETUAL.csv.gz",
+      "kind": "book_snapshot_5",
+      "md5": "831f20bee87fbfc20909aae9d48bb471",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "15241954",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:09 GMT",
+        "x-md5": "\"831f20bee87fbfc20909aae9d48bb471\""
+      },
+      "schema_version": 1,
+      "sha256": "e2987adf5745b9fef6784044e8602ebc629d970824e79fc301987da15a128e7c",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2020/05/01/ETH-PERPETUAL.csv.gz"
+    },
+    {
+      "bytes": 21768275,
+      "date": "2020-04-01",
+      "downloaded_at_utc": "2026-09-13T20:22:07.939763+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 181492011,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/incremental_book_L2/2020/04/01/ETH-PERPETUAL.csv.gz",
+      "kind": "incremental_book_L2",
+      "md5": "89563c3cb70bfbe78421b4bc7993021a",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "21768275",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:06 GMT",
+        "x-md5": "\"89563c3cb70bfbe78421b4bc7993021a\""
+      },
+      "schema_version": 1,
+      "sha256": "dc4a84aba8f311235f76eef80248efae68bdb053dc4543323e7d4e36cc998a76",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/incremental_book_L2/2020/04/01/ETH-PERPETUAL.csv.gz"
+    },
+    {
+      "bytes": 33961919,
+      "date": "2020-05-01",
+      "downloaded_at_utc": "2026-09-13T20:22:14.025460+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 284956563,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/incremental_book_L2/2020/05/01/ETH-PERPETUAL.csv.gz",
+      "kind": "incremental_book_L2",
+      "md5": "804621a535325fefb0f8ea128d7f13d7",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "33961919",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:07 GMT",
+        "x-md5": "\"804621a535325fefb0f8ea128d7f13d7\""
+      },
+      "schema_version": 1,
+      "sha256": "e2b858a9a3d0eab635deabc578c4215e9d47a60d312927850d8f18800ced18b4",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/incremental_book_L2/2020/05/01/ETH-PERPETUAL.csv.gz"
+    },
+    {
+      "bytes": 180782,
+      "date": "2020-04-01",
+      "downloaded_at_utc": "2026-09-13T20:22:04.678019+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 1438816,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/trades/2020/04/01/ETH-PERPETUAL.csv.gz",
+      "kind": "trades",
+      "md5": "9acbff29c1322af6948035e00a536153",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "180782",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:06 GMT",
+        "x-md5": "\"9acbff29c1322af6948035e00a536153\""
+      },
+      "schema_version": 1,
+      "sha256": "9d74954103632424ce7a958a40929bb9b9a894467caa93ffd0303b14ee9ff655",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/trades/2020/04/01/ETH-PERPETUAL.csv.gz"
+    },
+    {
+      "bytes": 324196,
+      "date": "2020-05-01",
+      "downloaded_at_utc": "2026-09-13T20:22:08.681886+00:00",
+      "exchange": "deribit",
+      "expanded_bytes": 2407265,
+      "final_url": "https://datasets.tardis.dev/v1/deribit/trades/2020/05/01/ETH-PERPETUAL.csv.gz",
+      "kind": "trades",
+      "md5": "4529fb5204695b56971eaf08acb455bf",
+      "provider": "Tardis.dev",
+      "response_headers": {
+        "Content-Length": "324196",
+        "Content-Type": "text/csv",
+        "Date": "Sun, 13 Sep 2026 20:22:10 GMT",
+        "x-md5": "\"4529fb5204695b56971eaf08acb455bf\""
+      },
+      "schema_version": 1,
+      "sha256": "13b3c1d94a6bc75fb3178db8db8107d544618436432c71950ff34ad71b430b2b",
+      "symbol": "ETH-PERPETUAL",
+      "url": "https://datasets.tardis.dev/v1/deribit/trades/2020/05/01/ETH-PERPETUAL.csv.gz"
+    }
+  ]
+}

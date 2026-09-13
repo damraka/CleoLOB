@@ -63,6 +63,13 @@
 
     <div class="ctl">
       <h4>Agents</h4>
+      <div class="row"><label>Baseline</label>
+        <select id="baseline">
+          <option value="ac" selected>Almgren-Chriss</option>
+          <option value="twap">TWAP</option>
+          <option value="vwap">VWAP · forecast profile</option>
+          <option value="pov">POV · 30% participation</option>
+        </select></div>
       <div class="row"><label>AC risk aversion λ</label>
         <select id="lambda">
           <option value="1e-7">1e-7 · patient</option>
@@ -133,7 +140,7 @@
     <section id="cards" class="cards hidden">
       <div class="card"><span class="k">Arrival price</span><b id="cArrival" class="mono">—</b>
         <span class="s" id="cArrivalS"></span></div>
-      <div class="card ac"><span class="k">Almgren-Chriss · shortfall</span><b id="cAC" class="mono">—</b>
+      <div class="card ac"><span class="k" id="cACk">Almgren-Chriss · shortfall</span><b id="cAC" class="mono">—</b>
         <span class="s" id="cACS"></span></div>
       <div class="card rl"><span class="k" id="cRLk">RL agent · shortfall</span><b id="cRL" class="mono">—</b>
         <span class="s"><span id="cDelta" class="delta"></span></span></div>

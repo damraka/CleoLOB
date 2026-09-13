@@ -1,0 +1,22 @@
+name: Research foundations
+on: [push, pull_request]
+
+jobs:
+  correctness:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m ruff check lob tests evaluate.py train_rl.py server.py
+      - run: python -m compileall -q lob evaluate.py train_rl.py server.py
+      - run: python -m pytest -q
+      - run: cleo config validate configs/research.yaml
+      - run: cleo validate-data examples/data/canonical-events.jsonl
+      - run: cleo benchmark --pairs 500 --repeats 1

@@ -1,0 +1,5 @@
+{
+  "market.target_level_vol": [100, 200, 300, 400, 500],
+  "market.latency_base": [0.0, 0.005, 0.02, 0.1, 0.5],
+  "market.resilience": [0.0, 0.2, 0.5, 0.8, 1.0]
+}

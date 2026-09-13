@@ -1,0 +1,8 @@
+extends: ../base/default.yaml
+name: thin_liquidity_mechanics
+market:
+  target_level_vol: 100
+  limit_rate: 10.0
+  resilience: 0.2
+execution:
+  quantity: 3000

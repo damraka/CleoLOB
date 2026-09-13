@@ -1,0 +1,7 @@
+extends: base/default.yaml
+name: baseline_foundation_study
+evaluation:
+  agents: [twap, vwap, pov, ac, heuristic, random]
+  seeds: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
+resources:
+  max_runtime_seconds: 300.0

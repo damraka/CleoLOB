@@ -1,0 +1,17 @@
+{
+  "workload": "alternating one resting limit and one fully matching market order",
+  "orders_per_repeat": 4000,
+  "fills_per_repeat": 2000,
+  "repeats": 3,
+  "orders_per_second_median": 64834.76050957777,
+  "orders_per_second_samples": [
+    62957.62321697906,
+    64834.76050957777,
+    67681.32249030797
+  ],
+  "resting_orders_memory_count": 2000,
+  "python_tracemalloc_peak_bytes": 1153972,
+  "python": "3.14.6",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "note": "Local Python microbenchmark, not full market throughput; no latency/agent/replay workload included."
+}
