@@ -1,0 +1,173 @@
+{
+  "completed_at_utc": "2026-09-19T09:19:15.681671+00:00",
+  "files": [
+    {
+      "role": "train",
+      "date": "2026-07-01",
+      "symbol": "ETH-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-07-01_ETH-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 71695823,
+        "date": "2026-07-01",
+        "downloaded_at_utc": "2026-09-19T09:18:54.970099+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 1046546692,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/07/01/ETH-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "61494737932880a0de4a33874c4e6ded",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "71695823",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:18:46 GMT",
+          "x-md5": "\"61494737932880a0de4a33874c4e6ded\""
+        },
+        "schema_version": 1,
+        "sha256": "79676771ac0ab009d79ded0f2bdf8cdbd7286426235a27e8ff515e72ae0019da",
+        "symbol": "ETH-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/07/01/ETH-PERPETUAL.csv.gz"
+      }
+    },
+    {
+      "role": "validation",
+      "date": "2026-08-01",
+      "symbol": "BTC-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-08-01_BTC-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 22380444,
+        "date": "2026-08-01",
+        "downloaded_at_utc": "2026-09-19T09:19:02.666839+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 345148545,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/08/01/BTC-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "435386ae956d77bd7682945e6fecefc1",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "22380444",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:18:55 GMT",
+          "x-md5": "\"435386ae956d77bd7682945e6fecefc1\""
+        },
+        "schema_version": 1,
+        "sha256": "8127c938e4c406191cd1915510ba11dc2c0efe0f85a02a7526a66d7d0471a716",
+        "symbol": "BTC-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/08/01/BTC-PERPETUAL.csv.gz"
+      }
+    },
+    {
+      "role": "train",
+      "date": "2026-07-01",
+      "symbol": "BTC-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-07-01_BTC-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 110738274,
+        "date": "2026-07-01",
+        "downloaded_at_utc": "2026-09-19T09:19:04.308224+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 1638682706,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/07/01/BTC-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "af54788b0bfea75c2749962ec0c869b8",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "110738274",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:18:46 GMT",
+          "x-md5": "\"af54788b0bfea75c2749962ec0c869b8\""
+        },
+        "schema_version": 1,
+        "sha256": "475efcea47c4338970d7d2a44c50023915d089fb7b9b41ddc5565d2b2d67f4bc",
+        "symbol": "BTC-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/07/01/BTC-PERPETUAL.csv.gz"
+      }
+    },
+    {
+      "role": "holdout",
+      "date": "2026-09-01",
+      "symbol": "BTC-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-09-01_BTC-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 22850412,
+        "date": "2026-09-01",
+        "downloaded_at_utc": "2026-09-19T09:19:09.330726+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 226709304,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/09/01/BTC-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "08f3de3834e078ecf27b057e07642785",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "22850412",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:19:05 GMT",
+          "x-md5": "\"08f3de3834e078ecf27b057e07642785\""
+        },
+        "schema_version": 1,
+        "sha256": "6d11adbb0d35a4f37de6867c17bd43af628e37e7532d7cd8758112b08f4ec649",
+        "symbol": "BTC-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/09/01/BTC-PERPETUAL.csv.gz"
+      }
+    },
+    {
+      "role": "validation",
+      "date": "2026-08-01",
+      "symbol": "ETH-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-08-01_ETH-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 33564575,
+        "date": "2026-08-01",
+        "downloaded_at_utc": "2026-09-19T09:19:10.105058+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 528577138,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/08/01/ETH-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "ca70ee5c88eac6d40a8c661477f03d67",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "33564575",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:19:03 GMT",
+          "x-md5": "\"ca70ee5c88eac6d40a8c661477f03d67\""
+        },
+        "schema_version": 1,
+        "sha256": "b2a478d8737337f488a6e2fa14b0175aa9234d2bc483bc8fa3235ad26dac8362",
+        "symbol": "ETH-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/08/01/ETH-PERPETUAL.csv.gz"
+      }
+    },
+    {
+      "role": "holdout",
+      "date": "2026-09-01",
+      "symbol": "ETH-PERPETUAL",
+      "status": "DOWNLOADED",
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-09-01_ETH-PERPETUAL.csv.gz",
+      "provenance": {
+        "bytes": 22478758,
+        "date": "2026-09-01",
+        "downloaded_at_utc": "2026-09-19T09:19:15.664519+00:00",
+        "exchange": "deribit",
+        "expanded_bytes": 238214887,
+        "final_url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/09/01/ETH-PERPETUAL.csv.gz",
+        "kind": "book_snapshot_5",
+        "md5": "8e1e6157cc9bc14da2406741b606d659",
+        "provider": "Tardis.dev",
+        "response_headers": {
+          "Content-Length": "22478758",
+          "Content-Type": "text/csv",
+          "Date": "Sat, 19 Sep 2026 09:19:09 GMT",
+          "x-md5": "\"8e1e6157cc9bc14da2406741b606d659\""
+        },
+        "schema_version": 1,
+        "sha256": "9ea436a2b03c37f442740df60214c6c938903edb8e32c1348cc1c0f2eee3dc0a",
+        "symbol": "ETH-PERPETUAL",
+        "url": "https://datasets.tardis.dev/v1/deribit/book_snapshot_5/2026/09/01/ETH-PERPETUAL.csv.gz"
+      }
+    }
+  ]
+}

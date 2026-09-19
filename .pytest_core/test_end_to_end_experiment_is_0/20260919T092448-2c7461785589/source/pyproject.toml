@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleolob"
+version = "0.2.0"
+description = "Reproducible limit-order-book execution research laboratory"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26", "pandas>=2.0", "gymnasium>=0.29",
+  "pydantic>=2.0", "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+rl = ["stable-baselines3>=2.3", "tensorboard>=2.16"]
+web = ["fastapi>=0.110", "uvicorn>=0.29", "plotly>=5.20", "streamlit>=1.35"]
+dev = ["pytest>=8.0", "ruff>=0.9"]
+
+[project.scripts]
+cleo = "lob.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["lob*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_engine.py" = ["E402"]
+"tests/test_agents.py" = ["E402"]
+"tests/test_env_runner.py" = ["E402"]

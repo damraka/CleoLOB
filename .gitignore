@@ -8,5 +8,3 @@ __pycache__/
 .pytest_cache/
 data/public/
 results/*/
-!results/baselines-100seeds/
-.github/workflows/

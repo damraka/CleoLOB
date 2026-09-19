@@ -1,5 +1,5 @@
 """Compatibility harness keeps failures and never silently substitutes PPO."""
-from evaluate import _run_task
+from legacy.evaluate import _run_task
 
 
 def test_legacy_evaluation_records_missing_ppo_without_stopping_baselines(tmp_path):

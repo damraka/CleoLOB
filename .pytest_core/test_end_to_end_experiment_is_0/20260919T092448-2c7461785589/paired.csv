@@ -1,0 +1,2 @@
+scenario,agent,label,reference,n,delta_mean,delta_ci_lo,delta_ci_hi,delta_median,win_rate,wins,losses,p_sign,ties,p_adjusted,correction,family_size,significant_5pct,significant_at_alpha
+mechanics,ac,Almgren-Chriss,twap,2,0.0,0.0,0.0,0.0,0.0,0,0,1.0,2,1.0,holm,1,False,False

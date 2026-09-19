@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "registered_before_validation_and_holdout_extraction": true,
+  "primary_execution_instrument": "deribit:ETH-PERPETUAL",
+  "primary_instrument_rule": "ETH chosen before inspecting any fitted parameter or fit result, never choose the best scoring instrument",
+  "training_cohorts": ["pooled BTC and ETH", "BTC only", "ETH only"],
+  "all_cohorts_candidate_count": 24,
+  "all_cohorts_simulation_seconds_per_seed": 120,
+  "all_cohorts_simulation_seeds": [41001, 41002],
+  "all_cohorts_warmup_seconds": 30,
+  "all_cohorts_search_seed": 40100,
+  "gate": "unchanged DEFAULT_GATE in lob/zi_calibration.py and each cohort protocol.json",
+  "evaluation_order": "freeze all three train-only fits, evaluate August validation, then evaluate unopened September holdout exactly once",
+  "interpretation": "Per-instrument fits separate representative tick heterogeneity from simulator misspecification; short simulated paths cannot establish full-day or tail fidelity. A failed gate remains failed and bounds the execution study to that synthetic simulator."
+}

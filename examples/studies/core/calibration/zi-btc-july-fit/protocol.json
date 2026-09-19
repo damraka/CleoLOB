@@ -1,0 +1,93 @@
+{
+  "candidate_bounds": {
+    "cancel_rate": [
+      0.03,
+      0.5
+    ],
+    "limit_qty_mean": [
+      10,
+      120
+    ],
+    "limit_rate": [
+      0.5,
+      12
+    ],
+    "market_qty_mean": [
+      10,
+      120
+    ],
+    "market_rate": [
+      0.2,
+      8
+    ],
+    "offset_p": [
+      0.15,
+      0.8
+    ],
+    "resilience": [
+      0.03,
+      1.0
+    ],
+    "target_level_vol": [
+      60,
+      250
+    ]
+  },
+  "candidate_count": 24,
+  "features": {
+    "depth": [
+      "bid_depth",
+      "ask_depth"
+    ],
+    "imbalance": [
+      "imbalance"
+    ],
+    "impact": [
+      "impact_0.1_bps",
+      "impact_0.5_bps",
+      "impact_1.0_bps"
+    ],
+    "ofi": [
+      "abs_snapshot_ofi"
+    ],
+    "spread": [
+      "spread_bps"
+    ],
+    "volatility": [
+      "return_bps"
+    ]
+  },
+  "gate": {
+    "maximum_family_error": 0.6,
+    "minimum_target_samples": 1000,
+    "minimum_valid_fraction": 0.95,
+    "ofi_scale_floor": 0.05,
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "spread_impact_scale_floor_bps": 0.05,
+    "volatility_scale_floor_bps": 0.05
+  },
+  "gate_registered_before_fit": true,
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "method": "simulation-based minimum moment distance",
+  "schema_version": 1,
+  "search_seed": 40100,
+  "simulation_seconds_per_seed": 120,
+  "simulation_seeds": [
+    41001,
+    41002
+  ],
+  "target_depth_lots": 1000.0,
+  "warmup_seconds": 30.0
+}

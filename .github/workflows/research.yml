@@ -1,5 +1,8 @@
-name: Research foundations
-on: [push, pull_request]
+name: Execution research
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
 
 jobs:
   correctness:
@@ -14,9 +17,21 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: python -m pip install -e '.[dev]'
-      - run: python -m ruff check lob tests evaluate.py train_rl.py server.py
-      - run: python -m compileall -q lob evaluate.py train_rl.py server.py
+      - run: python -m ruff check lob tests tools legacy/evaluate.py train_rl.py server.py
+      - run: python -m compileall -q lob legacy/evaluate.py train_rl.py server.py
       - run: python -m pytest -q
       - run: cleo config validate configs/research.yaml
       - run: cleo validate-data examples/data/canonical-events.jsonl
       - run: cleo benchmark --pairs 500 --repeats 1
+
+  ppo-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e '.[dev,rl]'
+      - run: python -m pytest -q tests/test_core_study.py

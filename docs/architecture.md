@@ -13,8 +13,8 @@ flow is zero-intelligence; no historical calibration is present in the baseline.
 
 `server.py` executes `run_pair` in background threads and the browser polls jobs.
 The frontend synchronizes trajectory, price, depth, tape and 3D liquidity views.
-`app.py` is a separate legacy Streamlit dashboard. `train_rl.py` uses SB3 PPO and
-supports resume. The existing test suite exercises matching, agents, Gymnasium,
+`legacy/app.py` is the archived Streamlit dashboard. `train_rl.py` is the
+registered SB3 PPO study entry point. The existing test suite exercises matching, agents, Gymnasium,
 runner payloads, scenarios and statistics.
 
 ## Audit findings
@@ -63,3 +63,12 @@ integrity. These observable models do not replace the FIFO arrival mechanism.
 `settlement.py` drains post-horizon strategy messages and late fills for baselines
 and RL before final valuation. `portfolio.py` independently reconciles linear
 multi-currency holdings/reservations and evaluates risk limits and joint shocks.
+
+The active research scope is now the PPO–Almgren–Chriss comparison.
+`zi_calibration.py` fits the actual FIFO simulator to normalized historical L2
+moments. `controls.py` identifies AC parameters, separates exploratory positive
+controls from confirmation and reports labeled residual-price sensitivity.
+`core_study.py` freezes the environment and seed domains, trains five seeds per
+penalty arm, powers the test from diagnostics and evaluates saved policies once.
+Portfolio/FX and further product modules are frozen. Archived entry points and
+old 100-seed tables live under `legacy/`.
