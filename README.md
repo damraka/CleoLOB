@@ -29,6 +29,14 @@ records are designed to expose invalid assumptions and failed strategies.
 - **Public aggregate L2 data:** bounded Tardis sample downloads, checksum/gzip
   verification, exact decimal price-level replay, snapshot comparisons and
   causal one-second descriptive statistics. Two full real-market days tested.
+- **Calibration and validation:** frozen empirical L2 observable models, causal
+  features, purged chronological splits, expanding walk-forward folds,
+  later-date drift/coverage scorecards and deterministic observable generation.
+- **Settlement and portfolio risk:** post-horizon cancellation/fill reconciliation,
+  explicit late fees and timeouts; multi-currency linear portfolio accounting,
+  conservative reservations, exposure/loss limits and joint asset/FX scenarios.
+- **Registered stress families:** multi-scenario execution, frozen source/model
+  identity, complete outcome retention and family-wide statistical correction.
 - **Research configuration:** typed immutable YAML/JSON, inheritance, environment
   and CLI overrides, schema export, validation, normalized hashes and diffs.
 - **Experiment evidence:** unique run directories, source snapshots, config and
@@ -62,6 +70,8 @@ cleo evaluate --config configs/research.yaml
 cleo validate-data examples/data/canonical-events.jsonl
 cleo replay examples/data/canonical-events.jsonl
 cleo benchmark --pairs 2000 --repeats 3
+cleo stress --config configs/robustness.yaml
+cleo portfolio --config configs/portfolio_example.json
 ```
 
 Install `python -m pip install -e '.[dev,rl,web]'` for PPO and the web dashboards,
@@ -153,18 +163,22 @@ as a real fill.
 Shared seeds mean shared exogenous randomness, not identical realized books after
 agent impact. Message latency is modeled; market-data dissemination latency is not.
 Monetary risk checks are pretrade estimates, not guarantees against later price
-movement. Outstanding orders at the horizon are disclosed and receive delayed
-cancel requests.
+movement. Outstanding orders at the horizon are cancelled and drained through a
+bounded settlement phase. Late actual fills/fees are reconciled; unresolved
+orders make final economic metrics invalid. Hypothetical residual valuation
+remains distinct from actual execution.
 
-PPO training/validation now use disjoint seed domains, but this does not provide
-historical or OOD strategy validation. There is no calibrated market model,
-exchange-native feed adapter, SAC implementation, supervised prediction pipeline, portfolio risk
-system, walk-forward study, full stress engine or alpha verdict pipeline yet.
+PPO training/validation use disjoint seed domains. Historical observable calibration,
+walk-forward diagnostics, registered parameter stresses and linear portfolio risk
+are now implemented. The FIFO order-flow model remains uncalibrated; L2 does not
+identify queue-level arrivals or counterfactual fills. There is no historical
+strategy-performance claim, nonlinear derivatives risk engine, exchange-native
+feed adapter, SAC implementation, full outage/flash-crash engine or alpha verdict.
 The CLI lists only implemented commands.
 
 ## Verification and next work
 
-The integrated foundation and public-data batches pass **385 tests**, Ruff checks and Python compilation.
+The integrated suite passes **521 tests**, Ruff checks and Python compilation.
 Two Gymnasium warnings concern the existing unbounded observation Box. The
 [implementation checklist](docs/implementation-status.md) records exact commands,
 measured benchmark evidence, discovered bugs and remaining phases. The local
@@ -174,10 +188,11 @@ microbenchmark measures matching only; it is not full simulation throughput.
 - [Configuration, CLI and provenance](docs/configuration.md)
 - [Historical data format and limitations](docs/historical-replay.md)
 - [Public L2 samples and validation](docs/public-market-data.md)
+- [Calibration, stress, settlement and portfolio workflows](docs/validation-and-risk.md)
 - [Research methodology and limitations](docs/research-methodology.md)
 - [Persistent implementation status](docs/implementation-status.md)
 
-Next priorities are instrument/venue adapters and empirical calibration, then registered
-multi-regime/stress designs and out-of-sample evaluation. All missing subsystems
-remain explicitly tracked; this is a tested foundation batch, not completion of
-the full research-platform brief.
+The four priority workflows are implemented and exercised; their
+[executed evidence](examples/studies/validation/README.md) records model failures
+and economic invalidity as well as successful mechanics. Advanced exchange-native
+and counterfactual execution modeling remain tracked in the full platform checklist.

@@ -1,0 +1,16 @@
+extends: base/default.yaml
+name: registered_stress_suite
+execution:
+  quantity: 600
+  horizon: 5.0
+  decision_dt: 0.5
+  settlement_timeout: 5.0
+  settlement_poll_dt: 0.01
+evaluation:
+  agents: [twap, vwap, pov, ac, heuristic]
+  reference: twap
+  seeds: [501, 502, 503, 504, 505, 506, 507, 508, 509, 510]
+  bootstrap_samples: 1000
+resources:
+  max_runtime_seconds: 600.0
+  max_estimated_events: 5000000

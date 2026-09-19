@@ -81,6 +81,13 @@ limits are not a portfolio margin system. Cancels remain subject to latency and
 can lose to fills. A loss limit stops new orders and requests cancellation;
 automatic flattening is not implemented.
 
+After decisions stop, `execution.settlement_timeout` and
+`execution.settlement_poll_dt` control cancellation/fill draining. Their ratio
+cannot exceed 100,000. Late fills/fees enter actual accounting; settlement timeout
+makes economic metrics INVALID/null. The event-work estimate includes settlement.
+The separate [portfolio workflow](validation-and-risk.md) supplies linear
+multi-currency margin/exposure controls through its own strict JSON configuration.
+
 `max_episodes` and `max_decisions_per_episode` reject excessive designs before
 launch. `max_events_per_episode` stops exchange processing at its hard event cap
 (also applied to each synthetic VWAP calibration path). `max_estimated_events`
@@ -108,3 +115,8 @@ not prevent a person with write access from forging both results and checksums.
 
 CSV/JSON are suitable for this small batch. Parquet, DuckDB/SQLite indexing,
 parallel registered runs and a model registry remain pending.
+
+Calibration, portfolio and stress-family roots use `plan.json`, `provenance.json`,
+`source/`, `result.json` and a complete recursive manifest. `verify/report` detect
+this format and include nested child manifests. See `validation-and-risk.md` for
+`calibrate`, `stress` and `portfolio` commands and their inference boundaries.

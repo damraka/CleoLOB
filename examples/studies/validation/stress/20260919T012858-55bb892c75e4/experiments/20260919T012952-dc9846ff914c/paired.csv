@@ -1,0 +1,5 @@
+scenario,agent,label,reference,n,delta_mean,delta_ci_lo,delta_ci_hi,delta_median,win_rate,wins,losses,p_sign,ties,p_adjusted,correction,family_size,significant_5pct,significant_at_alpha
+thin_depth,vwap,VWAP,twap,10,-0.1901557518396177,-0.8113311846096941,0.3200681620642823,0.09080005483165832,0.4,4,6,0.75390625,0,1.0,holm,4,False,False
+thin_depth,pov,POV,twap,10,0.3904124934149661,-0.04370107489679522,0.8445240186636708,0.3924838784695448,0.3,3,7,0.34375,0,1.0,holm,4,False,False
+thin_depth,ac,Almgren-Chriss,twap,10,-0.002832633828869857,-0.00549985019368338,-0.00016665791681361034,-0.0033323335582247093,0.6,6,3,0.5078125,1,1.0,holm,4,False,False
+thin_depth,heuristic,Heuristic,twap,10,-1.5058403649561896,-2.291400597065893,-0.7561949393745471,-1.1950073303995787,0.9,9,1,0.021484375,0,0.0859375,holm,4,False,False

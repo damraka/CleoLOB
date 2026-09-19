@@ -56,3 +56,10 @@ and records exact matches, mismatches, quality counters and causal grid summarie
 There are no artificial order IDs or strategy fills in this path. The current
 two-day assessment establishes input/reconstruction consistency, not calibrated
 synthetic dynamics or historical execution performance.
+
+`calibration.py` fits frozen empirical L2 observable models; `robustness.py` owns
+purged chronological/walk-forward evaluation, registered stress families and study
+integrity. These observable models do not replace the FIFO arrival mechanism.
+`settlement.py` drains post-horizon strategy messages and late fills for baselines
+and RL before final valuation. `portfolio.py` independently reconciles linear
+multi-currency holdings/reservations and evaluates risk limits and joint shocks.

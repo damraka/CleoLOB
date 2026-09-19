@@ -1,0 +1,976 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>CLEO research report</title>
+<style>body{font:16px system-ui;margin:40px auto;max-width:1200px;padding:0 24px;color:#182534;background:#f7f9fc}h1,h2{color:#183c59}table{border-collapse:collapse;background:white;width:100%;font-size:13px}th,td{padding:9px;border:1px solid #d8e2e9;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}section{overflow:auto;margin:24px 0}.badge{font-weight:bold;color:#8a4600}</style></head><body>
+<h1>reference</h1><p>20260919T012858-ab46d338b56a</p>
+<p class='badge'>Status: WARNING · INSUFFICIENT EVIDENCE FOR ALPHA</p>
+<h2>Objective and methodology</h2><p>Compare execution costs for a frozen set of strategies on paired synthetic seeds. Lower economic implementation shortfall is cheaper. Fees apply to actual fills. Unfilled quantity is valued hypothetically only when visible depth is sufficient; it is never recorded as a real execution. The noncompletion reward penalty is reported separately from economic cost.</p>
+<p>The market is an uncalibrated Poisson order-flow model with FIFO, message latency and endogenous book feedback. Shared exogenous seeds do not imply identical realized books. Observations are current exchange state; market-data dissemination latency is not modeled. No training, independent historical validation or live-trading test occurs here.</p>
+<h2>Design coverage</h2><pre>{
+  &quot;market_configurations_theoretical&quot;: 1,
+  &quot;market_configurations_selected&quot;: 1,
+  &quot;sampling_method&quot;: &quot;full factorial of configured agents \u00d7 configured seeds&quot;,
+  &quot;agents&quot;: 5,
+  &quot;seeds&quot;: 10,
+  &quot;episodes_planned&quot;: 50,
+  &quot;episodes_attempted&quot;: 50,
+  &quot;episodes_valid_or_warning&quot;: 50,
+  &quot;unexplored_space&quot;: &quot;All market parameters outside this frozen configuration; no broader coverage claimed.&quot;,
+  &quot;estimated_events&quot;: 435000
+}</pre>
+<h2>Research guardrails</h2><pre>{
+  &quot;config_validated&quot;: &quot;YES&quot;,
+  &quot;data_validated&quot;: &quot;N/A \u2014 synthetic only&quot;,
+  &quot;dedicated_leakage_test&quot;: &quot;NOT RUN&quot;,
+  &quot;train_test_separated&quot;: &quot;NOT RUN \u2014 no training in this experiment&quot;,
+  &quot;baselines_included&quot;: &quot;YES&quot;,
+  &quot;costs_modeled&quot;: &quot;YES&quot;,
+  &quot;message_latency_modeled&quot;: &quot;YES&quot;,
+  &quot;feed_latency_modeled&quot;: &quot;NO&quot;,
+  &quot;risk_controls_active&quot;: &quot;YES \u2014 parent reservation and configured pretrade limits&quot;,
+  &quot;multiple_seeds&quot;: &quot;YES&quot;,
+  &quot;stress_tested&quot;: &quot;NOT RUN&quot;,
+  &quot;ood_tested&quot;: &quot;NOT RUN&quot;,
+  &quot;multiple_testing&quot;: &quot;holm&quot;,
+  &quot;reproduced&quot;: &quot;NO \u2014 provenance saved; use cleo reproduce&quot;
+}</pre>
+<section><h2>Economic results</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>scenario</th>
+      <th>agent</th>
+      <th>label</th>
+      <th>n</th>
+      <th>mean</th>
+      <th>ci_lo</th>
+      <th>ci_hi</th>
+      <th>median</th>
+      <th>std</th>
+      <th>standard_error</th>
+      <th>p5</th>
+      <th>p95</th>
+      <th>worst</th>
+      <th>best</th>
+      <th>fill_frac</th>
+      <th>filled_only_mean</th>
+      <th>children</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>reference</td>
+      <td>twap</td>
+      <td>TWAP</td>
+      <td>10</td>
+      <td>1.7298</td>
+      <td>1.5693</td>
+      <td>1.9051</td>
+      <td>1.7</td>
+      <td>0.28622</td>
+      <td>0.090512</td>
+      <td>1.4457</td>
+      <td>2.17</td>
+      <td>2.3499</td>
+      <td>1.4449</td>
+      <td>0.95</td>
+      <td>1.7129</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>vwap</td>
+      <td>VWAP</td>
+      <td>10</td>
+      <td>1.6931</td>
+      <td>1.525</td>
+      <td>1.8786</td>
+      <td>1.6416</td>
+      <td>0.30534</td>
+      <td>0.096558</td>
+      <td>1.4064</td>
+      <td>2.1967</td>
+      <td>2.3766</td>
+      <td>1.3749</td>
+      <td>0.93917</td>
+      <td>1.671</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>pov</td>
+      <td>POV</td>
+      <td>10</td>
+      <td>1.7296</td>
+      <td>1.5288</td>
+      <td>1.9488</td>
+      <td>1.6391</td>
+      <td>0.35778</td>
+      <td>0.11314</td>
+      <td>1.3404</td>
+      <td>2.2522</td>
+      <td>2.3999</td>
+      <td>1.255</td>
+      <td>1</td>
+      <td>1.7296</td>
+      <td>7.6</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>ac</td>
+      <td>Almgren-Chriss</td>
+      <td>10</td>
+      <td>1.729</td>
+      <td>1.569</td>
+      <td>1.904</td>
+      <td>1.6991</td>
+      <td>0.28545</td>
+      <td>0.090266</td>
+      <td>1.4457</td>
+      <td>2.1676</td>
+      <td>2.3483</td>
+      <td>1.4449</td>
+      <td>0.95</td>
+      <td>1.7121</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>heuristic</td>
+      <td>Heuristic</td>
+      <td>10</td>
+      <td>1.5458</td>
+      <td>1.2572</td>
+      <td>1.8386</td>
+      <td>1.5125</td>
+      <td>0.50307</td>
+      <td>0.15908</td>
+      <td>0.88</td>
+      <td>2.2964</td>
+      <td>2.3999</td>
+      <td>0.69997</td>
+      <td>0.86383</td>
+      <td>1.4779</td>
+      <td>9.8</td>
+    </tr>
+  </tbody>
+</table></section>
+<p>Means and paired differences use percentile bootstrap intervals over independent seeds. Intervals are marginal, not simultaneous, and a singleton interval is not evidence of precision. Sign tests exclude exact ties and test direction rather than the mean effect. Adjusted p-values cover all planned candidate-versus-reference tests in this run. No alpha verdict follows from statistical significance.</p>
+<section><h2>Paired comparisons</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>scenario</th>
+      <th>agent</th>
+      <th>label</th>
+      <th>reference</th>
+      <th>n</th>
+      <th>delta_mean</th>
+      <th>delta_ci_lo</th>
+      <th>delta_ci_hi</th>
+      <th>delta_median</th>
+      <th>win_rate</th>
+      <th>wins</th>
+      <th>losses</th>
+      <th>p_sign</th>
+      <th>ties</th>
+      <th>p_adjusted</th>
+      <th>correction</th>
+      <th>family_size</th>
+      <th>significant_5pct</th>
+      <th>significant_at_alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>reference</td>
+      <td>vwap</td>
+      <td>VWAP</td>
+      <td>twap</td>
+      <td>10</td>
+      <td>-0.036662</td>
+      <td>-0.080829</td>
+      <td>0.0005248</td>
+      <td>-1.3157e-12</td>
+      <td>0.6</td>
+      <td>6</td>
+      <td>3</td>
+      <td>0.50781</td>
+      <td>1</td>
+      <td>1</td>
+      <td>holm</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>pov</td>
+      <td>POV</td>
+      <td>twap</td>
+      <td>10</td>
+      <td>-0.00016412</td>
+      <td>-0.069192</td>
+      <td>0.072353</td>
+      <td>-9.0938e-13</td>
+      <td>0.6</td>
+      <td>6</td>
+      <td>3</td>
+      <td>0.50781</td>
+      <td>1</td>
+      <td>1</td>
+      <td>holm</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>ac</td>
+      <td>Almgren-Chriss</td>
+      <td>twap</td>
+      <td>10</td>
+      <td>-0.00083331</td>
+      <td>-0.0015</td>
+      <td>-0.00016666</td>
+      <td>-4.4409e-16</td>
+      <td>0.7</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0.070312</td>
+      <td>2</td>
+      <td>0.28125</td>
+      <td>holm</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>reference</td>
+      <td>heuristic</td>
+      <td>Heuristic</td>
+      <td>twap</td>
+      <td>10</td>
+      <td>-0.184</td>
+      <td>-0.41457</td>
+      <td>0.018538</td>
+      <td>-0.089995</td>
+      <td>0.6</td>
+      <td>6</td>
+      <td>4</td>
+      <td>0.75391</td>
+      <td>0</td>
+      <td>1</td>
+      <td>holm</td>
+      <td>4</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table></section>
+<section><h2>Every planned episode, including failures</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>agent</th>
+      <th>seed</th>
+      <th>status</th>
+      <th>effective_bps</th>
+      <th>gross_effective_bps</th>
+      <th>fee_bps</th>
+      <th>fill_frac</th>
+      <th>unpriced_leftover_qty</th>
+      <th>outstanding_qty</th>
+      <th>invalid_reasons</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>twap</td>
+      <td>501</td>
+      <td>VALID</td>
+      <td>1.4467</td>
+      <td>0.44673</td>
+      <td>0.94996</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>501</td>
+      <td>VALID</td>
+      <td>1.4467</td>
+      <td>0.44673</td>
+      <td>0.94996</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>501</td>
+      <td>VALID</td>
+      <td>1.4467</td>
+      <td>0.44673</td>
+      <td>0.99996</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>501</td>
+      <td>VALID</td>
+      <td>1.4467</td>
+      <td>0.44673</td>
+      <td>0.94996</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>501</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50008</td>
+      <td>0.79996</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>502</td>
+      <td>VALID</td>
+      <td>1.4449</td>
+      <td>0.44498</td>
+      <td>0.94996</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>502</td>
+      <td>VALID</td>
+      <td>1.4449</td>
+      <td>0.44498</td>
+      <td>0.96662</td>
+      <td>0.96667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>502</td>
+      <td>VALID</td>
+      <td>1.4449</td>
+      <td>0.44498</td>
+      <td>0.99996</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>502</td>
+      <td>VALID</td>
+      <td>1.4449</td>
+      <td>0.44498</td>
+      <td>0.94996</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>502</td>
+      <td>VALID</td>
+      <td>0.69997</td>
+      <td>0.099995</td>
+      <td>0.59997</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>503</td>
+      <td>VALID</td>
+      <td>2.3499</td>
+      <td>1.3501</td>
+      <td>0.94987</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>503</td>
+      <td>VALID</td>
+      <td>2.3766</td>
+      <td>1.3767</td>
+      <td>0.9582</td>
+      <td>0.95833</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>503</td>
+      <td>VALID</td>
+      <td>2.3999</td>
+      <td>1.4001</td>
+      <td>0.99986</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>503</td>
+      <td>VALID</td>
+      <td>2.3483</td>
+      <td>1.3484</td>
+      <td>0.94987</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>503</td>
+      <td>VALID</td>
+      <td>2.3999</td>
+      <td>1.4001</td>
+      <td>0.79989</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>504</td>
+      <td>VALID</td>
+      <td>1.65</td>
+      <td>0.6501</td>
+      <td>0.94994</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>504</td>
+      <td>VALID</td>
+      <td>1.625</td>
+      <td>0.62509</td>
+      <td>0.93661</td>
+      <td>0.93667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>504</td>
+      <td>VALID</td>
+      <td>1.5884</td>
+      <td>0.58842</td>
+      <td>0.99994</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>504</td>
+      <td>VALID</td>
+      <td>1.65</td>
+      <td>0.6501</td>
+      <td>0.94994</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>504</td>
+      <td>VALID</td>
+      <td>1.7667</td>
+      <td>0.76678</td>
+      <td>0.79995</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>505</td>
+      <td>VALID</td>
+      <td>1.95</td>
+      <td>0.95014</td>
+      <td>0.94991</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>505</td>
+      <td>VALID</td>
+      <td>1.9767</td>
+      <td>0.97681</td>
+      <td>0.92491</td>
+      <td>0.925</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>505</td>
+      <td>VALID</td>
+      <td>2.0684</td>
+      <td>1.0685</td>
+      <td>0.99989</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>505</td>
+      <td>VALID</td>
+      <td>1.9467</td>
+      <td>0.94681</td>
+      <td>0.94991</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>505</td>
+      <td>VALID</td>
+      <td>1.1</td>
+      <td>0.50008</td>
+      <td>0.59997</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>506</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50003</td>
+      <td>0.94995</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>506</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50003</td>
+      <td>0.91995</td>
+      <td>0.92</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>506</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50003</td>
+      <td>0.99995</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>506</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50003</td>
+      <td>0.94995</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>506</td>
+      <td>VALID</td>
+      <td>1.5</td>
+      <td>0.50003</td>
+      <td>0.79996</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>507</td>
+      <td>VALID</td>
+      <td>1.4999</td>
+      <td>0.49998</td>
+      <td>0.94995</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>507</td>
+      <td>VALID</td>
+      <td>1.3749</td>
+      <td>0.37498</td>
+      <td>0.91496</td>
+      <td>0.915</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>507</td>
+      <td>VALID</td>
+      <td>1.255</td>
+      <td>0.25499</td>
+      <td>0.99997</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>507</td>
+      <td>VALID</td>
+      <td>1.4999</td>
+      <td>0.49998</td>
+      <td>0.94995</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>507</td>
+      <td>VALID</td>
+      <td>1.1266</td>
+      <td>0.31332</td>
+      <td>0.6983</td>
+      <td>0.885</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>508</td>
+      <td>VALID</td>
+      <td>1.7499</td>
+      <td>0.74996</td>
+      <td>0.94993</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>508</td>
+      <td>VALID</td>
+      <td>1.6582</td>
+      <td>0.6583</td>
+      <td>0.92661</td>
+      <td>0.92667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>508</td>
+      <td>VALID</td>
+      <td>1.6899</td>
+      <td>0.68997</td>
+      <td>0.99993</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>508</td>
+      <td>VALID</td>
+      <td>1.7482</td>
+      <td>0.7483</td>
+      <td>0.94993</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>508</td>
+      <td>VALID</td>
+      <td>1.5249</td>
+      <td>0.60164</td>
+      <td>0.79996</td>
+      <td>0.87667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>509</td>
+      <td>VALID</td>
+      <td>1.8566</td>
+      <td>0.85667</td>
+      <td>0.94992</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>509</td>
+      <td>VALID</td>
+      <td>1.6783</td>
+      <td>0.67833</td>
+      <td>0.9566</td>
+      <td>0.95667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>509</td>
+      <td>VALID</td>
+      <td>2.0716</td>
+      <td>1.0717</td>
+      <td>0.99989</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>509</td>
+      <td>VALID</td>
+      <td>1.8566</td>
+      <td>0.85667</td>
+      <td>0.94992</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>509</td>
+      <td>VALID</td>
+      <td>2.1699</td>
+      <td>1.2467</td>
+      <td>0.7999</td>
+      <td>0.87667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>twap</td>
+      <td>510</td>
+      <td>VALID</td>
+      <td>1.85</td>
+      <td>0.85004</td>
+      <td>0.94992</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>vwap</td>
+      <td>510</td>
+      <td>VALID</td>
+      <td>1.85</td>
+      <td>0.85004</td>
+      <td>0.93659</td>
+      <td>0.93667</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>pov</td>
+      <td>510</td>
+      <td>VALID</td>
+      <td>1.8316</td>
+      <td>0.83171</td>
+      <td>0.99992</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>ac</td>
+      <td>510</td>
+      <td>VALID</td>
+      <td>1.8483</td>
+      <td>0.84838</td>
+      <td>0.94992</td>
+      <td>0.95</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <td>heuristic</td>
+      <td>510</td>
+      <td>VALID</td>
+      <td>1.67</td>
+      <td>0.67003</td>
+      <td>0.79996</td>
+      <td>0.8</td>
+      <td>0</td>
+      <td>0</td>
+      <td>[]</td>
+    </tr>
+  </tbody>
+</table></section>
+<h2>Stress, OOD, ablations and sensitivity</h2><p>NOT RUN. Changing the frozen market configuration creates a separate experiment; this report does not assert robustness across regimes.</p>
+<h2>Conclusion and limitations</h2><p>This study measures execution mechanics under one uncalibrated synthetic configuration. It provides insufficient evidence for robust execution alpha or live profitability. All planned economic outcomes are available; inspect effect sizes, uncertainty and failures before drawing conclusions.</p><ul>
+<li>Synthetic Poisson market is uncalibrated; results cannot establish live alpha.</li>
+<li>Fewer than 20 seeds: uncertainty estimates and hypothesis tests have low resolution.</li>
+<li>Historical queue counterfactuals, impact calibration, feed latency, exchange auctions, leverage, and portfolio risk are not established by this study.</li></ul>
+<h2>Provenance</h2><pre>{
+  &quot;experiment_id&quot;: &quot;20260919T012858-ab46d338b56a&quot;,
+  &quot;created_at&quot;: &quot;2026-09-19T01:28:59.038936+00:00&quot;,
+  &quot;config_sha256&quot;: &quot;a2c9c86bff3059df6fba82e144e7fcc44ba38aa0862567d69f1295f17211f210&quot;,
+  &quot;git_commit&quot;: &quot;dfe569239a6280e6c4501b9d475012a9c93a78b0&quot;,
+  &quot;git_dirty&quot;: true,
+  &quot;source_manifest&quot;: {
+    &quot;lob/__init__.py&quot;: &quot;90b41a8171405adff01e9bc59a33d0d4353a468b53771af9b62b81401c7aa328&quot;,
+    &quot;lob/__main__.py&quot;: &quot;98abec005a95d7a02b1d7c811b4a57b37947b2f0e6e1e56d76b44abc0f475698&quot;,
+    &quot;lob/accounting.py&quot;: &quot;92ff9e81aa27b709c0912a98a4300ff30080df287c9d06083e6cc2737739db14&quot;,
+    &quot;lob/benchmarks.py&quot;: &quot;4a191ba0e547e1a9e19ebec0a347f200a40fa8479e3ccf81ba406840a9362bf9&quot;,
+    &quot;lob/calibration.py&quot;: &quot;4c683a5acad8534d0a3c99be4c4b3409ecc4bcae674faa4fa39b8419538b1395&quot;,
+    &quot;lob/cli.py&quot;: &quot;86b5066ac8bc96f6ba0f47bb0c9d912c8e83ebcf5f9ba94a3c872f0c2d8893cd&quot;,
+    &quot;lob/config.py&quot;: &quot;195e40a7f21810f1d0356ea5edd34fddd3d8491f10da3da6a630c1b9368e4792&quot;,
+    &quot;lob/data_download.py&quot;: &quot;0fc6e849b913956fbb9633aa1826f80150e8e31de3391e971da49822d6ba163d&quot;,
+    &quot;lob/engine.py&quot;: &quot;b96c3c17218fb8f7aef3bcbba69aa7a3d7113340956cde960a0feeb3c069434b&quot;,
+    &quot;lob/execution.py&quot;: &quot;60a2977655facb123c9699f97533ddf8efdcbc4d81adf6bced43aa39f258887b&quot;,
+    &quot;lob/experiments/__init__.py&quot;: &quot;bd62712b3bc4fb9e0b21afef687e4361f5ba21ddb7524529c770942e9729b870&quot;,
+    &quot;lob/experiments/design.py&quot;: &quot;6800e65231f033cbd9387b1aa465003cda8e3a8956e084ffe2a55a6714540403&quot;,
+    &quot;lob/experiments/registry.py&quot;: &quot;0f5847d3b5bfba923b2047ff9fac7d0d7dccdba4a243c6a704718e1087e767f4&quot;,
+    &quot;lob/experiments/report.py&quot;: &quot;f407a512c47b93ef9be8de3febf120d8e4f17f605b71b567d272585f30f936af&quot;,
+    &quot;lob/experiments/runner.py&quot;: &quot;ed29278c621194dc31f562c167a8b709d3ff2366c3b3d946d46a6dc228689030&quot;,
+    &quot;lob/portfolio.py&quot;: &quot;3fa88cb4799d65deb14fa147493b82fca725bdb5c4900f1508efedd30f03735d&quot;,
+    &quot;lob/replay/__init__.py&quot;: &quot;14403c4b3bff1d8be57dcd470cbbe703406af89056aeffb947b0c7510f5146a6&quot;,
+    &quot;lob/replay/assessment.py&quot;: &quot;6e13838c26cf386571e3f24d0879420e0f79e105eba8b41a04b72577c324bf77&quot;,
+    &quot;lob/replay/book.py&quot;: &quot;dff54da62d7da8fb2da7a3b2e2facd89b205fe2a11323368bb0febcbb6f0a7b9&quot;,
+    &quot;lob/replay/engine.py&quot;: &quot;af2a521fce89ffbf1773aefb0f7ef13819b020e606e7bf847eee70d4fa57187c&quot;,
+    &quot;lob/replay/io.py&quot;: &quot;22a7ee660d8900c57cc40afa5aa8329e86aeb7577de2f31dc30696997687cd76&quot;,
+    &quot;lob/replay/l2.py&quot;: &quot;76baa3b77cc3da10a3c30f923c958b7509422c3e398747b991453137769df21e&quot;,
+    &quot;lob/replay/schema.py&quot;: &quot;ac7a7e277b5fd5130cabc79443cb9604d2ab7e685ffec4330da8dbb05ab81d62&quot;,
+    &quot;lob/replay/validation.py&quot;: &quot;34bac33ed6c4ebfce278eeec74b51672610e2d3a72f1c6a726fee60d4bacdad6&quot;,
+    &quot;lob/risk.py&quot;: &quot;43107b159b244ba3fd003adc20d8fd02b9981532b7b894170efc93643f38c050&quot;,
+    &quot;lob/rl_env.py&quot;: &quot;22c3539a67fa7a4cc0113ed5c05f6963b380edb7c59a9abf291887d6cda061a4&quot;,
+    &quot;lob/robustness.py&quot;: &quot;ee4d01fcea9ee9ddd24375952a49e7e89a1715cd5844da40be17aff053283a6c&quot;,
+    &quot;lob/runner.py&quot;: &quot;5ce2acd76efb2099825cce847712a47c9cfe6737935896421edef75a848ba025&quot;,
+    &quot;lob/scenarios.py&quot;: &quot;f8c9ba80979757e72d86eb4551f2ada732168120c94f55801b5227355eb4e61e&quot;,
+    &quot;lob/settlement.py&quot;: &quot;2f0044c80d300242f6146c6fd7ca0ac2ac52656174b89b8e2e25ac99ebc2774c&quot;,
+    &quot;lob/stats.py&quot;: &quot;9944ad629f3e49bf1bb081a929d5584b290902a7aa15376c92f77c445c63c0c4&quot;,
+    &quot;pyproject.toml&quot;: &quot;8b37b2b8b8c78d3bbeedc655bfeb5dc1193fb79b660c020f4cfd17e94385fb39&quot;,
+    &quot;requirements.txt&quot;: &quot;9e7ca114dedc826130c0c81c20904529c7de5505663f52bac18ea8b1b2a227fc&quot;,
+    &quot;evaluate.py&quot;: &quot;f084060f2575107194808c92c6473bef907c96ace28f4159ffd493eefcfeacec&quot;,
+    &quot;train_rl.py&quot;: &quot;1dd57675aac758bfdbfefd40c854460a05bdb91caef242bd2536aa4a2c8c561f&quot;
+  },
+  &quot;source_sha256&quot;: &quot;d8d9c90998b3963666924dab157bb35a61e79b65f4409a40e01128f550a22851&quot;,
+  &quot;runtime&quot;: {
+    &quot;python&quot;: &quot;3.14.6&quot;,
+    &quot;implementation&quot;: &quot;CPython&quot;,
+    &quot;platform&quot;: &quot;Windows-11-10.0.26200-SP0&quot;,
+    &quot;machine&quot;: &quot;AMD64&quot;,
+    &quot;executable&quot;: &quot;C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\.venv\\Scripts\\python.exe&quot;,
+    &quot;packages&quot;: {
+      &quot;numpy&quot;: &quot;2.5.3&quot;,
+      &quot;pandas&quot;: &quot;3.0.5&quot;,
+      &quot;gymnasium&quot;: &quot;1.3.0&quot;,
+      &quot;stable-baselines3&quot;: &quot;2.9.0&quot;,
+      &quot;torch&quot;: &quot;2.14.0&quot;,
+      &quot;pydantic&quot;: &quot;2.13.5&quot;,
+      &quot;PyYAML&quot;: &quot;6.0.3&quot;
+    }
+  },
+  &quot;dataset&quot;: {
+    &quot;kind&quot;: &quot;synthetic&quot;,
+    &quot;model&quot;: &quot;poisson_fifo_v2&quot;,
+    &quot;calibrated&quot;: false
+  },
+  &quot;model&quot;: null,
+  &quot;reproduced_from&quot;: null,
+  &quot;planned_episodes&quot;: 50,
+  &quot;randomness&quot;: {
+    &quot;episode_seeds&quot;: [
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510
+    ],
+    &quot;statistics_seed&quot;: 0,
+    &quot;engine_streams&quot;: &quot;SeedSequence streams; see source/engine configuration for exact mapping&quot;,
+    &quot;agent_rng&quot;: &quot;legacy random policy uses episode_seed + 7&quot;
+  }
+}</pre>
+<p>Resolved settings, source snapshot, per-episode order/fill/risk logs, and SHA-256 manifest accompany this report. Checksums detect accidental change; they are not cryptographic signatures.</p></body></html>

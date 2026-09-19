@@ -1,0 +1,5 @@
+scenario,agent,label,reference,n,delta_mean,delta_ci_lo,delta_ci_hi,delta_median,win_rate,wins,losses,p_sign,ties,p_adjusted,correction,family_size,significant_5pct,significant_at_alpha
+slow_messages,vwap,VWAP,twap,10,0.0169994834534954,-0.021196316407368215,0.05733865439799722,0.002499625018870355,0.3,3,6,0.5078125,1,1.0,holm,4,False,False
+slow_messages,pov,POV,twap,10,0.10082259990327809,-0.042497157747481425,0.2762379857776679,-0.03416520858946448,0.6,6,4,0.75390625,0,1.0,holm,4,False,False
+slow_messages,ac,Almgren-Chriss,twap,10,-0.0003333583354121483,-0.0011666835516194619,0.0004999250037425435,0.0,0.4,4,3,1.0,3,1.0,holm,4,False,False
+slow_messages,heuristic,Heuristic,twap,10,-0.24250441697813124,-0.4338691295216044,-0.05616246882607242,-0.24166508341122261,0.6,6,4,0.75390625,0,1.0,holm,4,False,False

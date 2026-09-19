@@ -78,11 +78,13 @@ terminal depth is unknown the finite reward remains a diagnostic, not a valid
 economic result. Decision logs capture the observation **before** the action,
 then record the next observation separately.
 
-Outstanding orders at the horizon receive delayed cancel requests and are
-reported. Accounting/reporting ends at the research horizon; the hypothetical
-terminal value is not a claim that those cancellations already succeeded.
-Post-horizon settlement and double-order-free executable liquidation need a
-separate settlement protocol; this batch does not provide one.
+Outstanding orders at the horizon enter bounded post-decision settlement. The
+exchange processes delayed messages, cancellation retries and late fills while
+the ledger continues reconciling cash, inventory and fees. Reports separate
+decision and settlement durations; unresolved leaves make economic results
+INVALID/null and RL episodes truncate. Hypothetical leftover valuation occurs
+after successful settlement, and remains an estimate rather than an actual
+liquidation fill. No new strategy children are sent during settlement.
 
 ## Statistics and evidence
 
@@ -126,10 +128,12 @@ training or held-out strategy study is claimed in this batch.
 Market-data dissemination delay is absent; agents observe current exchange state.
 Message latency models only fixed plus exponential delay. No opening/closing
 auction, halt/price-limit model in the synthetic exchange, queue-jump rule, hidden
-liquidity, venue fees, corporate actions, multi-instrument portfolio, operational
+liquidity, venue fee schedules, corporate actions, operational
 outage model, Hawkes process, calibrated volatility or calibrated impact is
-implemented here. Risk is execution-focused; automatic flattening, margin,
-leverage, model drift and portfolio tail risk remain future work.
+implemented in the FIFO exchange. A separate funded linear portfolio module now
+models multi-currency exposure, reservations, margin capacity, leverage, loss
+limits and scenario/empirical tail risk. Automatic flattening, borrow and
+nonlinear derivative settlement remain outside its scope.
 
 Historical replay reconstructs a supplied feed, not the counterfactual future
 after an agent's order changes it. Real data can have survivorship and selection
@@ -137,8 +141,12 @@ bias, omissions, venue-specific ordering and licensing restrictions. The include
 fabricated feed verifies canonical mechanics only. A separate Tardis aggregate
 L2 adapter has now matched two full days of real published snapshots; see
 [the assessment](../examples/studies/historical/README.md). This adds ingestion
-evidence without counterfactual fills or calibration. Instrument adapters, empirical
-calibration, walk-forward evaluation, stress/OOD studies, capacity tests and
-ablation analysis are still necessary before evidence of alpha can be assessed.
+evidence without counterfactual fills. The subsequent frozen empirical observable
+calibration, purged walk-forward diagnostics and registered execution stresses are
+documented in [validation and risk](validation-and-risk.md). Later-date observable
+diagnostics failed; all stress-family inference was withheld where terminal depth
+was unavailable. Instrument adapters, latent flow/impact calibration, broader
+independent datasets, capacity tests and ablations remain necessary before any
+robust execution claim.
 
 No broker or live-trading connection is included or authorized.

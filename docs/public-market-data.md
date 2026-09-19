@@ -74,7 +74,9 @@ individual queues, strategy impact, fills, PnL, margin or funding. The normalize
 CSV omits exchange sequence IDs, and the provider can clean crossings in its
 published snapshots. Discrepancies are reported rather than hidden.
 
-Next work remains: instrument-aware units and fees, empirical calibration with
-frozen parameters, chronological held-out dates, several venues/regimes, causal
-execution modeling and a registered stress/out-of-sample study. This batch fits
-no parameters and makes no historical strategy-performance claim.
+The later [calibration and validation workflow](validation-and-risk.md) now fits
+frozen observable parameters and evaluates purged chronological holdouts, alongside
+registered synthetic execution stresses. Instrument-aware historical execution,
+several independent venues/regimes and counterfactual fill/impact modeling remain.
+The reconstruction assessment itself fits no parameters and makes no historical
+strategy-performance claim.

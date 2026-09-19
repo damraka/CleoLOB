@@ -17,13 +17,13 @@ This is a local measurement, not a cross-machine performance claim.
 
 | Phase | Status | Scope and next required evidence |
 |---|---|---|
-| 1. Correctness and reproducibility | PARTIAL | DONE: strict config, lifecycle/TIF, FIFO invariants, partition-independent clocks, separate RNG streams, ledger, reservations and regressions. Remaining: broader latency models, self-trade prevention, full exchange sessions and settlement. |
-| 2. Historical replay and calibration | PARTIAL | DONE: canonical ID-driven reconstruction and controls; bounded public Tardis downloads, exact aggregate L2 replay, snapshot comparison and descriptive scorecard on two full real days. Exchange-native/instrument adapters, Parquet and empirical calibration remain. |
+| 1. Correctness and reproducibility | PARTIAL | DONE: strict config, lifecycle/TIF, FIFO invariants, clocks/RNG, ledger/reservations, bounded post-horizon settlement and late-fill reconciliation. Remaining: feed/broader latency models, self-trade prevention and full exchange sessions. |
+| 2. Historical replay and calibration | PARTIAL | DONE: canonical/L2 reconstruction, public data provenance, frozen empirical observable calibration and later-date scorecards. Latent FIFO order-flow calibration, exchange-native/instrument adapters and Parquet remain. |
 | 3. Execution baselines and TCA | PARTIAL | DONE: TWAP/VWAP/POV/AC, fees, fill reconciliation, economic/objective separation and unpriced inventory detection. Full spread/impact/timing/adverse-selection attribution remains. |
-| 4. Experiments and statistics | PARTIAL | DONE: frozen config/source registry, integrity verification/reproduction, finite-factor design preview, failure retention, paired bootstrap/sign tests and Holm/Bonferroni/BH corrections. Parallel registered sweeps, LHS/Sobol/optimization and result cube remain. |
-| 5. Risk | PARTIAL | DONE: reservations through cancel latency; child, position, estimated notional/gross exposure, loss and kill-switch controls. Portfolio/operational risk, automatic flattening and stress engine remain. |
+| 4. Experiments and statistics | PARTIAL | DONE: source/config registry, reproduction, finite designs, registered multi-scenario stress execution, full-family Holm, failure retention and nested study verification. Parallel scheduling, LHS/Sobol/optimization and result cube remain. |
+| 5. Risk | PARTIAL | DONE: execution limits plus linear multi-currency portfolio accounting/reservations, gross/net/leverage/margin/concentration, stale mark/FX rejection, drawdown/daily-loss latch, asset/FX scenarios and empirical VaR/ES. Nonlinear derivatives, operational risk and automatic flattening remain. |
 | 6. RL and prediction | PARTIAL | DONE: PPO environment regression checks, explicit reward terms, causal decision logs and disjoint train/validation seed domains. No new trained research models. SAC, recurrent/continuous policies and supervised prediction NOT STARTED. |
-| 7. Robustness | NOT STARTED | Chronological/purged splits, walk-forward orchestration, OOD, ablations, sensitivity and independent validation datasets. |
+| 7. Robustness | PARTIAL | DONE: purged chronological splits, expanding walk-forward fits, later-date observable drift/coverage tests and six-profile execution stresses. Broader independent datasets, historical counterfactual execution, ablations and dynamic outage/crash scenarios remain. |
 | 8. Visualization and reports | PARTIAL | DONE: offline HTML evidence report with guardrails, complete outcomes and adjusted comparisons. Existing web/3D view preserved and cards now display economic effective cost/invalid depth. New replay/risk/research dashboards remain. |
 | 9. Performance | PARTIAL | DONE: bounded matching microbenchmark with separate memory measurement. No Rust/GPU acceleration or full-workload profiling performed. |
 | 10. Advanced modeling | NOT STARTED | Hawkes, regimes, market making, multi-instrument markets, auctions, empirical latency and volatility models. |
@@ -177,3 +177,57 @@ historical execution and delayed-order settlement, market-data latency, chronolo
 held-out periods, multi-regime stress/OOD evaluation, portfolio risk, SAC and the
 other phases above. These data validate aggregate mechanics, not FIFO fill models
 or profitability. See `docs/public-market-data.md` for commands and assumptions.
+
+## Four priority workflows — 2026-09-19
+
+**DONE: implementation and executed validation for the four requested workflows.**
+This does not mark the full 170-section platform complete or certify the fitted
+model's realism. The empirical baseline fails later-date diagnostics, as recorded.
+
+- Calibration: `lob/calibration.py` extracts causal one-second L2 features with
+  stale/invalid masking, fits immutable joint empirical observable distributions,
+  provides deterministic generation and digest-verified save/load. No latent
+  FIFO flow or counterfactual execution calibration is claimed.
+- Robustness: `lob/robustness.py` supplies purged chronological splits, expanding
+  walk-forward fits, immutable train/validation/test plans, registered execution
+  stress families, source archives and nested study verification. Checkpoint or
+  child provenance changes withhold all family inference.
+- Settlement: `lob/settlement.py` plus execution/runner/RL integration stop new
+  decisions, retry cancellations, drain late fills/fees, reconcile the ledger,
+  and mark unresolved settlement INVALID. Policy series use actual exchange time.
+- Portfolio: `lob/portfolio.py` supplies bounded linear multi-currency cash,
+  positions, independent reservations, margin/gross/net/concentration/leverage,
+  stale mark/FX controls, loss latch, reduce-only admission, asset/FX stress and
+  empirical VaR/ES. Precision is isolated at 192 Decimal digits for allowed scales.
+- Integration: `calibrate`, `stress`, `portfolio`, generalized `verify/report`,
+  settlement settings, `configs/robustness.yaml`, `configs/portfolio_example.json`.
+  Earlier sealed config hashes remain verifiable without injecting new defaults.
+
+Final suite: **521 passed, 2 existing Gymnasium warnings in 25.32 seconds**.
+Ruff, compilation, JavaScript syntax and old/new artifact integrity checks passed.
+No new full visual review, speed claim, remote CI or model-training claim.
+
+Executed evidence: `examples/studies/validation/README.md`.
+
+1. Calibration on April's first 60%, with purged later validation/internal test
+   and May external test: 51,778 train / 17,219 validation / 17,279 internal /
+   86,399 external samples. Validation WARNING, internal FAIL, external FAIL.
+   Four training-only walk-forward folds returned WARNING/FAIL/WARNING/WARNING.
+   The model remained frozen; failures were not tuned away using held-out data.
+2. Stress: 300 episodes, 204 VALID / 3 WARNING / 93 INVALID. All orders settled;
+   827 late shares in 17 episodes, maximum settlement 1.08s. All invalid outcomes
+   were insufficient terminal depth; all 24 planned comparisons were withheld.
+3. Portfolio: actual demo actions reconciled cash/positions/fees, rejected risk
+   increases, preserved cancel reservations and latched losses. Three synthetic
+   joint shocks executed. Its deliberately partial reduce-only order is disclosed.
+
+The attempted June public download failed DNS resolution, including escalated
+access. Existing checksum-verified April/May files were used. Their prior
+reconstruction/descriptive inspection is disclosed; they are holdouts from model
+fitting, not never-inspected independent data. No auto-review approval rejection
+occurred and no data were fabricated.
+
+Next research decisions must address failed observable generalization and obtain
+fresh dates/venues before any robust execution claim. Advanced items remain
+explicit in the phase checklist; the four implemented workflows now make these
+limitations testable rather than silently assumed.
