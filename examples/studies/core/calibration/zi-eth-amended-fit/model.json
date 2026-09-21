@@ -1,0 +1,481 @@
+{
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "model_sha256": "5a85a1ae46435389ab9f010fb9a2f6fd47afcef12333896e7d33cfbaa2efffbd",
+  "parent_model_sha256": "b24ab9880135a7dc9af61eff652964af11e3e23d261ee6e448ae34d88bd19eb9",
+  "protocol": {
+    "amendment": {
+      "candidate_bounds": {
+        "cancel_rate": [
+          0.02,
+          1.5
+        ],
+        "limit_qty_mean": [
+          10,
+          300
+        ],
+        "limit_rate": [
+          0.5,
+          40
+        ],
+        "market_qty_mean": [
+          10,
+          400
+        ],
+        "market_rate": [
+          0.2,
+          20
+        ],
+        "offset_p": [
+          0.04,
+          0.8
+        ],
+        "resilience": [
+          0.02,
+          2.0
+        ],
+        "target_level_vol": [
+          40,
+          400
+        ]
+      },
+      "candidate_count": 128,
+      "cohorts": [
+        "ETH",
+        "BTC",
+        "pooled"
+      ],
+      "confirmation_seconds_per_seed": 1800,
+      "confirmation_seeds": [
+        41101,
+        41102
+      ],
+      "design": "Original selected config, original 24 fixed candidates, then seeded independent log-uniform draws within the amended bounds, up to exactly 128 configurations.",
+      "evaluation_order": "August first, September once after all selected models are frozen. Instrument models evaluate their own instrument; pooled model evaluates both. Outputs are retained irrespective of failure.",
+      "evaluation_simulation_seconds_per_seed": 1800,
+      "finalists": 8,
+      "gate": "Unchanged DEFAULT_GATE from original protocols, including maximum family error 0.60. No threshold changes, no strategy-result optimization.",
+      "holdout_simulation_seeds": [
+        43001,
+        43002
+      ],
+      "primary_execution_instrument": "deribit:ETH-PERPETUAL",
+      "reason": "All initial July fits failed. Broaden the train-only parameter search and lengthen simulation before opening August or September observations.",
+      "registered_at_utc": "2026-09-19T14:49:34Z",
+      "schema_version": 1,
+      "screening_seconds_per_seed": 240,
+      "screening_seeds": [
+        41001,
+        41002
+      ],
+      "search_seed": 40101,
+      "selection": "Minimize largest family error plus 10 times invalid simulation fraction, then mean family error; confirm the eight screening finalists on fresh training-only simulator seeds and select by the same fixed criterion.",
+      "stop_rule": "One bounded amended search per cohort. Freeze all models before August extraction. No further model change after validation or holdout. Failed gates remain failed.",
+      "training_sources": "Only the original frozen July training summaries and source files; no August or September observations have been extracted.",
+      "validation_simulation_seeds": [
+        42001,
+        42002
+      ],
+      "warmup_seconds": 30
+    },
+    "amendment_sha256": "f8668695a4a3072f8a245ba582c8c8cceaa1a2fe5d6f39908e850fd742959c3d",
+    "candidate_bounds": {
+      "cancel_rate": [
+        0.03,
+        0.5
+      ],
+      "limit_qty_mean": [
+        10,
+        120
+      ],
+      "limit_rate": [
+        0.5,
+        12
+      ],
+      "market_qty_mean": [
+        10,
+        120
+      ],
+      "market_rate": [
+        0.2,
+        8
+      ],
+      "offset_p": [
+        0.15,
+        0.8
+      ],
+      "resilience": [
+        0.03,
+        1.0
+      ],
+      "target_level_vol": [
+        60,
+        250
+      ]
+    },
+    "candidate_count": 128,
+    "features": {
+      "depth": [
+        "bid_depth",
+        "ask_depth"
+      ],
+      "imbalance": [
+        "imbalance"
+      ],
+      "impact": [
+        "impact_0.1_bps",
+        "impact_0.5_bps",
+        "impact_1.0_bps"
+      ],
+      "ofi": [
+        "abs_snapshot_ofi"
+      ],
+      "spread": [
+        "spread_bps"
+      ],
+      "volatility": [
+        "return_bps"
+      ]
+    },
+    "gate": {
+      "maximum_family_error": 0.6,
+      "minimum_target_samples": 1000,
+      "minimum_valid_fraction": 0.95,
+      "ofi_scale_floor": 0.05,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "spread_impact_scale_floor_bps": 0.05,
+      "volatility_scale_floor_bps": 0.05
+    },
+    "gate_registered_before_fit": true,
+    "limitations": [
+      "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+      "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+      "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+      "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+      "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+      "One representative tick geometry may fail for instruments with different relative tick sizes.",
+      "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+    ],
+    "method": "registered two-stage simulator moment search",
+    "parent_model_sha256": "b24ab9880135a7dc9af61eff652964af11e3e23d261ee6e448ae34d88bd19eb9",
+    "schema_version": 1,
+    "search_seed": 40101,
+    "simulation_seconds_per_seed": 1800,
+    "simulation_seeds": [
+      41001,
+      41002,
+      41101,
+      41102
+    ],
+    "target_depth_lots": 1000.0,
+    "warmup_seconds": 30
+  },
+  "protocol_sha256": "a202b4676a460defe57b0ae31037a1e74459710f3259f2f7fb3e3d3b64ea89e6",
+  "scales": {
+    "deribit:ETH-PERPETUAL": {
+      "native_depth_per_1000_lots": 31994.75,
+      "native_mid_price": 1590.375,
+      "native_tick": 0.049999999999954525,
+      "tick_bps": 0.3143912599226882
+    }
+  },
+  "schema_version": 1,
+  "selected_candidate": 91,
+  "selection_score": [
+    0.6194723377860082,
+    0.3517502792927694
+  ],
+  "simulated_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.49535996044539665,
+        "nonzero_fraction": 0.9980544747081712,
+        "quantiles": [
+          0.08366040976567292,
+          0.39244390918417416,
+          1.0773244147157193
+        ],
+        "std": 0.3910967371516526
+      },
+      "ask_depth": {
+        "mean": 1.2454966666666667,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.491,
+          1.265,
+          1.946
+        ],
+        "std": 0.549285487894147
+      },
+      "bid_depth": {
+        "mean": 1.2440866666666666,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.491,
+          1.271,
+          1.935
+        ],
+        "std": 0.5369258905410814
+      },
+      "imbalance": {
+        "mean": 0.0008728340815014531,
+        "nonzero_fraction": 0.9994444444444445,
+        "quantiles": [
+          -0.5478849513876662,
+          -0.01037721105261733,
+          0.5486459204517454
+        ],
+        "std": 0.4057563379195795
+      },
+      "impact_0.1_bps": {
+        "mean": 0.39681715963328734,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.1884275910653932,
+          0.37201444807564304,
+          0.6286817182019054
+        ],
+        "std": 0.1716045968443614
+      },
+      "impact_0.5_bps": {
+        "mean": 0.7349953736891334,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.5035827995383498,
+          0.7285042326847371,
+          0.9685106882524003
+        ],
+        "std": 0.17938651982149664
+      },
+      "impact_1.0_bps": {
+        "mean": 1.0245728981564288,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.8305472623746822,
+          1.0117038847715594,
+          1.2213590486954362
+        ],
+        "std": 0.155649450713516
+      },
+      "return_bps": {
+        "mean": -0.0001750460648972854,
+        "nonzero_fraction": 0.6731517509727627,
+        "quantiles": [
+          -0.6284268905933459,
+          0.0,
+          0.47185985144512826
+        ],
+        "std": 0.44359883370260356
+      },
+      "spread_bps": {
+        "mean": 0.39597112160524134,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.31427269441713424,
+          0.31444068862529684,
+          0.6288517167655643
+        ],
+        "std": 0.2042695627017298
+      }
+    },
+    "samples": 3600,
+    "valid_fraction": 1.0,
+    "valid_samples": 3600
+  },
+  "simulator_config": {
+    "cancel_rate": 0.03982624914655048,
+    "cancellation_seed": null,
+    "check_invariants": false,
+    "initial_mid_ticks": 31808,
+    "latency_base": 0.005,
+    "latency_jitter": 0.005,
+    "latency_seed": null,
+    "limit_qty_mean": 10.17747944111248,
+    "limit_rate": 25.1424481673531,
+    "lot_size": 1,
+    "market_qty_mean": 54.72644450032321,
+    "market_rate": 2.9255016728801646,
+    "market_seed": null,
+    "max_events": 2000000,
+    "offset_p": 0.21382683839309916,
+    "order_flow_seed": null,
+    "record_events": false,
+    "resilience": 0.08565246323145076,
+    "resilience_levels": 5,
+    "resilience_seed": null,
+    "seed": 42,
+    "target_level_vol": 107,
+    "tick_size": 0.003143863179074447
+  },
+  "training_comparison": {
+    "families": {
+      "depth": {
+        "error": 0.3868030171616698,
+        "passed": true
+      },
+      "imbalance": {
+        "error": 0.1111775798450055,
+        "passed": true
+      },
+      "impact": {
+        "error": 0.6194723377860082,
+        "passed": false
+      },
+      "ofi": {
+        "error": 0.08929082567558691,
+        "passed": true
+      },
+      "spread": {
+        "error": 0.3350566802076106,
+        "passed": true
+      },
+      "volatility": {
+        "error": 0.5687012350807358,
+        "passed": true
+      }
+    },
+    "gate": {
+      "maximum_family_error": 0.6,
+      "minimum_target_samples": 1000,
+      "minimum_valid_fraction": 0.95,
+      "ofi_scale_floor": 0.05,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "spread_impact_scale_floor_bps": 0.05,
+      "volatility_scale_floor_bps": 0.05
+    },
+    "objective": 0.3517502792927694,
+    "sample_count_passed": true,
+    "status": "FAIL",
+    "valid_fraction_passed": true
+  },
+  "training_sources": [
+    {
+      "exchange": "deribit",
+      "first_capture_us": 1782864000599086,
+      "inferred_native_tick": 0.049999999999954525,
+      "inferred_tick_method": "5th percentile of sampled positive adjacent price gaps",
+      "instrument": "deribit:ETH-PERPETUAL",
+      "last_capture_us": 1782950399995188,
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-07-01_ETH-PERPETUAL.csv.gz",
+      "rows": 5836637,
+      "sample_interval_us": 1000000,
+      "samples": 86399,
+      "sha256": "79676771ac0ab009d79ded0f2bdf8cdbd7286426235a27e8ff515e72ae0019da",
+      "source_complete": true,
+      "symbol": "ETH-PERPETUAL",
+      "valid_samples": 86366
+    }
+  ],
+  "training_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.5220881590042362,
+        "nonzero_fraction": 0.9384626074067212,
+        "quantiles": [
+          0.002455007735109704,
+          0.3562178751889501,
+          1.3111007967460582
+        ],
+        "std": 0.5178899011081912
+      },
+      "ask_depth": {
+        "mean": 1.3380314367854227,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.30226834089967886,
+          1.0404832042757015,
+          2.6931605966603898
+        ],
+        "std": 1.2156985800202893
+      },
+      "bid_depth": {
+        "mean": 1.0629502960213104,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.272013377194696,
+          0.7550301221294119,
+          1.9562428210878346
+        ],
+        "std": 1.495547033184251
+      },
+      "imbalance": {
+        "mean": -0.1003096486976538,
+        "nonzero_fraction": 0.9999768427390409,
+        "quantiles": [
+          -0.7107103393405065,
+          -0.1436452801624149,
+          0.586085202924124
+        ],
+        "std": 0.47494811071072834
+      },
+      "impact_0.1_bps": {
+        "mean": 0.36134197129397555,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.15443299924313786,
+          0.19558173047838334,
+          0.7817268242054217
+        ],
+        "std": 0.31231409466481924
+      },
+      "impact_0.5_bps": {
+        "mean": 0.8316416140791683,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.3120404821314847,
+          0.7795853656641312,
+          1.3996208388885154
+        ],
+        "std": 0.4429587067328714
+      },
+      "impact_1.0_bps": {
+        "mean": 1.2846818502192943,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.7880461244836358,
+          1.2355515610906467,
+          1.836852010621079
+        ],
+        "std": 0.4378497235222246
+      },
+      "return_bps": {
+        "mean": 0.0028365965903579754,
+        "nonzero_fraction": 0.3041434096857123,
+        "quantiles": [
+          -0.6370481739335042,
+          0.0,
+          0.6383087375238199
+        ],
+        "std": 1.0285186737913377
+      },
+      "spread_bps": {
+        "mean": 0.34452076920776586,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.3084087649768202,
+          0.3145099149247819,
+          0.318648928544137
+        ],
+        "std": 0.24786490995111982
+      }
+    },
+    "samples": 86399,
+    "valid_fraction": 0.9996180511348511,
+    "valid_samples": 86366
+  }
+}

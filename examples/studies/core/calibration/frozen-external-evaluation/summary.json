@@ -1,0 +1,156 @@
+{
+  "completed_at_utc": "2026-09-19T21:06:04.883540+00:00",
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "models_unchanged": true,
+  "overall_status": "FAIL",
+  "results": [
+    {
+      "cohort": "eth",
+      "completed_at_utc": "2026-09-19T21:03:51.657373+00:00",
+      "failed_families": [
+        "depth"
+      ],
+      "family_errors": {
+        "depth": 1.0160788306414856,
+        "imbalance": 0.04558928566111974,
+        "impact": 0.5838264631083184,
+        "ofi": 0.3981554099326773,
+        "spread": 0.5603825767532263,
+        "volatility": 0.581745839944376
+      },
+      "phase": "validation",
+      "samples": 86399,
+      "source_rows": 2918222,
+      "status": "FAIL",
+      "valid_fraction": 0.9996990705910948,
+      "valid_samples": 86373
+    },
+    {
+      "cohort": "btc",
+      "completed_at_utc": "2026-09-19T21:05:10.998887+00:00",
+      "failed_families": [
+        "ofi",
+        "impact",
+        "volatility"
+      ],
+      "family_errors": {
+        "depth": 0.5015564526382712,
+        "imbalance": 0.22454407728077963,
+        "impact": 0.9946248900147475,
+        "ofi": 1.723258851081859,
+        "spread": 0.06474214475457606,
+        "volatility": 0.8035871941890834
+      },
+      "phase": "validation",
+      "samples": 86398,
+      "source_rows": 1914915,
+      "status": "FAIL",
+      "valid_fraction": 0.9963772309544202,
+      "valid_samples": 86085
+    },
+    {
+      "cohort": "pooled",
+      "completed_at_utc": "2026-09-19T21:05:30.209066+00:00",
+      "failed_families": [
+        "depth",
+        "ofi",
+        "impact"
+      ],
+      "family_errors": {
+        "depth": 1.4558118714219546,
+        "imbalance": 0.20607046688339006,
+        "impact": 1.07848642143717,
+        "ofi": 0.9727981804658778,
+        "spread": 0.3941166155158373,
+        "volatility": 0.5623408570472961
+      },
+      "phase": "validation",
+      "samples": 172797,
+      "source_rows": 4833137,
+      "status": "FAIL",
+      "valid_fraction": 0.9980381603847289,
+      "valid_samples": 172458
+    },
+    {
+      "cohort": "eth",
+      "completed_at_utc": "2026-09-19T21:05:40.688679+00:00",
+      "failed_families": [
+        "spread",
+        "impact"
+      ],
+      "family_errors": {
+        "depth": 0.3520376241414613,
+        "imbalance": 0.18384217102431344,
+        "impact": 1.3692699620413182,
+        "ofi": 0.11662362809412746,
+        "spread": 1.0534473783880276,
+        "volatility": 0.41625669172761903
+      },
+      "phase": "holdout",
+      "samples": 86399,
+      "source_rows": 1348557,
+      "status": "FAIL",
+      "valid_fraction": 0.8822092848296855,
+      "valid_samples": 76222
+    },
+    {
+      "cohort": "btc",
+      "completed_at_utc": "2026-09-19T21:05:51.162322+00:00",
+      "failed_families": [
+        "depth",
+        "impact",
+        "volatility"
+      ],
+      "family_errors": {
+        "depth": 0.9083138376774741,
+        "imbalance": 0.2843959715621948,
+        "impact": 2.384190636972978,
+        "ofi": 0.13313569427613006,
+        "spread": 0.3202207938227945,
+        "volatility": 0.9264008885477973
+      },
+      "phase": "holdout",
+      "samples": 86399,
+      "source_rows": 1280034,
+      "status": "FAIL",
+      "valid_fraction": 0.881804187548467,
+      "valid_samples": 76187
+    },
+    {
+      "cohort": "pooled",
+      "completed_at_utc": "2026-09-19T21:06:04.846125+00:00",
+      "failed_families": [
+        "impact",
+        "volatility"
+      ],
+      "family_errors": {
+        "depth": 0.4114695200677601,
+        "imbalance": 0.31500777800668683,
+        "impact": 1.3896232945233478,
+        "ofi": 0.1342366567673389,
+        "spread": 0.5453865727889085,
+        "volatility": 0.7328088711403462
+      },
+      "phase": "holdout",
+      "samples": 172798,
+      "source_rows": 2628591,
+      "status": "FAIL",
+      "valid_fraction": 0.8820067361890762,
+      "valid_samples": 152409
+    }
+  ],
+  "schema_version": 1,
+  "sources_unchanged": true,
+  "unique_external_files": 4,
+  "unique_external_samples": 345595,
+  "unique_external_source_rows": 7461728,
+  "unique_external_valid_samples": 324867
+}

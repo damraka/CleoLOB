@@ -1,0 +1,481 @@
+{
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "model_sha256": "9a47d59cf980e6d9331b7393255c0efd95b1e24813b9ed71220d80cc114fc5e9",
+  "parent_model_sha256": "6d2b4055356572e36ea30464098447cac4ad660a0ec82faf900f9fdb812988e5",
+  "protocol": {
+    "amendment": {
+      "candidate_bounds": {
+        "cancel_rate": [
+          0.02,
+          1.5
+        ],
+        "limit_qty_mean": [
+          10,
+          300
+        ],
+        "limit_rate": [
+          0.5,
+          40
+        ],
+        "market_qty_mean": [
+          10,
+          400
+        ],
+        "market_rate": [
+          0.2,
+          20
+        ],
+        "offset_p": [
+          0.04,
+          0.8
+        ],
+        "resilience": [
+          0.02,
+          2.0
+        ],
+        "target_level_vol": [
+          40,
+          400
+        ]
+      },
+      "candidate_count": 128,
+      "cohorts": [
+        "ETH",
+        "BTC",
+        "pooled"
+      ],
+      "confirmation_seconds_per_seed": 1800,
+      "confirmation_seeds": [
+        41101,
+        41102
+      ],
+      "design": "Original selected config, original 24 fixed candidates, then seeded independent log-uniform draws within the amended bounds, up to exactly 128 configurations.",
+      "evaluation_order": "August first, September once after all selected models are frozen. Instrument models evaluate their own instrument; pooled model evaluates both. Outputs are retained irrespective of failure.",
+      "evaluation_simulation_seconds_per_seed": 1800,
+      "finalists": 8,
+      "gate": "Unchanged DEFAULT_GATE from original protocols, including maximum family error 0.60. No threshold changes, no strategy-result optimization.",
+      "holdout_simulation_seeds": [
+        43001,
+        43002
+      ],
+      "primary_execution_instrument": "deribit:ETH-PERPETUAL",
+      "reason": "All initial July fits failed. Broaden the train-only parameter search and lengthen simulation before opening August or September observations.",
+      "registered_at_utc": "2026-09-19T14:49:34Z",
+      "schema_version": 1,
+      "screening_seconds_per_seed": 240,
+      "screening_seeds": [
+        41001,
+        41002
+      ],
+      "search_seed": 40101,
+      "selection": "Minimize largest family error plus 10 times invalid simulation fraction, then mean family error; confirm the eight screening finalists on fresh training-only simulator seeds and select by the same fixed criterion.",
+      "stop_rule": "One bounded amended search per cohort. Freeze all models before August extraction. No further model change after validation or holdout. Failed gates remain failed.",
+      "training_sources": "Only the original frozen July training summaries and source files; no August or September observations have been extracted.",
+      "validation_simulation_seeds": [
+        42001,
+        42002
+      ],
+      "warmup_seconds": 30
+    },
+    "amendment_sha256": "f8668695a4a3072f8a245ba582c8c8cceaa1a2fe5d6f39908e850fd742959c3d",
+    "candidate_bounds": {
+      "cancel_rate": [
+        0.03,
+        0.5
+      ],
+      "limit_qty_mean": [
+        10,
+        120
+      ],
+      "limit_rate": [
+        0.5,
+        12
+      ],
+      "market_qty_mean": [
+        10,
+        120
+      ],
+      "market_rate": [
+        0.2,
+        8
+      ],
+      "offset_p": [
+        0.15,
+        0.8
+      ],
+      "resilience": [
+        0.03,
+        1.0
+      ],
+      "target_level_vol": [
+        60,
+        250
+      ]
+    },
+    "candidate_count": 128,
+    "features": {
+      "depth": [
+        "bid_depth",
+        "ask_depth"
+      ],
+      "imbalance": [
+        "imbalance"
+      ],
+      "impact": [
+        "impact_0.1_bps",
+        "impact_0.5_bps",
+        "impact_1.0_bps"
+      ],
+      "ofi": [
+        "abs_snapshot_ofi"
+      ],
+      "spread": [
+        "spread_bps"
+      ],
+      "volatility": [
+        "return_bps"
+      ]
+    },
+    "gate": {
+      "maximum_family_error": 0.6,
+      "minimum_target_samples": 1000,
+      "minimum_valid_fraction": 0.95,
+      "ofi_scale_floor": 0.05,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "spread_impact_scale_floor_bps": 0.05,
+      "volatility_scale_floor_bps": 0.05
+    },
+    "gate_registered_before_fit": true,
+    "limitations": [
+      "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+      "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+      "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+      "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+      "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+      "One representative tick geometry may fail for instruments with different relative tick sizes.",
+      "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+    ],
+    "method": "registered two-stage simulator moment search",
+    "parent_model_sha256": "6d2b4055356572e36ea30464098447cac4ad660a0ec82faf900f9fdb812988e5",
+    "schema_version": 1,
+    "search_seed": 40101,
+    "simulation_seconds_per_seed": 1800,
+    "simulation_seeds": [
+      41001,
+      41002,
+      41101,
+      41102
+    ],
+    "target_depth_lots": 1000.0,
+    "warmup_seconds": 30
+  },
+  "protocol_sha256": "b2787baa67fc822c6006a6bf96bdc300ba9e6ff6b27cfe8ba134128dee825b0c",
+  "scales": {
+    "deribit:BTC-PERPETUAL": {
+      "native_depth_per_1000_lots": 125840.0,
+      "native_mid_price": 59064.25,
+      "native_tick": 0.5,
+      "tick_bps": 0.08465357640196905
+    }
+  },
+  "schema_version": 1,
+  "selected_candidate": 36,
+  "selection_score": [
+    1.6545101818771708,
+    0.5925805790533577
+  ],
+  "simulated_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.5728979567860386,
+        "nonzero_fraction": 0.9988857938718663,
+        "quantiles": [
+          0.09888987397078974,
+          0.5079221382916909,
+          1.1436042960559318
+        ],
+        "std": 0.397552492666996
+      },
+      "ask_depth": {
+        "mean": 1.3700920467185762,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.7905,
+          1.321,
+          2.009
+        ],
+        "std": 0.4816385000736632
+      },
+      "bid_depth": {
+        "mean": 1.3498537263626251,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.7965,
+          1.288,
+          1.97
+        ],
+        "std": 0.47053594542222815
+      },
+      "imbalance": {
+        "mean": -0.006175424635438033,
+        "nonzero_fraction": 0.9991657397107898,
+        "quantiles": [
+          -0.31415,
+          -0.010518741691331431,
+          0.3088137449517421
+        ],
+        "std": 0.23668843274887302
+      },
+      "impact_0.1_bps": {
+        "mean": 0.054625563729811394,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.0423210559958101,
+          0.04233252196010626,
+          0.08322926479960766
+        ],
+        "std": 0.018703522841800612
+      },
+      "impact_0.5_bps": {
+        "mean": 0.11500276446995078,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.0724495850645418,
+          0.11221291064291708,
+          0.16100147737797815
+        ],
+        "std": 0.03459486923321113
+      },
+      "impact_1.0_bps": {
+        "mean": 0.20703117355747122,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.16355707058934285,
+          0.20568670733997949,
+          0.2520088996640509
+        ],
+        "std": 0.03544754503840554
+      },
+      "return_bps": {
+        "mean": -0.0002829901534395808,
+        "nonzero_fraction": 0.2523676880222841,
+        "quantiles": [
+          -0.042327504838316134,
+          0.0,
+          0.04232472801034118
+        ],
+        "std": 0.05170679094468639
+      },
+      "spread_bps": {
+        "mean": 0.08943028226225261,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.0846406791570305,
+          0.08465071000805115,
+          0.08466719442573292
+        ],
+        "std": 0.02091619235447576
+      }
+    },
+    "samples": 3600,
+    "valid_fraction": 0.9988888888888889,
+    "valid_samples": 3596
+  },
+  "simulator_config": {
+    "cancel_rate": 1.0580736241288349,
+    "cancellation_seed": null,
+    "check_invariants": false,
+    "initial_mid_ticks": 118128,
+    "latency_base": 0.005,
+    "latency_jitter": 0.005,
+    "latency_seed": null,
+    "limit_qty_mean": 120.7572992783747,
+    "limit_rate": 16.955865506633895,
+    "lot_size": 1,
+    "market_qty_mean": 101.16847099006466,
+    "market_rate": 0.5842329999119761,
+    "market_seed": null,
+    "max_events": 2000000,
+    "offset_p": 0.13673133583155112,
+    "order_flow_seed": null,
+    "record_events": false,
+    "resilience": 0.7142175857194553,
+    "resilience_levels": 5,
+    "resilience_seed": null,
+    "seed": 42,
+    "target_level_vol": 155,
+    "tick_size": 0.0008465393471488554
+  },
+  "training_comparison": {
+    "families": {
+      "depth": {
+        "error": 0.4293194532739992,
+        "passed": true
+      },
+      "imbalance": {
+        "error": 0.319763047572621,
+        "passed": true
+      },
+      "impact": {
+        "error": 1.6433990707660602,
+        "passed": false
+      },
+      "ofi": {
+        "error": 0.15696401638397256,
+        "passed": true
+      },
+      "spread": {
+        "error": 0.009573095564025873,
+        "passed": true
+      },
+      "volatility": {
+        "error": 0.9297981240928042,
+        "passed": false
+      }
+    },
+    "gate": {
+      "maximum_family_error": 0.6,
+      "minimum_target_samples": 1000,
+      "minimum_valid_fraction": 0.95,
+      "ofi_scale_floor": 0.05,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "spread_impact_scale_floor_bps": 0.05,
+      "volatility_scale_floor_bps": 0.05
+    },
+    "objective": 0.5925805790533577,
+    "sample_count_passed": true,
+    "status": "FAIL",
+    "valid_fraction_passed": true
+  },
+  "training_sources": [
+    {
+      "exchange": "deribit",
+      "first_capture_us": 1782864000601238,
+      "inferred_native_tick": 0.5,
+      "inferred_tick_method": "5th percentile of sampled positive adjacent price gaps",
+      "instrument": "deribit:BTC-PERPETUAL",
+      "last_capture_us": 1782950399971240,
+      "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-07-01_BTC-PERPETUAL.csv.gz",
+      "rows": 9083448,
+      "sample_interval_us": 1000000,
+      "samples": 86399,
+      "sha256": "475efcea47c4338970d7d2a44c50023915d089fb7b9b41ddc5565d2b2d67f4bc",
+      "source_complete": true,
+      "symbol": "BTC-PERPETUAL",
+      "valid_samples": 86390
+    }
+  ],
+  "training_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.371519133803203,
+        "nonzero_fraction": 0.9735029576209383,
+        "quantiles": [
+          0.002046104711305238,
+          0.17545560294687865,
+          1.0693610054980818
+        ],
+        "std": 0.44103914359364876
+      },
+      "ask_depth": {
+        "mean": 1.0738903460975144,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.20915448188175462,
+          0.8088048315321043,
+          2.007954545454546
+        ],
+        "std": 1.174397717832368
+      },
+      "bid_depth": {
+        "mean": 1.401679616093637,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.2846471710108074,
+          1.1015178003814368,
+          2.5596233312142416
+        ],
+        "std": 1.4479576323965713
+      },
+      "imbalance": {
+        "mean": 0.10438452704561671,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          -0.6449003898078787,
+          0.141405641588425,
+          0.7854281145819698
+        ],
+        "std": 0.5182162468721949
+      },
+      "impact_0.1_bps": {
+        "mean": 0.07019575960532694,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.041522893647412504,
+          0.04245184899028277,
+          0.08221244632472297
+        ],
+        "std": 0.12750050580549294
+      },
+      "impact_0.5_bps": {
+        "mean": 0.1512109504742508,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.04162140339047952,
+          0.060958623741715276,
+          0.3794570456396524
+        ],
+        "std": 0.20693547872982593
+      },
+      "impact_1.0_bps": {
+        "mean": 0.36247546036865635,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.14303373660800225,
+          0.30731865117943813,
+          0.6397676824891493
+        ],
+        "std": 0.24950805598495743
+      },
+      "return_bps": {
+        "mean": 0.002761510370389997,
+        "nonzero_fraction": 0.17750355956336022,
+        "quantiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "std": 0.7365442913953013
+      },
+      "spread_bps": {
+        "mean": 0.09100093042838683,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.0830168316626196,
+          0.08465859305884196,
+          0.08546679828553602
+        ],
+        "std": 0.1416503584838261
+      }
+    },
+    "samples": 86399,
+    "valid_fraction": 0.9998958321276866,
+    "valid_samples": 86390
+  }
+}

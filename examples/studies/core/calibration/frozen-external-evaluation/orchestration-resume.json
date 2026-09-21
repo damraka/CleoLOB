@@ -1,0 +1,10 @@
+{
+  "original_runner_sha256": "a05dd1a8c49274b63582e7b73ba4feb5d86979a5cf82ad87bf05087c0c050bcc",
+  "reason": "Reporting-only KeyError: comparison families expose passed, not status. Completed evaluation retained without rerun.",
+  "resumed_at_utc": "2026-09-19T21:04:59.454100+00:00",
+  "resumed_runner_sha256": "fc5ce60f0eefc9acc8f333894b13d9fde9d66ae1a62bccdf1aab8c5949c35208",
+  "reused_result_sha256": {
+    "validation-eth.json": "c8fc853ad09ed2356344e7af0ad106c8f410af02cccb132110b7bb0282d7abc7"
+  },
+  "scientific_sources_unchanged": true
+}

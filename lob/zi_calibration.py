@@ -418,6 +418,100 @@ def load_model(path: str | Path) -> dict:
     return model
 
 
+def refine_model(model: dict, amendment: dict, *, out: str | Path) -> dict:
+    """Run one registered, train-only expanded search from an immutable prior fit.
+
+    The prior's data summaries are reusable sufficient inputs to this moment
+    objective. Their source hashes are checked, and evaluation data are neither
+    accepted nor read here. Fresh simulator paths confirm the screening finalists.
+    """
+    output = Path(out)
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("refinement output must be a new or empty directory")
+    if not 25 <= amendment["candidate_count"] <= 256 or amendment["finalists"] < 1:
+        raise ValueError("refinement requires 25 to 256 candidates and at least one finalist")
+    if amendment["finalists"] > amendment["candidate_count"]:
+        raise ValueError("finalist count exceeds candidate count")
+    screen_seeds = amendment["screening_seeds"]
+    confirm_seeds = amendment["confirmation_seeds"]
+    if set(screen_seeds) & set(confirm_seeds):
+        raise ValueError("confirmation seeds must be independent of screening")
+    for source in model["training_sources"]:
+        if _sha(Path(source["path"])) != source["sha256"]:
+            raise ValueError("training source changed since original fit")
+    protocol = {**model["protocol"], "method": "registered two-stage simulator moment search",
+                "candidate_count": amendment["candidate_count"],
+                "simulation_seconds_per_seed": amendment["confirmation_seconds_per_seed"],
+                "simulation_seeds": screen_seeds + confirm_seeds,
+                "warmup_seconds": amendment["warmup_seconds"],
+                "candidate_bounds": amendment["candidate_bounds"],
+                "search_seed": amendment["search_seed"], "amendment": amendment,
+                "amendment_sha256": _digest(amendment), "parent_model_sha256": model["model_sha256"]}
+    _write(output / "protocol.json", protocol)
+    candidates = [SimConfig(**model["simulator_config"]), *candidate_configs(model["scales"])]
+    base = candidates[0]
+    rng = np.random.default_rng(amendment["search_seed"])
+    for _ in range(amendment["candidate_count"] - len(candidates)):
+        values = {}
+        for name, (lower, upper) in amendment["candidate_bounds"].items():
+            if name == "target_level_vol":
+                values[name] = int(rng.integers(lower, upper + 1))
+            elif name == "offset_p":
+                values[name] = float(rng.uniform(lower, upper))
+            else:
+                values[name] = float(np.exp(rng.uniform(np.log(lower), np.log(upper))))
+        candidates.append(replace(base, **values))
+    _write(output / "search_design.json", {"candidates": [asdict(cfg) for cfg in candidates],
+                                            "training_sources": model["training_sources"]})
+    target = model["training_summary"]
+
+    def score(record: dict) -> tuple[float, float]:
+        comparison = record["comparison"]
+        return (max(item["error"] for item in comparison["families"].values())
+                + 10 * (1 - record["simulated_summary"]["valid_fraction"]), comparison["objective"])
+
+    def run(index: int, phase: str, seeds: list[int], seconds: int) -> dict:
+        config = candidates[index]
+        try:
+            simulation = summarize(simulate_features(config, seeds=seeds, seconds=seconds,
+                                                     warmup_seconds=amendment["warmup_seconds"]))
+            record = {"candidate": index, "phase": phase, "config": asdict(config),
+                      "comparison": compare_summaries(target, simulation, protocol["gate"]),
+                      "simulated_summary": simulation, "error": None}
+        except (ValueError, RuntimeError, AssertionError) as exc:
+            record = {"candidate": index, "phase": phase, "config": asdict(config),
+                      "comparison": None, "simulated_summary": None,
+                      "error": f"{type(exc).__name__}: {exc}"}
+        with (output / "candidate_results.jsonl").open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps(record, sort_keys=True, allow_nan=False) + "\n")
+        return record
+
+    screening = [run(i, "screening", screen_seeds, amendment["screening_seconds_per_seed"])
+                 for i in range(len(candidates))]
+    eligible = sorted((record for record in screening if record["error"] is None), key=score)
+    if not eligible:
+        raise ValueError("all simulator calibration screening candidates failed")
+    finalist_ids = [record["candidate"] for record in eligible[:amendment["finalists"]]]
+    _write(output / "finalists.json", {"candidate_ids": finalist_ids,
+                                       "selected_before_confirmation_simulations": True})
+    confirmed = [run(i, "confirmation", confirm_seeds, amendment["confirmation_seconds_per_seed"])
+                 for i in finalist_ids]
+    eligible = [record for record in confirmed if record["error"] is None]
+    if not eligible:
+        raise ValueError("all simulator calibration confirmation candidates failed")
+    best = min(eligible, key=score)
+    result = {key: value for key, value in model.items()
+              if key not in {"model_sha256", "training_instrument_comparisons"}}
+    result.update({"protocol": protocol, "protocol_sha256": _digest(protocol),
+                   "simulator_config": best["config"], "selected_candidate": best["candidate"],
+                   "training_comparison": best["comparison"],
+                   "simulated_summary": best["simulated_summary"],
+                   "selection_score": list(score(best)), "parent_model_sha256": model["model_sha256"]})
+    result["model_sha256"] = _digest(result)
+    _write(output / "model.json", result)
+    return result
+
+
 def evaluate_model(model: dict, paths: Iterable[str | Path], *,
                    seeds: Iterable[int] = (42001, 42002),
                    simulation_seconds: int | None = None) -> dict:
@@ -474,10 +568,20 @@ def main(argv: list[str] | None = None) -> None:
     evaluate.add_argument("--data", nargs="+", required=True)
     evaluate.add_argument("--out", required=True)
     evaluate.add_argument("--seeds", nargs="+", type=int, default=[42001, 42002])
+    refine = sub.add_parser("refine")
+    refine.add_argument("--model", required=True)
+    refine.add_argument("--amendment", required=True)
+    refine.add_argument("--out", required=True)
     args = parser.parse_args(argv)
     if args.command == "fit":
         result = fit_model(args.train, out=args.out, candidate_count=args.candidates,
                            simulation_seconds=args.seconds, warmup_seconds=args.warmup)
+        print(json.dumps({"model": str(Path(args.out) / "model.json"),
+                          "training_status": result["training_comparison"]["status"],
+                          "candidate": result["selected_candidate"]}))
+    elif args.command == "refine":
+        amendment = json.loads(Path(args.amendment).read_text(encoding="utf-8"))
+        result = refine_model(load_model(args.model), amendment, out=args.out)
         print(json.dumps({"model": str(Path(args.out) / "model.json"),
                           "training_status": result["training_comparison"]["status"],
                           "candidate": result["selected_candidate"]}))

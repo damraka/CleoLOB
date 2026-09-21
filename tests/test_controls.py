@@ -1,4 +1,4 @@
-from dataclasses import replace
+from dataclasses import asdict, replace
 import json
 import math
 
@@ -6,7 +6,8 @@ import pandas as pd
 import pytest
 
 from lob.config import ResearchConfig
-from lob.controls import estimate_ac_parameters, positive_control, residual_sensitivity
+from lob.controls import (AllMarketPolicy, AllWaitPolicy, estimate_ac_parameters,
+                          finalize_execution_config, positive_control, residual_sensitivity)
 from lob.engine import SimConfig
 from lob.runner import make_baseline
 
@@ -59,9 +60,32 @@ def test_control_registration_precedes_data_and_confirmation_only_once(tmp_path,
                               median_top5_depth=100, grid=((2., 30.), (5., 60.)), n_boot=30)
     assert result["status"] == "FAIL"
     assert result["selected_params"]["qty"] == 200
-    assert len(calls) == 18
+    assert len(calls) == 24
     assert all(qty == 200 for _, seed, qty in calls if seed >= 20)
     assert json.loads((path / "result.json").read_text())["status"] == "FAIL"
+
+
+def test_market_control_failure_prevents_diagnostic_selection(tmp_path, monkeypatch):
+    def fake_run(agent, params, model=None):
+        invalid = isinstance(model, AllMarketPolicy)
+        assert model is None or isinstance(model, (AllMarketPolicy, AllWaitPolicy))
+        return {"agent": agent, "seed": params["seed"],
+                "status": "INVALID" if invalid else "VALID",
+                "effective_bps": None if invalid else (3. if agent == "random" else 1.)}
+
+    monkeypatch.setattr("lob.controls.run_episode", fake_run)
+    result = positive_control({"dt": 1., "sim": {}}, [10, 11], [20, 21], tmp_path / "control",
+                              median_top5_depth=100, grid=((2., 30.),), n_boot=30)
+    assert result["selected_params"] is None
+    assert result["confirmation"]["status"] == "NOT_RUN_NO_DIAGNOSTIC_PASS"
+    assert not result["diagnostics"][0]["all_wait_and_market_capacity_pass"]
+
+
+def test_invalid_control_effect_is_rejected_before_registration(tmp_path):
+    with pytest.raises(ValueError, match="minimum effect"):
+        positive_control({}, [10, 11], [20, 21], tmp_path / "bad",
+                         median_top5_depth=100, min_effect_bps=float("nan"))
+    assert not (tmp_path / "bad").exists()
 
 
 def test_control_seed_blocks_cannot_overlap(tmp_path):
@@ -106,3 +130,36 @@ def test_unsettled_orders_never_receive_synthetic_prices():
     assert all(arm["comparisons"][0]["status"] == "AVAILABLE" for arm in result["arms"])
     assert all(arm["comparisons"][1]["status"] == "WITHHELD_FOR_THIS_COMPARISON" for arm in result["arms"])
     assert all(arm["imputed_rows"] == 0 for arm in result["arms"])
+
+
+def test_final_config_preserves_failed_gate_and_refits_independent_seeds(tmp_path, monkeypatch):
+    model = tmp_path / "model.json"
+    model.write_text("{}")
+    control = tmp_path / "control"
+    control.mkdir()
+    (control / "plan.json").write_text(json.dumps({"params": {"dt": .5}}))
+    (control / "result.json").write_text(json.dumps({
+        "status": "FAIL", "selected_params": None,
+        "diagnostics": [{"quantity": 100, "horizon": 30.,
+                         "all_wait_and_market_capacity_pass": True,
+                         "comparison": {"status": "AVAILABLE"}}]}))
+    monkeypatch.setattr("lob.zi_calibration.load_model", lambda _path: {
+        "simulator_config": asdict(SimConfig()), "model_sha256": "test-model",
+        "training_comparison": {"status": "FAIL"}})
+    out, config = tmp_path / "final", tmp_path / "config.json"
+
+    def fit(_cfg, seeds, **kwargs):
+        plan = json.loads((out / "plan.json").read_text())
+        assert seeds == list(range(46000, 46016)) == plan["ac_fit_seeds"]
+        assert kwargs["execution_interval"] == 1.5
+        return {"status": "PASS", "temp_impact": .002, "sigma": .4}
+
+    monkeypatch.setattr("lob.controls.estimate_ac_parameters", fit)
+    result = finalize_execution_config(model, control, out, config)
+    resolved = ResearchConfig.model_validate_json(config.read_text())
+    assert result["positive_control_status"] == result["calibration_train_status"] == "FAIL"
+    assert result["ac_fit_status"] == "PASS"
+    assert resolved.execution.risk_aversion == 0.
+    assert resolved.execution.temp_impact == .002
+    assert not resolved.resources.check_invariants
+    assert "exploratory" in result["selection"]

@@ -1,0 +1,171 @@
+{
+  "amendment": {
+    "candidate_bounds": {
+      "cancel_rate": [
+        0.02,
+        1.5
+      ],
+      "limit_qty_mean": [
+        10,
+        300
+      ],
+      "limit_rate": [
+        0.5,
+        40
+      ],
+      "market_qty_mean": [
+        10,
+        400
+      ],
+      "market_rate": [
+        0.2,
+        20
+      ],
+      "offset_p": [
+        0.04,
+        0.8
+      ],
+      "resilience": [
+        0.02,
+        2.0
+      ],
+      "target_level_vol": [
+        40,
+        400
+      ]
+    },
+    "candidate_count": 128,
+    "cohorts": [
+      "ETH",
+      "BTC",
+      "pooled"
+    ],
+    "confirmation_seconds_per_seed": 1800,
+    "confirmation_seeds": [
+      41101,
+      41102
+    ],
+    "design": "Original selected config, original 24 fixed candidates, then seeded independent log-uniform draws within the amended bounds, up to exactly 128 configurations.",
+    "evaluation_order": "August first, September once after all selected models are frozen. Instrument models evaluate their own instrument; pooled model evaluates both. Outputs are retained irrespective of failure.",
+    "evaluation_simulation_seconds_per_seed": 1800,
+    "finalists": 8,
+    "gate": "Unchanged DEFAULT_GATE from original protocols, including maximum family error 0.60. No threshold changes, no strategy-result optimization.",
+    "holdout_simulation_seeds": [
+      43001,
+      43002
+    ],
+    "primary_execution_instrument": "deribit:ETH-PERPETUAL",
+    "reason": "All initial July fits failed. Broaden the train-only parameter search and lengthen simulation before opening August or September observations.",
+    "registered_at_utc": "2026-09-19T14:49:34Z",
+    "schema_version": 1,
+    "screening_seconds_per_seed": 240,
+    "screening_seeds": [
+      41001,
+      41002
+    ],
+    "search_seed": 40101,
+    "selection": "Minimize largest family error plus 10 times invalid simulation fraction, then mean family error; confirm the eight screening finalists on fresh training-only simulator seeds and select by the same fixed criterion.",
+    "stop_rule": "One bounded amended search per cohort. Freeze all models before August extraction. No further model change after validation or holdout. Failed gates remain failed.",
+    "training_sources": "Only the original frozen July training summaries and source files; no August or September observations have been extracted.",
+    "validation_simulation_seeds": [
+      42001,
+      42002
+    ],
+    "warmup_seconds": 30
+  },
+  "amendment_sha256": "f8668695a4a3072f8a245ba582c8c8cceaa1a2fe5d6f39908e850fd742959c3d",
+  "candidate_bounds": {
+    "cancel_rate": [
+      0.03,
+      0.5
+    ],
+    "limit_qty_mean": [
+      10,
+      120
+    ],
+    "limit_rate": [
+      0.5,
+      12
+    ],
+    "market_qty_mean": [
+      10,
+      120
+    ],
+    "market_rate": [
+      0.2,
+      8
+    ],
+    "offset_p": [
+      0.15,
+      0.8
+    ],
+    "resilience": [
+      0.03,
+      1.0
+    ],
+    "target_level_vol": [
+      60,
+      250
+    ]
+  },
+  "candidate_count": 128,
+  "features": {
+    "depth": [
+      "bid_depth",
+      "ask_depth"
+    ],
+    "imbalance": [
+      "imbalance"
+    ],
+    "impact": [
+      "impact_0.1_bps",
+      "impact_0.5_bps",
+      "impact_1.0_bps"
+    ],
+    "ofi": [
+      "abs_snapshot_ofi"
+    ],
+    "spread": [
+      "spread_bps"
+    ],
+    "volatility": [
+      "return_bps"
+    ]
+  },
+  "gate": {
+    "maximum_family_error": 0.6,
+    "minimum_target_samples": 1000,
+    "minimum_valid_fraction": 0.95,
+    "ofi_scale_floor": 0.05,
+    "quantiles": [
+      0.1,
+      0.5,
+      0.9
+    ],
+    "spread_impact_scale_floor_bps": 0.05,
+    "volatility_scale_floor_bps": 0.05
+  },
+  "gate_registered_before_fit": true,
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "method": "registered two-stage simulator moment search",
+  "parent_model_sha256": "5e660a0710ee7ca75bf8e07e8c49e9f2a0eb5bdb2ef702b7d7934c0c6c195d30",
+  "schema_version": 1,
+  "search_seed": 40101,
+  "simulation_seconds_per_seed": 1800,
+  "simulation_seeds": [
+    41001,
+    41002,
+    41101,
+    41102
+  ],
+  "target_depth_lots": 1000.0,
+  "warmup_seconds": 30
+}

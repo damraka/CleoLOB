@@ -1,0 +1,14 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "holdout-btc.json": "762e7da864da62e205b556b6440bf4c11668816a5f07e389339a4662f37064f6",
+    "holdout-eth.json": "368a241151c42f1830a1f18e2e7b53c112774bcf55857877aaeeb9c9c5241b6b",
+    "holdout-pooled.json": "6e4527a0cf3681cda57f55e53190c7114be57663b9501f4755b56542db15c6bf",
+    "orchestration-resume.json": "0b0a0eca1b87de12595404dcff173f4d9e9b800afaba580b49b6c27ce21e3cc3",
+    "plan.json": "b2593917dbf2d0dff35eef19a18b5ebce71993041526a48248b9d1b77ed8a3dd",
+    "summary.json": "7ee487e686a231a5e18f9cc651c8916c9dfd524eab5819cfd7301e74ea667a93",
+    "validation-btc.json": "20da8dee402c6aa1b162bed9bed8fa6b4abe9de06991ce02c5ebe96460b3c624",
+    "validation-eth.json": "c8fc853ad09ed2356344e7af0ad106c8f410af02cccb132110b7bb0282d7abc7",
+    "validation-pooled.json": "ce243eb908a00085c9780abba0cd105529c5c960977358cce710402b69e37aa8"
+  }
+}

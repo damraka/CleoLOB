@@ -123,6 +123,7 @@ class EvaluationSettings(Settings):
 
 
 class ResourceSettings(Settings):
+    check_invariants: bool = Field(True, description="Run full book assertions after every event; disabling changes checks only, never market dynamics.")
     max_episodes: Annotated[int, Field(ge=1, le=100_000)] = Field(200, description="Hard preflight bound on agent × seed episodes.")
     max_runtime_seconds: Positive = Field(120.0, description="Wall-clock stop checked between episodes; not a per-event timeout.")
     max_decisions_per_episode: PositiveInt = Field(20_000, description="Reject horizon/decision interval above this count.")
@@ -166,7 +167,8 @@ class ResearchConfig(Settings):
         rate += 20 * self.market.resilience * self.market.resilience_levels
         rate = 2 * rate + 40 * self.market.cancel_rate
         paths = self.episode_count + (5 * len(self.evaluation.seeds) if "vwap" in self.evaluation.agents else 0)
-        return math.ceil((self.execution.horizon + self.execution.settlement_timeout + 5) * max(1, rate) * paths)
+        return math.ceil((self.execution.horizon + self.execution.settlement_timeout
+                          + self.execution.warmup_seconds) * max(1, rate) * paths)
 
     def runner_params(self, seed: int) -> dict[str, Any]:
         if seed not in self.evaluation.seeds:
@@ -180,7 +182,8 @@ class ResearchConfig(Settings):
             "risk_aversion": self.execution.risk_aversion,
             "temp_impact": self.execution.temp_impact, "sigma": self.execution.sigma,
             "pov_rate": self.execution.participation,
-            "sim": {**self.market.engine_config(seed).__dict__, "max_events": self.resources.max_events_per_episode},
+            "sim": {**self.market.engine_config(seed).__dict__, "max_events": self.resources.max_events_per_episode,
+                    "check_invariants": self.resources.check_invariants},
             "fees": self.fees.model_dump(), "risk": self.risk.model_dump(),
             "terminal_penalty_bps": self.execution.terminal_penalty_bps,
             "settlement_timeout": self.execution.settlement_timeout,

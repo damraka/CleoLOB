@@ -11,7 +11,7 @@ import pytest
 from lob.engine import SimConfig
 from lob.zi_calibration import (
     DEFAULT_GATE, _normalize, _training_scales, candidate_configs, compare_summaries,
-    evaluate_model, extract_top5, fit_model, load_model, simulate_features, summarize,
+    evaluate_model, extract_top5, fit_model, load_model, refine_model, simulate_features, summarize,
 )
 
 
@@ -158,3 +158,31 @@ def test_evaluation_rejects_earlier_dates_even_with_different_file_hash(tmp_path
     model = fit_model([train], candidate_count=1, simulation_seconds=3, warmup_seconds=0)
     with pytest.raises(ValueError, match="strictly earlier training"):
         evaluate_model(model, [earlier], simulation_seconds=3)
+
+
+def test_amended_search_uses_fresh_confirmation_seeds_and_preserves_gate(tmp_path):
+    path = snapshots(tmp_path / "training.csv.gz", count=5)
+    model = fit_model([path], candidate_count=1, simulation_seconds=3, warmup_seconds=0)
+    amendment = {"candidate_count": 25, "finalists": 2, "screening_seeds": [11],
+                 "confirmation_seeds": [12], "screening_seconds_per_seed": 3,
+                 "confirmation_seconds_per_seed": 4, "warmup_seconds": 0,
+                 "search_seed": 9, "candidate_bounds": {}}
+    original = json.dumps(model, sort_keys=True)
+    out = tmp_path / "amended"
+    result = refine_model(model, amendment, out=out)
+    assert result == load_model(out / "model.json")
+    assert json.dumps(model, sort_keys=True) == original
+    assert result["protocol"]["gate"] == DEFAULT_GATE
+    assert result["protocol"]["simulation_seeds"] == [11, 12]
+    assert result["simulated_summary"]["samples"] == 4
+    records = [json.loads(line) for line in (out / "candidate_results.jsonl").read_text().splitlines()]
+    assert len(records) == 27
+    assert [record["phase"] for record in records].count("confirmation") == 2
+    assert result["selected_candidate"] in json.loads((out / "finalists.json").read_text())["candidate_ids"]
+    with pytest.raises(ValueError, match="new or empty"):
+        refine_model(model, amendment, out=out)
+    with pytest.raises(ValueError, match="independent"):
+        refine_model(model, {**amendment, "confirmation_seeds": [11]}, out=tmp_path / "overlap")
+    snapshots(path, count=6)
+    with pytest.raises(ValueError, match="source changed"):
+        refine_model(model, amendment, out=tmp_path / "changed")

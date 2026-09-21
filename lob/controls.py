@@ -6,11 +6,13 @@ prices are declared stress assumptions, never replacements for raw observations.
 """
 from __future__ import annotations
 
+import argparse
 import ast
 from dataclasses import asdict, replace
 import json
 import math
 from pathlib import Path
+import time
 from typing import Any, Sequence
 
 import numpy as np
@@ -117,6 +119,8 @@ def estimate_ac_parameters(cfg: SimConfig, seeds: Sequence[int], *, horizon: flo
 
 def _paired(rows: list[dict], reference: str, agent: str, *, n_boot: int, seed: int = 7919) -> dict:
     indexed = {(r["agent"], r["seed"]): r for r in rows}
+    if len(indexed) != len(rows):
+        raise ValueError("duplicate agent/seed observations")
     seed_set = sorted({r["seed"] for r in rows})
     delta = []
     for market_seed in seed_set:
@@ -145,11 +149,19 @@ class AllWaitPolicy:
         return 0, None
 
 
+class AllMarketPolicy:
+    """Fixed most-aggressive action capacity control, not a trained PPO model."""
+
+    def predict(self, _observation, deterministic=True):
+        return 4, None
+
+
 def _control_episode(agent: str, params: dict) -> dict:
-    if agent == "all_wait":
-        row = run_episode("ppo", params, model=AllWaitPolicy())
-        return {**row, "agent": "all_wait", "label": "All-wait terminal capacity control",
-                "implementation": "fixed_action_zero"}
+    if agent in {"all_wait", "all_market"}:
+        model = AllWaitPolicy() if agent == "all_wait" else AllMarketPolicy()
+        row = run_episode("ppo", params, model=model)
+        return {**row, "agent": agent, "label": f"{agent} capacity control",
+                "implementation": "fixed_action_zero" if agent == "all_wait" else "fixed_action_four"}
     return run_episode(agent, params)
 
 
@@ -166,19 +178,21 @@ def positive_control(params: dict, diagnostic_seeds: Sequence[int], confirmation
     diagnostics, confirmation = _seeds(diagnostic_seeds), _seeds(confirmation_seeds)
     if set(diagnostics) & set(confirmation):
         raise ValueError("diagnostic and confirmation seed blocks must be disjoint")
-    if not math.isfinite(median_top5_depth) or median_top5_depth <= 0 or min_effect_bps <= 0:
+    if (not math.isfinite(median_top5_depth) or median_top5_depth <= 0
+            or not math.isfinite(min_effect_bps) or min_effect_bps <= 0):
         raise ValueError("positive depth and minimum effect required")
-    if not grid or any(m <= 0 or h <= 0 for m, h in grid):
+    if not grid or any(not math.isfinite(m) or not math.isfinite(h) or m <= 0 or h <= 0 for m, h in grid):
         raise ValueError("positive multiplier/horizon grid required")
     path = Path(out)
     path.mkdir(parents=True, exist_ok=False)
     plan = {"params": params, "diagnostic_seeds": diagnostics, "confirmation_seeds": confirmation,
             "median_top5_depth": median_top5_depth, "grid": [list(v) for v in grid],
             "selection": "first grid cell with no invalids, CI excluding zero, absolute effect >= threshold",
-            "capacity_gate": "All-wait policy must retain fully priced terminal parent quantity on every diagnostic and confirmation seed.",
+            "capacity_gate": "All-wait and all-market policies must have fully priced economic outcomes on every diagnostic and confirmation seed.",
             "confirmation": "one independent two-sided comparison; do not search after its result",
             "min_effect_bps": min_effect_bps, "bootstrap_samples": n_boot}
     write_json(path / "plan.json", plan)
+    started = time.monotonic()
     lot = int(params.get("sim", {}).get("lot_size", 1))
     rows, summaries, selected = [], [], None
     for cell, (multiplier, horizon) in enumerate(grid):
@@ -187,7 +201,7 @@ def positive_control(params: dict, diagnostic_seeds: Sequence[int], confirmation
         group = []
         for market_seed in diagnostics:
             p = {**chosen, "seed": market_seed, "sim": {**chosen.get("sim", {}), "seed": market_seed}}
-            for agent in ("twap", "random", "all_wait"):
+            for agent in ("twap", "random", "all_wait", "all_market"):
                 try:
                     row = _control_episode(agent, p)
                 except (RuntimeError, ValueError) as exc:
@@ -198,14 +212,18 @@ def positive_control(params: dict, diagnostic_seeds: Sequence[int], confirmation
         capacity_pass = all(r.get("status") in {"VALID", "WARNING"}
                             and r.get("effective_bps") is not None
                             and math.isfinite(float(r["effective_bps"]))
-                            for r in group if r["agent"] == "all_wait")
+                            for r in group if r["agent"] in {"all_wait", "all_market"})
         passing = (comparison["status"] == "AVAILABLE" and capacity_pass
                    and (comparison["ci_low_bps"] > 0 or comparison["ci_high_bps"] < 0)
                    and abs(comparison["delta_mean_bps"]) >= min_effect_bps)
         summaries.append({"cell": cell, "depth_multiplier": multiplier, "horizon": horizon,
                           "quantity": chosen["qty"], "comparison": comparison,
-                          "all_wait_capacity_pass": capacity_pass, "diagnostic_pass": passing})
+                          "all_wait_and_market_capacity_pass": capacity_pass, "diagnostic_pass": passing})
         rows.extend(group)
+        pd.DataFrame(rows).to_csv(path / "episodes.csv", index=False)
+        write_json(path / f"diagnostic-cell-{cell}.json", summaries[-1])
+        print(json.dumps({"positive_control_cell": cell, "elapsed_seconds": time.monotonic() - started,
+                          **summaries[-1]}), flush=True)
         if passing and selected is None:
             selected = chosen
     confirmation_result = {"status": "NOT_RUN_NO_DIAGNOSTIC_PASS"}
@@ -214,7 +232,7 @@ def positive_control(params: dict, diagnostic_seeds: Sequence[int], confirmation
         group = []
         for market_seed in confirmation:
             p = {**selected, "seed": market_seed, "sim": {**selected.get("sim", {}), "seed": market_seed}}
-            for agent in ("twap", "random", "all_wait"):
+            for agent in ("twap", "random", "all_wait", "all_market"):
                 try:
                     row = _control_episode(agent, p)
                 except (RuntimeError, ValueError) as exc:
@@ -226,13 +244,14 @@ def positive_control(params: dict, diagnostic_seeds: Sequence[int], confirmation
         confirmation_capacity = all(r.get("status") in {"VALID", "WARNING"}
                                     and r.get("effective_bps") is not None
                                     and math.isfinite(float(r["effective_bps"]))
-                                    for r in group if r["agent"] == "all_wait")
+                                    for r in group if r["agent"] in {"all_wait", "all_market"})
     passed = (confirmation_result["status"] == "AVAILABLE" and confirmation_capacity
               and (confirmation_result["ci_low_bps"] > 0 or confirmation_result["ci_high_bps"] < 0)
               and abs(confirmation_result["delta_mean_bps"]) >= min_effect_bps)
     result = {"status": "PASS" if passed else "FAIL", "diagnostics": summaries,
               "selected_params": selected, "confirmation": confirmation_result,
-              "confirmation_all_wait_capacity_pass": confirmation_capacity,
+              "confirmation_all_wait_and_market_capacity_pass": confirmation_capacity,
+              "elapsed_seconds": time.monotonic() - started,
               "interpretation": "Execution-cost discrimination only; not a calibration or PPO superiority test."}
     pd.DataFrame(rows).to_csv(path / "episodes.csv", index=False)
     write_json(path / "result.json", result)
@@ -347,3 +366,210 @@ def run_stress_sensitivity(source: str | Path, out: str | Path, *, quantity: int
     (run / "report.md").write_text("\n".join(report), encoding="utf-8")
     _seal(run)
     return run
+
+
+def execution_design(model_path: str | Path, out: str | Path,
+                     config_out: str | Path) -> dict:
+    """Fit AC, run registered controls, and freeze one complete execution config.
+
+    A failed control does not produce a study configuration. It remains a
+    preserved failed study; any diagnostic amendment must be explicit.
+    """
+    from .config import MarketSettings, ResearchConfig
+    from .zi_calibration import load_model
+
+    model_path = Path(model_path).resolve(strict=True)
+    model = load_model(model_path)
+    path = Path(out)
+    path.mkdir(parents=True, exist_ok=False)
+    config_path = Path(config_out)
+    if config_path.exists() or config_path.with_name(config_path.stem + "-ac-risk.json").exists():
+        raise FileExistsError("execution configuration already exists")
+    cfg = SimConfig(**model["simulator_config"])
+    fit_seeds = list(range(43000, 43016))
+    plan = {
+        "model_path": model_path.as_posix(), "model_file_sha256": sha256_file(model_path),
+        "model_sha256": model["model_sha256"], "ac_fit_seeds": fit_seeds,
+        "ac_fit_horizon_seconds": 120., "ac_sample_dt_seconds": 1., "warmup_seconds": 30.,
+        "diagnostic_seeds": list(range(44000, 44016)),
+        "confirmation_seeds": list(range(45000, 45032)),
+        "primary_risk_aversion": 0.,
+        "primary_objective": "Expected net execution cost, matching PPO; risk-neutral AC is the analytical TWAP limit.",
+        "secondary_risk_aversion": "eta / (sigma * horizon)^2, giving kappa * horizon = 1; no selection using test outcomes",
+        "decision_dt_seconds": .5, "taker_fee_bps": 1., "terminal_penalty_bps": 0.,
+        "control_grid": [[2., 30.], [5., 60.], [10., 120.]],
+        "control_min_effect_bps": .5, "bootstrap_samples": 2000,
+    }
+    write_json(path / "plan.json", plan)
+    initial = estimate_ac_parameters(cfg, fit_seeds, horizon=120., warmup_seconds=30.)
+    write_json(path / "ac-one-second-probes.json", initial)
+    print(json.dumps({"ac_initial_fit_status": initial["status"],
+                      "median_top5_depth": initial["median_top5_depth"]}), flush=True)
+    market = {name: getattr(cfg, name) for name in MarketSettings.model_fields}
+    base = ResearchConfig(name="ppo_vs_simulator_fitted_ac", market=market,
+                          execution={"warmup_seconds": 30., "terminal_penalty_bps": 0.,
+                                     "risk_aversion": 0., "temp_impact": initial["temp_impact"],
+                                     "sigma": initial["sigma"]},
+                          evaluation={"agents": ("ac", "twap", "random"), "reference": "ac",
+                                      "seeds": (61000,)},
+                          resources={"max_episodes": 10000, "max_runtime_seconds": 7200.,
+                                     "max_estimated_events": 1_000_000_000,
+                                     "max_events_per_episode": 2_000_000})
+    params = base.runner_params(61000)
+    params["sim"]["record_events"] = False
+    control = positive_control(params, plan["diagnostic_seeds"], plan["confirmation_seeds"],
+                               path / "positive-control", median_top5_depth=initial["median_top5_depth"])
+    result = {"status": control["status"], "positive_control": control,
+              "calibration_train_status": model["training_comparison"]["status"]}
+    if control["status"] == "PASS":
+        selected = control["selected_params"]
+        fitted = estimate_ac_parameters(cfg, fit_seeds, horizon=120.,
+                                        execution_interval=selected["horizon"] / 20., warmup_seconds=30.)
+        write_json(path / "ac-fit.json", fitted)
+        document = base.model_dump(mode="json")
+        document["execution"].update(quantity=selected["qty"], horizon=selected["horizon"],
+                                     temp_impact=fitted["temp_impact"], sigma=fitted["sigma"])
+        resolved = ResearchConfig.model_validate(document)
+        config_path.parent.mkdir(parents=True, exist_ok=True)
+        write_json(config_path, resolved.model_dump(mode="json"))
+        risk_lambda = (fitted["temp_impact"] / (fitted["sigma"] * selected["horizon"]) ** 2
+                       if fitted["sigma"] > 0 else None)
+        sensitivity = {"risk_aversion": risk_lambda, "target_kappa_horizon": 1.,
+                       "status": "AVAILABLE" if risk_lambda is not None else "UNAVAILABLE_ZERO_VOLATILITY",
+                       "temp_impact": fitted["temp_impact"], "sigma": fitted["sigma"],
+                       "horizon": selected["horizon"], "primary_risk_aversion": 0.,
+                       "interpretation": "Prespecified risk-sensitive AC comparator; primary AC remains risk neutral to match the PPO expected-cost objective."}
+        write_json(config_path.with_name(config_path.stem + "-ac-risk.json"), sensitivity)
+        result.update(config_path=config_path.as_posix(), ac_fit_status=fitted["status"],
+                      risk_sensitive_ac=sensitivity)
+    write_json(path / "result.json", result)
+    return result
+
+
+def finalize_execution_config(model_path: str | Path, control_path: str | Path,
+                              out: str | Path, config_out: str | Path) -> dict:
+    """Freeze a conditional study config with independently refitted AC inputs.
+
+    Failed scientific gates remain failed. A configuration may still support a
+    clearly labeled synthetic experiment if the fixed capacity controls pass.
+    No final market or PPO training seeds enter this selection or identification.
+    """
+    from .config import MarketSettings, ResearchConfig
+    from .zi_calibration import load_model
+
+    model_path = Path(model_path).resolve(strict=True)
+    model = load_model(model_path)
+    control_path = Path(control_path).resolve(strict=True)
+    control = json.loads((control_path / "result.json").read_text(encoding="utf-8"))
+    control_plan = json.loads((control_path / "plan.json").read_text(encoding="utf-8"))
+    selected = control["selected_params"]
+    selection = "Previously selected diagnostic cell; independent confirmation is not used for reselection."
+    if selected is None:
+        cells = [cell for cell in control["diagnostics"]
+                 if cell["all_wait_and_market_capacity_pass"]
+                 and cell["comparison"]["status"] == "AVAILABLE"]
+        if not cells:
+            raise ValueError("No fully priced capacity cell; a registered capacity amendment is required")
+        cell = cells[0]
+        selected = {**control_plan["params"], "qty": cell["quantity"], "horizon": cell["horizon"]}
+        selection = "First fully priced diagnostic capacity cell, irrespective of effect size; exploratory synthetic configuration only."
+    path, config_path = Path(out), Path(config_out)
+    if config_path.exists() or config_path.with_name(config_path.stem + "-ac-risk.json").exists():
+        raise FileExistsError("final execution configuration already exists")
+    path.mkdir(parents=True, exist_ok=False)
+    plan = {
+        "model_file_sha256": sha256_file(model_path), "model_sha256": model["model_sha256"],
+        "control_result_sha256": sha256_file(control_path / "result.json"),
+        "control_status": control["status"], "selected_params": selected, "selection": selection,
+        "ac_fit_seeds": list(range(46000, 46016)), "ac_fit_horizon_seconds": 120.,
+        "warmup_seconds": 30., "ac_sample_dt_seconds": 1.,
+        "ac_execution_interval_seconds": selected["horizon"] / 20.,
+        "seed_amendment": "Initial identification seeds 43001/43002 overlapped calibration holdout simulator seeds. Preserve that exploratory fit, then refit final AC inputs on independent 46000..46015 before PPO registration. Historical holdout observations never enter AC identification.",
+        "primary_risk_aversion": 0., "secondary_kappa_times_horizon": 1.,
+        "runtime_check_invariants": False,
+        "runtime_check_interpretation": "Disable exhaustive after-event assertions in both training and evaluation. This changes checks only; a path-identity regression verifies identical exchange events and fills.",
+        "interpretation": "Synthetic execution comparison conditional on a frozen simulator; failed real-data calibration or execution-discrimination gates are not changed by this configuration.",
+    }
+    write_json(path / "plan.json", plan)
+    cfg = SimConfig(**model["simulator_config"])
+    fitted = estimate_ac_parameters(cfg, plan["ac_fit_seeds"], horizon=120.,
+                                    execution_interval=plan["ac_execution_interval_seconds"], warmup_seconds=30.)
+    write_json(path / "ac-fit.json", fitted)
+    if fitted["temp_impact"] <= 0:
+        raise ValueError("AC identification has nonpositive slope; no valid parameterized AC comparator")
+    market = {name: getattr(cfg, name) for name in MarketSettings.model_fields}
+    resolved = ResearchConfig(
+        name="ppo_vs_simulator_fitted_ac", market=market,
+        execution={"quantity": selected["qty"], "horizon": selected["horizon"],
+                   "decision_dt": selected["dt"], "warmup_seconds": 30.,
+                   "terminal_penalty_bps": 0., "risk_aversion": 0.,
+                   "temp_impact": fitted["temp_impact"], "sigma": fitted["sigma"]},
+        evaluation={"agents": ("ac", "twap", "random"), "reference": "ac", "seeds": (61000,)},
+        resources={"max_episodes": 10000, "max_runtime_seconds": 7200.,
+                   "max_estimated_events": 1_000_000_000, "max_events_per_episode": 2_000_000,
+                   "check_invariants": False})
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    write_json(config_path, resolved.model_dump(mode="json"))
+    risk_lambda = (fitted["temp_impact"] / (fitted["sigma"] * selected["horizon"]) ** 2
+                   if fitted["sigma"] > 0 else None)
+    sensitivity = {"risk_aversion": risk_lambda, "target_kappa_horizon": 1.,
+                   "status": "AVAILABLE" if risk_lambda is not None else "UNAVAILABLE_ZERO_VOLATILITY",
+                   "temp_impact": fitted["temp_impact"], "sigma": fitted["sigma"],
+                   "horizon": selected["horizon"], "primary_risk_aversion": 0.}
+    write_json(config_path.with_name(config_path.stem + "-ac-risk.json"), sensitivity)
+    result = {"positive_control_status": control["status"], "ac_fit_status": fitted["status"],
+              "calibration_train_status": model["training_comparison"]["status"],
+              "config_path": config_path.as_posix(), "config_sha256": sha256_file(config_path),
+              "selection": selection, "risk_sensitive_ac": sensitivity,
+              "interpretation": plan["interpretation"]}
+    write_json(path / "result.json", result)
+    return result
+
+
+def continue_execution_controls(initial_path: str | Path, out: str | Path) -> dict:
+    """Repeat interrupted controls with check-only overhead disabled, preserving evidence."""
+    initial_path = Path(initial_path).resolve(strict=True)
+    original = initial_path / "positive-control"
+    plan = json.loads((original / "plan.json").read_text(encoding="utf-8"))
+    path = Path(out)
+    path.mkdir(parents=True, exist_ok=False)
+    amendment = {
+        "kind": "compute_only_continuation", "original_plan_sha256": sha256_file(original / "plan.json"),
+        "original_episodes_sha256": sha256_file(original / "episodes.csv"),
+        "change": "Disable exhaustive invariant assertions; original grid, seeds, objective and effect threshold unchanged.",
+        "reason": "Assertions dominate execution time. Regression confirms identical simulator paths when toggled.",
+        "verification": "Every recorded economic and execution outcome of completed original diagnostic cells must match exactly after CSV round-trip.",
+    }
+    write_json(path / "continuation.json", amendment)
+    params = {**plan["params"], "sim": {**plan["params"]["sim"], "check_invariants": False}}
+    result = positive_control(params, plan["diagnostic_seeds"], plan["confirmation_seeds"],
+                              path / "positive-control", median_top5_depth=plan["median_top5_depth"],
+                              grid=plan["grid"], min_effect_bps=plan["min_effect_bps"],
+                              n_boot=plan["bootstrap_samples"])
+    previous = pd.read_csv(original / "episodes.csv")
+    current = pd.read_csv(path / "positive-control" / "episodes.csv")
+    current = current[(current.phase == "diagnostic") & current.cell.isin(previous.cell.unique())]
+    pd.testing.assert_frame_equal(previous.reset_index(drop=True), current.reset_index(drop=True),
+                                  check_exact=True, check_dtype=False)
+    write_json(path / "path-equivalence.json", {
+        "status": "PASS", "compared_episode_rows": len(previous),
+        "comparison": "Exact equality of all recorded outcomes from completed original diagnostic cells."})
+    return result
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Simulator-fitted AC and independent execution controls")
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--out", required=True)
+    parser.add_argument("--config-out", default="configs/core-study.json")
+    parser.add_argument("--continuation-from")
+    args = parser.parse_args()
+    if args.continuation_from:
+        result = continue_execution_controls(args.continuation_from, args.out)
+    else:
+        result = execution_design(args.model, args.out, args.config_out)
+    print(json.dumps(result), flush=True)
+
+
+if __name__ == "__main__":
+    main()

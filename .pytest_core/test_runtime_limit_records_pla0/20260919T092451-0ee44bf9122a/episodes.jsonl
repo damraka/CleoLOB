@@ -1,4 +1,0 @@
-{"agent":"twap","error":"not started: interrupt or wall-clock budget reached","label":"twap","scenario":"mechanics","seed":1,"status":"PARTIAL"}
-{"agent":"ac","error":"not started: interrupt or wall-clock budget reached","label":"ac","scenario":"mechanics","seed":1,"status":"PARTIAL"}
-{"agent":"twap","error":"not started: interrupt or wall-clock budget reached","label":"twap","scenario":"mechanics","seed":2,"status":"PARTIAL"}
-{"agent":"ac","error":"not started: interrupt or wall-clock budget reached","label":"ac","scenario":"mechanics","seed":2,"status":"PARTIAL"}

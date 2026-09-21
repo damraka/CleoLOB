@@ -1,5 +1,0 @@
-scenario,agent,seed,label,status,error
-mechanics,twap,1,twap,PARTIAL,not started: interrupt or wall-clock budget reached
-mechanics,ac,1,ac,PARTIAL,not started: interrupt or wall-clock budget reached
-mechanics,twap,2,twap,PARTIAL,not started: interrupt or wall-clock budget reached
-mechanics,ac,2,ac,PARTIAL,not started: interrupt or wall-clock budget reached

@@ -1,0 +1,431 @@
+{
+  "cohort": "btc",
+  "comparison": {
+    "families": {
+      "depth": {
+        "error": 0.9083138376774741,
+        "passed": false
+      },
+      "imbalance": {
+        "error": 0.2843959715621948,
+        "passed": true
+      },
+      "impact": {
+        "error": 2.384190636972978,
+        "passed": false
+      },
+      "ofi": {
+        "error": 0.13313569427613006,
+        "passed": true
+      },
+      "spread": {
+        "error": 0.3202207938227945,
+        "passed": true
+      },
+      "volatility": {
+        "error": 0.9264008885477973,
+        "passed": false
+      }
+    },
+    "gate": {
+      "maximum_family_error": 0.6,
+      "minimum_target_samples": 1000,
+      "minimum_valid_fraction": 0.95,
+      "ofi_scale_floor": 0.05,
+      "quantiles": [
+        0.1,
+        0.5,
+        0.9
+      ],
+      "spread_impact_scale_floor_bps": 0.05,
+      "volatility_scale_floor_bps": 0.05
+    },
+    "objective": 0.8316651926987835,
+    "sample_count_passed": true,
+    "status": "FAIL",
+    "valid_fraction_passed": false
+  },
+  "completed_at_utc": "2026-09-19T21:05:51.162322+00:00",
+  "download_sidecars_verified": true,
+  "instruments": {
+    "deribit:BTC-PERPETUAL@1788220800892924": {
+      "comparison": {
+        "families": {
+          "depth": {
+            "error": 0.9083138376774741,
+            "passed": false
+          },
+          "imbalance": {
+            "error": 0.2843959715621948,
+            "passed": true
+          },
+          "impact": {
+            "error": 2.384190636972978,
+            "passed": false
+          },
+          "ofi": {
+            "error": 0.13313569427613006,
+            "passed": true
+          },
+          "spread": {
+            "error": 0.3202207938227945,
+            "passed": true
+          },
+          "volatility": {
+            "error": 0.9264008885477973,
+            "passed": false
+          }
+        },
+        "gate": {
+          "maximum_family_error": 0.6,
+          "minimum_target_samples": 1000,
+          "minimum_valid_fraction": 0.95,
+          "ofi_scale_floor": 0.05,
+          "quantiles": [
+            0.1,
+            0.5,
+            0.9
+          ],
+          "spread_impact_scale_floor_bps": 0.05,
+          "volatility_scale_floor_bps": 0.05
+        },
+        "objective": 0.8316651926987835,
+        "sample_count_passed": true,
+        "status": "FAIL",
+        "valid_fraction_passed": false
+      },
+      "source": {
+        "exchange": "deribit",
+        "first_capture_us": 1788220800892924,
+        "inferred_native_tick": 0.5,
+        "inferred_tick_method": "5th percentile of sampled positive adjacent price gaps",
+        "instrument": "deribit:BTC-PERPETUAL",
+        "last_capture_us": 1788307199907289,
+        "path": "C:\\Users\\damra\\Documents\\GitHub\\CleoLOB\\data\\public\\deribit_book_snapshot_5_2026-09-01_BTC-PERPETUAL.csv.gz",
+        "rows": 1280034,
+        "sample_interval_us": 1000000,
+        "samples": 86399,
+        "sha256": "6d11adbb0d35a4f37de6867c17bd43af628e37e7532d7cd8758112b08f4ec649",
+        "source_complete": true,
+        "symbol": "BTC-PERPETUAL",
+        "valid_samples": 76187
+      },
+      "target_summary": {
+        "features": {
+          "abs_snapshot_ofi": {
+            "mean": 0.4554267905536307,
+            "nonzero_fraction": 0.8452477873782073,
+            "quantiles": [
+              0.0,
+              0.2078982566402608,
+              1.2966961727251483
+            ],
+            "std": 0.5332460411483643
+          },
+          "ask_depth": {
+            "mean": 0.6206772148140098,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.1069294342021615,
+              0.49046408137317227,
+              1.2505562619198982
+            ],
+            "std": 0.6103332579653393
+          },
+          "bid_depth": {
+            "mean": 0.4993317073806527,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.09329307056579784,
+              0.35632549268912905,
+              0.946439923712651
+            ],
+            "std": 0.6022224851514411
+          },
+          "imbalance": {
+            "mean": -0.09693044319545481,
+            "nonzero_fraction": 0.9999343720057228,
+            "quantiles": [
+              -0.7249834602887684,
+              -0.1434433874277187,
+              0.6195696637486705
+            ],
+            "std": 0.48944886006075383
+          },
+          "impact_0.1_bps": {
+            "mean": 0.13671678961216174,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.031736460432567955,
+              0.03214183549165759,
+              0.42056932181003814
+            ],
+            "std": 0.20734379996832827
+          },
+          "impact_0.5_bps": {
+            "mean": 0.281660694602202,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.032001331255380225,
+              0.18548283120398945,
+              0.6745846310452283
+            ],
+            "std": 0.29231702240766855
+          },
+          "impact_1.0_bps": {
+            "mean": 0.49685995327067345,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.1788205413253134,
+              0.42514790136158925,
+              0.9074130001318121
+            ],
+            "std": 0.3134566679291615
+          },
+          "return_bps": {
+            "mean": -0.002391219975087333,
+            "nonzero_fraction": 0.28815295322635714,
+            "quantiles": [
+              -0.3239783517588669,
+              0.0,
+              0.3807821774386806
+            ],
+            "std": 0.6330582987671131
+          },
+          "spread_bps": {
+            "mean": 0.10896299294686994,
+            "nonzero_fraction": 1.0,
+            "quantiles": [
+              0.06344110920435334,
+              0.06408674782185166,
+              0.06483633687663914
+            ],
+            "std": 0.21740390438805046
+          }
+        },
+        "samples": 86399,
+        "valid_fraction": 0.881804187548467,
+        "valid_samples": 76187
+      }
+    }
+  },
+  "limitations": [
+    "L2 does not identify FIFO queues, hidden liquidity, or individual arrivals/cancellations.",
+    "Amounts map to synthetic lots using each instrument's training-only median top-five side depth.",
+    "The mapping does not convert inverse contracts to shares or linear monetary P&L.",
+    "Snapshot OFI is a one-second best-quote proxy, not event-by-event exchange OFI.",
+    "Book-walk impact excludes replenishment and is not an estimated causal market-impact function.",
+    "One representative tick geometry may fail for instruments with different relative tick sizes.",
+    "Calibration PASS is an observable-distribution diagnostic, not counterfactual fill validation."
+  ],
+  "model_file_sha256": "0844b1405f85aa7eedd46cac14b1db7ee4a2c2139b802577b8fc42c38fcda303",
+  "model_sha256": "9a47d59cf980e6d9331b7393255c0efd95b1e24813b9ed71220d80cc114fc5e9",
+  "model_unchanged": true,
+  "phase": "holdout",
+  "schema_version": 1,
+  "simulated_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.5768878200425476,
+        "nonzero_fraction": 0.9988870339454646,
+        "quantiles": [
+          0.09534735500318674,
+          0.50279875983146,
+          1.1690343952566444
+        ],
+        "std": 0.4039946232737158
+      },
+      "ask_depth": {
+        "mean": 1.356351584213452,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.7847000000000001,
+          1.306,
+          1.9896000000000005
+        ],
+        "std": 0.475583343928513
+      },
+      "bid_depth": {
+        "mean": 1.3709538632573655,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.794,
+          1.299,
+          2.028
+        ],
+        "std": 0.493181041646129
+      },
+      "imbalance": {
+        "mean": 0.0037831953232880175,
+        "nonzero_fraction": 0.9991662034463591,
+        "quantiles": [
+          -0.30843867027712163,
+          -0.004924883900459549,
+          0.32144504260099194
+        ],
+        "std": 0.23948254083895607
+      },
+      "impact_0.1_bps": {
+        "mean": 0.054966742304768376,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.04231675785939031,
+          0.042326788201095,
+          0.08370597640035117
+        ],
+        "std": 0.01934967622458829
+      },
+      "impact_0.5_bps": {
+        "mean": 0.11561337056343407,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.07342334260120179,
+          0.11250708492941924,
+          0.1629197969699381
+        ],
+        "std": 0.03495059871779569
+      },
+      "impact_1.0_bps": {
+        "mean": 0.20813261557239743,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.16499820438943383,
+          0.20540807845808487,
+          0.2535652409561019
+        ],
+        "std": 0.035588292273736465
+      },
+      "return_bps": {
+        "mean": 0.0013894961570511842,
+        "nonzero_fraction": 0.25013912075681694,
+        "quantiles": [
+          -0.042321503766257346,
+          0.0,
+          0.04232485340861289
+        ],
+        "std": 0.046592528286702524
+      },
+      "spread_bps": {
+        "mean": 0.08892392611517452,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.08463065068297869,
+          0.08464426133091336,
+          0.08465500967205583
+        ],
+        "std": 0.01969459230562506
+      }
+    },
+    "samples": 3600,
+    "valid_fraction": 0.9994444444444445,
+    "valid_samples": 3598
+  },
+  "simulation_seeds": [
+    43001,
+    43002
+  ],
+  "source_sha256": {
+    "lob\\engine.py": "b96c3c17218fb8f7aef3bcbba69aa7a3d7113340956cde960a0feeb3c069434b",
+    "lob\\zi_calibration.py": "2b0e6bd189a935515641d0794415bdcd08d5624b9d7a08daac3be74fcf6d755d",
+    "tools\\evaluate_calibration_holdouts.py": "fc5ce60f0eefc9acc8f333894b13d9fde9d66ae1a62bccdf1aab8c5949c35208"
+  },
+  "started_at_utc": "2026-09-19T21:05:40.692968+00:00",
+  "status": "FAIL",
+  "target_summary": {
+    "features": {
+      "abs_snapshot_ofi": {
+        "mean": 0.4554267905536307,
+        "nonzero_fraction": 0.8452477873782073,
+        "quantiles": [
+          0.0,
+          0.2078982566402608,
+          1.2966961727251483
+        ],
+        "std": 0.5332460411483643
+      },
+      "ask_depth": {
+        "mean": 0.6206772148140098,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.1069294342021615,
+          0.49046408137317227,
+          1.2505562619198982
+        ],
+        "std": 0.6103332579653393
+      },
+      "bid_depth": {
+        "mean": 0.4993317073806527,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.09329307056579784,
+          0.35632549268912905,
+          0.946439923712651
+        ],
+        "std": 0.6022224851514411
+      },
+      "imbalance": {
+        "mean": -0.09693044319545481,
+        "nonzero_fraction": 0.9999343720057228,
+        "quantiles": [
+          -0.7249834602887684,
+          -0.1434433874277187,
+          0.6195696637486705
+        ],
+        "std": 0.48944886006075383
+      },
+      "impact_0.1_bps": {
+        "mean": 0.13671678961216174,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.031736460432567955,
+          0.03214183549165759,
+          0.42056932181003814
+        ],
+        "std": 0.20734379996832827
+      },
+      "impact_0.5_bps": {
+        "mean": 0.281660694602202,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.032001331255380225,
+          0.18548283120398945,
+          0.6745846310452283
+        ],
+        "std": 0.29231702240766855
+      },
+      "impact_1.0_bps": {
+        "mean": 0.49685995327067345,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.1788205413253134,
+          0.42514790136158925,
+          0.9074130001318121
+        ],
+        "std": 0.3134566679291615
+      },
+      "return_bps": {
+        "mean": -0.002391219975087333,
+        "nonzero_fraction": 0.28815295322635714,
+        "quantiles": [
+          -0.3239783517588669,
+          0.0,
+          0.3807821774386806
+        ],
+        "std": 0.6330582987671131
+      },
+      "spread_bps": {
+        "mean": 0.10896299294686994,
+        "nonzero_fraction": 1.0,
+        "quantiles": [
+          0.06344110920435334,
+          0.06408674782185166,
+          0.06483633687663914
+        ],
+        "std": 0.21740390438805046
+      }
+    },
+    "samples": 86399,
+    "valid_fraction": 0.881804187548467,
+    "valid_samples": 76187
+  }
+}
