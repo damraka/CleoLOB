@@ -1,0 +1,3 @@
+# Research evidence is byte-hashed; newline conversion would invalidate seals.
+examples/studies/** -text
+configs/core-study*.json -text

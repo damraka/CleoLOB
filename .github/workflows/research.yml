@@ -20,6 +20,7 @@ jobs:
       - run: python -m ruff check lob tests tools legacy/evaluate.py train_rl.py server.py
       - run: python -m compileall -q lob legacy/evaluate.py train_rl.py server.py
       - run: python -m pytest -q
+      - run: python train_rl.py verify --study examples/studies/core/ppo-final-20260921
       - run: cleo config validate configs/research.yaml
       - run: cleo validate-data examples/data/canonical-events.jsonl
       - run: cleo benchmark --pairs 500 --repeats 1

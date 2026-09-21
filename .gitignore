@@ -1,6 +1,10 @@
 .venv/
 models/
+!examples/studies/core/ppo-final-20260921/models/
+!examples/studies/core/ppo-final-20260921/models/**
 logs/
+!examples/studies/**/logs/
+!examples/studies/**/logs/**
 __pycache__/
 *.pyc
 *.egg-info/
