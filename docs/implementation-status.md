@@ -1,6 +1,6 @@
 # Implementation status
 
-This is the persistent checklist for the user's 170-section implementation brief.
+This is the persistent checklist for my 170-section implementation brief.
 Status values: **DONE**, **PARTIAL**, **NOT STARTED**, **BLOCKED**. A phase is not
 DONE merely because its directory exists. See `architecture.md` for the audit and
 `research-methodology.md` for assumptions. Update this file after each tested batch.
