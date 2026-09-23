@@ -1,0 +1,203 @@
+﻿{
+    "exchange":  "deribit",
+    "first_local_timestamp_us":  1585699200344483,
+    "implementation":  {
+                           "legacy/evaluate.py":  "d06c4f047dc28eea870837de213a76ec998e95c5ed9ea69a5459f3505c6e24b4",
+                           "lob/__init__.py":  "1e0aea889838aa34b9b1b6e4e02c2d36abfe303b95dd3d7e7a941f06aa54e5e8",
+                           "lob/__main__.py":  "494c32638e704f522ca9420b299580f6566ac8463a56e8115402b79ed84f3a12",
+                           "lob/accounting.py":  "76d0cc0ca097165d307fc432aad8a10289824fa2ef33216ee37f7f1d5a5a2233",
+                           "lob/benchmarks.py":  "232c0fc0aec2cd27ae7c0c515ec1927319b07d684fe8f872a9dda64ae83cc520",
+                           "lob/calibration.py":  "875aeeb651a9ea949de0facb770c9d69983ff94ec22dd58f1737d3deb9e49d85",
+                           "lob/cli.py":  "f05c637a012bfef60fbd1ac72f8e7efd7eb324eeb40498342efc8922fe5d2102",
+                           "lob/config.py":  "15f0a5716f9f1e9dabb54ed7a42e75940996c05dcee44167aaaf66817a794a6d",
+                           "lob/controls.py":  "98d568d12b8d851ce2f0c69fe65155bcc07e494f0d21809d04bb8eec23302bd2",
+                           "lob/core_study.py":  "a111c96cc7e495b76957cfde08ba2ec7014decb4c95f30a21b18d44eef1ecd6a",
+                           "lob/data_download.py":  "d730fb6d9deef5420c6334793aa98e1b0948f22f14e28c4701fb8c41af0e9636",
+                           "lob/engine.py":  "bc23faaff7e6e5098eb441153bfbb7f3520ab2d04db077ad3e41ee65e2584ee5",
+                           "lob/execution.py":  "cb386f46d80720a7fa869bccd93bcc5b59a1020792f5906a04d91cf4b2fd6e3e",
+                           "lob/experiments/__init__.py":  "a3bd0c17e23224742521c0be8f4bbe367955ee91a034097dfa34833e0c1cfd81",
+                           "lob/experiments/design.py":  "a035d97851122ffbe462cd1d10a1bc617bcd43948a1bff5c135e35bf2c74c45d",
+                           "lob/experiments/registry.py":  "35abfe145bf24aff0cdebb8f1bb6da6c1e2899ca3d50e80f898d0617103936b1",
+                           "lob/experiments/report.py":  "f1c19c3f26ce17eafb3ea66a0c8c10a7728b0c996b7abc535a98d5f4df0a417e",
+                           "lob/experiments/runner.py":  "2fc503fe4b1d0e7f60f7c77121a63efb17235aeb74cfa54f2749be9feade3b92",
+                           "lob/portfolio.py":  "771319500ab8930fd22809a3f6e8d685f3ad33de2ed809a3fc4df04bbddc0b17",
+                           "lob/replay/__init__.py":  "cc70fb5059409d0948d8ce94be0065612434c17f09e9deebe63f5b3c080445dd",
+                           "lob/replay/assessment.py":  "19912b0918a69c753a2e05bf3a0c60cd117ec26653e77e15d129a24105ec7196",
+                           "lob/replay/book.py":  "4a8c75e40b41d2bc5d74272adefe4ce1545bbf785f458809e99fb709fce84ab2",
+                           "lob/replay/engine.py":  "a2f15433cb3b6692472365ad0cb8189f69a38d957f3d23ea2ce1e0af0ebf393c",
+                           "lob/replay/io.py":  "a124be17a80384bfc19810863f376edca899c9e16f7ed88596be4abc36dad0f6",
+                           "lob/replay/l2.py":  "ab1314817ad193872bd3f1950ffe59f478729619281690f0d47e2da4c7a0934f",
+                           "lob/replay/schema.py":  "33765305ca0111d418d5f77b84f6f351cc30f0227c38fb9c79bbf2ea43c417e5",
+                           "lob/replay/validation.py":  "5a9c1d8e645ee2aedbfb21c6eec782deb92bfc4d6ae276ef5c029c2b3537fbb8",
+                           "lob/risk.py":  "910968f64adc0e94df1e41c6563c92745950d384e17812a7a8bb5e3f7f720c2f",
+                           "lob/rl_env.py":  "5f79f0739e7a66bc66790c2a8d486bf17b916f2cfe550bf22117a4e1d7e333a5",
+                           "lob/robustness.py":  "b6157400f24d9d86f93c06bd83aaa23f279d7c89e3ff295621ab7ff4b135fc11",
+                           "lob/runner.py":  "8b91492d6663a903c6b7b75eb51d152a3307cc40706c79a1e00502ee8fe5d374",
+                           "lob/scenarios.py":  "611b7261a34a156b7536d273f4dc0108cd20e3da3c75284be904c868a7238f9a",
+                           "lob/settlement.py":  "e879bd712167896e5e830b035ad9ebfd55627522dd6a624e60df4b04cdf19d02",
+                           "lob/stats.py":  "e96534f7ae146919a0744783825e69d0e391311ce9349e57495da78cce29168b",
+                           "lob/zi_calibration.py":  "4f3f1a856c72341c3a823ae42039ff8e2737044a3939035a4b621dd67d9cb33e",
+                           "pyproject.toml":  "09655a32f3dc6ba588cf79bfd996a59ca1e18dcf8480bfc2be8f3b52424ffe75",
+                           "requirements.txt":  "d3b976bd7f90bf454f2392c9b6bd57e6e65d99a282eeed1dd162eeb2811dc75d",
+                           "train_rl.py":  "6e014f375c2b615cf9d7a351a7ccabc4e8471a541d35c1b6219792e385e9e414"
+                       },
+    "inputs":  {
+                   "snapshots":  {
+                                     "bytes":  13307784,
+                                     "path":  "deribit_book_snapshot_5_2020-04-01_ETH-PERPETUAL.csv.gz",
+                                     "sha256":  "8fdbcda36a9307a6cf9813a41d6aef22c68f9a81e2d83baebab80126edf6b066"
+                                 },
+                   "trades":  {
+                                  "bytes":  180782,
+                                  "path":  "deribit_trades_2020-04-01_ETH-PERPETUAL.csv.gz",
+                                  "sha256":  "9d74954103632424ce7a958a40929bb9b9a894467caa93ffd0303b14ee9ff655"
+                              },
+                   "updates":  {
+                                   "bytes":  21768275,
+                                   "path":  "deribit_incremental_book_L2_2020-04-01_ETH-PERPETUAL.csv.gz",
+                                   "sha256":  "dc4a84aba8f311235f76eef80248efae68bdb053dc4543323e7d4e36cc998a76"
+                               }
+               },
+    "kind":  "historical_l2_mechanics_assessment",
+    "last_local_timestamp_us":  1585785599912852,
+    "observed_hours":  23.9998801025,
+    "reference_comparison":  {
+                                 "changed_top_without_reference":  0,
+                                 "compared":  988235,
+                                 "different_books":  0,
+                                 "exact_matches":  988235,
+                                 "exchange_timestamp_mismatches":  0,
+                                 "first_issues":  [
+
+                                                  ],
+                                 "reference_rows":  988235,
+                                 "reference_without_update_group":  0,
+                                 "status":  "MATCH"
+                             },
+    "regular_grid":  {
+                         "invalid_book_samples":  0,
+                         "maximum_sample_age_seconds":  6.530889,
+                         "metrics":  {
+                                         "ask_depth_5_native":  {
+                                                                    "count":  86399,
+                                                                    "max":  490812.0,
+                                                                    "mean":  241854.57176587693,
+                                                                    "median":  244314.0,
+                                                                    "min":  4237.0,
+                                                                    "p95":  342629.0
+                                                                },
+                                         "bid_depth_5_native":  {
+                                                                    "count":  86399,
+                                                                    "max":  437050.0,
+                                                                    "mean":  239901.70084144492,
+                                                                    "median":  242820.0,
+                                                                    "min":  10942.0,
+                                                                    "p95":  354901.69999999995
+                                                                },
+                                         "imbalance_5":  {
+                                                             "count":  86399,
+                                                             "max":  0.967049289969359,
+                                                             "mean":  -0.00944027719948272,
+                                                             "median":  -0.0009190760432103503,
+                                                             "min":  -0.886543817874222,
+                                                             "p95":  0.386657019033309
+                                                         },
+                                         "mid_price":  {
+                                                           "count":  86399,
+                                                           "max":  137.375,
+                                                           "mean":  131.81350912626303,
+                                                           "median":  131.975,
+                                                           "min":  128.675,
+                                                           "p95":  133.925
+                                                       },
+                                         "spread_bps":  {
+                                                            "count":  86399,
+                                                            "max":  25.82549345139273,
+                                                            "mean":  4.172422775387068,
+                                                            "median":  3.79003221527383,
+                                                            "min":  3.6436509382401168,
+                                                            "p95":  7.578628268283441
+                                                        }
+                                     },
+                         "samples_older_than_5_seconds":  2,
+                         "sampling":  "1-second UTC grid, previous completed local-timestamp group; no extrapolation past EOF"
+                     },
+    "replay":  {
+                   "complete":  true,
+                   "crossed_groups":  0,
+                   "empty_groups":  0,
+                   "exchange":  "deribit",
+                   "exchange_clock_regressions":  0,
+                   "expanded_bytes":  181492011,
+                   "file_bytes":  21768275,
+                   "first_local_timestamp_us":  1585699200344483,
+                   "first_timestamp_us":  1585699200234000,
+                   "groups":  1531713,
+                   "last_local_timestamp_us":  1585785599912852,
+                   "last_timestamp_us":  1585785599821000,
+                   "max_ask_levels":  269,
+                   "max_bid_levels":  307,
+                   "max_levels_observed":  490,
+                   "max_local_gap_us":  7059940,
+                   "missing_level_deletes":  0,
+                   "one_sided_groups":  0,
+                   "presnapshot_rows":  0,
+                   "rows":  2321160,
+                   "snapshots":  3,
+                   "states":  1531713,
+                   "symbol":  "ETH-PERPETUAL"
+               },
+    "schema_version":  1,
+    "status":  "PASS",
+    "symbol":  "ETH-PERPETUAL",
+    "trades":  {
+                   "count":  17288,
+                   "duplicate_trade_ids":  0,
+                   "exchange_timestamp_regressions":  0,
+                   "first_local_timestamp_us":  1585699202383425,
+                   "hourly_counts_utc":  {
+                                             "0":  1492,
+                                             "1":  412,
+                                             "10":  255,
+                                             "11":  303,
+                                             "12":  1041,
+                                             "13":  615,
+                                             "14":  522,
+                                             "15":  320,
+                                             "16":  1479,
+                                             "17":  549,
+                                             "18":  379,
+                                             "19":  624,
+                                             "2":  394,
+                                             "20":  1288,
+                                             "21":  591,
+                                             "22":  1925,
+                                             "23":  2692,
+                                             "3":  401,
+                                             "4":  278,
+                                             "5":  385,
+                                             "6":  421,
+                                             "7":  273,
+                                             "8":  361,
+                                             "9":  288
+                                         },
+                   "last_local_timestamp_us":  1585785596737653,
+                   "mean_amount_native":  671.9706154558075,
+                   "missing_trade_ids":  0,
+                   "p95_amount_native":  3000.0,
+                   "sides":  {
+                                 "buy":  8572,
+                                 "sell":  8716
+                             },
+                   "total_amount_native":  "11617028"
+               },
+    "warnings":  [
+                     "L2 amounts are native feed units; they are not automatically ETH units or stock shares.",
+                     "L2 does not expose order IDs, FIFO queue positions, hidden liquidity or hypothetical strategy fills.",
+                     "Both inputs come from one provider/feed; matching them is a reconstruction check, not independent market truth.",
+                     "The normalized CSV lacks original exchange sequence IDs; capture gaps cannot be proven absent.",
+                     "Provider snapshots may remove crossed levels; this replay never silently cleans crossed books.",
+                     "No model was fitted and no strategy profitability, calibration or out-of-sample claim is made.",
+                     "Some grid samples carry a book older than five seconds; inspect feed gaps."
+                 ]
+}
