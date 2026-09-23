@@ -836,3 +836,9 @@ flowchart LR
     H --> I[Risk & Performance Metrics]
     I --> J[Reports & Visualization]
 ```
+
+## License
+
+CleoLOB is licensed under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).
+
+You may use CleoLOB in academic, commercial, and proprietary projects. Modifications to LGPL-covered CleoLOB code must remain available under the LGPL.
