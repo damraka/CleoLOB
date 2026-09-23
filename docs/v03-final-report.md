@@ -312,7 +312,7 @@ disclosed rather than silently rewriting historical evidence.
 
 ## Review and version recommendation
 
-Released as **v0.3.0** after review; package metadata is
+Prepared for **v0.3.0** release after review; package metadata is
 `0.3.0`, with v0.2.0/v0.2.1 tags preserved. Suggested review groups mirror
 the logical commits: MBO; calibration; policy studies; benchmarks/artifacts;
 reproduction/CI; portability/privacy; claims and compact evidence.
