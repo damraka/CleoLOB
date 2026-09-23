@@ -58,6 +58,24 @@ confirmation runs once; a failed confirmation does not trigger another search
 on those seeds. AC estimation uses separate no-parent simulator paths and a
 spread intercept in the executable-cost-versus-trade-rate regression. Its
 temporary-impact estimate is local and conditional on the slice interval.
+
+The original three-cell control grid failed and remains archived. A subsequent
+execution-only amendment registered its finite search order and additional
+capacity checks before running them; it did not refit the physical simulator.
+The selected setting sells 1,714 lots over 240 seconds, with a 5-second policy
+decision interval and a 30-second warmup. All 384 fixed-action/random capacity
+preflight episodes were valid. One independent confirmation on seeds 48000–48063
+passed: Random minus TWAP was −0.9591 bps, paired 95% CI [−1.1953, −0.7155],
+and both all-wait and all-market controls remained priceable. This establishes
+execution discrimination in that synthetic setting, not PPO performance or
+historical fidelity. The amendment and rejected settings are retained in
+[`execution-amendment/`](../examples/studies/core/execution-controls/execution-amendment/).
+
+The final no-parent AC fit used separate seeds 46000–46015 and the baseline's
+12-second child interval. It estimated temporary impact η=5.51834×10⁻⁵ currency
+seconds per lot and volatility σ=0.00438465 currency per square-root second;
+the spread-intercept fit had R²=0.5013 and 92.94% probe coverage. The policy's
+5-second decision interval and AC's 20-slice schedule serve different roles.
 The primary comparator is risk-neutral AC (risk aversion zero), whose analytical
 schedule equals TWAP. Fitted impact and volatility do not make this schedule
 front-loaded. The additional risk-sensitive AC comparator fixes κT=1, using
@@ -98,6 +116,41 @@ absolute reward share. Final cost components and actual fill fractions keep
 hypothetical residual valuation separate from executed quantity. Plotly reports
 are written outside the sealed study folder so that rendering does not change
 the evidence manifest.
+
+## Execution chronology and replication
+
+The fixed design was already executed in Linux CI runs
+[35649272649](https://github.com/damraka/CleoLOB/actions/runs/35649272649) and
+[35649544066](https://github.com/damraka/CleoLOB/actions/runs/35649544066) before
+the durable local study was registered on September 22. Those workflow runs
+did not upload their study directories. Their printed outcome summaries and
+verification logs were recovered separately; these are not substitutes for
+checkpoint evidence. Published log exports omit the previous branch label and
+retain original/export hashes in
+[`export-provenance.json`](../examples/studies/core/ci-prior-runs/export-provenance.json).
+
+The initial local serial attempt, `ppo-final-20260921`, was stopped after one
+completed model and an interrupted second fit. That attempt remains preserved.
+The retained study, `ppo-final-20260922`, has a new source snapshot and registration
+for isolated process scheduling, with eight workers and one Torch thread each.
+Its five optimizer seeds, four penalties, 8,192-step budget, simulator and
+evaluation rules did not change. The computational amendment was recorded in
+[`PARALLEL_REPLICATION.json`](../examples/studies/core/PARALLEL_REPLICATION.json)
+before the new models were fitted. Regression checks compare policy tensors and
+training traces between serial and spawned-process training. The first actual
+8,192-step model also matched the preserved serial fit exactly in every policy
+tensor and the full training trace; checkpoint ZIP bytes can differ because of
+serialization metadata. The [identity check](../examples/studies/core/parallel-identity.json)
+is computational validation, not an additional independent optimizer seed.
+
+The local run is a computational replication of that fixed design, not the
+first exposure of those test seeds or a new untouched holdout. Its source,
+parameters, training budget and seed blocks remain unchanged after the prior
+runs were discovered. Earlier CI runs are reported as provenance and are not
+pooled as extra independent optimizer or market seeds. The reported intervals
+describe the five optimizer seeds and common market paths in the retained local
+run. This chronology is separate from the real-data September holdout, which
+was also already consumed in the frozen calibration assessment.
 
 ## Scope freeze
 

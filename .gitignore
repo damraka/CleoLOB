@@ -2,6 +2,8 @@
 models/
 !examples/studies/core/ppo-final-20260921/models/
 !examples/studies/core/ppo-final-20260921/models/**
+!examples/studies/core/ppo-final-20260922/models/
+!examples/studies/core/ppo-final-20260922/models/**
 logs/
 !examples/studies/**/logs/
 !examples/studies/**/logs/**

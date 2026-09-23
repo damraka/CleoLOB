@@ -10,6 +10,7 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from lob.core_study import verify_study
+from lob.experiments.registry import PROJECT_ROOT, sha256_file
 
 
 def _interval_text(interval: dict | None) -> str:
@@ -30,6 +31,14 @@ def _number(value: float | None, digits: int = 3) -> str:
 
 
 def _extras(study: Path, out: Path, result: dict, plan: dict) -> None:
+    context = {}
+    for name, digest in plan.get("evidence", {}).items():
+        if Path(name).name not in {"PARALLEL_REPLICATION.json", "export-provenance.json"}:
+            continue
+        path = (PROJECT_ROOT / name).resolve()
+        if not path.is_relative_to(PROJECT_ROOT) or not path.is_file() or sha256_file(path) != digest:
+            raise ValueError(f"Registered report context changed or missing: {name}")
+        context[name] = {"sha256": digest, "document": json.loads(path.read_text(encoding="utf-8"))}
     rows = [json.loads(line) for line in (study / "final_episodes.jsonl").read_text(encoding="utf-8").splitlines()]
     selectors = [("Risk-neutral AC", "ac", 0.0), ("Fixed risk-sensitive AC", "ac_risk", 0.0)]
     selectors += [(f"PPO / {penalty:g} bps", "ppo", penalty) for penalty in plan["penalties_bps"]]
@@ -85,10 +94,12 @@ def _extras(study: Path, out: Path, result: dict, plan: dict) -> None:
     execution.update_yaxes(title_text="Mean cost contribution (bps)", row=1, col=1)
     execution.update_yaxes(title_text="Percent", range=[0, 105], row=2, col=1)
     execution.update_layout(template="plotly_white", height=840, barmode="relative",
-                            title="Execution economics: actual fills and hypothetical residual liquidation",
-                            legend={"orientation": "h", "y": 1.1})
+                            title={"text": "Execution economics: actual fills and hypothetical residual liquidation",
+                                   "y": .98, "yanchor": "top"},
+                            legend={"orientation": "h", "y": 1.05, "yanchor": "bottom"},
+                            margin={"t": 150, "b": 80})
     execution.write_html(out / "execution-decomposition.html", include_plotlyjs=True, auto_open=False)
-    report = {"result": result, "economic_groups": groups,
+    report = {"result": result, "economic_groups": groups, "registered_context": context,
               "training_reward_components": [{"penalty_bps": model["penalty_bps"], "training_seed": model["training_seed"],
                                                 **model["reward_summary"]} for model in models],
               "aggregation": "Balanced final crossed design; policy costs use priced episodes. Training reward means are per optimizer seed."}
@@ -140,23 +151,55 @@ def _extras(study: Path, out: Path, result: dict, plan: dict) -> None:
               "The 100/500 bps residual-price sensitivities in `report-data.json` are assumptions, not",
               "observed liquidation prices or guaranteed worst cases. If every outcome is valid, they",
               "reproduce the raw comparisons. No policy or test episode was rerun for this report.", ""]
+    lines += ["## Training reward decomposition", "",
+              "Each table entry averages the five optimizer-level summaries equally. The share uses",
+              "absolute reward components before averaging, so offsetting gains/losses do not hide",
+              "the completion penalty. These are training returns, not final economic costs.", "",
+              "| Training penalty | Mean return (bps) | Mean penalty contribution (bps) | Mean absolute penalty share |",
+              "|---|---:|---:|---:|"]
+    for penalty in plan["penalties_bps"]:
+        summaries = [model["reward_summary"] for model in models if model["penalty_bps"] == penalty]
+        mean_return = _mean([summary.get("mean_return_bps") for summary in summaries])
+        penalty_term = _mean([summary["mean_reward_terms_bps"].get("completion_penalty", 0) for summary in summaries])
+        share = _mean([100 * summary["completion_penalty_absolute_share"] for summary in summaries])
+        lines.append(f"| {penalty:g} bps | {_number(mean_return)} | {_number(penalty_term)} | {_number(share, 2)}% |")
+    lines += ["", "## Replication scope", "",
+              "Intervals use this run's five optimizer seeds and common market paths. Repeating a fixed",
+              "design on the same seeds is a computational replication, not a fresh independent holdout.", ""]
+    if any(Path(name).name == "PARALLEL_REPLICATION.json" for name in context):
+        lines += ["This retained Windows run repeats the design already executed in Linux CI runs",
+                  "35649272649 and 35649544066. Those prior computations are not pooled as extra seeds.",
+                  "The original local serial attempt was preserved after one completed model and an",
+                  "interrupted second fit. A new source snapshot and registration introduced isolated",
+                  "process scheduling without changing the 20-model design, seeds, budget or settings.",
+                  "The registered computational amendment and prior-run export provenance are included",
+                  "with verified hashes in `report-data.json`.", ""]
     (out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
-    pages = [("Comparison intervals", "penalty-comparison.html"), ("Training curves", "training-curves.html"),
-             ("Training reward decomposition", "reward-decomposition.html"),
-             ("Final execution decomposition", "execution-decomposition.html")]
-    links = "".join(f'<li><a href="{page}">{escape(title)}</a></li>' for title, page in pages)
-    frames = "".join(f'<section><h2>{escape(title)}</h2><iframe title="{escape(title)}" src="{page}"></iframe></section>'
-                     for title, page in pages)
+    pages = [("Comparison intervals", "penalty-comparison.html", 450),
+             ("Training curves", "training-curves.html", 760),
+             ("Training reward decomposition", "reward-decomposition.html", 980),
+             ("Final execution decomposition", "execution-decomposition.html", 860)]
+    links = "".join(f'<li><a href="{page}">{escape(title)}</a></li>' for title, page, _ in pages)
+    frames = "".join(f'<section><h2>{escape(title)}</h2><iframe title="{escape(title)}" '
+                     f'style="height:{height}px" src="{page}"></iframe></section>'
+                     for title, page, height in pages)
     summary = escape(_interval_text(primary.get("economic_interval")))
+    fill = primary.get("mean_fill_fraction")
+    completion = (f"The primary policy actually filled {100 * fill:.2f}% of the parent order on average; "
+                  f"the remaining {100 * (1 - fill):.2f}% is hypothetically valued at visible-book liquidation cost."
+                  if fill is not None else "Actual fill fraction is unavailable; consult the outcome table.")
     html = ("<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">"
             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
             "<title>CleoLOB sealed execution study</title><style>"
             "body{font:16px/1.6 system-ui,sans-serif;color:#182d40;max-width:1400px;margin:32px auto;padding:0 24px}"
-            "h1,h2{line-height:1.2}iframe{width:100%;height:980px;border:1px solid #dce3e8;border-radius:8px}"
+            "h1,h2{line-height:1.2}iframe{width:100%;border:1px solid #dce3e8;border-radius:8px}"
             "a{color:#286a94}.finding{font-size:22px;font-weight:600}section{margin-top:48px}</style>"
             f"<h1>PPO versus simulator-fitted AC</h1><p class=\"finding\">Primary: {summary}</p>"
+            f"<p>{completion} Completion penalties are excluded from this economic endpoint.</p>"
             "<p>Negative differences favor PPO. This is a fixed-budget synthetic result. Real-data calibration "
             "failed its external fidelity gates; these results do not establish historical execution performance.</p>"
+            "<p>The retained local computation repeats a fixed design. Earlier CI computations are not extra "
+            "independent seeds or a fresh holdout. See the summary for execution chronology.</p>"
             f"<ul>{links}<li><a href=\"summary.md\">Study summary and limitations</a></li>"
             "<li><a href=\"report-data.json\">Derived report data</a></li></ul>"
             f"{frames}</html>")
@@ -188,7 +231,7 @@ def render(study: Path, out: Path) -> None:
                                    marker={"color": "#122d40", "size": 11},
                                    hovertemplate=f"Mean {mean:+.3f} bps<extra></extra>"))
     figure.add_vline(x=0, line_dash="dash", line_color="#9b4a39")
-    confidence = 100 * arms[0]["family_interval"]["confidence"] if arms else 0
+    confidence = 100 * comparisons[0][1]["confidence"] if comparisons else 0
     figure.update_layout(template="plotly_white", height=430,
                          title=f"Synthetic execution: {confidence:g}% crossed bootstrap intervals",
                          xaxis_title="PPO minus comparator net cost (bps); negative favors PPO",

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scope": "Publication-label redaction only; scientific outcome summaries and commit/run identifiers remain unchanged",
+  "exports": [
+    {
+      "run_id": "35649272649",
+      "kind": "sanitized export of retrieved GitHub Actions evidence",
+      "redactions": {
+        "log": "Replace the former branch label with [previous branch]",
+        "log_occurrences": 7,
+        "metadata": "Omit the former run.head_branch label"
+      },
+      "original_download_sha256": {
+        "research-job.log": "65a7f4403cc1c88a6bbcb10e4dc30e8464c6d3221ab28d229513016b67b7a1cb",
+        "metadata.json": "fa9722ce928608906745ea4d1abddc0574012b576ab5e6ced732e6c7fccb215d"
+      },
+      "published_export_sha256": {
+        "research-job.log": "a94034889a9093a51945e2507850627e9ee841f5be45028c4b6d83d72cec16af",
+        "metadata.json": "188d9ad7a61ad2e3df00c3460364b3aa64c32bbdec1b29db4c01855d62964d1b"
+      },
+      "unchanged_printed_summaries_sha256": {
+        "printed-result.json": "675e0e410a570874d3cbcb075fda94e26b53896b4ec34e13257129d55ccdd111",
+        "printed-training-summary.json": "e17f61ccf75054549fbb67b73b53ebc73897d868cd5dd00f67358bc72746cda3",
+        "printed-verification.json": "c32ad6095ba927743014822ad0ec708914e2a212c6c4335805be0da3f928d958"
+      }
+    },
+    {
+      "run_id": "35649544066",
+      "kind": "sanitized export of retrieved GitHub Actions evidence",
+      "redactions": {
+        "log": "Replace the former branch label with [previous branch]",
+        "log_occurrences": 7,
+        "metadata": "Omit the former run.head_branch label"
+      },
+      "original_download_sha256": {
+        "research-job.log": "f4c3d3f77ab970f671fe2ad19c7afb192e74ef8788d924b628d70816903eca16",
+        "metadata.json": "9b3839b928340d5c89e8f49803fdcc25a0f48e26774151c38717142fb35957b2"
+      },
+      "published_export_sha256": {
+        "research-job.log": "ff491a84e4226857f228096393b184abada24787dcc049d7f23bd6b44933b4fa",
+        "metadata.json": "41ee5211b43e81154dd211993c9020f2cc130d0ade1206b58694d61b8af913fa"
+      },
+      "unchanged_printed_summaries_sha256": {
+        "printed-result.json": "34f7bbf8018a908eabacdafb2034c3462a0f02060c404557cb227cd2385fab31",
+        "printed-training-summary.json": "a12a70f3be9d30ea2f9938ea86995123cbfce2eaf8139d9027e30e8beb8d038d",
+        "printed-verification.json": "ea1e3c440e22a2bd62b137789e19aa4198d9281973d5302ca11b67ccd06217e5"
+      }
+    }
+  ]
+}

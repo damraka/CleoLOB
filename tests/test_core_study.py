@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -201,6 +202,70 @@ def test_sb3_train_save_load_contract_uses_same_resolved_environment(tmp_path):
     assert info["market_seed"] == 71000
     train.close()
     evaluation.close()
+
+
+def test_parallel_training_matches_serial_models_and_trace(tmp_path, monkeypatch):
+    sb3 = pytest.importorskip("stable_baselines3")
+    torch = pytest.importorskip("torch")
+    # Small real registrations preserve the production source checks, spawn
+    # boundary, optimizer implementation, and model provenance verification.
+    monkeypatch.setattr(study, "TRAINING_SEEDS", (81001, 81002))
+    monkeypatch.setattr(study, "PENALTIES", (5.0,))
+    serial = study.register_study(tiny_config(), tmp_path / "serial", timesteps=256)
+    parallel = study.register_study(tiny_config(), tmp_path / "parallel", timesteps=256)
+    one = study.train_study(serial)
+    many = study.train_study(parallel, workers=2)
+    assert many["total_timesteps"] == one["total_timesteps"] == 512
+    assert [model["training_seed"] for model in many["models"]] == [81001, 81002]
+    assert many["execution"] == {"requested_workers": 2, "torch_threads_per_worker": 1,
+                                 "process_start_method": "spawn"}
+    assert all(model["worker_pid"] != os.getpid() for model in many["models"])
+    assert len({model["worker_pid"] for model in many["models"]}) == 2
+    for seed in (81001, 81002):
+        stem = study._model_stem(5.0, seed)
+        first = sb3.PPO.load(serial / "models" / f"{stem}.zip", device="cpu")
+        second = sb3.PPO.load(parallel / "models" / f"{stem}.zip", device="cpu")
+        first_state, second_state = first.policy.state_dict(), second.policy.state_dict()
+        assert first_state.keys() == second_state.keys()
+        assert all(torch.equal(value, second_state[key]) for key, value in first_state.items())
+        assert json.loads((serial / "models" / f"{stem}.training.json").read_text()) == json.loads(
+            (parallel / "models" / f"{stem}.training.json").read_text())
+    # Resumption verifies and reuses fits without scheduling another process.
+    assert study.train_study(parallel, workers=2) == many
+    attempt = parallel / "models" / "penalty-5-seed-81001.attempt.json"
+    attempt.write_text("{}", encoding="utf-8")
+    with pytest.raises(ValueError, match="attempt provenance"):
+        study.train_study(parallel, workers=2)
+
+
+def test_parallel_invalid_training_never_seals_or_retries(tmp_path, monkeypatch):
+    pytest.importorskip("stable_baselines3")
+    monkeypatch.setattr(study, "TRAINING_SEEDS", (81001, 81002))
+    monkeypatch.setattr(study, "PENALTIES", (0.0,))
+    out = study.register_study(tiny_config(quantity=1_000_000), tmp_path / "invalid-parallel", timesteps=256)
+    with pytest.raises(ValueError, match="INVALID training"):
+        study.train_study(out, workers=2)
+    failures = list((out / "models").glob("*.failure.json"))
+    assert failures
+    assert all(json.loads(path.read_text())["episodes"][-1]["status"] == "INVALID" for path in failures)
+    assert not list((out / "models").glob("*.zip"))
+    assert not (out / "training_summary.json").exists()
+    with pytest.raises(ValueError, match="preserved failed"):
+        study.train_study(out, workers=2)
+
+
+def test_interrupted_training_attempt_is_not_recycled(registered):
+    attempt = registered / "models" / "penalty-0-seed-81001.attempt.json"
+    attempt.write_text("{}", encoding="utf-8")
+    with pytest.raises(FileExistsError, match="unsealed training attempt"):
+        study.train_study(registered, workers=2)
+    assert not (registered / "training_summary.json").exists()
+
+
+@pytest.mark.parametrize("workers", [0, True, 1.5, 33])
+def test_training_worker_count_is_bounded(registered, workers):
+    with pytest.raises(ValueError, match="workers"):
+        study.train_study(registered, workers=workers)
 
 
 def test_verifier_detects_missing_models_and_artifact_corruption(registered):

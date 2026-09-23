@@ -1,3 +1,3 @@
-# Research evidence is byte-hashed; newline conversion would invalidate seals.
-examples/studies/** -text
+# Research evidence preserves original bytes, including whitespace, for its seals.
+examples/studies/** -text -whitespace
 configs/core-study*.json -text

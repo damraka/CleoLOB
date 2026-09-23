@@ -21,11 +21,29 @@ their original bytes and unchanged seals. Existing CRLF artifacts remain CRLF;
 existing LF artifacts remain LF.
 
 A second narrow exception includes the final study's generated PPO checkpoints
-and their training traces under `examples/studies/core/ppo-final-20260921/models/`.
+and their training traces under `examples/studies/core/ppo-final-20260922/models/`,
+plus the interrupted earlier attempt under `ppo-final-20260921/models/`.
 Other model directories and downloaded raw market data retain their existing
 ignore rules.
 
 The Linux correctness workflow verifies the published final PPO study with
-`python train_rl.py verify --study examples/studies/core/ppo-final-20260921`.
+`python train_rl.py verify --study examples/studies/core/ppo-final-20260922`.
 That check validates the artifact set, all hashes, model/training metadata,
 registration, and completed evaluation design without retraining the models.
+
+The 2026-09-22 follow-up audit at commit `c459dc6` found the 420 omitted logs had
+been included. All 932 local artifacts still matched their original seals;
+871 corresponding Git blobs matched, while the 61 newline conversions still
+required restaging with text conversion disabled.
+
+After restaging on 2026-09-22, all 932 referenced artifacts matched their original
+SHA-256 hashes in Git's index. All 94 staged archive files differed from the
+previous commit only by newline representation; no scientific content, recorded
+hash, or file identity changed.
+
+Full research reruns are available through the workflow's explicit
+`run_full_study` dispatch input. Ordinary pushes run correctness and PPO contract
+checks and verify the published archive. A dispatched reproduction saves model
+files, raw episodes, logs, and Plotly reports as one GitHub Actions artifact even
+when a training or evaluation step fails. Reusing the frozen seed blocks is a
+reproduction and does not create an independent confirmatory sample.

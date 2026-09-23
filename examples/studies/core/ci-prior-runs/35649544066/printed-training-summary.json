@@ -1,0 +1,766 @@
+{
+  "completed_at": "2026-09-21T21:06:38.193537+00:00",
+  "models": [
+    {
+      "completed_at": "2026-09-21T20:16:36.901086+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 170.01360370999998,
+      "episodes": 255,
+      "model_sha256": "8373a288b56194b1e164a03ea2ccbdc69d0a8530abf65577ea7e47c40bbc76d1",
+      "penalty_bps": 0.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 255,
+        "first_quarter_mean_return_bps": -1.3733726825396826,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.3753981746031745,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.1993067050910963,
+          "fills": 1.2192831390903878,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0005467025079322938,
+          "terminal_shortfall": 0.00120655405386675
+        },
+        "mean_return_bps": -0.8171618627450982,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.1993067050910963,
+          "fills": -0.6161019052246446,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0005467025079322938,
+          "terminal_shortfall": -0.00120655405386675
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81001,
+      "training_trace_sha256": "234946ffe9940db681afac083858b6a355df1297f3d7513bc479ebf8d3fef457"
+    },
+    {
+      "completed_at": "2026-09-21T20:19:18.223919+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 161.32149921899997,
+      "episodes": 264,
+      "model_sha256": "f2577b76274ae774c7ae193103580c9705de0052d1130438f3b4183fc1fe805c",
+      "penalty_bps": 0.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.0498529242424244,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8845065606060606,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.219499750229226,
+          "fills": 1.0791626231329625,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        },
+        "mean_return_bps": -0.8656491401515152,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.219499750229226,
+          "fills": -0.6461494176341572,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81002,
+      "training_trace_sha256": "e64a6c5fdf2b55561227441121a722a77c2779b832e9283672965fd5e63042ca"
+    },
+    {
+      "completed_at": "2026-09-21T20:21:54.235859+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 156.010635418,
+      "episodes": 237,
+      "model_sha256": "c8447d8220fe3656df8aa64216ad7f434d84e0203812f23f6b66fba40fa82549",
+      "penalty_bps": 0.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 237,
+        "first_quarter_mean_return_bps": -1.3434741525423728,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.5069584067796611,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.32488531570148915,
+          "fills": 1.25634164495588,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.002363131058133226,
+          "terminal_shortfall": 0.004795957743369386
+        },
+        "mean_return_bps": -0.9977651012658227,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.32488531570148915,
+          "fills": -0.6691964658466676,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.002363131058133226,
+          "terminal_shortfall": -0.0013201735825897267
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81003,
+      "training_trace_sha256": "34abba3ed930dff99988df372f022de1ecf285f5a2527d3bddc2752906c55f94"
+    },
+    {
+      "completed_at": "2026-09-21T20:24:29.384892+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 155.14772280199998,
+      "episodes": 237,
+      "model_sha256": "cb9a3c1e6d1e9b32e1f8fd6c875c9c7f25926a0dc4f2ebc7b40cbefa588cb1d9",
+      "penalty_bps": 0.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 237,
+        "first_quarter_mean_return_bps": -1.1608261355932201,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8175315762711864,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.20551241918337526,
+          "fills": 1.2841485781193527,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0015752941998417773,
+          "terminal_shortfall": 0.0026220354059952465
+        },
+        "mean_return_bps": -0.9059192278481012,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.20551241918337526,
+          "fills": -0.6966863570572513,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0015752941998417773,
+          "terminal_shortfall": -0.0021451715254580876
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81004,
+      "training_trace_sha256": "f3d63ee0fdc13ed30829f9f1261f17ff6c158ebf5ab6db27e12b38e024113a39"
+    },
+    {
+      "completed_at": "2026-09-21T20:27:04.989798+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 155.60362294700008,
+      "episodes": 224,
+      "model_sha256": "9a0c5627b281cca21efdf555313c85ea3d04a42970bd4071aa4f44102f024d36",
+      "penalty_bps": 0.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 224,
+        "first_quarter_mean_return_bps": -1.2742380535714284,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -1.115340410714286,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.30523403555669226,
+          "fills": 1.3782468908091392,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0037365050024701493,
+          "terminal_shortfall": 0.010970978799090552
+        },
+        "mean_return_bps": -1.02670190625,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.30523403555669226,
+          "fills": -0.706760405362023,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0037365050024701493,
+          "terminal_shortfall": -0.010970978799090552
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81005,
+      "training_trace_sha256": "02a2f09489b6a95752db171d0b7c2b3e96ea0159fab1ca00e6fc26f92c9bfc58"
+    },
+    {
+      "completed_at": "2026-09-21T20:29:44.111368+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 159.1202283570001,
+      "episodes": 256,
+      "model_sha256": "38e101b9317d32b745ecad84870baf8be32fd9140fdf3f59adae1c1c27eb46ef",
+      "penalty_bps": 5.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.002057543029376121,
+        "episodes": 256,
+        "first_quarter_mean_return_bps": -1.3684740781250002,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.545362921875,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0029741285005834305,
+          "fees": 0.2140853340364123,
+          "fills": 1.2261196124684677,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.000594655500741313,
+          "terminal_shortfall": 0.0017019937537311035
+        },
+        "mean_return_bps": -0.8536957109375001,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.0029741285005834305,
+          "fees": -0.2140853340364123,
+          "fills": -0.6343395833630224,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.000594655500741313,
+          "terminal_shortfall": -0.0017019937537311035
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81001,
+      "training_trace_sha256": "ec082b7e0945daa399093a88be882ff9065860216e03c017247484e8b4a8b6ca"
+    },
+    {
+      "completed_at": "2026-09-21T20:32:23.175512+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 159.06279365799992,
+      "episodes": 264,
+      "model_sha256": "f9373b2ece3f7e865a425dc33f86256ca944a4aabb6256e20cceac3fa16be467",
+      "penalty_bps": 5.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.0498529242424244,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8845065606060606,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.219499750229226,
+          "fills": 1.0791626231329625,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        },
+        "mean_return_bps": -0.8656491401515152,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.219499750229226,
+          "fills": -0.6461494176341572,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81002,
+      "training_trace_sha256": "e64a6c5fdf2b55561227441121a722a77c2779b832e9283672965fd5e63042ca"
+    },
+    {
+      "completed_at": "2026-09-21T20:35:01.018776+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 157.84198698,
+      "episodes": 241,
+      "model_sha256": "47603c8665c786a721f1d0ac0b1808022af536c6a71f6ef649efb276ac8bea4e",
+      "penalty_bps": 5.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.012205075791460908,
+        "episodes": 241,
+        "first_quarter_mean_return_bps": -1.3412958166666664,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8965690499999999,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0196817035204346,
+          "fees": 0.32337676692655065,
+          "fills": 1.2507713574682506,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.003935037857160049,
+          "terminal_shortfall": 0.014818608244586196
+        },
+        "mean_return_bps": -1.0987551452282156,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.0196817035204346,
+          "fees": -0.32337676692655065,
+          "fills": -0.7387331395571416,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.003935037857160049,
+          "terminal_shortfall": -0.013028469268700995
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81003,
+      "training_trace_sha256": "a7106cbb73444f88b7a61eb938be009a43644abd3c9ded7ad6c398f9c8a6a079"
+    },
+    {
+      "completed_at": "2026-09-21T20:37:34.898219+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 153.87817794499983,
+      "episodes": 218,
+      "model_sha256": "2fb01df4e5692e6ad3f17ad943d0107544d7be3c558afbf8ee967f33277e6dfe",
+      "penalty_bps": 5.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0347198083674648,
+        "episodes": 218,
+        "first_quarter_mean_return_bps": -1.0677707592592591,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.6500893148148147,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.05410114223930288,
+          "fees": 0.20548339140770228,
+          "fills": 1.2552509925704316,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.010817085942607127,
+          "terminal_shortfall": 0.03256861033955737
+        },
+        "mean_return_bps": -0.9029463853211008,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.05410114223930288,
+          "fees": -0.20548339140770228,
+          "fills": -0.6011197165951996,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.010817085942607127,
+          "terminal_shortfall": -0.03142505253449687
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81004,
+      "training_trace_sha256": "c10bec71700e2f3d41d9ae21149858eda95c8325d50649fc79569db979150532"
+    },
+    {
+      "completed_at": "2026-09-21T20:40:10.745234+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 155.84570210200013,
+      "episodes": 232,
+      "model_sha256": "cbf70986e8749d52939662b20f6de2d9757dbf5247cce4c7ff7088adcb96cff7",
+      "penalty_bps": 5.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.006445055182978325,
+        "episodes": 232,
+        "first_quarter_mean_return_bps": -1.2907807758620686,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.9415277586206896,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.010675270591075524,
+          "fees": 0.2944416964005847,
+          "fills": 1.3456261401878267,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0021347068462628325,
+          "terminal_shortfall": 0.0034727195227268913
+        },
+        "mean_return_bps": -0.9894748577586207,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.010675270591075524,
+          "fees": -0.2944416964005847,
+          "fills": -0.6787504901654671,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0021347068462628325,
+          "terminal_shortfall": -0.0034727195227268913
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81005,
+      "training_trace_sha256": "eaaa2b169ef0149036f67ae4251b68accccf996fc5d4ac188bda1068d4444f3a"
+    },
+    {
+      "completed_at": "2026-09-21T20:42:50.286146+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 159.53937978399995,
+      "episodes": 264,
+      "model_sha256": "f28c4782962a6d480ef5043ec4b16237815e67448fa1898ae782655f2f467e09",
+      "penalty_bps": 25.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.00806297749507411,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.362716196969697,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.6238849696969696,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.011657561613804322,
+          "fees": 0.2236579902522673,
+          "fills": 1.208873276764427,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0004661866173019348,
+          "terminal_shortfall": 0.001158472502380801
+        },
+        "mean_return_bps": -0.8829626060606062,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.011657561613804322,
+          "fees": -0.2236579902522673,
+          "fills": -0.6460224127023588,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0004661866173019348,
+          "terminal_shortfall": -0.001158472502380801
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81001,
+      "training_trace_sha256": "1ede057337295552c1605cdfef1e09fafabee05bc6ff2cd66a04c5f43d9c1e0b"
+    },
+    {
+      "completed_at": "2026-09-21T20:45:29.170533+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 158.88297466400013,
+      "episodes": 264,
+      "model_sha256": "ac3d2b8626b004eafd1de72460858b574e9262659d3d13cc59787ad1fe9f44f6",
+      "penalty_bps": 25.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.0498529242424244,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8845065606060606,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.219499750229226,
+          "fills": 1.0791626231329625,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        },
+        "mean_return_bps": -0.8656491401515152,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.219499750229226,
+          "fills": -0.6461494176341572,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81002,
+      "training_trace_sha256": "e64a6c5fdf2b55561227441121a722a77c2779b832e9283672965fd5e63042ca"
+    },
+    {
+      "completed_at": "2026-09-21T20:48:06.060521+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 156.88866558899963,
+      "episodes": 239,
+      "model_sha256": "9c90a1ad0760e825f1235fe939595f790e92d9ff933c90c9c9ec557736f47745",
+      "penalty_bps": 25.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.04211863464202061,
+        "episodes": 239,
+        "first_quarter_mean_return_bps": -1.3434741525423728,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -1.096627677966102,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.07060974597579373,
+          "fees": 0.33325971060031195,
+          "fills": 1.2597173794410317,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.002823526108614616,
+          "terminal_shortfall": 0.010038710260566842
+        },
+        "mean_return_bps": -1.141142410041841,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.07060974597579373,
+          "fees": -0.33325971060031195,
+          "fills": -0.7258121082767357,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.002823526108614616,
+          "terminal_shortfall": -0.00863730417133418
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81003,
+      "training_trace_sha256": "5159d4a77df90f56e78083f7f0341f0f10038a4a6cf25c32b52ed27eeee05371"
+    },
+    {
+      "completed_at": "2026-09-21T20:50:46.188380+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 160.12645307599996,
+      "episodes": 264,
+      "model_sha256": "9cd826f8a9d369af04662dfa4a5be85997b48787940012ba233a5130f9c21262",
+      "penalty_bps": 25.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0004592080203882347,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.0831307575757574,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.5865448787878788,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0006077401789187087,
+          "fees": 0.1423365875074247,
+          "fills": 1.1804269409429664,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 2.4303876011642634e-05,
+          "terminal_shortfall": 5.7311451057167034e-05
+        },
+        "mean_return_bps": -0.7208324886363636,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.0006077401789187087,
+          "fees": -0.1423365875074247,
+          "fills": -0.5778065769977748,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -2.4303876011642634e-05,
+          "terminal_shortfall": -5.7311451057167034e-05
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81004,
+      "training_trace_sha256": "770c0f2291c0c33941389206af5704f7d5846ae99b9cba230321a684fcd9f3fb"
+    },
+    {
+      "completed_at": "2026-09-21T20:53:23.464053+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 157.2743636780001,
+      "episodes": 241,
+      "model_sha256": "3b20819d526e130fb60ca5376105489ecfe228ff05719eb2595f8056b4e4c485",
+      "penalty_bps": 25.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.00847596087058701,
+        "episodes": 241,
+        "first_quarter_mean_return_bps": -1.3287743499999998,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.7905589666666665,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.013556892953804887,
+          "fees": 0.28810797948333056,
+          "fills": 1.2952154029565575,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0005420727483955626,
+          "terminal_shortfall": 0.002029697566328567
+        },
+        "mean_return_bps": -0.9800681078838175,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.013556892953804887,
+          "fees": -0.28810797948333056,
+          "fills": -0.675831466599608,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0005420727483955626,
+          "terminal_shortfall": -0.002029697566328567
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81005,
+      "training_trace_sha256": "f5294f56e0c774dd26b95b41c5f4a872ae3c66bd2a9c1ba548517bceb2e74f68"
+    },
+    {
+      "completed_at": "2026-09-21T20:56:04.124480+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 160.65903031400012,
+      "episodes": 265,
+      "model_sha256": "981aa96c2aedb30472e557e1903f2f1031d5bd68b55c72141192c10018a637c8",
+      "penalty_bps": 100.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.031833008889804976,
+        "episodes": 265,
+        "first_quarter_mean_return_bps": -1.362716196969697,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.5061406666666667,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.046454283261046656,
+          "fees": 0.20919021906591498,
+          "fills": 1.202048698932848,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.00046442742251966336,
+          "terminal_shortfall": 0.0011541009080321943
+        },
+        "mean_return_bps": -0.863985,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.046454283261046656,
+          "fees": -0.20919021906591498,
+          "fills": -0.6067219908393935,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.00046442742251966336,
+          "terminal_shortfall": -0.0011541009080321943
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81001,
+      "training_trace_sha256": "2c8df76cc21c8548215d3dbc844c88a677245762c1859febecf22fd9ab77c981"
+    },
+    {
+      "completed_at": "2026-09-21T20:58:43.869906+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 159.74403091800013,
+      "episodes": 264,
+      "model_sha256": "8bd2e99252c0f697f15f5386cdcaf19e89c776af2e142000ba1794403d26deaf",
+      "penalty_bps": 100.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.0,
+        "episodes": 264,
+        "first_quarter_mean_return_bps": -1.0498529242424244,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.8845065606060606,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": 0.219499750229226,
+          "fills": 1.0791626231329625,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        },
+        "mean_return_bps": -0.8656491401515152,
+        "mean_reward_terms_bps": {
+          "completion_penalty": 0.0,
+          "fees": -0.219499750229226,
+          "fills": -0.6461494176341572,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0,
+          "terminal_shortfall": 0.0
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81002,
+      "training_trace_sha256": "e64a6c5fdf2b55561227441121a722a77c2779b832e9283672965fd5e63042ca"
+    },
+    {
+      "completed_at": "2026-09-21T21:01:22.332301+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 158.46109179199993,
+      "episodes": 244,
+      "model_sha256": "53f33b1e930347e350bd5433ed61387c47c1f04c03a711073eff96cec2e21d40",
+      "penalty_bps": 100.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.03832030368161335,
+        "episodes": 244,
+        "first_quarter_mean_return_bps": -1.3271983278688522,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -0.9432952950819671,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.06169060963712531,
+          "fees": 0.32279443878218594,
+          "fills": 1.2212441814754804,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.000616681440075052,
+          "terminal_shortfall": 0.0035215403869573517
+        },
+        "mean_return_bps": -1.0956592663934424,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.06169060963712531,
+          "fees": -0.32279443878218594,
+          "fills": -0.7083109494949217,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.000616681440075052,
+          "terminal_shortfall": -0.0022465629620113466
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81003,
+      "training_trace_sha256": "d941b614c03e4132e5dc2c6a698cd94b3a233d2033937b8c9497cb0861e795c3"
+    },
+    {
+      "completed_at": "2026-09-21T21:03:59.607504+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 157.27385727599994,
+      "episodes": 240,
+      "model_sha256": "417ad72f8bd416e412c08116ada1c84f8264e154623510b4a6bc9baf6cff6ba6",
+      "penalty_bps": 100.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.1493340406890047,
+        "episodes": 240,
+        "first_quarter_mean_return_bps": -1.1846904833333332,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -1.6330163333333334,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.24820108907040064,
+          "fees": 0.17257518771510363,
+          "fills": 1.2297476887512653,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.0024812679755627353,
+          "terminal_shortfall": 0.009047758057696384
+        },
+        "mean_return_bps": -1.0173384791666666,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.24820108907040064,
+          "fees": -0.17257518771510363,
+          "fills": -0.5866517945181536,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.0024812679755627353,
+          "terminal_shortfall": -0.007429151412709923
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81004,
+      "training_trace_sha256": "7144367327bbc8be18c18a75dd7dc6d95b506531d1db1a5c2af3d14f76edc900"
+    },
+    {
+      "completed_at": "2026-09-21T21:06:38.193337+00:00",
+      "config_sha256": "ad27b6d96a527f36587a771b1935ed816a15b3aeaa6ec1669b3ef4dc990a65c9",
+      "elapsed_seconds": 158.58451121999997,
+      "episodes": 244,
+      "model_sha256": "4f6fa1b54942ec9a85304f89cb5f11a33c1f542268a15a2e9791dd5e52ed11e3",
+      "penalty_bps": 100.0,
+      "preregistration_sha256": "39b51c741664a70ee68795d7fd53b6948c6ac2121a0a6d6b5a132b09a5cfd338",
+      "reward_summary": {
+        "completion_penalty_absolute_share": 0.010354013882180943,
+        "episodes": 244,
+        "first_quarter_mean_return_bps": -1.3265446721311474,
+        "invalid_episodes": 0,
+        "last_quarter_mean_return_bps": -1.0993683934426228,
+        "mean_absolute_reward_terms_bps": {
+          "completion_penalty": 0.017215984084779156,
+          "fees": 0.32080623263838226,
+          "fills": 1.3234856187471942,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": 0.00017205430266276726,
+          "terminal_shortfall": 0.0010553818502434605
+        },
+        "mean_return_bps": -1.039069475409836,
+        "mean_reward_terms_bps": {
+          "completion_penalty": -0.017215984084779156,
+          "fees": -0.32080623263838226,
+          "fills": -0.6998198351851367,
+          "late_fees": 0.0,
+          "late_fills": 0.0,
+          "terminal_fees": -0.00017205430266276726,
+          "terminal_shortfall": -0.0010553818502434605
+        }
+      },
+      "timesteps": 8192,
+      "training_seed": 81005,
+      "training_trace_sha256": "de51d76f1f913bc8e86231d198e4976233284c43d34edd3ee82cdead47f8cb20"
+    }
+  ],
+  "total_timesteps": 163840
+}

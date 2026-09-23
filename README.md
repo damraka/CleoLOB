@@ -1,198 +1,184 @@
-# CLEOLOB — Market Microstructure Research Lab
+# CleoLOB — Execution research
 
-A Python laboratory for limit-order-book mechanics, execution strategies, historical
-reconstruction, and reproducible comparisons. The engine, accounting and experiment
-records are designed to expose invalid assumptions and failed strategies.
+Fixed-budget PPO reduced mean net execution cost relative to simulator-fitted,
+risk-neutral Almgren–Chriss by **1.605 bps: PPO minus AC = −1.605 bps, 95% CI
+[−2.095, −1.015]**, across five optimizer seeds and 32 common market seeds.
+The primary policy actually filled **86.90%** of the parent order on average;
+the endpoint includes hypothetical visible-book liquidation of the remaining
+13.10%. The simulator failed **all six external real-data calibration gates**,
+so this is a conditional synthetic result, not demonstrated market performance.
 
-> A positive synthetic backtest is not evidence of live alpha. Unpriced inventory,
-> missing experiments and failed comparisons are reported rather than concealed.
+CleoLOB combines a FIFO exchange, explicit execution accounting and a recorded
+PPO comparison. The active scope is this research question. Portfolio/FX, new
+interfaces and additional model families are frozen.
 
-![Existing CLEO liquidity-canyon visualization](docs/3d-graph.png)
+## Final result
 
-## Implemented and tested
+All **20 PPO models**, **163,840 training steps** and **704 final evaluation
+episodes** completed. Training and final evaluation contain **zero INVALID
+episodes**. Mean net cost was **0.583 bps** for primary PPO and **2.188 bps** for
+risk-neutral AC. The primary comparison against the fixed risk-sensitive AC
+comparator was **−1.658 bps, 99% CI [−2.229, −0.877]**.
 
-- **FIFO exchange:** integer ticks/lots, GTC/IOC/FOK/GTD, post-only, partial fills,
-  cancel, modify and conditional cancel/replace; explicit order states, queue
-  positions and invariant checks.
-- **Persistent event clocks:** deterministic tie-breaking, separate random streams,
-  delayed messages and cancellation races. Dividing a simulation into different
-  observation steps preserves its background event path.
-- **Accounting and execution risk:** cash, signed inventory, average-cost PnL,
-  maker/taker fees and rebates; in-flight reservations prevent parent overfills.
-  Child/position/notional/loss limits and a latched kill switch are available.
-- **Execution baselines:** TWAP, synthetic-profile VWAP, POV and Almgren–Chriss,
-  plus heuristic/random policies and the existing SB3 PPO interface. Research
-  commands require a checkpoint when PPO is requested.
-- **Historical reconstruction:** bounded CSV/JSONL input, exact order IDs,
-  snapshots and incremental events, source hashes, quality reports, step/pause/
-  resume/reset. This reconstructs recorded events without inventing agent fills.
-- **Public aggregate L2 data:** bounded Tardis sample downloads, checksum/gzip
-  verification, exact decimal price-level replay, snapshot comparisons and
-  causal one-second descriptive statistics. Two full real-market days tested.
-- **Calibration and validation:** frozen empirical L2 observable models, causal
-  features, purged chronological splits, expanding walk-forward folds,
-  later-date drift/coverage scorecards and deterministic observable generation.
-- **Settlement and portfolio risk:** post-horizon cancellation/fill reconciliation,
-  explicit late fees and timeouts; multi-currency linear portfolio accounting,
-  conservative reservations, exposure/loss limits and joint asset/FX scenarios.
-- **Registered stress families:** multi-scenario execution, frozen source/model
-  identity, complete outcome retention and family-wide statistical correction.
-- **Research configuration:** typed immutable YAML/JSON, inheritance, environment
-  and CLI overrides, schema export, validation, normalized hashes and diffs.
-- **Experiment evidence:** unique run directories, source snapshots, config and
-  checkpoint hashes, every episode outcome, order/fill/risk logs, offline HTML
-  reports, integrity verification and exact reproduction checks.
-- **Statistics and design:** paired bootstrap intervals, exact sign tests,
-  Holm/Bonferroni/BH correction, complete-pair validation and bounded sampling of
-  large finite parameter spaces. Failed or unpriced planned outcomes withhold
-  comparative inference.
+| Training completion penalty | PPO minus risk-neutral AC (bps) | Family-adjusted 99% CI | Mean actual fill |
+|---|---:|---:|---:|
+| **0 bps — primary** | **−1.605** | **[−2.213, −0.810]** | **86.90%** |
+| 5 bps | −1.839 | [−2.256, −1.343] | 98.42% |
+| 25 bps | −1.745 | [−2.164, −1.237] | 98.67% |
+| 100 bps | −1.675 | [−2.160, −1.126] | 100.00% |
 
-The existing FastAPI/Three.js app and legacy Streamlit dashboard remain available.
-The web comparison now displays economic effective shortfall and unpriced outcomes;
-its fallback heuristic is labeled. It is an exploration UI, while registered research
-uses the stricter CLI workflow.
+The primary remains the preregistered 0 bps arm. The 100 bps arm completed every
+evaluated parent order; its mean economic cost was 0.513 bps. Training completion
+penalties accounted for 0%, 1.11%, 1.18% and 4.60% of absolute reward components
+on average across the five optimizer seeds in the respective arms. They did
+not dominate the recorded training objectives. All final outcomes were priced,
+so the 100/500 bps invalid-residual sensitivities reproduce the raw comparisons.
 
-## Quickstart
+Read the [result summary](examples/studies/core/reports/summary.md), inspect the
+[sealed result](examples/studies/core/ppo-final-20260922/result.json), or download
+and open the [standalone Plotly report index](examples/studies/core/reports/index.html)
+with its neighboring HTML files. Reports include confidence intervals, training
+curves, reward decomposition and actual/hypothetical execution-cost components.
 
-Python 3.11+ is supported by package metadata; this batch was tested locally on
-Python 3.14.6 / Windows 11. Linux CI for 3.11 and 3.13 is configured but has not been
-run from this workspace.
+## Study design and evidence
+
+The [frozen configuration](configs/core-study.json) sells **1,714 synthetic lots
+over 240 seconds**, with a 30-second warmup, 5-second policy decisions, zero maker
+fees and 1 bps taker fees. Five optimizer seeds are trained separately at each
+completion penalty: **0, 5, 25 and 100 bps**, using **8,192 steps per model**.
+The 163,840-step budget is fixed; it is not evidence of policy convergence.
+
+Economic cost includes actual fill shortfall and fees plus hypothetical
+visible-book liquidation of any priceable residual. The completion penalty
+affects training, but is excluded from the economic endpoint. Actual fill
+fractions remain separate from hypothetical terminal valuation. Unpriced
+residuals remain INVALID; they are not counted as zero-cost outcomes.
+
+The primary comparator is risk-neutral AC, whose analytical schedule equals
+TWAP. The fixed risk-sensitive comparator uses κT=1, with risk aversion
+4.98329×10⁻⁵. Independent no-parent paths fitted temporary impact
+η=5.51834×10⁻⁵ and volatility σ=0.00438465 at the AC schedule's 12-second child
+interval. The [fit](examples/studies/core/execution-controls/execution-amendment/final-ac-fit/ac-fit.json)
+passes its gate: R²=0.5013 and 92.94% probe coverage. It estimates a local
+visible-depth cost approximation, not causal or permanent market impact.
+
+| Evidence | Outcome |
+|---|---|
+| [Original positive-control grid](examples/studies/core/execution-controls/compute-continuation/positive-control/result.json) | FAIL; retained |
+| [Registered execution amendment](examples/studies/core/execution-controls/execution-amendment/plan.json) | Finite ordered search; physical simulator unchanged |
+| [Independent control confirmation](examples/studies/core/execution-controls/execution-amendment/result.json) | PASS; Random−TWAP −0.9591 bps, 95% CI [−1.1953, −0.7155]; 64 seeds and valid capacity controls |
+| Additional capacity preflight | 384 fixed-action/random episodes; no invalid outcomes in the selected setting |
+| [Final AC parameter fit](examples/studies/core/execution-controls/execution-amendment/final-ac-fit/ac-fit.json) | PASS; separate seeds 46000–46015 |
+| [PPO registration and sealed result](examples/studies/core/ppo-final-20260922/preregistration.json) | 20 models; 704/704 final episodes; integrity verification PASS |
+
+Training completed **4,957 episodes and 163,840 steps with zero INVALID episodes**.
+Diagnostic seeds 61000–61019 locked **32 final market seeds, 71000–71031**, before
+this run's final evaluation. Estimated power is **81.48%** for a 0.5 bps primary
+effect, against an 80% target; the 256-market cap was not binding. The pilot
+variance estimate and five optimizer seeds limit the precision of that estimate.
+Training markets use [1000000, 2000000). Crossed bootstrap intervals independently resample
+optimizer and common market seeds. The primary interval is 95%; the five-member
+family of penalty arms and fixed AC sensitivity uses 99% intervals. A single
+invalid outcome does not suppress unrelated comparisons; incomplete-pair
+intervals and 100/500 bps residual-price sensitivities are explicitly labeled.
+
+This local computation is a **computational replication**, not a fresh test
+holdout: two earlier Linux CI runs already executed the fixed design. Their
+results are not pooled as extra independent seeds. An interrupted local serial
+attempt remains preserved; the retained run uses isolated worker processes
+under a new registration, without changing scientific settings. See the
+[protocol and chronology](docs/core-research-protocol.md),
+[computational amendment](examples/studies/core/PARALLEL_REPLICATION.json) and
+[prior CI evidence](examples/studies/core/ci-prior-runs/export-provenance.json).
+
+## Real-data calibration failed
+
+Public Deribit BTC and ETH perpetual top-five samples cover July 1, August 1
+and September 1, 2026. July data fitted the physical simulator. Frozen ETH, BTC
+and pooled fits each failed August validation and the previously unopened
+September holdout: **6/6 FAIL**. The four distinct external files contain
+**7,461,728 snapshots**, producing **345,595 causal one-second observations**.
+Pooled results reuse those observations and are not additional independent data.
+
+All September cohorts also failed the unchanged 95% valid-observation gate.
+For ETH, September spread and visible-impact errors were 1.0534 and 1.3693,
+against a maximum allowed error of 0.60. Models were not retuned after these
+failures. September is now consumed holdout evidence.
+
+The [full assessment](examples/studies/core/calibration/EXTERNAL_RESULTS.md)
+retains every failed family and source/model hash. L2 snapshots do not identify
+FIFO queues, hidden liquidity or historical counterfactual fills. Synthetic
+normalized lots are not funded inverse-perpetual positions. This study does not
+establish live alpha or historical strategy performance.
+
+## Run and verify
+
+Python 3.11+ is supported. The retained local runtime is Python 3.14.6 on Windows;
+Linux correctness CI covers Python 3.11 and 3.13.
 
 ```sh
 python -m venv .venv
 # Windows PowerShell: .\.venv\Scripts\Activate.ps1
 # macOS/Linux: source .venv/bin/activate
-python -m pip install -e '.[dev]'
+python -m pip install -e '.[dev,rl,plots]'
 
 python -m pytest -q
-cleo config validate configs/research.yaml
-cleo evaluate --config configs/research.yaml
-cleo validate-data examples/data/canonical-events.jsonl
-cleo replay examples/data/canonical-events.jsonl
-cleo benchmark --pairs 2000 --repeats 3
-cleo stress --config configs/robustness.yaml
-cleo portfolio --config configs/portfolio_example.json
+python -m ruff check lob tests tools legacy/evaluate.py train_rl.py server.py
+cleo config validate configs/core-study.json
+python train_rl.py verify --study examples/studies/core/ppo-final-20260922
+python tools/report_core_study.py examples/studies/core/ppo-final-20260922 --out results/retained-reports
 ```
 
-Install `python -m pip install -e '.[dev,rl,web]'` for PPO and the web dashboards,
-or use the existing `requirements.txt`. Run `python server.py --no-browser` and
-open `http://127.0.0.1:8000`. No credentials or live-market connection are needed.
+The full local suite passes **573 tests**. Two existing Gymnasium warnings concern
+the unbounded observation Box. Linux CI also checks saved study integrity,
+configuration/data validation and a small matching benchmark. Full retraining is
+an explicit workflow option that uploads completed or failed evidence.
+See [Execution research CI](https://github.com/damraka/CleoLOB/actions/workflows/research.yml).
 
-`python -m lob.cli` is equivalent to `cleo`; `python -m lob` retains the standalone
-simulation demonstration. No broker integration or real-money order submission is
-included.
-
-## A reproducible study
-
-[The foundation study](examples/studies/foundation/README.md) evaluates six
-baselines/heuristics on ten paired seeds: **60 episodes**, 2,000-share sell orders,
-10 seconds, 1 bps taker fees. Full results, exact source/configuration and audit
-logs are included. No PPO/SAC comparison was run.
-
-Every candidate-minus-TWAP bootstrap interval in this small study includes zero,
-and all five Holm-adjusted sign-test p-values are 1.0. This study does **not**
-establish that one agent is better. The result is conditional on one uncalibrated
-synthetic market; stress, OOD and historical strategy evaluation remain NOT RUN.
+To repeat the fixed design in a new directory:
 
 ```sh
-cleo reproduce examples/studies/foundation/20260913T191627-0268a8fa8cb3
-cleo verify examples/studies/foundation/20260913T191627-0268a8fa8cb3
-cleo experiment diff PATH_TO_FIRST_RUN PATH_TO_SECOND_RUN
+python train_rl.py register --config configs/core-study.json --out results/replication/study
+python train_rl.py train --study results/replication/study --workers 4
+python train_rl.py evaluate --study results/replication/study
+python train_rl.py verify --study results/replication/study
+python tools/report_core_study.py results/replication/study --out results/replication/reports
 ```
 
-Reproduction requires the recorded source/runtime/checkpoint versions and writes
-a new directory. It never executes archived Python or overwrites original results.
-The later L2 additions change the source manifest; the foundation reproduction
-command therefore requires its recorded source version, not the current checkout.
-The old 100-seed tables are preserved in `results/baselines-100seeds/` and described
-in [the archived README](docs/legacy-readme.md); they were produced by different
-market mechanics and are not validation of this engine.
+Registration freezes configuration and source hashes. Training aborts at the
+first invalid terminal economic outcome and preserves the attempt. Completed
+checkpoints can be reused only after hash verification. Reports are generated
+outside the sealed study directory and do not rerun policies. Reusing this
+design's seeds is a replication, not a new independent experiment.
 
-## Real-data validation
+## Scope and earlier evidence
 
-[The real-data assessment](examples/studies/historical/README.md) processed
-**5,972,671 updates**, matched **2,081,479 top-five snapshots exactly**, and checked
-**46,195 trades** across Deribit ETH perpetual samples for April 1 and May 1, 2020.
-This validates aggregate reconstruction; historical strategy performance remains
-untested. See [public-data commands and limits](docs/public-market-data.md).
+The engine uses integer ticks/lots, FIFO priority, persistent event clocks,
+separate random streams, delayed messages, order-state tracking and in-flight
+reservations. Settlement reconciles late fills and fees before final valuation.
+Research artifacts retain configurations, source snapshots, checkpoints,
+training traces, every evaluation outcome and integrity manifests.
 
-## Architecture
+The earlier [300-episode stress study](examples/studies/validation/README.md)
+retains 93 INVALID episodes. Its separately labeled
+[residual-price sensitivity](examples/studies/core/stress-sensitivity/20260919T092238-bbe58e0a27dd/report.md)
+recovers unaffected raw comparisons and reports explicit adverse-price
+assumptions instead of removing failures. Earlier
+[historical replay](examples/studies/historical/README.md) and
+[10-seed foundation](examples/studies/foundation/README.md) records are historical
+evidence, not substitutes for the present study.
 
-```mermaid
-flowchart TD
-    Config[Validated immutable configuration] --> Clock[Persistent event clock]
-    Clock --> Exchange[FIFO exchange and order lifecycle]
-    Agents[Baseline or RL decision] --> Risk[Risk and in-flight reservations]
-    Risk --> Exchange
-    Exchange --> Fills[Recorded fills]
-    Fills --> Ledger[Cash / inventory / fees / PnL]
-    Exchange --> State[Observable book state]
-    State --> Agents
-    Ledger --> Metrics[Economic outcomes and validity]
-    Metrics --> Registry[Immutable experiment records]
-    Registry --> Stats[Paired statistics and corrections]
-    Stats --> Report[Evidence report]
-    Data[Canonical historical events] --> Validate[Dataset validation]
-    Validate --> Replay[Exact ID-driven reconstruction]
-```
+Old Streamlit, flat training/evaluation scripts and 100-seed artifacts are in
+[`legacy/`](legacy/README.md). The existing FastAPI/Three.js exploration UI can be
+started with `python server.py --no-browser` after installing `.[web]`.
+No broker connection or real-money order submission is included.
 
-| Module | Responsibility |
-|---|---|
-| `lob/engine.py` | Orders, FIFO book, deterministic exchange and synthetic flow |
-| `lob/accounting.py`, `lob/risk.py` | Reconciled ledger and execution budgets |
-| `lob/execution.py`, `lob/rl_env.py`, `lob/runner.py` | Strategies, rewards and orchestration |
-| `lob/replay/` | Canonical schemas, quality checks, reconstruction and replay |
-| `lob/config.py`, `configs/` | Strict research schema and reusable presets |
-| `lob/experiments/`, `lob/stats.py` | Provenance, finite designs, statistics and reports |
-| `lob/cli.py`, `lob/benchmarks.py` | CLI and measured matching workload |
-| `server.py`, `static/`, `app.py` | Existing web and Streamlit exploration tools |
-| `tests/` | Unit, randomized-invariant, integration and regression checks |
+- [Execution protocol](docs/core-research-protocol.md)
+- [Configuration and provenance](docs/configuration.md)
+- [Public data commands and limitations](docs/public-market-data.md)
+- [Architecture](docs/architecture.md)
+- [Full platform checklist and historical batches](docs/implementation-status.md)
 
-The original `lob` package is retained. Historical execution records use a separate
-book because routing them through synthetic matching would change recorded fills.
-Correctness comes before acceleration; no Rust or GPU speedup is claimed.
-
-## Research conventions and limitations
-
-`effective_bps` includes actual fill costs and hypothetical terminal liquidation
-costs/fees only when sufficient depth exists. It excludes the separate RL completion
-penalty. If some leftover quantity cannot be priced, the economic metric is null
-and the episode is INVALID. A mark or a hypothetical liquidation is never recorded
-as a real fill.
-
-Shared seeds mean shared exogenous randomness, not identical realized books after
-agent impact. Message latency is modeled; market-data dissemination latency is not.
-Monetary risk checks are pretrade estimates, not guarantees against later price
-movement. Outstanding orders at the horizon are cancelled and drained through a
-bounded settlement phase. Late actual fills/fees are reconciled; unresolved
-orders make final economic metrics invalid. Hypothetical residual valuation
-remains distinct from actual execution.
-
-PPO training/validation use disjoint seed domains. Historical observable calibration,
-walk-forward diagnostics, registered parameter stresses and linear portfolio risk
-are now implemented. The FIFO order-flow model remains uncalibrated; L2 does not
-identify queue-level arrivals or counterfactual fills. There is no historical
-strategy-performance claim, nonlinear derivatives risk engine, exchange-native
-feed adapter, SAC implementation, full outage/flash-crash engine or alpha verdict.
-The CLI lists only implemented commands.
-
-## Verification and next work
-
-The integrated suite passes **521 tests**, Ruff checks and Python compilation.
-Two Gymnasium warnings concern the existing unbounded observation Box. The
-[implementation checklist](docs/implementation-status.md) records exact commands,
-measured benchmark evidence, discovered bugs and remaining phases. The local
-microbenchmark measures matching only; it is not full simulation throughput.
-
-- [Architecture audit](docs/architecture.md)
-- [Configuration, CLI and provenance](docs/configuration.md)
-- [Historical data format and limitations](docs/historical-replay.md)
-- [Public L2 samples and validation](docs/public-market-data.md)
-- [Calibration, stress, settlement and portfolio workflows](docs/validation-and-risk.md)
-- [Research methodology and limitations](docs/research-methodology.md)
-- [Persistent implementation status](docs/implementation-status.md)
-
-The four priority workflows are implemented and exercised; their
-[executed evidence](examples/studies/validation/README.md) records model failures
-and economic invalidity as well as successful mechanics. Advanced exchange-native
-and counterfactual execution modeling remain tracked in the full platform checklist.
+The bounded execution study does not complete every item in the broader platform
+brief. Historical counterfactual execution, exchange-native feed adapters,
+additional RL families and advanced market dynamics remain outside this release.
