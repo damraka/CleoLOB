@@ -106,9 +106,13 @@ class _Watch:
     initial_position: int
     initial_quantity: int
     filled_quantity: int = 0
+    cancelled_quantity: int = 0
     cancelled_ahead_quantity: int = 0
     first_fill_timestamp_ns: int | None = None
+    initial_quantity_executed_timestamp_ns: int | None = None
     full_fill_timestamp_ns: int | None = None
+    priority_reset_timestamp_ns: int | None = None
+    priority_reset_reason: str | None = None
     terminal_timestamp_ns: int | None = None
     terminal_reason: str | None = None
     history: list[dict[str, Any]] = field(default_factory=list)
@@ -215,11 +219,21 @@ class MBOBook:
                        "quantity_ahead": None, "quantity_behind": None, "age_ns": None}
         else:
             current = self.queue_metrics(watch.order_id)
-        current.update(filled_quantity=watch.filled_quantity,
-                       cancelled_ahead_quantity=watch.cancelled_ahead_quantity,
-                       queue_movement=None if current["position"] is None else (
-                           watch.initial_position - current["position"]),
-                       terminal_reason=watch.terminal_reason)
+        current.update(
+            filled_quantity=watch.filled_quantity,
+            cancelled_quantity=watch.cancelled_quantity,
+            cancelled_ahead_quantity=watch.cancelled_ahead_quantity,
+            queue_movement=(
+                None
+                if current["position"] is None
+                or watch.priority_reset_timestamp_ns is not None
+                else watch.initial_position - current["position"]
+            ),
+            priority_reset=watch.priority_reset_timestamp_ns is not None,
+            priority_reset_timestamp_ns=watch.priority_reset_timestamp_ns,
+            priority_reset_reason=watch.priority_reset_reason,
+            terminal_reason=watch.terminal_reason,
+        )
         watch.history.append(current)
         self._observations += 1
 
@@ -231,13 +245,34 @@ class MBOBook:
             "order_id": order_id, "entry_timestamp_ns": watch.entry_timestamp_ns,
             "observed_from_submission": origin is not None,
             "position_at_submission": watch.initial_position if origin is not None else None,
-            "time_to_first_fill_ns": None if origin is None or watch.first_fill_timestamp_ns is None
-            else watch.first_fill_timestamp_ns - origin,
-            "time_to_full_fill_ns": None if origin is None or watch.full_fill_timestamp_ns is None
-            else watch.full_fill_timestamp_ns - origin,
+            "time_to_first_fill_ns": (
+                None
+                if origin is None or watch.first_fill_timestamp_ns is None
+                else watch.first_fill_timestamp_ns - origin
+            ),
+            # Legacy-style execution threshold: cumulative recorded EXECUTE
+            # quantity has reached the originally observed submitted quantity.
+            # This is NOT necessarily a terminal fill after amendments.
+            "time_to_initial_quantity_executed_ns": (
+                None
+                if origin is None
+                or watch.initial_quantity_executed_timestamp_ns is None
+                else watch.initial_quantity_executed_timestamp_ns - origin
+            ),
+            # Full fill means the observed identity actually leaves the book
+            # through EXECUTE, with no prior explicit CANCEL on that identity.
+            "time_to_full_fill_ns": (
+                None
+                if origin is None or watch.full_fill_timestamp_ns is None
+                else watch.full_fill_timestamp_ns - origin
+            ),
             "initial_quantity": watch.initial_quantity,
             "filled_quantity": watch.filled_quantity,
+            "cancelled_quantity": watch.cancelled_quantity,
             "cancelled_ahead_quantity": watch.cancelled_ahead_quantity,
+            "priority_reset": watch.priority_reset_timestamp_ns is not None,
+            "priority_reset_timestamp_ns": watch.priority_reset_timestamp_ns,
+            "priority_reset_reason": watch.priority_reset_reason,
             "terminal_reason": watch.terminal_reason,
             "terminal_timestamp_ns": watch.terminal_timestamp_ns,
             "history": [dict(item) for item in watch.history],
@@ -297,14 +332,61 @@ class MBOBook:
                     elif event.event_type == "MODIFY" and event.price_ticks in (None, target.price_ticks):
                         watch.cancelled_ahead_quantity += max(0, target.quantity - new[event.order_id].quantity)
                 if event.order_id == watch.order_id:
+                    # Same-price size reductions retain priority in the
+                    # canonical book. Repricing or increasing visible size
+                    # loses priority, so submission-position movement is no
+                    # longer comparable after that amendment.
+                    if (
+                        event.event_type == "MODIFY"
+                        and target is not None
+                        and watch.order_id in new
+                    ):
+                        replacement = new[watch.order_id]
+                        repriced = replacement.price_ticks != target.price_ticks
+                        size_increased = replacement.quantity > target.quantity
+                        if (
+                            (repriced or size_increased)
+                            and watch.priority_reset_timestamp_ns is None
+                        ):
+                            watch.priority_reset_timestamp_ns = event.timestamp_ns
+                            watch.priority_reset_reason = (
+                                "REPRICE" if repriced else "SIZE_INCREASE"
+                            )
+
+                    if event.event_type == "CANCEL":
+                        watch.cancelled_quantity += event.quantity
+
                     if event.event_type == "EXECUTE":
                         watch.filled_quantity += event.quantity
+
                         if watch.first_fill_timestamp_ns is None:
                             watch.first_fill_timestamp_ns = event.timestamp_ns
-                        if watch.filled_quantity >= watch.initial_quantity and watch.full_fill_timestamp_ns is None:
-                            watch.full_fill_timestamp_ns = event.timestamp_ns
+
+                        if (
+                            watch.filled_quantity >= watch.initial_quantity
+                            and watch.initial_quantity_executed_timestamp_ns is None
+                        ):
+                            watch.initial_quantity_executed_timestamp_ns = (
+                                event.timestamp_ns
+                            )
+
                     if watch.order_id not in new:
-                        watch.terminal_reason = "FILLED" if event.event_type == "EXECUTE" else "CANCELLED"
+                        if event.event_type == "EXECUTE":
+                            watch.terminal_reason = "FILLED"
+
+                            # A true observed full fill requires terminal
+                            # removal by EXECUTE and no explicit cancellation
+                            # of this watched identity beforehand. Same-ID
+                            # MODIFY amendments are tracked separately.
+                            if (
+                                watch.cancelled_quantity == 0
+                                and watch.full_fill_timestamp_ns is None
+                            ):
+                                watch.full_fill_timestamp_ns = (
+                                    event.timestamp_ns
+                                )
+                        else:
+                            watch.terminal_reason = "CANCELLED"
             if watch.terminal_reason:
                 watch.terminal_timestamp_ns = event.timestamp_ns
             self._record(watch)
@@ -314,8 +396,11 @@ class MBOBook:
 
         Denominator: watches registered at ADD whose entire horizon is observed
         or whose order terminates before it. A census before the horizon censors
-        that observation. No independent-censoring or causal assumption is made;
-        this complete-case frequency is not a population fill-probability model.
+        that observation. ``full_fill_frequency`` requires observed terminal
+        removal by EXECUTE without a prior explicit CANCEL on that identity.
+        Quantity amendments through MODIFY remain visible separately from that
+        estimand. No independent-censoring or causal assumption is made; this
+        complete-case frequency is not a population fill-probability model.
         """
         horizon_ns = _integer(horizon_ns, "horizon_ns", minimum=0)
         eligible = [w for w in self._watches.values() if w.submission_timestamp_ns is not None]

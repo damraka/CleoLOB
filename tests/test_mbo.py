@@ -131,16 +131,42 @@ def test_cancelled_then_executed_remainder_is_not_full_initial_size_fill():
     assert book.cohort_summary(20)["any_passive_fill_frequency"] == 1
 
 
-def test_initial_size_fill_threshold_is_distinct_from_amended_remaining_size():
+def test_initial_execution_threshold_is_distinct_from_actual_full_fill():
     book = initialized()
     book.apply(event(1, "ADD"))
     book.watch("o1")
+
+    # Increasing quantity loses priority and increases the then-resting size.
     book.apply(event(2, "MODIFY", order_id="o1", quantity=15))
+
+    # Ten units have now executed: this reaches the originally submitted
+    # quantity, but the amended order is still resting with five units.
     book.apply(event(3, "EXECUTE", order_id="o1", quantity=10))
+
     assert book.queue_metrics("o1")["quantity"] == 5
-    assert book.order_research("o1")["time_to_full_fill_ns"] == 20
-    assert book.cohort_summary(20)["full_fill_frequency"] == 1
-    assert book.cohort_summary(20)["queue_survival_frequency"] == 1
+
+    research = book.order_research("o1")
+    assert research["time_to_initial_quantity_executed_ns"] == 20
+    assert research["time_to_full_fill_ns"] is None
+    assert research["terminal_reason"] is None
+    assert research["priority_reset"] is True
+    assert research["priority_reset_reason"] == "SIZE_INCREASE"
+
+    report = book.cohort_summary(20)
+    assert report["full_fill_frequency"] == 0
+    assert report["queue_survival_frequency"] == 1
+
+    # The final recorded execution actually removes the order.
+    book.apply(event(4, "EXECUTE", order_id="o1", quantity=5))
+
+    research = book.order_research("o1")
+    assert research["terminal_reason"] == "FILLED"
+    assert research["time_to_full_fill_ns"] == 30
+    assert research["time_to_initial_quantity_executed_ns"] == 20
+
+    report = book.cohort_summary(30)
+    assert report["full_fill_frequency"] == 1
+
 
 
 def test_modify_retains_or_loses_priority_and_cancellation_ahead_definition():
@@ -463,3 +489,96 @@ def test_redistributable_fixture_is_explicitly_synthetic_and_reproducible():
     assert replay.book.summary()["executed_quantity"] == 12
     assert replay.book.aggregate_l2() == {"bids": [], "asks": [[102, 9]]}
     assert replay.book.order_research("b2")["time_to_full_fill_ns"] == 60
+
+
+# --- v0.3 MBO amendment/full-fill regression tests ---
+
+
+def test_modify_down_then_terminal_execute_is_observed_full_fill():
+    book = initialized()
+    book.apply(event(1, "ADD"))
+    book.watch("o1")
+
+    # Same-price quantity reduction retains priority.
+    book.apply(event(2, "MODIFY", order_id="o1", quantity=5))
+
+    research = book.order_research("o1")
+    assert research["priority_reset"] is False
+
+    book.apply(event(3, "EXECUTE", order_id="o1", quantity=5))
+
+    research = book.order_research("o1")
+    assert research["terminal_reason"] == "FILLED"
+    assert research["filled_quantity"] == 5
+
+    # Only five units executed, so the original-size execution threshold was
+    # never reached. Nevertheless the amended resting identity genuinely
+    # terminated through an execution.
+    assert research["time_to_initial_quantity_executed_ns"] is None
+    assert research["time_to_full_fill_ns"] == 20
+
+    assert book.cohort_summary(20)["full_fill_frequency"] == 1
+
+
+def test_explicit_cancel_then_execute_remainder_is_not_full_fill():
+    book = initialized()
+    book.apply(event(1, "ADD"))
+    book.watch("o1")
+
+    book.apply(event(2, "CANCEL", order_id="o1", quantity=4))
+    book.apply(event(3, "EXECUTE", order_id="o1", quantity=6))
+
+    research = book.order_research("o1")
+
+    assert research["terminal_reason"] == "FILLED"
+    assert research["cancelled_quantity"] == 4
+    assert research["filled_quantity"] == 6
+    assert research["time_to_full_fill_ns"] is None
+    assert research["time_to_initial_quantity_executed_ns"] is None
+
+    report = book.cohort_summary(20)
+    assert report["any_passive_fill_frequency"] == 1
+    assert report["full_fill_frequency"] == 0
+
+
+def test_reprice_makes_submission_queue_movement_unavailable():
+    book = initialized()
+
+    book.apply(event(1, "ADD", quantity=8))
+    book.apply(event(2, "ADD", quantity=10))
+    book.watch("o2")
+
+    assert book.order_research("o2")["history"][-1]["queue_movement"] == 0
+
+    # Repricing loses source FIFO priority. A queue position at another price
+    # level must not be presented as advancement relative to submission.
+    book.apply(event(3, "MODIFY", order_id="o2", price_ticks=98))
+
+    research = book.order_research("o2")
+
+    assert research["priority_reset"] is True
+    assert research["priority_reset_reason"] == "REPRICE"
+    assert research["priority_reset_timestamp_ns"] == 30
+    assert research["history"][-1]["queue_movement"] is None
+
+
+def test_same_price_size_increase_resets_priority_movement_baseline():
+    book = initialized()
+
+    book.apply(event(1, "ADD", quantity=10))
+    book.watch("o1")
+    book.apply(event(2, "ADD", quantity=7))
+
+    # o1 starts ahead of o2.
+    assert book.queue("BUY", 99) == ("o1", "o2")
+
+    # Same-price increase loses priority in the canonical historical book,
+    # moving o1 behind o2.
+    book.apply(event(3, "MODIFY", order_id="o1", quantity=12))
+
+    assert book.queue("BUY", 99) == ("o2", "o1")
+
+    research = book.order_research("o1")
+    assert research["priority_reset"] is True
+    assert research["priority_reset_reason"] == "SIZE_INCREASE"
+    assert research["history"][-1]["queue_movement"] is None
