@@ -1,12 +1,55 @@
-# CLEOLOB — Market Microstructure Research Lab
+<div align="center">
 
-**CleoLOB** is a reproducible research laboratory for limit-order-book mechanics, execution algorithms, historical L2 reconstruction, reinforcement learning, risk, and statistical strategy comparison.
+# CleoLOB
 
-It is built around a simple principle:
+### A research-grade laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.
 
-> **A positive synthetic backtest is not evidence of live alpha.**
+**CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets — from synthetic experiments to historical L2 market data.**
 
-Unpriced inventory, invalid experiments, missing comparisons, failed runs, and model limitations are reported rather than silently discarded.
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Research](https://img.shields.io/badge/focus-market%20microstructure-blueviolet)
+![LOB](https://img.shields.io/badge/limit%20order%20book-simulation-orange)
+![RL](https://img.shields.io/badge/reinforcement%20learning-execution-green)
+![License](https://img.shields.io/github/license/damraka/CleoLOB)
+
+</div>
+
+---
+
+## Overview
+
+CleoLOB is an open-source quantitative research platform for studying modern electronic markets.
+
+It combines a configurable limit order book simulator with historical market-data reconstruction, empirical calibration, execution algorithms, reinforcement-learning environments, risk analysis, and interactive visualization.
+
+The project is designed for research into questions such as:
+
+- How do execution strategies behave under different market regimes?
+- How accurately can historical L2 order books be reconstructed?
+- How does order-book imbalance relate to short-term market dynamics?
+- How do classical execution algorithms compare with learned policies?
+- How sensitive are strategies to latency, impact, liquidity, fees, and market structure?
+- Can simulated market dynamics reproduce empirical characteristics observed in real markets?
+
+> **CleoLOB is a research and experimentation framework, not a production trading system.**
+
+---
+
+## Core Capabilities
+
+| Area | Capabilities |
+|---|---|
+| Limit Order Book | Event-driven matching, bids/asks, market and limit orders |
+| Market Simulation | Configurable synthetic order-flow environments |
+| Historical Data | L2 reconstruction and snapshot validation |
+| Calibration | Empirical parameter estimation from market data |
+| Execution | TWAP, VWAP, POV, Almgren-Chriss and configurable policies |
+| Reinforcement Learning | Execution environments and trainable agents |
+| Risk | Execution cost, slippage, inventory and impact analysis |
+| Research | Reproducible experiments, seeds, configs and reporting |
+| Visualization | Interactive market-microstructure dashboards |
+
+---
 
 [![Research foundations](https://github.com/damraka/CleoLOB/actions/workflows/research.yml/badge.svg)](https://github.com/damraka/CleoLOB/actions/workflows/research.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
