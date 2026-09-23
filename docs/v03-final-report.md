@@ -246,7 +246,7 @@ git log --oneline --decorate -10
 .\results\v03\runtimes\py313\python.exe -m pytest -q
 .\.venv\Scripts\python.exe tools/bootstrap.py --environment results/v03/bootstrap-env
 .\.venv\Scripts\python.exe -m venv results/v03/wheel-env
-.\results\v03\wheel-env\Scripts\python.exe -m pip install results/v03/wheels/cleolob-0.3.0.dev0-py3-none-any.whl
+.\results\v03\wheel-env\Scripts\python.exe -m pip install results/v03/wheels/cleolob-0.3.0-py3-none-any.whl
 .\.venv\Scripts\python.exe -m lob.cli calibration-study --config configs/v03-calibration.json --out results/v03/calibration-final
 .\.venv\Scripts\python.exe -m lob.generalization --out results/v03/calibration-final --verify
 .\.venv\Scripts\python.exe -m lob.policy_study register --config configs/v03-policy-study.json --out results/v03/policy-final
@@ -312,8 +312,8 @@ disclosed rather than silently rewriting historical evidence.
 
 ## Review and version recommendation
 
-Recommend **v0.3.0** after review; package metadata is deliberately
-`0.3.0.dev0`, with v0.2.0/v0.2.1 tags preserved. Suggested review groups mirror
+Prepared for **v0.3.0** release after review; package metadata is
+`0.3.0`, with v0.2.0/v0.2.1 tags preserved. Suggested review groups mirror
 the logical commits: MBO; calibration; policy studies; benchmarks/artifacts;
 reproduction/CI; portability/privacy; claims and compact evidence.
 
