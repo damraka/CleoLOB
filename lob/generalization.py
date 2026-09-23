@@ -451,22 +451,41 @@ def run_study(config: dict, out: str | Path) -> dict:
     if not eligible:
         raise ValueError("all registered calibration candidates failed; results retained")
     selected = min(eligible, key=lambda row: (row["mean_validation_loss"], row["candidate"]))
-    internal = _section(development, selection_stop, len(development))
-    stop = int(np.searchsorted(selection.timestamp_us, int(internal.timestamp_us.iloc[0]) - config["embargo_us"]))
-    start = max(0, stop - config["initial_train_rows"]) if selected["window"] == "rolling" else 0
+
+    # Candidate selection and final refit must not depend on internal-holdout
+    # values. Its boundary is registered by the chronological design, so
+    # derive that timestamp without materializing internal observations.
+    internal_start_us = (
+        config["development"]["start_us"]
+        + selection_stop * config["interval_us"]
+    )
+    stop = int(
+        np.searchsorted(
+            selection.timestamp_us,
+            internal_start_us - config["embargo_us"],
+        )
+    )
+    start = (
+        max(0, stop - config["initial_train_rows"])
+        if selected["window"] == "rolling"
+        else 0
+    )
     model = fit_observable_model(_section(selection, start, stop), family=selected["family"],
                                 interval_us=config["interval_us"], seed=config["fit_seed"],
                                 max_pool_rows=config["max_pool_rows"])
     write_json(root / "model.json", model)
     write_json(root / "selection.json", {"candidate": selected["candidate"],
                                         "mean_validation_loss": selected["mean_validation_loss"],
-                                        "development_frame_sha256": _frame_hash(development),
+                                        "selection_frame_sha256": _frame_hash(selection),
                                         "model_sha256": model["model_sha256"]})
     write_json(root / "selection-seal.json", {"sealed_before_internal_and_external_evaluation": True,
                                              "files": {name: sha256_file(root / name) for name in
                                                        ("plan.json", "provenance.json", "validation.json",
                                                         "model.json", "selection.json")}})
     _check_seal(root)
+
+    # Materialize internal observations only after the selection seal.
+    internal = _section(development, selection_stop, len(development))
     internal_score = evaluate_observable_model(model, internal, seeds=config["internal_seeds"],
                                                simulation_rows=config["simulation_rows"])
     write_json(root / "internal.json", internal_score)

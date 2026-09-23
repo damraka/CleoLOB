@@ -399,3 +399,172 @@ def test_v03_partition_start_resets_causal_return():
     # Ten fresh returns are required after the partition boundary.
     assert observed.loc[0:9, "rms_return_10"].isna().all()
     assert np.isfinite(observed.loc[10, "rms_return_10"])
+
+
+# --- v0.3 strict holdout-isolation regression tests ---
+
+
+def test_internal_payload_cannot_change_sealed_selection_artifacts(
+    config,
+    tmp_path,
+    monkeypatch,
+):
+    config["simulation_rows"] = 128
+
+    first_out = tmp_path / "first"
+    second_out = tmp_path / "second"
+
+    g.run_study(config, first_out)
+
+    original_load = g._load
+
+    def mutate_only_internal(cfg, phase):
+        observations = original_load(cfg, phase)
+
+        if phase == "development":
+            start = len(observations) - cfg["internal_rows"]
+
+            # Only the untouched internal holdout is changed.
+            observations.loc[start:, "spread_bps"] *= 2.5
+
+        return observations
+
+    monkeypatch.setattr(g, "_load", mutate_only_internal)
+
+    g.run_study(config, second_out)
+
+    # Selection and frozen-refit artifacts must be byte-identical.
+    for name in (
+        "validation.json",
+        "model.json",
+        "selection.json",
+        "selection-seal.json",
+    ):
+        assert (
+            (first_out / name).read_bytes()
+            == (second_out / name).read_bytes()
+        ), name
+
+    # Internal scoring itself must observe the changed holdout.
+    assert (
+        (first_out / "internal.json").read_bytes()
+        != (second_out / "internal.json").read_bytes()
+    )
+
+
+def test_external_payload_cannot_change_selection_artifacts(
+    config,
+    tmp_path,
+):
+    config["simulation_rows"] = 128
+
+    first_out = tmp_path / "first"
+    second_out = tmp_path / "second"
+
+    g.run_study(config, first_out)
+
+    config["external"]["shift"] = 3.0
+    g.run_study(config, second_out)
+
+    # External registration changes plan.json, so the seal itself may
+    # legitimately differ. The actual selection outputs must not.
+    for name in (
+        "validation.json",
+        "model.json",
+        "selection.json",
+    ):
+        assert (
+            (first_out / name).read_bytes()
+            == (second_out / name).read_bytes()
+        ), name
+
+    assert (
+        (first_out / "external.json").read_bytes()
+        != (second_out / "external.json").read_bytes()
+    )
+
+
+def test_selection_json_hashes_only_selection_period(
+    config,
+    tmp_path,
+):
+    config["simulation_rows"] = 128
+
+    out = tmp_path / "study"
+    g.run_study(config, out)
+
+    artifact = json.loads(
+        (out / "selection.json").read_text()
+    )
+
+    assert "selection_frame_sha256" in artifact
+    assert "development_frame_sha256" not in artifact
+
+    development = g.synthetic_fixture(
+        config["development"],
+        config["interval_us"],
+    )
+
+    selection_stop = (
+        len(development) - config["internal_rows"]
+    )
+
+    expected = g._section(
+        development,
+        0,
+        selection_stop,
+    )
+
+    assert (
+        artifact["selection_frame_sha256"]
+        == g._frame_hash(expected)
+    )
+
+
+def test_feature_csv_external_first_return_cannot_cross_partition(
+    config,
+    tmp_path,
+    monkeypatch,
+):
+    monkeypatch.setattr(g, "PROJECT_ROOT", tmp_path)
+
+    interval_us = config["interval_us"]
+
+    development = g.synthetic_fixture(
+        config["development"],
+        interval_us,
+    )
+    external = g.synthetic_fixture(
+        config["external"],
+        interval_us,
+    )
+
+    # Finite first return would necessarily rely on an observation outside
+    # the registered external partition.
+    external.loc[0, "log_return"] = 0.001
+
+    development_path = tmp_path / "development.csv"
+    external_path = tmp_path / "external.csv"
+
+    development.to_csv(development_path, index=False)
+    external.to_csv(external_path, index=False)
+
+    config["kind"] = "feature_csv"
+
+    config["development"].update(
+        path="development.csv",
+        sha256=g.sha256_file(development_path),
+    )
+
+    config["external"].update(
+        path="external.csv",
+        sha256=g.sha256_file(external_path),
+    )
+
+    g._validate_config(config)
+
+    with pytest.raises(
+        ValueError,
+        match="first feature row must have NaN log_return",
+    ):
+        g._load(config, "external")
