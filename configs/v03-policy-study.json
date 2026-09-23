@@ -1,0 +1,20 @@
+{
+  "config": {
+    "name": "v03_policy_smoke",
+    "market": {"limit_rate": 8.0, "market_rate": 4.0, "cancel_rate": 0.08, "resilience": 0.4},
+    "execution": {"quantity": 300, "horizon": 2.0, "decision_dt": 0.1, "warmup_seconds": 0.5,
+      "terminal_penalty_bps": 25.0},
+    "fees": {"maker_bps": 0.0, "taker_bps": 1.0},
+    "resources": {"max_episodes": 1000, "max_estimated_events": 5000000}
+  },
+  "training_seeds": [83001, 83002, 83003],
+  "evaluation_seeds": [73000, 73001, 73002, 73003, 73004, 73005, 73006, 73007],
+  "identification_seeds": [53001, 53002, 53003, 53004],
+  "timesteps": 1024,
+  "bootstrap_samples": 20000,
+  "statistics_seed": 93001,
+  "evidence_level": "smoke",
+  "shifted_market": {"market_rate": 7.0, "cancel_rate": 0.2, "resilience": 0.25},
+  "stress_market": {"market_rate": 12.0, "cancel_rate": 0.4, "resilience": 0.1,
+    "target_level_vol": 120, "latency_base": 0.025, "latency_jitter": 0.025}
+}
