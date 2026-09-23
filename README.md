@@ -128,6 +128,32 @@ The framework therefore treats experiment validity, provenance and failure repor
 
 ---
 
+## Empirical Validation
+
+CleoLOB's historical L2 reconstruction pipeline was evaluated using
+Deribit ETH-PERPETUAL market data over an approximately 24-hour period.
+
+### Reconstruction Results
+
+| Metric | Result |
+|---|---:|
+| Exchange | Deribit |
+| Instrument | ETH-PERPETUAL |
+| Observed period | 23.9999 hours |
+| Incremental L2 rows processed | 2,321,160 |
+| Reconstructed book states | 1,531,713 |
+| Published top-5 snapshots compared | 988,235 |
+| Exact top-5 matches | 988,235 / 988,235 |
+| Reconstruction match rate | **100.000%** |
+| Different reconstructed books | 0 |
+| Exchange timestamp mismatches | 0 |
+| Crossed book groups | 0 |
+| Missing level deletes | 0 |
+| Trade records checked | 17,288 |
+
+The reconstructed order book matched every published top-five reference
+snapshot in the evaluated dataset.
+
 # Core Capabilities
 
 ## Deterministic FIFO Exchange
@@ -777,6 +803,71 @@ Historical data and simulation results are intentionally separated so that
 synthetic experiments are not presented as empirical market evidence.
 
 See the documentation for supported datasets and validation methodology.
+
+## Empirical Validation
+
+CleoLOB's historical L2 reconstruction pipeline was evaluated using
+Deribit ETH-PERPETUAL market data over an approximately 24-hour period.
+
+### Reconstruction Results
+
+| Metric | Result |
+|---|---:|
+| Exchange | Deribit |
+| Instrument | ETH-PERPETUAL |
+| Observed period | 23.9999 hours |
+| Incremental L2 rows processed | 2,321,160 |
+| Reconstructed book states | 1,531,713 |
+| Published top-5 snapshots compared | 988,235 |
+| Exact top-5 matches | 988,235 / 988,235 |
+| Reconstruction match rate | **100.000%** |
+| Different reconstructed books | 0 |
+| Exchange timestamp mismatches | 0 |
+| Crossed book groups | 0 |
+| Missing level deletes | 0 |
+| Trade records checked | 17,288 |
+
+The reconstructed order book matched every published top-five reference
+snapshot in the evaluated dataset.
+
+### End-to-End Performance
+
+Measured locally while running the complete historical assessment pipeline.
+
+| Metric | Result |
+|---|---:|
+| Total assessment runtime | 111.06 s |
+| Effective L2 throughput | ~20,900 rows/s |
+| Effective reconstructed-state throughput | ~13,792 states/s |
+| Platform | Windows 11 / AMD64 |
+| Python | CPython 3.14.6 |
+
+> Throughput represents the complete `assess-l2` workflow rather than an
+> isolated matching-engine microbenchmark.
+
+### Observed Market Statistics
+
+Statistics are sampled on a one-second UTC grid using the latest completed
+captured book.
+
+| Metric | Mean | Median | 95th percentile |
+|---|---:|---:|---:|
+| Mid price | 131.814 | 131.975 | 133.925 |
+| Spread | 4.172 bps | 3.790 bps | 7.579 bps |
+| Bid depth (top 5, native units) | 239,902 | 242,820 | 354,902 |
+| Ask depth (top 5, native units) | 241,855 | 244,314 | 342,629 |
+| Top-5 imbalance | -0.00944 | -0.00092 | 0.38666 |
+
+### Scope and Limitations
+
+This validates CleoLOB's historical L2 reconstruction mechanics against
+published snapshots from the same market-data source.
+
+It is not independent verification of exchange truth and does not establish
+strategy profitability.
+
+L2 data does not expose individual order IDs, FIFO queue positions,
+hidden liquidity, or hypothetical counterfactual fills.
 
 ## Roadmap
 
