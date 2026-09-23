@@ -727,42 +727,25 @@ Executed evidence:
 
 ## Roadmap
 
-**PLANNED:** The remaining items below are extensions beyond the bounded,
-implemented v0.3 workflows.
+CleoLOB **v0.4** is planned as an **external-validity and real-market evidence**
+release rather than a feature-count release.
 
-### Historical execution
+Primary research directions include:
 
-- [ ] Validated exchange-native MBO adapter
-- [ ] Counterfactual order insertion
-- [ ] Independently validated queue studies on actual MBO data
-- [ ] Conservative / neutral / optimistic fill models
+- genuine historical MBO validation,
+- formal L2/MBO capability contracts,
+- multi-period chronological generalization,
+- observable-level calibration failure attribution,
+- completion-constrained learned execution policies,
+- larger preregistered PPO/DQN studies,
+- scaling and memory characterization,
+- stronger artifact provenance and independent reproduction.
 
-### Market realism
+Failed external tests, incomplete policies, and unsupported market-data
+inferences will continue to be preserved rather than hidden.
 
-- [ ] Latency-model extensions
-- [ ] Improved market-impact calibration
-- [ ] Empirically validated market regimes beyond synthetic shifts
+See the full [v0.4 roadmap](docs/v04-roadmap.md).
 
-### Data
-
-- [ ] Additional exchanges
-- [ ] Additional instruments
-- [ ] L3 / order-level datasets
-- [ ] Longer multi-day validation datasets
-
-### Research
-
-- [ ] Expanded TWAP / VWAP / POV / Almgren–Chriss benchmark studies
-- [ ] Longer-budget PPO/DQN studies with more independent training seeds
-- [ ] Independent real-market generalization with fresh holdouts
-- [ ] Licensed MBO benchmark datasets
-
-### Infrastructure
-
-- [ ] Expanded CI benchmarks
-- [ ] Profile-supported optimization with equivalence evidence
-- [ ] Improved experiment registry and reporting
-- [ ] Expanded documentation
 
 ---
 
