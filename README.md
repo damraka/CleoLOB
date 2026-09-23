@@ -11,6 +11,7 @@
 ![LOB](https://img.shields.io/badge/limit%20order%20book-simulation-orange)
 ![RL](https://img.shields.io/badge/reinforcement%20learning-execution-green)
 ![License](https://img.shields.io/github/license/damraka/CleoLOB)
+![CI](https://github.com/damraka/CleoLOB/actions/workflows/ci.yml/badge.svg)
 
 </div>
 
