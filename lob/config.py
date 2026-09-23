@@ -61,7 +61,10 @@ class ExecutionSettings(Settings):
     quantity: PositiveInt = Field(2_000, description="Parent quantity in shares; lot aligned.")
     horizon: Annotated[float, Field(gt=0, le=3600)] = Field(10.0, description="Execution horizon, seconds.")
     decision_dt: Positive = Field(0.5, description="Decision interval, seconds; final step ends at horizon.")
+    warmup_seconds: Annotated[float, Field(ge=0, le=3600)] = Field(5.0, description="Background simulator warmup before arrival-price observation.")
     risk_aversion: Nonnegative = Field(1e-6, description="AC quadratic inventory-risk coefficient.")
+    temp_impact: Positive = Field(1.3e-3, description="AC temporary impact slope, currency seconds per quantity unit; calibrate on simulator diagnostics.")
+    sigma: Nonnegative = Field(1.5, description="AC arithmetic price volatility, currency per square-root second; calibrate on simulator diagnostics.")
     participation: Annotated[float, Field(gt=0, lt=1)] = Field(0.3, description="POV target participation.")
     terminal_penalty_bps: Nonnegative = Field(25.0, description="Noncompletion objective penalty; separate from economic costs.")
     settlement_timeout: Annotated[float, Field(ge=0, le=3600)] = Field(5.0, description="Maximum post-decision seconds to cancel/drain outstanding strategy orders.")
@@ -120,6 +123,7 @@ class EvaluationSettings(Settings):
 
 
 class ResourceSettings(Settings):
+    check_invariants: bool = Field(True, description="Run full book assertions after every event; disabling changes checks only, never market dynamics.")
     max_episodes: Annotated[int, Field(ge=1, le=100_000)] = Field(200, description="Hard preflight bound on agent × seed episodes.")
     max_runtime_seconds: Positive = Field(120.0, description="Wall-clock stop checked between episodes; not a per-event timeout.")
     max_decisions_per_episode: PositiveInt = Field(20_000, description="Reject horizon/decision interval above this count.")
@@ -163,7 +167,8 @@ class ResearchConfig(Settings):
         rate += 20 * self.market.resilience * self.market.resilience_levels
         rate = 2 * rate + 40 * self.market.cancel_rate
         paths = self.episode_count + (5 * len(self.evaluation.seeds) if "vwap" in self.evaluation.agents else 0)
-        return math.ceil((self.execution.horizon + self.execution.settlement_timeout + 5) * max(1, rate) * paths)
+        return math.ceil((self.execution.horizon + self.execution.settlement_timeout
+                          + self.execution.warmup_seconds) * max(1, rate) * paths)
 
     def runner_params(self, seed: int) -> dict[str, Any]:
         if seed not in self.evaluation.seeds:
@@ -171,11 +176,14 @@ class ResearchConfig(Settings):
         return {
             "qty": self.execution.quantity, "horizon": self.execution.horizon, "side": self.execution.side,
             "dt": self.execution.decision_dt, "seed": seed,
+            "warmup_seconds": self.execution.warmup_seconds,
             "latency_ms": 1000 * (self.market.latency_base + self.market.latency_jitter),
             "resilience": self.market.resilience, "market_rate": self.market.market_rate,
             "risk_aversion": self.execution.risk_aversion,
+            "temp_impact": self.execution.temp_impact, "sigma": self.execution.sigma,
             "pov_rate": self.execution.participation,
-            "sim": {**self.market.engine_config(seed).__dict__, "max_events": self.resources.max_events_per_episode},
+            "sim": {**self.market.engine_config(seed).__dict__, "max_events": self.resources.max_events_per_episode,
+                    "check_invariants": self.resources.check_invariants},
             "fees": self.fees.model_dump(), "risk": self.risk.model_dump(),
             "terminal_penalty_bps": self.execution.terminal_penalty_bps,
             "settlement_timeout": self.execution.settlement_timeout,

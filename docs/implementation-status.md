@@ -1,9 +1,55 @@
 # Implementation status
 
-This is the persistent checklist for the user's 170-section implementation brief.
+This is the persistent checklist for the broader 170-section platform brief.
 Status values: **DONE**, **PARTIAL**, **NOT STARTED**, **BLOCKED**. A phase is not
 DONE merely because its directory exists. See `architecture.md` for the audit and
 `research-methodology.md` for assumptions. Update this file after each tested batch.
+
+## Current execution study — 2026-09-22
+
+The active release is the bounded PPO-versus-AC study. The platform-wide phases
+below remain partial where their broader features are outside this scope.
+Older dated batch sections are historical records, not current test counts or
+statements that the new study has never run.
+
+- **DONE:** frozen simulation-based L2 calibration against July 2026 BTC/ETH
+  training data, followed by August validation and September holdout. All six
+  external cohort/phase gates FAIL. The four external files contain 7,461,728
+  snapshots and 345,595 one-second observations; pooled rows reuse those data.
+  September is consumed holdout evidence, and the model remains unvalidated.
+- **DONE:** positive control under a separately registered execution amendment.
+  The original failed grid is preserved. The selected 1,714-lot, 240-second
+  setting passed 384 capacity preflight episodes and 64 independent confirmation
+  seeds: Random minus TWAP −0.9591 bps, 95% CI [−1.1953, −0.7155].
+- **DONE:** frozen `configs/core-study.json` and interval-specific AC fit on
+  separate seeds; η=5.51834×10⁻⁵, σ=0.00438465, R²=0.5013, coverage 92.94%.
+- **DONE:** all 20 PPO fits in `examples/studies/core/ppo-final-20260922`:
+  163,840 steps and 4,957 training episodes, with zero INVALID outcomes. The run repeats the fixed design already
+  executed twice in Linux CI; prior runs are not pooled as independent seeds.
+  The initial local serial attempt is preserved. A registered computational
+  amendment adds isolated processes without changing scientific settings.
+- **DONE:** diagnostic power analysis locked 32 final market seeds before final
+  evaluation; approximate power is 81.48% for the 0.5 bps primary effect, against
+  an 80% target. The resource cap is not binding. All **704/704** planned final
+  episodes completed, with **zero INVALID** outcomes. Primary PPO minus
+  risk-neutral AC is **−1.6046 bps, 95% CI [−2.0951, −1.0152]**. Actual primary
+  fill is **86.90%**, with remaining inventory hypothetically valued; the 100 bps
+  penalty arm filled 100%. All 99% family intervals and fixed risk-sensitive AC
+  results are retained. This is a synthetic computational replication, not
+  historical execution validation.
+- **DONE:** four Plotly report types, reward decomposition, primary/family
+  intervals and labeled invalid-outcome sensitivity rendering. Final reports
+  were generated from the sealed study, which passes integrity verification.
+  No test episode was rerun for rendering.
+- **DONE:** current full local suite **573 passed**, plus Ruff and compilation.
+  Two existing Gymnasium warnings concern the unbounded observation Box. Linux
+  CI covers Python 3.11/3.13; the release commit's run is verified separately.
+- **DONE:** legacy scripts/100-seed results archived under `legacy/`; non-core
+  Portfolio/FX and new interface work frozen. Earlier scientific artifacts and
+  failed results remain intact.
+
+See the [current README](../README.md), [protocol](core-research-protocol.md) and
+[external calibration assessment](../examples/studies/core/calibration/EXTERNAL_RESULTS.md).
 
 ## Baseline audit — 2026-09-13
 
@@ -18,21 +64,21 @@ This is a local measurement, not a cross-machine performance claim.
 | Phase | Status | Scope and next required evidence |
 |---|---|---|
 | 1. Correctness and reproducibility | PARTIAL | DONE: strict config, lifecycle/TIF, FIFO invariants, clocks/RNG, ledger/reservations, bounded post-horizon settlement and late-fill reconciliation. Remaining: feed/broader latency models, self-trade prevention and full exchange sessions. |
-| 2. Historical replay and calibration | PARTIAL | DONE: canonical/L2 reconstruction, public data provenance, frozen empirical observable calibration and later-date scorecards. Latent FIFO order-flow calibration, exchange-native/instrument adapters and Parquet remain. |
+| 2. Historical replay and calibration | PARTIAL | DONE: canonical/L2 reconstruction, public provenance, empirical observable models and simulation-based ZI moment fitting across BTC/ETH dates. All frozen external ZI gates fail; real-market validity, exchange-native/instrument adapters and Parquet remain. |
 | 3. Execution baselines and TCA | PARTIAL | DONE: TWAP/VWAP/POV/AC, fees, fill reconciliation, economic/objective separation and unpriced inventory detection. Full spread/impact/timing/adverse-selection attribution remains. |
-| 4. Experiments and statistics | PARTIAL | DONE: source/config registry, reproduction, finite designs, registered multi-scenario stress execution, full-family Holm, failure retention and nested study verification. Parallel scheduling, LHS/Sobol/optimization and result cube remain. |
+| 4. Experiments and statistics | PARTIAL | DONE: source/config registry, reproduction, finite designs, stress execution, Holm/Bonferroni families, crossed-seed intervals, power locking, isolated PPO workers and failure retention. Broader scheduling, LHS/Sobol/optimization and result cube remain. |
 | 5. Risk | PARTIAL | DONE: execution limits plus linear multi-currency portfolio accounting/reservations, gross/net/leverage/margin/concentration, stale mark/FX rejection, drawdown/daily-loss latch, asset/FX scenarios and empirical VaR/ES. Nonlinear derivatives, operational risk and automatic flattening remain. |
-| 6. RL and prediction | PARTIAL | DONE: PPO environment regression checks, explicit reward terms, causal decision logs and disjoint train/validation seed domains. No new trained research models. SAC, recurrent/continuous policies and supervised prediction NOT STARTED. |
-| 7. Robustness | PARTIAL | DONE: purged chronological splits, expanding walk-forward fits, later-date observable drift/coverage tests and six-profile execution stresses. Broader independent datasets, historical counterfactual execution, ablations and dynamic outage/crash scenarios remain. |
-| 8. Visualization and reports | PARTIAL | DONE: offline HTML evidence report with guardrails, complete outcomes and adjusted comparisons. Existing web/3D view preserved and cards now display economic effective cost/invalid depth. New replay/risk/research dashboards remain. |
+| 6. RL and prediction | PARTIAL | DONE: PPO environment contracts, reward decomposition, train/diagnostic/test seed blocks, 20 trained fixed-budget models and all 704 final episodes with crossed intervals. Prior fixed-design CI runs are documented. SAC, recurrent/continuous policies and supervised prediction remain outside scope. |
+| 7. Robustness | PARTIAL | DONE: purged splits, walk-forward fits, multiple BTC/ETH dates, external fidelity gates, six-profile stresses and explicit residual-price sensitivity. Four completion penalties are in the current study. Broader independent venues, historical counterfactual execution and outage/crash dynamics remain. |
+| 8. Visualization and reports | PARTIAL | DONE: offline evidence reports plus Plotly comparison intervals, training curves, reward and execution-cost decomposition. Existing web/3D exploration is preserved. Broader replay/risk dashboards remain. |
 | 9. Performance | PARTIAL | DONE: bounded matching microbenchmark with separate memory measurement. No Rust/GPU acceleration or full-workload profiling performed. |
 | 10. Advanced modeling | NOT STARTED | Hawkes, regimes, market making, multi-instrument markets, auctions, empirical latency and volatility models. |
 
-## Batch verification
+## Foundation batch verification — historical
 
 - Foundation batch: **DONE for the bounded scope below**. The overall platform
   and several phases remain PARTIAL as explicitly listed above.
-- PPO/SAC comparative study: **NOT RUN**. No claim of predictive, execution, or
+- PPO/SAC comparative study at the foundation date: **NOT RUN**. No claim of predictive, execution, or
   trading alpha follows from simulator smoke tests.
 - Historical data mechanics assessment: **DONE** for two complete Deribit ETH
   perpetual sample days. Historical execution strategy study: **NOT RUN**. The
@@ -40,8 +86,7 @@ This is a local measurement, not a cross-machine performance claim.
 
 ## Implemented batch and file ownership
 
-- Exchange: `lob/engine.py` was completed after the parallel worker stopped at
-  a usage limit. Retained tick/lot FIFO representation; added lifecycle, TIF,
+- Exchange: `lob/engine.py` retains tick/lot FIFO representation and adds lifecycle, TIF,
   queue and event controls instead of introducing a new package hierarchy.
 - Accounting/execution: new `lob/accounting.py` and `lob/risk.py`; updated
   `lob/execution.py`, `lob/rl_env.py`, `lob/runner.py`, public exports and training
@@ -60,17 +105,18 @@ This is a local measurement, not a cross-machine performance claim.
 - Documentation/CI: architecture, methodology/limitations, canonical data,
   configuration/CLI, current README, archived original README and this checklist.
   `.github/workflows/research.yml` configures Linux 3.11/3.13 lint, compile, tests,
-  config/data validation and a small benchmark; remote CI is **NOT RUN** here.
+  config/data validation and a small benchmark. This describes the foundation
+  configuration; current CI and retained-study verification are listed above.
 - UI: `static/js/app.js` now exposes effective economic cost, fees, status and
   unpriced quantity. Other pre-existing frontend/server working-tree edits are
   preserved. No new screenshot or full visual browser review was performed.
 
 ## Tests and executed checks
 
-Final local suite: **241 passed**, two warnings for Gymnasium's existing unbounded
+Foundation local suite: **241 passed**, two warnings for Gymnasium's existing unbounded
 observation Box, **23.78 seconds** on the successful final recorded suite run.
 Earlier integrated run: 240 passed in 9.82 seconds. Timings depend on concurrent
-machine load and are not performance comparisons. Windows sandbox temp-directory
+machine load and are not performance comparisons. Windows temp-directory
 restrictions caused fixture setup errors on unprivileged invocations; rerunning
 with approved normal temp access passed. No test failure was suppressed.
 
@@ -224,8 +270,7 @@ Executed evidence: `examples/studies/validation/README.md`.
 The attempted June public download failed DNS resolution, including escalated
 access. Existing checksum-verified April/May files were used. Their prior
 reconstruction/descriptive inspection is disclosed; they are holdouts from model
-fitting, not never-inspected independent data. No auto-review approval rejection
-occurred and no data were fabricated.
+fitting, not never-inspected independent data. No data were fabricated.
 
 Next research decisions must address failed observable generalization and obtain
 fresh dates/venues before any robust execution claim. Advanced items remain

@@ -73,7 +73,9 @@ def make_baseline(name: str, p: Dict[str, Any], cfg: SimConfig, start_time: floa
     kwargs = {"fees": p.get("fees"), "risk": p.get("risk")}
     if name == "ac":
         return AlmgrenChrissAgent(qty, horizon, n_slices=N_SLICES, side=side,
-                                  risk_aversion=float(p["risk_aversion"]), start_time=start_time, **kwargs)
+                                  risk_aversion=float(p["risk_aversion"]),
+                                  temp_impact=float(p.get("temp_impact", 1.3e-3)),
+                                  sigma=float(p.get("sigma", 1.5)), start_time=start_time, **kwargs)
     if name == "twap":
         return TWAPAgent(qty, horizon, n_slices=N_SLICES, side=side, start_time=start_time, **kwargs)
     if name == "vwap":
@@ -160,8 +162,10 @@ def run_baseline(p: Dict[str, Any], progress: Optional[ProgressFn] = None,
     if qty % getattr(cfg, "lot_size", 1):
         raise ValueError("qty must be a multiple of lot_size")
     sim = ExchangeSimulator(cfg)
-    for _ in range(int(WARMUP_S / 0.1)):
-        sim.step(0.1)
+    warmup = float(p.get("warmup_seconds", WARMUP_S))
+    if not math.isfinite(warmup) or warmup < 0:
+        raise ValueError("warmup_seconds must be finite and nonnegative")
+    sim.step(warmup)
     t0, arrival = sim.t, sim.book.mid()
     agent = make_baseline(name, p, cfg, t0)
     owner = name.upper()
@@ -233,7 +237,7 @@ def run_policy(p: Dict[str, Any], policy: str = "ppo", progress: Optional[Progre
                model: Optional[Any] = None, record: bool = True) -> Dict[str, Any]:
     qty, horizon, dt = int(p["qty"]), float(p["horizon"]), float(p["dt"])
     env = LOBExecutionEnv(total_qty=qty, horizon=horizon, decision_dt=dt,
-                          warmup=WARMUP_S, cfg=cfg_from_params(p),
+                          warmup=float(p.get("warmup_seconds", WARMUP_S)), cfg=cfg_from_params(p),
                           side=_side_from_params(p),
                           fees=p.get("fees"), risk=p.get("risk"),
                           terminal_penalty_bps=float(p.get("terminal_penalty_bps", 25.0)),
