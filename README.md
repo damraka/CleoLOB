@@ -1,36 +1,31 @@
-<div align="center">
-
-# CleoLOB
-
-### A research-grade laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.
-
-**CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets; from synthetic experiments to historical L2 market data.**
-
-## Preview
+<h1 align="center">CleoLOB</h1>
 
 <p align="center">
-  <img src="docs/assets/cleolob-dashboard.png"
-       alt="CleoLOB interactive market microstructure dashboard"
-       width="100%">
+  <strong>A research-grade laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.</strong>
 </p>
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Research](https://img.shields.io/badge/focus-market%20microstructure-blueviolet)
-![LOB](https://img.shields.io/badge/limit%20order%20book-simulation-orange)
-![RL](https://img.shields.io/badge/reinforcement%20learning-execution-green)
-![License](https://img.shields.io/github/license/damraka/CleoLOB)
-![CI](https://github.com/damraka/CleoLOB/actions/workflows/ci.yml/badge.svg)
+<p align="center">
+  CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets — from synthetic experiments to historical L2 market data.
+</p>
 
-</div>
+<p align="center">
+  <a href="https://github.com/damraka/CleoLOB/actions/workflows/research.yml"><img src="https://github.com/damraka/CleoLOB/actions/workflows/research.yml/badge.svg" alt="Research foundations"></a>
+  <img src="https://github.com/damraka/CleoLOB/actions/workflows/ci.yml/badge.svg" alt="CI">
+  <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/focus-market%20microstructure-informational" alt="Market microstructure">
+  <img src="https://img.shields.io/github/license/damraka/CleoLOB" alt="License">
+</p>
+
+<p align="center">
+  <img src="docs/assets/cleolob-dashboard.png" alt="CleoLOB interactive market microstructure dashboard" width="100%">
+</p>
 
 ---
 
 ## Overview
 
 CleoLOB is an open-source quantitative research platform for studying modern electronic markets.
-
 It combines a configurable limit order book simulator with historical market-data reconstruction, empirical calibration, execution algorithms, reinforcement-learning environments, risk analysis, and interactive visualization.
-
 The project is designed for research into questions such as:
 
 - How do execution strategies behave under different market regimes?
@@ -60,28 +55,20 @@ The project is designed for research into questions such as:
 
 ---
 
-[![Research foundations](https://github.com/damraka/CleoLOB/actions/workflows/research.yml/badge.svg)](https://github.com/damraka/CleoLOB/actions/workflows/research.yml)
-![Python](https://img.shields.io/badge/python-3.11%2B-blue)
-![Version](https://img.shields.io/badge/version-0.2.0-blue)
-![Research](https://img.shields.io/badge/focus-market%20microstructure-informational)
-
----
-
 ## Highlights
 
 |                               |                                                                                |
 | ----------------------------- | ------------------------------------------------------------------------------ |
 | **521 tests**                 | Integrated unit, randomized-invariant, integration and regression suite        |
-| **5,972,671**                 | Real Deribit L2 updates processed                                              |
-| **2,081,479**                 | Top-five order-book snapshots matched exactly                                  |
-| **46,195**                    | Public trade records checked                                                   |
+| **5,972,671**                 | Real Deribit L2 updates processed across the included April/May validation samples                                              |
+| **2,081,479**                 | Top-five order-book snapshots matched exactly across the included public validation samples                                  |
+| **46,195**                    | Public trade records checked across the included public validation samples                                                   |
 | **Deterministic experiments** | Separate random streams, persistent clocks and reproducible run manifests      |
 | **Execution research**        | TWAP, VWAP, POV, Almgren–Chriss, heuristics, random policies and PPO interface |
 | **Statistical inference**     | Paired bootstrap, exact sign tests and multiple-testing correction             |
 | **Historical reconstruction** | Exact event replay without inventing counterfactual fills                      |
 
 CleoLOB combines a deterministic synthetic exchange with real-market reconstruction and research infrastructure designed to make experiments **auditable, reproducible and difficult to accidentally overstate**.
-
 ![CLEO liquidity-canyon visualization](docs/3d-graph.png)
 
 ---
@@ -102,7 +89,6 @@ CleoLOB is intended for research into:
 * and reproducible strategy comparison.
 
 It is **not** a live trading system.
-
 There is no broker integration, real-money order submission, or claim of demonstrated live alpha.
 
 ---
@@ -110,7 +96,6 @@ There is no broker integration, real-money order submission, or claim of demonst
 ## Research Philosophy
 
 Market-microstructure experiments are extremely easy to overstate.
-
 A strategy can appear profitable because of:
 
 * unrealistic fills,
@@ -123,17 +108,20 @@ A strategy can appear profitable because of:
 * or repeated hypothesis testing without correction.
 
 CleoLOB is designed to expose these failure modes instead of hiding them.
-
 The framework therefore treats experiment validity, provenance and failure reporting as first-class parts of the research process.
 
 ---
 
 ## Empirical Validation
 
-CleoLOB's historical L2 reconstruction pipeline was evaluated using
-Deribit ETH-PERPETUAL market data over an approximately 24-hour period.
+CleoLOB has been evaluated against historical Deribit ETH-PERPETUAL
+Level-2 market data using both exact order-book reconstruction checks and
+chronological out-of-sample calibration diagnostics.
 
-### Reconstruction Results
+### Historical L2 Reconstruction
+
+A full approximately 24-hour incremental L2 stream was replayed and compared
+against published top-five book snapshots.
 
 | Metric | Result |
 |---|---:|
@@ -151,12 +139,119 @@ Deribit ETH-PERPETUAL market data over an approximately 24-hour period.
 | Missing level deletes | 0 |
 | Trade records checked | 17,288 |
 
-The reconstructed order book matched every published top-five reference
-snapshot in the evaluated dataset.
+The reconstructed book matched every published top-five reference snapshot
+in the evaluated dataset.
 
-# Core Capabilities
+> This is a reconstruction-consistency check against snapshots from the same market-data source. It should not be interpreted as independent verification of exchange truth.
 
-## Deterministic FIFO Exchange
+### End-to-End Assessment Performance
+
+Measured locally while running the complete historical assessment pipeline. These numbers include the full `assess-l2` workflow and are not an isolated matching-engine benchmark.
+
+| Metric | Result |
+|---|---:|
+| Total runtime | 111.06 s |
+| Effective L2 throughput | ~20,900 rows/s |
+| Effective reconstructed-state throughput | ~13,792 states/s |
+| Platform | Windows 11 / AMD64 |
+| Python | CPython 3.14.6 |
+
+### Observed Market Statistics
+
+Statistics were sampled on a one-second UTC grid using the latest completed
+captured book.
+
+| Metric | Mean | Median | 95th percentile |
+|---|---:|---:|---:|
+| Mid price | 131.814 | 131.975 | 133.925 |
+| Spread | 4.172 bps | 3.790 bps | 7.579 bps |
+| Bid depth (top 5, native units) | 239,902 | 242,820 | 354,902 |
+| Ask depth (top 5, native units) | 241,855 | 244,314 | 342,629 |
+| Top-5 imbalance | -0.00944 | -0.00092 | 0.38666 |
+
+### Chronological Calibration Diagnostics
+
+A fitted observable model was trained on earlier April 2020 data and frozen
+before validation, internal testing, and later-date evaluation.
+The study uses ordered, disjoint samples with purging / embargo rather than
+random train-test splitting.
+
+| Split | Samples | Diagnostic Status |
+|---|---:|---|
+| Training | 51,778 | Fit |
+| Validation | 17,219 | WARNING |
+| Internal test | 17,279 | FAIL |
+| Later-date May test | 86,399 | FAIL |
+
+A completed calibration study is not treated as evidence that the fitted
+distribution generalizes to future market regimes.
+
+### Later-Date Distribution Drift
+
+The May 2020 holdout exhibited substantial drift relative to the April
+training regime, particularly in quoted depth and spread.
+
+| Observable | Train Mean | May Mean | Coverage | Normalized Distance | Status |
+|---|---:|---:|---:|---:|---|
+| Ask depth (top 5) | 254,266 | 109,161 | 32.6% | 1.703 | FAIL |
+| Bid depth (top 5) | 233,046 | 90,984 | 34.4% | 1.246 | FAIL |
+| Imbalance (top 5) | -0.0522 | -0.0823 | 83.2% | 0.186 | WARNING |
+| Log return | ~0 | ~0 | 88.4% | 0.350 | WARNING |
+| Spread | 4.071 bps | 2.977 bps | 20.4% | 1.282 | FAIL |
+
+Rather than treating the later-date regime as a successful calibration,
+CleoLOB reports the deterioration explicitly as an out-of-sample
+generalization failure.
+
+### Purged Expanding Walk-Forward Diagnostics
+
+Four expanding-window folds were used to evaluate within-training-period
+stability.
+
+| Fold | Training Rows | Holdout Rows | Status |
+|---|---:|---:|---|
+| 1 | 25,828 | 6,471 | WARNING |
+| 2 | 32,300 | 6,471 | FAIL |
+| 3 | 38,772 | 6,471 | WARNING |
+| 4 | 45,244 | 6,471 | WARNING |
+
+#### Fold-level observables
+
+| Fold | Ask Depth | Bid Depth | Imbalance | Log Return | Spread |
+|---|---|---|---|---|---|
+| 1 | WARNING | WARNING | WARNING | PASS | WARNING |
+| 2 | FAIL | WARNING | FAIL | PASS | PASS |
+| 3 | WARNING | WARNING | WARNING | PASS | PASS |
+| 4 | PASS | PASS | PASS | PASS | WARNING |
+
+Fold 2 was rejected primarily because the normalized distribution distances
+for ask depth and imbalance exceeded the configured failure threshold.
+By Fold 4, depth, imbalance, and log-return diagnostics passed, while spread
+remained a warning-level diagnostic.
+
+### Scope and Limitations
+
+- L2 data does not expose individual order IDs or FIFO queue position.
+- Hidden liquidity and hypothetical counterfactual fills cannot be recovered
+
+  from aggregate L2 data.
+
+- Depth remains in dataset-native units unless explicitly converted.
+- Calibration thresholds are diagnostic heuristics, not statistical
+
+  significance tests.
+
+- Empirical reconstruction and calibration results do not establish strategy
+
+  profitability.
+
+- Historical replay validation and synthetic strategy evaluation are reported
+
+  separately.
+
+## Core Components
+
+### Deterministic FIFO Exchange
 
 The synthetic exchange supports:
 
@@ -176,18 +271,18 @@ The synthetic exchange supports:
 * and invariant checks.
 
 Persistent event clocks provide deterministic tie-breaking while separate random streams isolate independent sources of stochasticity.
-
 Delayed messages and cancellation races are explicitly modeled.
-
 Changing the observation frequency of a simulation does not change its underlying exogenous event path.
 
 <p align="center">
+
   <img src="docs/assets/order-book-depth.png" width="49%">
+
 </p>
 
 ---
 
-## Execution Algorithms
+### Execution Algorithms
 
 Built-in execution strategies include:
 
@@ -203,7 +298,7 @@ Registered research commands require an actual PPO checkpoint when PPO is select
 
 ---
 
-## Accounting and Execution Risk
+### Accounting and Execution Risk
 
 CleoLOB tracks:
 
@@ -226,17 +321,14 @@ Risk controls include:
 * and a latched kill switch.
 
 Outstanding orders are reconciled through a bounded post-horizon settlement phase.
-
 Late fills and fees are included when they actually occur.
-
 Unresolved orders can invalidate final economic metrics rather than being ignored.
 
 ---
 
-# Real-Market L2 Reconstruction
+## Real-Market L2 Reconstruction
 
 CleoLOB includes a separate historical reconstruction pipeline for recorded market data.
-
 Supported functionality includes:
 
 * bounded CSV/JSONL ingestion,
@@ -251,7 +343,7 @@ Supported functionality includes:
 
 Historical events are reconstructed separately from the synthetic matching engine so that recorded fills are not accidentally modified by synthetic exchange mechanics.
 
-## Public L2 Validation
+### Public L2 Validation
 
 The public-data pipeline supports bounded Tardis samples with:
 
@@ -278,9 +370,7 @@ with the following results:
 | Trades checked                  |    **46,195** |
 
 This validates **aggregate historical reconstruction**.
-
 It does **not** establish historical strategy profitability because aggregate L2 data alone does not identify the counterfactual queue position and fills that an unobserved strategy would have received.
-
 See:
 
 * [`examples/studies/historical/README.md`](examples/studies/historical/README.md)
@@ -288,7 +378,7 @@ See:
 
 ---
 
-# Calibration and Validation
+## Calibration and Validation
 
 Historical observable models support:
 
@@ -303,14 +393,12 @@ Historical observable models support:
 * and deterministic observable generation.
 
 Calibration artifacts can therefore be separated from later evaluation periods rather than allowing future information to leak backward into a study.
-
 The current aggregate-L2 calibration layer does **not** identify queue-level arrival and cancellation dynamics.
-
 The synthetic FIFO order-flow model should therefore not be interpreted as a fully calibrated representation of a real exchange.
 
 ---
 
-# Reproducible Experiments
+## Reproducible Experiments
 
 Every registered experiment can produce an isolated run directory containing evidence such as:
 
@@ -329,7 +417,6 @@ Every registered experiment can produce an isolated run directory containing evi
 * and offline HTML reports.
 
 Runs can be verified and compared rather than relying solely on final summary tables.
-
 Example:
 
 ```bash
@@ -339,15 +426,13 @@ cleo experiment diff PATH_TO_FIRST_RUN PATH_TO_SECOND_RUN
 ```
 
 Reproduction creates a new result directory.
-
 It does not execute archived Python code or overwrite the original experiment.
 
 ---
 
-# Statistical Research Design
+## Statistical Research Design
 
 CleoLOB includes tools for paired experimental designs and uncertainty-aware comparison.
-
 Implemented methods include:
 
 * paired bootstrap intervals,
@@ -359,17 +444,14 @@ Implemented methods include:
 * and bounded sampling of large finite parameter spaces.
 
 Planned experiments that fail or produce economically unpriceable outcomes are retained.
-
 If the required observations for a valid comparison do not exist, comparative inference can be withheld rather than calculated from a selectively surviving subset.
 
 ---
 
-# Foundation Study
+## Foundation Study
 
 The included foundation study compares six baseline/heuristic execution policies using ten paired seeds:
-
 **60 total episodes**
-
 with:
 
 * 2,000-share sell orders,
@@ -381,28 +463,21 @@ with:
 * and audit logs.
 
 No PPO or SAC comparison was run in this study.
-
 Every candidate-minus-TWAP bootstrap interval contains zero, and all five Holm-adjusted sign-test p-values are `1.0`.
-
 Therefore:
 
 > **The foundation study does not establish that any tested strategy outperforms TWAP.**
 
 The experiment was performed in one uncalibrated synthetic market and should not be interpreted as evidence of live trading performance.
-
 See:
-
 [`examples/studies/foundation/README.md`](examples/studies/foundation/README.md)
-
 Older 100-seed results generated under different market mechanics are retained separately for provenance:
-
 [`results/baselines-100seeds/`](results/baselines-100seeds/)
-
 They are archived results, not validation of the current engine.
 
 ---
 
-# Stress Testing
+## Stress Testing
 
 Registered stress families allow strategies to be evaluated across multiple controlled scenarios while preserving:
 
@@ -413,7 +488,6 @@ Registered stress families allow strategies to be evaluated across multiple cont
 * and family-wide statistical correction.
 
 This allows sensitivity analysis without treating every parameter variation as an unrelated experiment.
-
 Example:
 
 ```bash
@@ -422,7 +496,7 @@ cleo stress --config configs/robustness.yaml
 
 ---
 
-# Portfolio Risk
+## Portfolio Risk
 
 CleoLOB includes linear multi-asset portfolio accounting with support for:
 
@@ -440,55 +514,9 @@ cleo portfolio --config configs/portfolio_example.json
 ```
 
 The current implementation is a **linear portfolio risk framework**.
-
 It is not a nonlinear derivatives pricing or Greeks engine.
 
 ---
-
-## Quick Start
-
-### Clone
-
-```bash
-git clone https://github.com/damraka/CleoLOB.git
-cd CleoLOB
-```
-
-### Create an environment
-
-```bash
-python -m venv .venv
-```
-
-Windows:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Linux/macOS:
-
-```bash
-source .venv/bin/activate
-```
-
-### Install
-
-```bash
-pip install -e .
-```
-
-### Explore the CLI
-
-```bash
-cleo --help
-```
-
-### Run the test suite
-
-```bash
-pytest
-```
 
 ## Main Modules
 
@@ -512,15 +540,13 @@ pytest
 | `tests/`               | Unit, invariant, integration and regression tests |
 
 Correctness is currently prioritized over acceleration.
-
 No Rust, C++, GPU or low-latency production performance claim is made.
 
 ---
 
-# Installation
+## Installation
 
 CleoLOB requires **Python 3.11+**.
-
 Clone the repository:
 
 ```bash
@@ -558,7 +584,7 @@ python -m pip install -e '.[dev,rl,web]'
 
 ---
 
-# Quickstart
+## Quickstart
 
 Run the test suite:
 
@@ -609,7 +635,6 @@ cleo portfolio --config configs/portfolio_example.json
 ```
 
 `python -m lob.cli` is equivalent to the `cleo` command.
-
 The original standalone demonstration remains available through:
 
 ```bash
@@ -618,10 +643,9 @@ python -m lob
 
 ---
 
-# Web Visualization
+## Web Visualization
 
 CleoLOB retains both its FastAPI/Three.js interface and its original Streamlit dashboard.
-
 Start the FastAPI application with:
 
 ```bash
@@ -635,12 +659,11 @@ http://127.0.0.1:8000
 ```
 
 The web application is intended primarily for **exploration and visualization**.
-
 Registered research experiments use the stricter CLI workflow and immutable experiment records.
 
 ---
 
-# Configuration
+## Configuration
 
 Research configuration uses typed YAML/JSON with support for:
 
@@ -653,7 +676,6 @@ Research configuration uses typed YAML/JSON with support for:
 * and configuration diffs.
 
 The experiment configuration is part of the evidence record rather than an implicit collection of runtime parameters.
-
 Example:
 
 ```bash
@@ -662,35 +684,29 @@ cleo config validate configs/research.yaml
 
 ---
 
-# Economic Validity
+## Economic Validity
 
 CleoLOB distinguishes actual execution from hypothetical residual valuation.
-
 `effective_bps` includes:
 
 * actual fill costs,
 * and hypothetical terminal liquidation costs/fees,
 
 only when sufficient depth exists to price the remaining quantity.
-
 It does **not** include the separate RL completion penalty.
-
 If residual inventory cannot be economically priced, the metric becomes null and the episode is marked **INVALID**.
-
 A hypothetical mark or terminal liquidation is never recorded as an actual fill.
-
 This prevents unfinished execution from appearing artificially profitable simply because remaining inventory disappeared at the end of an episode.
 
 ---
 
-# Current Limitations
+## Current Limitations
 
 CleoLOB deliberately documents what it does **not** currently establish.
 
 ### Historical strategy performance
 
 Historical L2 reconstruction is implemented and validated, but counterfactual historical execution is not yet established.
-
 Aggregate L2 data does not uniquely determine:
 
 * queue position,
@@ -703,21 +719,17 @@ Therefore the repository currently makes **no historical alpha claim**.
 ### Synthetic order flow
 
 The FIFO exchange mechanics are explicit and tested, but the queue-level synthetic order-flow model remains uncalibrated.
-
 Historical aggregate L2 calibration does not by itself identify queue-level arrival/cancellation processes.
 
 ### Latency
 
 Message latency is modeled.
-
 Full market-data dissemination latency is not.
 
 ### Reinforcement learning
 
 A Stable-Baselines3 PPO interface is available.
-
 The project currently does not claim a completed PPO-vs-baseline result establishing superiority.
-
 SAC is not implemented.
 
 ### Market coverage
@@ -732,7 +744,7 @@ The project does not currently provide:
 
 ---
 
-# Verification
+## Verification
 
 The integrated project suite currently passes:
 
@@ -743,15 +755,14 @@ The integrated project suite currently passes:
 CI is configured on Ubuntu for:
 
 * Python **3.11**
-* Python **3.13**
+* Python **3.12**
 
 The current matching benchmark is a local **matching-engine microbenchmark**.
-
 It should not be interpreted as full simulation throughput or production exchange performance.
 
 ---
 
-# Documentation
+## Documentation
 
 Detailed documentation is available in:
 
@@ -780,7 +791,6 @@ Historical validation:
 ## Historical Market Data
 
 CleoLOB supports experiments based on historical L2 market data.
-
 A typical workflow is:
 
 ```text
@@ -801,95 +811,33 @@ Evaluation and reporting
 
 Historical data and simulation results are intentionally separated so that
 synthetic experiments are not presented as empirical market evidence.
-
 See the documentation for supported datasets and validation methodology.
-
-## Empirical Validation
-
-CleoLOB's historical L2 reconstruction pipeline was evaluated using
-Deribit ETH-PERPETUAL market data over an approximately 24-hour period.
-
-### Reconstruction Results
-
-| Metric | Result |
-|---|---:|
-| Exchange | Deribit |
-| Instrument | ETH-PERPETUAL |
-| Observed period | 23.9999 hours |
-| Incremental L2 rows processed | 2,321,160 |
-| Reconstructed book states | 1,531,713 |
-| Published top-5 snapshots compared | 988,235 |
-| Exact top-5 matches | 988,235 / 988,235 |
-| Reconstruction match rate | **100.000%** |
-| Different reconstructed books | 0 |
-| Exchange timestamp mismatches | 0 |
-| Crossed book groups | 0 |
-| Missing level deletes | 0 |
-| Trade records checked | 17,288 |
-
-The reconstructed order book matched every published top-five reference
-snapshot in the evaluated dataset.
-
-### End-to-End Performance
-
-Measured locally while running the complete historical assessment pipeline.
-
-| Metric | Result |
-|---|---:|
-| Total assessment runtime | 111.06 s |
-| Effective L2 throughput | ~20,900 rows/s |
-| Effective reconstructed-state throughput | ~13,792 states/s |
-| Platform | Windows 11 / AMD64 |
-| Python | CPython 3.14.6 |
-
-> Throughput represents the complete `assess-l2` workflow rather than an
-> isolated matching-engine microbenchmark.
-
-### Observed Market Statistics
-
-Statistics are sampled on a one-second UTC grid using the latest completed
-captured book.
-
-| Metric | Mean | Median | 95th percentile |
-|---|---:|---:|---:|
-| Mid price | 131.814 | 131.975 | 133.925 |
-| Spread | 4.172 bps | 3.790 bps | 7.579 bps |
-| Bid depth (top 5, native units) | 239,902 | 242,820 | 354,902 |
-| Ask depth (top 5, native units) | 241,855 | 244,314 | 342,629 |
-| Top-5 imbalance | -0.00944 | -0.00092 | 0.38666 |
-
-### Scope and Limitations
-
-This validates CleoLOB's historical L2 reconstruction mechanics against
-published snapshots from the same market-data source.
-
-It is not independent verification of exchange truth and does not establish
-strategy profitability.
-
-L2 data does not expose individual order IDs, FIFO queue positions,
-hidden liquidity, or hypothetical counterfactual fills.
 
 ## Roadmap
 
 ### Historical execution
+
 - [ ] Historical event-replay execution engine
 - [ ] Counterfactual order insertion
 - [ ] Queue-position estimation
 - [ ] Conservative / neutral / optimistic fill models
 
 ### Market realism
+
 - [ ] Latency models
 - [ ] Maker/taker fee models
 - [ ] Improved market-impact calibration
 - [ ] Additional market regimes
 
 ### Data
+
 - [ ] Additional exchanges
 - [ ] Additional instruments
 - [ ] L3 / order-level datasets
 - [ ] Longer multi-day validation datasets
 
 ### Research
+
 - [ ] TWAP / VWAP / POV / Almgren-Chriss benchmark suite
 - [ ] RL vs classical execution experiments
 - [ ] Bootstrap confidence intervals
@@ -897,19 +845,17 @@ hidden liquidity, or hypothetical counterfactual fills.
 - [ ] Reproducible benchmark datasets
 
 ### Infrastructure
+
 - [ ] Expanded CI benchmarks
 - [ ] Performance profiling
 - [ ] Experiment registry
 - [ ] Improved documentation
 
-# Project Status
+## Project Status
 
 CleoLOB is an active research project.
-
 The framework currently provides substantial infrastructure for:
-
 **simulation → execution → accounting → risk → replay → calibration → experiments → statistics → verification**
-
 but it should still be treated as a research environment rather than a production trading system.
 
 ---
@@ -917,7 +863,6 @@ but it should still be treated as a research environment rather than a productio
 ## Disclaimer
 
 CleoLOB is provided for research and educational purposes.
-
 Nothing in this repository constitutes investment advice, a recommendation to trade, or evidence of future trading performance.
 
 ## Architecture
@@ -926,16 +871,12 @@ Nothing in this repository constitutes investment advice, a recommendation to tr
 flowchart LR
     A[Market Data] --> B[Historical L2 Reconstruction]
     A --> C[Empirical Calibration]
-
     C --> D[Market Simulator]
     B --> E[Validation Engine]
-
     D --> F[Execution Algorithms]
     D --> G[RL Environment]
-
     F --> H[Evaluation]
     G --> H
-
     H --> I[Risk & Performance Metrics]
     I --> J[Reports & Visualization]
 ```
@@ -946,6 +887,4 @@ flowchart LR
 
 ## License
 
-CleoLOB is licensed under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later).
-
-You may use CleoLOB in academic, commercial, and proprietary projects. Modifications to LGPL-covered CleoLOB code must remain available under the LGPL.
+CleoLOB is licensed under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later). See [`LICENSE`](LICENSE) for the full terms.
