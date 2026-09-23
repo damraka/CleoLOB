@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use CleoLOB in academic work, please cite this software."
+title: "CleoLOB: A Limit Order Book and Market Microstructure Research Laboratory"
+type: software
+
+authors:
+  - family-names: "AGLAMAZ"
+    given-names: "DAMRA KAAN"
+
+repository-code: "https://github.com/damraka/CleoLOB"
+
+keywords:
+  - limit-order-book
+  - market-microstructure
+  - quantitative-finance
+  - reinforcement-learning
+  - execution-algorithms
+  - simulation
+
+license: "LGPL-3.0-or-later"
