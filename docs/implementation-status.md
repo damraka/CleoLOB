@@ -78,8 +78,10 @@ This is a local measurement, not a cross-machine performance claim.
 
 - Foundation batch: **DONE for the bounded scope below**. The overall platform
   and several phases remain PARTIAL as explicitly listed above.
-- PPO/SAC comparative study at the foundation date: **NOT RUN**. No claim of predictive, execution, or
-  trading alpha follows from simulator smoke tests.
+- At the original foundation-study date, the PPO/SAC comparative study had **NOT RUN**.
+  A subsequent bounded PPO execution study has since been completed; its compact final evidence is
+  available under `examples/studies/core/ppo-final-20260922/`.
+  This does not constitute evidence of live profitability or historical alpha.
 - Historical data mechanics assessment: **DONE** for two complete Deribit ETH
   perpetual sample days. Historical execution strategy study: **NOT RUN**. The
   original canonical fixture remains fabricated and clearly separate.

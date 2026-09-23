@@ -536,9 +536,24 @@ This prevents unfinished execution from appearing artificially profitable simply
 
 Correctness is currently prioritized over acceleration. No Rust, C++, GPU, or low-latency production-performance claim is made.
 
+
+
 ## Current Limitations
 
-CleoLOB deliberately documents what it does **not** currently establish.
+- CleoLOB is a young research project and has not yet accumulated substantial
+  independent community validation or external reproductions.
+
+- Historical validation currently operates on aggregate Level-2 data rather
+  than full market-by-order feeds. Order identity, exact FIFO queue position,
+  hidden liquidity, and historical passive-fill counterfactuals therefore
+  cannot be reconstructed exactly.
+
+- The reinforcement-learning layer supports bounded PPO execution studies,
+  but CleoLOB should not be interpreted as a library of production-ready or
+  state-of-the-art execution agents.
+
+- Reported historical-processing throughput is an end-to-end local benchmark,
+  not a production low-latency or exchange-colocation benchmark.
 
 ### Historical strategy performance
 
