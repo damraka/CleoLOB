@@ -1,0 +1,42 @@
+﻿{
+    "datasets":  [
+                     {
+                         "path":  "deribit_incremental_book_L2_2020-04-01_ETH-PERPETUAL.csv.gz",
+                         "role":  "development",
+                         "sha256":  "dc4a84aba8f311235f76eef80248efae68bdb053dc4543323e7d4e36cc998a76"
+                     },
+                     {
+                         "path":  "deribit_incremental_book_L2_2020-05-01_ETH-PERPETUAL.csv.gz",
+                         "role":  "external_test",
+                         "sha256":  "e2b858a9a3d0eab635deabc578c4215e9d47a60d312927850d8f18800ced18b4"
+                     }
+                 ],
+    "diagnostic_thresholds":  {
+                                  "coverage_fail_below":  0.75,
+                                  "coverage_warning_below":  0.9,
+                                  "distance_fail_above":  0.5,
+                                  "distance_warning_above":  0.25,
+                                  "valid_fraction_fail_below":  0.9,
+                                  "valid_fraction_warning_below":  0.99
+                              },
+    "embargo_seconds":  60,
+    "fit_seed":  0,
+    "generation_seed":  1729,
+    "kind":  "chronological_observable_calibration",
+    "max_pool_rows":  4096,
+    "max_staleness_seconds":  5,
+    "outcome_horizon_seconds":  1,
+    "sample_interval_seconds":  1,
+    "selection":  "no tuning or selection on validation/test",
+    "split":  "development day 60/20/20 purged train/validation/internal test; later file external test",
+    "split_fractions":  {
+                            "internal_test":  0.2,
+                            "train":  0.6,
+                            "validation":  0.2
+                        },
+    "walk_forward":  {
+                         "initial_train_fraction":  0.5,
+                         "max_folds":  5,
+                         "test_block_fraction":  0.125
+                     }
+}
