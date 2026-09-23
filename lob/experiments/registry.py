@@ -37,7 +37,7 @@ def write_json(path: Path, data: Any) -> None:
 
 def source_manifest() -> dict[str, str]:
     paths = sorted((PROJECT_ROOT / "lob").rglob("*.py"))
-    paths += [PROJECT_ROOT / name for name in ("pyproject.toml", "requirements.txt", "evaluate.py", "train_rl.py")]
+    paths += [PROJECT_ROOT / name for name in ("pyproject.toml", "requirements.txt", "legacy/evaluate.py", "train_rl.py")]
     return {p.relative_to(PROJECT_ROOT).as_posix(): sha256_file(p) for p in paths if p.is_file()}
 
 

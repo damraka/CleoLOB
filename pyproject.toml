@@ -14,6 +14,7 @@ dependencies = [
 
 [project.optional-dependencies]
 rl = ["stable-baselines3>=2.3", "tensorboard>=2.16"]
+plots = ["plotly>=5.20"]
 web = ["fastapi>=0.110", "uvicorn>=0.29", "plotly>=5.20", "streamlit>=1.35"]
 dev = ["pytest>=8.0", "ruff>=0.9"]
 

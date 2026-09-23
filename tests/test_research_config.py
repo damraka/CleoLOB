@@ -7,6 +7,27 @@ from pydantic import ValidationError
 from lob.config import ResearchConfig, config_diff, config_hash, load_config
 
 
+def test_resource_estimate_accounts_for_registered_warmup():
+    short = ResearchConfig.model_validate({"execution": {"warmup_seconds": 5.0}})
+    longer = ResearchConfig.model_validate({"execution": {"warmup_seconds": 30.0}})
+    assert longer.estimated_events > short.estimated_events
+
+
+def test_invariant_checks_do_not_change_the_simulated_market():
+    from lob.engine import ExchangeSimulator, Side, SimConfig
+
+    paths = []
+    for enabled in (True, False):
+        config = ResearchConfig.model_validate({"resources": {"check_invariants": enabled}})
+        sim = ExchangeSimulator(SimConfig(**config.runner_params(101)["sim"]))
+        sim.step(1.0)
+        sim.submit(Side.SELL, 100, "comparison")
+        sim.step(2.0)
+        sim.book.assert_invariants()
+        paths.append((sim.book.depth(20), sim.book.trades, sim.seed_manifest, sim.event_count))
+    assert paths[0] == paths[1]
+
+
 def test_defaults_are_deeply_immutable_and_hash_roundtrips():
     cfg = load_config(environ={})
     with pytest.raises(ValidationError):
