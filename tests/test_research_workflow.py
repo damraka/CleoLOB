@@ -69,8 +69,16 @@ def test_failures_not_discarded_and_remaining_agents_still_run(tmp_path, monkeyp
     assert sum(result["outcome_counts"].values()) == 4 and not result["paired"]
 
 
-def test_runtime_limit_records_planned_but_unstarted_episodes(tmp_path):
-    cfg = small_config(resources={"max_runtime_seconds": 1e-12})
+def test_runtime_limit_records_planned_but_unstarted_episodes(tmp_path, monkeypatch):
+    from itertools import count
+    from types import SimpleNamespace
+    from lob.experiments import runner
+    # Older Windows monotonic clocks may return the same value twice. A budget
+    # below clock resolution is not evidence that the first episode cannot run.
+    # Advance a controlled clock past a realistic budget before the first call.
+    ticks = count()
+    monkeypatch.setattr(runner, "time", SimpleNamespace(monotonic=lambda: float(next(ticks))))
+    cfg = small_config(resources={"max_runtime_seconds": 0.5})
     run = run_experiment(cfg, tmp_path)
     result = read_experiment(run)["result"]
     assert result["status"] == "PARTIAL" and result["outcome_counts"] == {"PARTIAL": 4}

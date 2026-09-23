@@ -11,3 +11,4 @@ results/*/
 !results/baselines-100seeds/
 
 build/
+dist/

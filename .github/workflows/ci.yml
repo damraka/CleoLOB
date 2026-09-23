@@ -2,18 +2,21 @@ name: CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12"]
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.11', '3.12', '3.13', '3.14']
 
     steps:
       - name: Checkout repository
@@ -24,14 +27,29 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pip check
+      - run: python -m ruff check lob tests tools train_rl.py server.py
+      - run: python -m compileall -q lob tools train_rl.py server.py
+      - run: python -m pytest -q
+      - run: python -m pip wheel . --no-deps -w dist
+      - name: Install and smoke the wheel outside the checkout
+        shell: bash
+        run: |
+          python -m venv wheel-env
+          if [ "$RUNNER_OS" = Windows ]; then PY="$PWD/wheel-env/Scripts/python.exe"; else PY="$PWD/wheel-env/bin/python"; fi
+          "$PY" -m pip install dist/*.whl
+          "$PY" -m pip check
+          cd "$RUNNER_TEMP"
+          "$PY" -m lob.cli --help
+          "$PY" -m lob.cli smoke --out "wheel-smoke-${{ matrix.python-version }}"
+          "$PY" -m lob.cli verify-artifact "wheel-smoke-${{ matrix.python-version }}"
+      - name: Verify committed compact evidence
+        run: python -m lob.cli verify-artifact examples/studies/v03
 
-      - name: Install project
-        run: pip install -e .
-
-      - name: Install test dependencies
-        run: pip install pytest
-
-      - name: Run tests
-        run: pytest -q
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t cleolob-smoke .
+      - run: docker run --rm cleolob-smoke smoke --out /tmp/cleo-smoke

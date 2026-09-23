@@ -1,7 +1,7 @@
 <h1 align="center">CleoLOB</h1>
 
 <p align="center">
-  <strong>A research-grade laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.</strong>
+  <strong>A research laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.</strong>
 </p>
 
 <p align="center">
@@ -43,14 +43,21 @@ The project is designed for research into questions such as:
 
 | Evidence / capability | Current state |
 |---|---|
-| **521 automated tests** | Integrated unit, randomized-invariant, integration, and regression suite |
-| **5,972,671 real L2 updates** | Processed across the included April/May Deribit validation samples |
-| **2,081,479 exact top-five matches** | Published top-five snapshots matched exactly across the included public validation samples |
-| **46,195 public trades checked** | Trade records checked across the included public validation samples |
-| **Deterministic experiments** | Separate random streams, persistent clocks, reproducible configuration and run manifests |
-| **Execution research** | TWAP, synthetic-profile VWAP, POV, Almgren–Chriss, heuristics, random policies, and PPO interface |
-| **Statistical inference** | Paired bootstrap intervals, exact sign tests, and multiple-testing correction |
-| **Historical reconstruction** | Exact event replay without inventing counterfactual fills |
+| **Automated verification** | TESTED: 700 passed on local Python 3.14; isolated Python 3.11/3.12/3.13 core runs each passed 691 with 9 optional-RL skips; details in the [v0.3 report](docs/v03-final-report.md) |
+| **5,972,671 real L2 updates** | EMPIRICALLY OBSERVED: processed across the preserved April/May Deribit validation samples |
+| **2,081,479 exact top-five matches** | EMPIRICALLY OBSERVED: published top-five snapshots matched across those samples |
+| **46,195 public trades checked** | EMPIRICALLY OBSERVED: trade records checked across those samples |
+| **MBO identity research** | IMPLEMENTED / TESTED: bounded order-level replay, observed queues and deterministic L2 aggregation; real MBO validation remains pending |
+| **Calibration generalization** | IMPLEMENTED / TESTED: IID and spread-state Markov observable models, expanding/rolling validation and sealed external evaluation; prior historical WARNING/FAIL results preserved |
+| **Execution research** | IMPLEMENTED / TESTED: PPO and discrete-action DQN studies with six classical/diagnostic controls, paired seeds, regime shifts and finite ablations |
+| **Performance measurements** | IMPLEMENTED / TESTED: warm repeated L2/MBO/book/snapshot/replay/episode workloads, latency percentiles, separate Python-allocation measurements and provenance |
+
+Claims use **IMPLEMENTED** for runnable functionality, **TESTED** for checks of
+specified behavior, **EMPIRICALLY OBSERVED** for a recorded study result,
+**FAILED** for a retained failed diagnostic or experiment, **LIMITATION** for an
+unsupported inference, and **PLANNED** for work not yet validated. Passing tests
+does not establish market realism or policy superiority. Current v0.3 results,
+commands and exclusions are recorded in the [final report](docs/v03-final-report.md).
 
 CleoLOB is intentionally designed to make experiments **auditable, reproducible, and difficult to accidentally overstate**.
 
@@ -61,25 +68,31 @@ CleoLOB is intentionally designed to make experiments **auditable, reproducible,
 | Limit Order Book | Event-driven matching, FIFO price-time priority, market and limit orders |
 | Market Simulation | Configurable synthetic order-flow environments and controlled scenarios |
 | Historical Data | L2 reconstruction, snapshot validation, trade checks, and source hashing |
-| Calibration | Causal feature extraction, chronological splits, walk-forward diagnostics, and drift detection |
+| MBO Research | Actual source IDs, snapshot FIFO contract, recorded maker executions, queue trajectories and censoring |
+| Calibration | Causal observables, two model families, chronological selection, expanding/rolling folds and drift diagnostics |
 | Execution | TWAP, VWAP, POV, Almgren–Chriss, heuristic policies, and configurable strategies |
-| Reinforcement Learning | Execution environment and Stable-Baselines3 PPO integration |
+| Reinforcement Learning | Audited execution environment, Stable-Baselines3 PPO/DQN and registered policy studies |
 | Risk | Execution cost, slippage, inventory, reservations, fees, and exposure controls |
 | Research | Reproducible experiments, provenance, statistical comparison, and audit artifacts |
+| Performance | Profiled local research workloads, p50/p95/p99 latencies and bounded memory measurements |
 | Visualization | FastAPI/Three.js and Streamlit exploration interfaces |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    A[Market Data] --> B[Historical L2 Reconstruction]
-    A --> C[Empirical Calibration]
+    A[Aggregate L2 Data] --> B[Historical L2 Reconstruction]
+    A --> C[Observable Calibration]
+    M[Source Order Identities] --> N[MBO Replay and Observed Queues]
+    N --> O[MBO to L2 Aggregation]
 
     B --> D[Validation Engine]
-    C --> E[Market Simulator]
+    C --> K[Frozen Generalization Diagnostics]
+    A --> L[Separate Simulator Calibration]
+    L --> E[Market Simulator]
 
     E --> F[Execution Algorithms]
-    E --> G[RL Environment]
+    E --> G[PPO and DQN Environment]
 
     F --> H[Evaluation]
     G --> H
@@ -127,6 +140,10 @@ Core development environment:
 python -m pip install -e '.[dev]'
 ```
 
+The [Linux-first reproduction guide](docs/reproduction.md) also provides a
+one-command bootstrap, wheel checks, container instructions and a synthetic
+end-to-end smoke dataset. Generated runs belong under ignored `results/` paths.
+
 Optional RL and web components:
 
 ```bash
@@ -162,7 +179,10 @@ python -m lob
 
 ## Empirical Validation
 
-CleoLOB has been evaluated against historical Deribit ETH-PERPETUAL Level-2 market data using both exact order-book reconstruction checks and chronological out-of-sample calibration diagnostics.
+**EMPIRICALLY OBSERVED — preserved historical studies:** CleoLOB has been evaluated
+against historical Deribit ETH-PERPETUAL Level-2 market data using reconstruction
+checks and chronological out-of-sample calibration diagnostics. The numerical
+tables in this section describe the earlier studies, not new v0.3 measurements.
 
 ### Historical L2 Reconstruction
 
@@ -309,7 +329,7 @@ Built-in execution strategies include:
 - **Almgren–Chriss**,
 - heuristic policies,
 - random policies,
-- and a Stable-Baselines3 **PPO** interface.
+- and Stable-Baselines3 **PPO** and **DQN** through the registered v0.3 study.
 
 Registered research commands require an actual PPO checkpoint when PPO is selected, preventing an unavailable learned policy from silently falling back to another strategy.
 
@@ -323,9 +343,11 @@ Outstanding orders are reconciled through a bounded post-horizon settlement phas
 
 ---
 
-## Real-Market L2 Reconstruction
+## Historical Reconstruction and MBO Research
 
-CleoLOB includes a separate historical reconstruction pipeline for recorded market data.
+CleoLOB separates aggregate L2 reconstruction from canonical order-level replay.
+The following order-level capabilities require identities supplied by a source;
+they cannot be synthesized from aggregate price levels.
 
 Supported functionality includes:
 
@@ -339,6 +361,16 @@ Supported functionality includes:
 - and stepwise replay.
 
 Historical events are reconstructed separately from the synthetic matching engine so that recorded data is not accidentally modified by synthetic exchange mechanics.
+
+**IMPLEMENTED / TESTED:** `lob.mbo` wraps the existing identity-driven book with
+strict MBO events, bounded JSONL/gzip replay, source/canonical hashes, queue
+observations, cancellation ahead, recorded fill times and censored cohort
+frequencies. `TRADE` prints do not become maker fills; `EXECUTE` requires the
+recorded maker ID. Aggregate L2 explicitly refuses identity/FIFO capabilities.
+
+**LIMITATION:** Both bundled order-level fixtures are synthetic. No real
+historical MBO validation is claimed. Exact queues additionally require source
+completeness and source-guaranteed snapshot priority. See [MBO semantics](docs/mbo.md).
 
 ### Public L2 Validation
 
@@ -384,13 +416,13 @@ Historical data and simulation results are intentionally separated so that synth
 
 ## Calibration and Validation
 
-Historical observable models support:
+**IMPLEMENTED / TESTED:** Historical observable models support:
 
 - causal feature construction,
 - frozen calibration artifacts,
 - chronological train/test separation,
 - purged splits,
-- expanding walk-forward folds,
+- expanding and rolling walk-forward folds,
 - later-date validation,
 - drift diagnostics,
 - coverage diagnostics,
@@ -399,6 +431,25 @@ Historical observable models support:
 Calibration artifacts can therefore be separated from later evaluation periods rather than allowing future information to leak backward into a study.
 
 The current aggregate-L2 calibration layer does **not** identify queue-level arrival and cancellation dynamics. The synthetic FIFO order-flow model should therefore not be interpreted as a fully calibrated representation of a real exchange.
+
+The v0.3 workflow compares joint IID resampling with a two-state spread Markov
+observable model. Family/window selection uses chronological validation only;
+internal and external scores cannot alter the sealed selection. Eight observable
+definitions, missing-data rules, loss contributions and predeclared gates are
+documented in [the calibration protocol](docs/calibration-v03.md).
+
+**FAILED:** The earlier April/May observable study retains WARNING/FAIL outcomes.
+The separate July–September 2026 simulator calibration also retains
+[all six failed external gates](examples/studies/core/calibration/EXTERNAL_RESULTS.md).
+Those consumed periods cannot serve as new untouched holdouts. The v0.3 bundled
+two-state dataset is a synthetic smoke fixture, not independent market validation.
+
+**EMPIRICALLY OBSERVED / FAILED:** In the v0.3 smoke, validation selected
+`spread_markov/expanding` with mean loss **0.163811**, versus **0.487916** for
+`iid_joint/expanding`. The frozen model's internal test returned **WARNING**
+(loss **0.290986**) and shifted external fixture returned **FAIL** (loss
+**0.937720**). Better validation loss did not establish cross-regime validity;
+the external result did not change the selection or thresholds.
 
 ## Reproducible Experiments
 
@@ -453,6 +504,36 @@ See [`examples/studies/foundation/README.md`](examples/studies/foundation/README
 
 Older 100-seed results generated under different market mechanics are retained separately for provenance in [`results/baselines-100seeds/`](results/baselines-100seeds/). They are archived results, not validation of the current engine.
 
+## Learned-Policy Studies
+
+**EMPIRICALLY OBSERVED:** The preserved September 22 core study completed 20 PPO
+fits and 704 final synthetic episodes with zero INVALID outcomes. Its primary
+PPO-minus-risk-neutral-AC net-cost difference was −1.6046 bps, with a 95% interval
+[−2.0951, −1.0152]. Actual primary fill was 86.90%; remaining inventory was
+hypothetically valued. This is a bounded simulator result, conditional on failed
+historical calibration gates, and establishes no historical execution edge or
+live alpha. See the [retained result](examples/studies/core/ppo-final-20260922/result.json)
+and [core evidence scope](examples/studies/core/README.md).
+
+**IMPLEMENTED / TESTED:** The separate v0.3 protocol adds DQN for the environment's
+five discrete actions, PPO, three independent training seeds, paired evaluation
+on unseen seeds, original/shifted/stress regimes and observation/terminal-penalty
+ablations. All six controls run on every regime/market seed. Its registered smoke
+completed **18 fits / 18,432 training steps / 576 evaluation episodes**, with zero
+INVALID or WARNING economic outcomes. All **48/48** multiplicity-adjusted cost
+intervals include zero; this study does not establish policy superiority.
+
+**FAILED — completion objective:** Main DQN completed **0%, 4.17%, 4.17%** of
+original, shifted and stress episodes, leaving mean residual quantities of
+**272.125, 205.375, 108.0833** out of 300. Main PPO completed 100% in each regime,
+but its stress mean cost was **3.7378 bps**, versus TWAP **2.9858** and AC **3.4108**.
+An economically priceable outcome is not necessarily a completed execution:
+DQN's residuals are hypothetically valued, never recorded as fills. These
+failures remain visible despite the successful pipeline execution.
+
+Full results are in the [v0.3 report](docs/v03-final-report.md). The [RL protocol](docs/rl-v03.md)
+defines the 48-comparison family, uncertainty, reward, observations and limitations.
+
 ## Stress Testing
 
 Registered stress families allow strategies to be evaluated across multiple controlled scenarios while preserving source identity, model identity, configuration identity, complete outcome retention, and family-wide statistical correction.
@@ -475,7 +556,8 @@ The current implementation is a **linear portfolio risk framework**. It is not a
 
 ## Web Visualization
 
-CleoLOB retains both its FastAPI/Three.js interface and its original Streamlit dashboard.
+CleoLOB retains its FastAPI/Three.js interface and original Streamlit dashboard
+in `app.py`. They are exploration interfaces, not registered study entry points.
 
 Start the FastAPI application with:
 
@@ -524,12 +606,17 @@ This prevents unfinished execution from appearing artificially profitable simply
 | `lob/rl_env.py` | Reinforcement-learning environment |
 | `lob/runner.py` | Simulation and strategy orchestration |
 | `lob/replay/` | Historical schemas, validation, and reconstruction |
+| `lob/mbo.py` | Bounded identity replay, queue metrics, censoring and exact L2 aggregation |
+| `lob/generalization.py` | Chronological observable-model selection and holdout diagnostics |
+| `lob/policy_study.py` | Registered PPO/DQN training, paired controls, ablations and evaluation |
 | `lob/config.py` | Strict research configuration |
 | `configs/` | Reusable experiment presets |
 | `lob/experiments/` | Experiment provenance and registry |
+| `lob/artifacts.py` | Portable provenance, hashes and compact evidence verification |
 | `lob/stats.py` | Statistical comparison |
 | `lob/cli.py` | Research command-line interface |
 | `lob/benchmarks.py` | Matching microbenchmarks |
+| `lob/performance.py` | Profiling, repeated workload benchmarks, latency distributions and memory |
 | `server.py`, `static/` | FastAPI / Three.js exploration interface |
 | `app.py` | Legacy Streamlit exploration interface |
 | `tests/` | Unit, invariant, integration, and regression tests |
@@ -549,8 +636,15 @@ Correctness is currently prioritized over acceleration. No Rust, C++, GPU, or lo
   cannot be reconstructed exactly.
 
 - The reinforcement-learning layer supports bounded PPO execution studies,
-  but CleoLOB should not be interpreted as a library of production-ready or
+  discrete-action DQN and a registered smoke comparison, but CleoLOB should not be interpreted as a library of production-ready or
   state-of-the-art execution agents.
+
+- Observable and simulator calibration have failed historical cross-regime
+  diagnostics. Those failures remain visible. Synthetic smoke results cannot
+  override them, and previously inspected holdouts cannot be reused as fresh evidence.
+
+- No live alpha, live profitability or independent execution superiority has
+  been demonstrated. Hypothetical residual valuation is separate from actual fills.
 
 - Reported historical-processing throughput is an end-to-end local benchmark,
   not a production low-latency or exchange-colocation benchmark.
@@ -563,7 +657,10 @@ Therefore, the repository currently makes **no historical alpha claim**.
 
 ### Synthetic order flow
 
-The FIFO exchange mechanics are explicit and tested, but the queue-level synthetic order-flow model remains uncalibrated. Historical aggregate L2 calibration does not by itself identify queue-level arrival/cancellation processes.
+The FIFO exchange mechanics are explicit and tested. Simulation-based fitting
+exists, but the model failed its external gates and remains empirically
+unvalidated. Historical aggregate L2 calibration does not identify queue-level
+arrival/cancellation processes.
 
 ### Latency
 
@@ -571,7 +668,11 @@ Message latency is modeled. Full market-data dissemination latency is not.
 
 ### Reinforcement learning
 
-A Stable-Baselines3 PPO interface is available. The project currently does not claim a completed PPO-vs-baseline result establishing superiority. SAC is not implemented.
+The completed core PPO comparison is limited to its declared synthetic design.
+The new PPO/DQN study broadens controls and regimes; its small training budget
+cannot establish convergence or algorithm superiority. SAC is not implemented;
+the current action space is discrete. A historically calibrated execution regime
+is unavailable while the calibration gates fail.
 
 ### Market coverage
 
@@ -581,18 +682,25 @@ The project does not currently provide an exchange-native production feed adapte
 
 ## Verification
 
-The integrated project suite currently passes:
+The exact final Ruff, compilation, full pytest, dependency, wheel and CLI checks
+are recorded in the [v0.3 validation report](docs/v03-final-report.md). Historical
+test counts in dated documents describe their original commits.
 
-- **521 automated tests**,
-- Ruff checks,
-- Python compilation.
+**TESTED locally:** Python 3.14 completed **700 passed, 2 warnings**. Isolated
+Python 3.11, 3.12 and 3.13 environments each completed **691 passed, 9 skipped,
+2 warnings**; those skips concern optional RL dependencies. The two warnings
+concern the existing unbounded Gymnasium observation Box. These local results
+do not certify a remote CI run.
 
-CI is configured on Ubuntu for:
+The [research CI workflow](.github/workflows/research.yml) defines the supported
+test matrix and the separate RL dependency job. Configuring a workflow does not
+establish that its remote run passed; local and remote checks are reported separately.
 
-- Python **3.11**,
-- Python **3.12**.
-
-The current matching benchmark is a local **matching-engine microbenchmark**. It should not be interpreted as full simulation throughput or production exchange performance.
+**IMPLEMENTED / TESTED:** `lob.performance` reports warm repeated small/medium/deep
+workloads, p50/p95/p99, operations per second, replay/episode throughput and Python
+allocations, with OS/Python/CPU/package/source identity. Timer and scheduling costs
+are included; Python allocations are not process RSS. No speedup or production
+latency follows merely from having a benchmark suite.
 
 ## Documentation
 
@@ -601,8 +709,13 @@ Detailed documentation:
 - [Architecture audit](docs/architecture.md)
 - [Configuration, CLI and provenance](docs/configuration.md)
 - [Historical replay](docs/historical-replay.md)
+- [MBO research and synthetic validation](docs/mbo.md)
 - [Public L2 data and validation](docs/public-market-data.md)
 - [Calibration, stress, settlement and portfolio workflows](docs/validation-and-risk.md)
+- [v0.3 calibration methodology](docs/calibration-v03.md)
+- [v0.3 RL protocol and environment audit](docs/rl-v03.md)
+- [Independent reproduction](docs/reproduction.md)
+- [v0.3 final results and acceptance report](docs/v03-final-report.md)
 - [Research methodology and limitations](docs/research-methodology.md)
 - [Implementation status](docs/implementation-status.md)
 
@@ -614,18 +727,21 @@ Executed evidence:
 
 ## Roadmap
 
+**PLANNED:** The remaining items below are extensions beyond the bounded,
+implemented v0.3 workflows.
+
 ### Historical execution
 
-- [ ] Historical event-replay execution engine
+- [ ] Validated exchange-native MBO adapter
 - [ ] Counterfactual order insertion
-- [ ] Queue-position estimation
+- [ ] Independently validated queue studies on actual MBO data
 - [ ] Conservative / neutral / optimistic fill models
 
 ### Market realism
 
 - [ ] Latency-model extensions
 - [ ] Improved market-impact calibration
-- [ ] Additional market regimes
+- [ ] Empirically validated market regimes beyond synthetic shifts
 
 ### Data
 
@@ -637,14 +753,14 @@ Executed evidence:
 ### Research
 
 - [ ] Expanded TWAP / VWAP / POV / Almgren–Chriss benchmark studies
-- [ ] RL vs classical execution experiments
-- [ ] Regime-conditioned evaluation
-- [ ] Reproducible benchmark datasets
+- [ ] Longer-budget PPO/DQN studies with more independent training seeds
+- [ ] Independent real-market generalization with fresh holdouts
+- [ ] Licensed MBO benchmark datasets
 
 ### Infrastructure
 
 - [ ] Expanded CI benchmarks
-- [ ] Performance profiling
+- [ ] Profile-supported optimization with equivalence evidence
 - [ ] Improved experiment registry and reporting
 - [ ] Expanded documentation
 

@@ -1,6 +1,60 @@
 # Architecture and audit
 
-## Existing architecture
+## Current v0.3 architecture
+
+**IMPLEMENTED / TESTED:** The package retains three distinct market paths:
+
+| Path | Implementation | Evidence boundary |
+|---|---|---|
+| Synthetic exchange | `engine.py`, `execution.py`, `rl_env.py`, accounting/risk/settlement | Simulated FIFO and actual simulated fills; residual valuation remains hypothetical |
+| Aggregate historical L2 | `replay/l2.py`, `replay/assessment.py` | Source price-level reconstruction; identity, exact FIFO and agent counterfactual fills explicitly unavailable |
+| Canonical MBO | `replay/book.py` plus `mbo.py` | Recorded source IDs/executions and source-guaranteed snapshot FIFO; no invented matching or fills |
+
+`mbo.py` adds bounded JSONL/gzip streaming, strict sequence/timestamp validation,
+exact integer L2 aggregation, queue trajectories, observed maker fill times and
+explicit census/prefix censoring. **LIMITATION:** the committed order-level
+datasets are synthetic; real historical MBO validation remains pending.
+
+`generalization.py` selects joint IID or spread-state Markov observable models
+using expanding/rolling train-validation folds and temporal embargoes. It seals
+selection inputs before internal evaluation and loads the external partition only
+after selection. It models observables, not executable order flow. The separate
+`zi_calibration.py` fits simulator parameters. **FAILED:** preserved historical
+observable and simulator studies breached external calibration gates.
+
+`policy_study.py` reuses the execution environment, six classical/diagnostic
+controls and existing crossed-seed bootstrap. It adds fixed-budget PPO and DQN
+training, separate training/evaluation seeds, original/shifted/stress regimes,
+two finite ablations, checkpoint metadata and failure retention. The prior
+`core_study.py` PPO–AC experiment and evidence remain independently identified.
+
+**EMPIRICALLY OBSERVED / FAILED:** The v0.3 smoke completed 18 PPO/DQN fits and
+576 evaluations. Its 48 corrected cost intervals all include zero, and main
+DQN rarely completed its parent order. The selected Markov observable model
+returned internal WARNING and external FAIL. These are valid retained outputs
+of the architecture, not evidence that market fidelity or execution quality
+passed. See the [final measurements](v03-final-report.md).
+
+`performance.py` profiles workloads before timing repeated book, L2, MBO,
+snapshot, replay and complete simulation-episode operations. Warmups, size classes,
+latency percentiles and separate Python allocation passes are explicit.
+`artifacts.py` captures portable runtime/source provenance and seals artifacts;
+hash verification establishes integrity, not independent scientific validation.
+Large models, source bundles, episode journals and raw data stay outside Git.
+
+**PLANNED:** validated native MBO adapters, fresh real-data generalization and
+profile-supported acceleration. No production execution or live-alpha evidence
+is established. See [reproduction](reproduction.md), the
+[v0.3 report](v03-final-report.md), [MBO](mbo.md),
+[calibration](calibration-v03.md) and [RL protocol](rl-v03.md).
+
+The sections below retain the original architecture audit and its development
+history. Their baseline omissions are not statements about the current release.
+In the current checkout the legacy entry points remain `app.py` and `evaluate.py`,
+and the old tables are under `results/baselines-100seeds/`; references to a
+`legacy/` location below should not be used as current checkout paths.
+
+## Original baseline architecture — historical audit
 
 `SimConfig` → `ExchangeSimulator` clock/heap/background flow → `OrderBook`
 price-time matching → `Trade` → baseline `ExecutionAgent` or `LOBExecutionEnv`
@@ -17,7 +71,7 @@ The frontend synchronizes trajectory, price, depth, tape and 3D liquidity views.
 registered SB3 PPO study entry point. The existing test suite exercises matching, agents, Gymnasium,
 runner payloads, scenarios and statistics.
 
-## Audit findings
+## Original audit findings — addressed in subsequent batches
 
 1. Order constructors accepted invalid quantities, prices, timestamps and IDs.
 2. The market generated arrivals anew per `step(dt)`, so decision frequency changed
@@ -36,12 +90,12 @@ runner payloads, scenarios and statistics.
    the training script's original claims of strict seed separation were too strong.
 10. Historical reconstruction, source validation and a persistent registry were absent.
 
-## Direction
+## Architecture evolution before v0.3
 
 Retain `lob` as the package and existing public entry points. Add bounded modules
 for configuration, accounting, risk, replay, experiments and reporting rather than
 renaming every caller or creating empty directories. The `cleo` console command
-will delegate to these modules. The web UI remains an exploration interface; the
+delegates to these modules. The web UI remains an exploration interface; the
 research command is responsible for validity, provenance and failure records.
 
 Canonical historical reconstruction has its own ID-driven book. Venue execution
@@ -64,11 +118,11 @@ integrity. These observable models do not replace the FIFO arrival mechanism.
 and RL before final valuation. `portfolio.py` independently reconciles linear
 multi-currency holdings/reservations and evaluates risk limits and joint shocks.
 
-The active research scope is now the PPO–Almgren–Chriss comparison.
+The v0.2.1 research scope was the PPO–Almgren–Chriss comparison.
 `zi_calibration.py` fits the actual FIFO simulator to normalized historical L2
 moments. `controls.py` identifies AC parameters, separates exploratory positive
 controls from confirmation and reports labeled residual-price sensitivity.
 `core_study.py` freezes the environment and seed domains, trains five seeds per
 penalty arm, powers the test from diagnostics and evaluates saved policies once.
-Portfolio/FX and further product modules are frozen. Archived entry points and
+Portfolio/FX and further product modules remain frozen. Archived entry points and
 old 100-seed tables live under `legacy/`.

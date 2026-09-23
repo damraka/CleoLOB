@@ -1,0 +1,126 @@
+{
+  "scope": "Verified code-and-evidence commit; later commits may add documentation or test assertions. Final branch status must be checked separately.",
+  "runs": [
+    {
+      "run_id": 35883526967,
+      "run": {
+        "name": "Execution research",
+        "head_branch": "research/v0.3-validity-upgrade",
+        "head_sha": "798f8828e7dbad334914158e77b282024df7bd63",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526967",
+        "created_at": "2026-09-23T15:42:29Z",
+        "updated_at": "2026-09-23T15:43:40Z"
+      },
+      "jobs": [
+        {
+          "id": 107257725277,
+          "name": "correctness (3.11)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526967/job/107257725277"
+        },
+        {
+          "id": 107257725338,
+          "name": "ppo-contract",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526967/job/107257725338"
+        },
+        {
+          "id": 107257726250,
+          "name": "correctness (3.13)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526967/job/107257726250"
+        },
+        {
+          "id": 107258219362,
+          "name": "research-study",
+          "status": "completed",
+          "conclusion": "skipped",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526967/job/107258219362"
+        }
+      ]
+    },
+    {
+      "run_id": 35883526924,
+      "run": {
+        "name": "CI",
+        "head_branch": "research/v0.3-validity-upgrade",
+        "head_sha": "798f8828e7dbad334914158e77b282024df7bd63",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924",
+        "created_at": "2026-09-23T15:42:29Z",
+        "updated_at": "2026-09-23T15:45:12Z"
+      },
+      "jobs": [
+        {
+          "id": 107257733165,
+          "name": "container",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733165"
+        },
+        {
+          "id": 107257733224,
+          "name": "test (windows-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733224"
+        },
+        {
+          "id": 107257733501,
+          "name": "test (ubuntu-latest, 3.14)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733501"
+        },
+        {
+          "id": 107257733511,
+          "name": "test (ubuntu-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733511"
+        },
+        {
+          "id": 107257733775,
+          "name": "test (windows-latest, 3.14)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733775"
+        },
+        {
+          "id": 107257733829,
+          "name": "test (ubuntu-latest, 3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733829"
+        },
+        {
+          "id": 107257733837,
+          "name": "test (windows-latest, 3.11)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733837"
+        },
+        {
+          "id": 107257733918,
+          "name": "test (ubuntu-latest, 3.11)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257733918"
+        },
+        {
+          "id": 107257734069,
+          "name": "test (windows-latest, 3.13)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/damraka/CleoLOB/actions/runs/35883526924/job/107257734069"
+        }
+      ]
+    }
+  ]
+}

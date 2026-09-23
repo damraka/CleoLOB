@@ -1,0 +1,8 @@
+**
+!Dockerfile
+!pyproject.toml
+!requirements.txt
+!lob/
+!lob/**
+lob/**/__pycache__/
+lob/**/*.pyc

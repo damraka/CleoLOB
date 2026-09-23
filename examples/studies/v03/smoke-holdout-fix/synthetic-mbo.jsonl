@@ -1,0 +1,6 @@
+{"event_type": "RESET", "sequence": 0, "symbol": "SMOKE", "timestamp_ns": 0, "venue": "SYNTHETIC"}
+{"event_type": "ADD", "order_id": "ahead", "price_ticks": 100, "quantity": 5, "sequence": 1, "side": "BUY", "symbol": "SMOKE", "timestamp_ns": 1, "venue": "SYNTHETIC"}
+{"event_type": "ADD", "order_id": "watched", "price_ticks": 100, "quantity": 4, "sequence": 2, "side": "BUY", "symbol": "SMOKE", "timestamp_ns": 2, "venue": "SYNTHETIC"}
+{"event_type": "CANCEL", "order_id": "ahead", "quantity": 5, "sequence": 3, "symbol": "SMOKE", "timestamp_ns": 3, "venue": "SYNTHETIC"}
+{"event_type": "EXECUTE", "order_id": "watched", "quantity": 2, "sequence": 4, "symbol": "SMOKE", "timestamp_ns": 4, "venue": "SYNTHETIC"}
+{"event_type": "EXECUTE", "order_id": "watched", "quantity": 2, "sequence": 5, "symbol": "SMOKE", "timestamp_ns": 5, "venue": "SYNTHETIC"}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic_smoke",
+  "exchange": "SYNTHETIC",
+  "symbol": "TWO-STATE-OBSERVABLES",
+  "interval_us": 1000000,
+  "embargo_us": 2000000,
+  "initial_train_rows": 360,
+  "validation_rows": 120,
+  "internal_rows": 240,
+  "folds": 4,
+  "simulation_rows": 1024,
+  "max_pool_rows": 128,
+  "fit_seed": 91401,
+  "validation_seeds": [91501, 91502],
+  "internal_seeds": [91601, 91602],
+  "external_seeds": [91701, 91702],
+  "development": {"seed": 91101, "rows": 1080, "start_us": 0, "shift": 1.0},
+  "external": {"seed": 91102, "rows": 360, "start_us": 86400000000, "shift": 1.8}
+}

@@ -1,0 +1,216 @@
+{
+  "base": "main",
+  "files_with_personal_paths": 23,
+  "new_personal_path_files": [],
+  "locations": [
+    {
+      "file": "examples/studies/foundation/20260913T191842-dca37a631e1c/report.html",
+      "lines": [
+        1092
+      ],
+      "file_sha256": "2a4662cb3e3cd6593fc65904f940675d9dcb3ee8c12211c6152f8a47cccbbd58",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/foundation/reproductions/20260913T191842-dca37a631e1c.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "251bf3e17c11e3121bb435e8b317b706bc41208a31e87f58e90cb9740b7ce3a1",
+      "matches": 2,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/historical/20260913T202441-ae4e5d848775/assessment.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "10089cd2bb777dd25fbf69f8be7608aab62c26997dd931c9df2cad05f79558da",
+      "matches": 3,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/historical/20260913T202441-ae4e5d848775/provenance.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "38ff928aa4b2ef06cea355bd1082400289f614fae134dc724aedd4354fd6a1d3",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/historical/20260913T202528-c5d5d426358c/assessment.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "85f06899c05cf6be16363fd9223e7a61bd6061eeba24502484eaf99b4d38411b",
+      "matches": 3,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/historical/20260913T202528-c5d5d426358c/provenance.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "95baad96094f98c56bcc0c9c5dc6f42da87a472c30828d667d726e38a25eab9d",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/calibration/20260919T012858-2ce969ab5e22/plan.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "6a24b2c40c7fba0f458293877e5f295254fed481f74b9c84eaa3ee8c3df0cbf1",
+      "matches": 2,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/calibration/20260919T012858-2ce969ab5e22/provenance.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "6d0cb758149bdcfee697b179c3f23ed67f2b9202606600ce0f76853f807b91c4",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/calibration/20260919T012858-2ce969ab5e22/result.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "6805d622bac0b072bbede4be4f95dfe97995be3c2c3c03be8acb1dc6e4954117",
+      "matches": 2,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/portfolio/20260919T012859-6cd624b82611/provenance.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "6d0cb758149bdcfee697b179c3f23ed67f2b9202606600ce0f76853f807b91c4",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T012858-ab46d338b56a/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "233d4680982d5c8b345167b09a6b3008e24f68e351beaf4976798587bf768459",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T012858-ab46d338b56a/report.html",
+      "lines": [
+        939
+      ],
+      "file_sha256": "9749b54858820ea99ae8c3253bd215d3bb8e4220c623e0c235f514241d722aa5",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T012952-dc9846ff914c/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "e9277e7b0ad142247d9ef97177df551d281ce5ad3feff80eba34ccc0925c9fa4",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T012952-dc9846ff914c/report.html",
+      "lines": [
+        939
+      ],
+      "file_sha256": "ba13328f47ea928f9aa1959cd626dbb01550336eb150d09343391c1bcf466a57",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013008-c28ebfd7c1ad/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "580fb765c8eede883e60175efe2eedaae894dbf2ad9af7a10fd4664dc97f6e14",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013008-c28ebfd7c1ad/report.html",
+      "lines": [
+        939
+      ],
+      "file_sha256": "0f8a02ea7cd7a15fce30e93f1ce8f20a3ef0b6effd2db3f205e260eeaf5b651b",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013057-b82c14e08653/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "128dbf1cf4756c150d574cceca565814dcb3bd5cca2616a6feb068b10b436a79",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013057-b82c14e08653/report.html",
+      "lines": [
+        939
+      ],
+      "file_sha256": "d4c8e4007251fc109dba3572199cb29071ff867f6462d937bf041f11758bfc2e",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013140-8bce2a45f27d/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "636b5781db1e29b6ad05185742f1b28837da4bf463e34ccd8f41df05311ac1d0",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013140-8bce2a45f27d/report.html",
+      "lines": [
+        711
+      ],
+      "file_sha256": "0a5ce613413d4adf35cb812892d48126f131f32d7c3700ab9db506b1a79a3631",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013146-5a0a8654dee4/metadata.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "7e3e37be10e31e6985fc647c849f939a5551ccca6b964cfdcc7c0f70d6463588",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/experiments/20260919T013146-5a0a8654dee4/report.html",
+      "lines": [
+        711
+      ],
+      "file_sha256": "e1dd73207ff9afeef2e0dafe37617acc5eea44dc7673c7df503d2f2e6654a5c1",
+      "matches": 1,
+      "new_values": 0
+    },
+    {
+      "file": "examples/studies/validation/stress/20260919T012858-55bb892c75e4/provenance.json",
+      "lines": [
+        1
+      ],
+      "file_sha256": "6d0cb758149bdcfee697b179c3f23ed67f2b9202606600ce0f76853f807b91c4",
+      "matches": 1,
+      "new_values": 0
+    }
+  ],
+  "scope": "tracked plus nonignored untracked files; ignored datasets/logs/environments excluded",
+  "historical_policy": "Report existing evidence paths without altering historical records or their seals."
+}

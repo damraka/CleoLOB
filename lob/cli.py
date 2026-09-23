@@ -75,6 +75,25 @@ def parser() -> argparse.ArgumentParser:
     child = commands.add_parser("benchmark", help="run the measured Python matching microbenchmark")
     child.add_argument("--pairs", type=int, default=2000)
     child.add_argument("--repeats", type=int, default=3)
+    child = commands.add_parser("benchmark-suite", help="profile and measure L2/MBO/simulation research workloads")
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--operations", type=int, default=200)
+    child.add_argument("--repeats", type=int, default=3)
+    child.add_argument("--warmup", type=int, default=20)
+    child = commands.add_parser("mbo-replay", help="replay genuine order-ID or clearly synthetic MBO JSONL")
+    child.add_argument("path", type=Path)
+    child.add_argument("--max-events", type=int, default=100_000)
+    child = commands.add_parser("calibration-study", help="registered chronological observable family comparison")
+    child.add_argument("--config", type=Path, required=True)
+    child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("policy-study", help="registered multi-seed PPO/DQN studies; requires rl extra")
+    child.add_argument("operation", choices=("register", "train", "evaluate", "verify"))
+    child.add_argument("--config", type=Path)
+    child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("smoke", help="offline generated L2/MBO/calibration/execution reproduction smoke")
+    child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("verify-artifact", help="verify a compact portable artifact's exact byte integrity")
+    child.add_argument("path", type=Path)
     for name in ("report", "verify"):
         child = commands.add_parser(name, help="verify a saved research run and locate its offline report")
         child.add_argument("experiment", type=Path)
@@ -125,6 +144,32 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "benchmark":
             from .benchmarks import benchmark_matching
             _print(benchmark_matching(args.pairs, args.repeats))
+        elif args.command == "benchmark-suite":
+            from .performance import main as benchmark_main
+            return benchmark_main(["--out", str(args.out), "--operations", str(args.operations),
+                                   "--repeats", str(args.repeats), "--warmup", str(args.warmup)])
+        elif args.command == "mbo-replay":
+            from .mbo import MBOReplay
+            replay = MBOReplay(args.path, max_events=args.max_events)
+            replay.run()
+            _print(replay.summary())
+        elif args.command == "calibration-study":
+            from .generalization import run_study
+            _print(run_study(json.loads(args.config.read_text(encoding="utf-8")), args.out))
+        elif args.command == "policy-study":
+            from .policy_study import main as policy_main
+            arguments = [args.operation, "--out", str(args.out)]
+            if args.config:
+                arguments += ["--config", str(args.config)]
+            policy_main(arguments)
+        elif args.command == "smoke":
+            from .smoke import run_smoke
+            _print(run_smoke(args.out))
+        elif args.command == "verify-artifact":
+            from .artifacts import verify_artifacts
+            result = verify_artifacts(args.path)
+            _print(result)
+            return 0 if result["valid"] else 1
         elif args.command == "download-sample":
             from .data_download import download_tardis_sample
             path = download_tardis_sample(args.exchange, args.symbol, args.date, args.type,
