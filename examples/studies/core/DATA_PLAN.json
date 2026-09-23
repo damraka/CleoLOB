@@ -1,0 +1,21 @@
+{
+  "registered_at_utc": "2026-09-19T09:18:00Z",
+  "question": "Does PPO reduce net execution cost relative to simulator-fitted Almgren-Chriss?",
+  "provider": "Tardis.dev public first-day-of-month samples",
+  "exchange": "deribit",
+  "data_type": "book_snapshot_5",
+  "symbols": ["BTC-PERPETUAL", "ETH-PERPETUAL"],
+  "train_dates": ["2026-07-01"],
+  "validation_dates": ["2026-08-01"],
+  "holdout_dates": ["2026-09-01"],
+  "holdout_rule": "Download and integrity verification allowed; no feature extraction or inspection until simulator fit and gates are frozen. Evaluate once, retain failures, no refit on validation or holdout.",
+  "availability_rule": "If a registered date is unavailable, record the HTTP/network failure; do not silently substitute an observed date or call old data a fresh holdout.",
+  "mapping": "Normalize native aggregate depth and price using training-only instrument-specific scales. Simulated lots are normalized units, not derivative contracts or shares.",
+  "impact_limit": "Visible-book walk curve is a liquidity proxy, not identified causal permanent market impact.",
+  "ppo_training_seeds": [81001, 81002, 81003, 81004, 81005],
+  "primary_penalty_bps": 0,
+  "penalty_ablations_bps": [0, 5, 25, 100],
+  "training_steps_per_model": 8192,
+  "stopping_rule": "Fixed compute budget, no final-test checkpoint selection; report possible undertraining.",
+  "module_scope": "Freeze portfolio/FX and new product modules. Focus on execution research."
+}
