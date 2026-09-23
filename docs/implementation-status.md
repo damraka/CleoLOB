@@ -5,7 +5,59 @@ Status values: **DONE**, **PARTIAL**, **NOT STARTED**, **BLOCKED**. A phase is n
 DONE merely because its directory exists. See `architecture.md` for the audit and
 `research-methodology.md` for assumptions. Update this file after each tested batch.
 
-## Current execution study — 2026-09-22
+## Current v0.3 validity upgrade — 2026-09-23
+
+Current claims use **IMPLEMENTED**, **TESTED**, **EMPIRICALLY OBSERVED**, **FAILED**,
+**LIMITATION** and **PLANNED**. The dated sections below retain their historical
+counts, outcomes and original scope; they are not current acceptance reports.
+Exact final commands, test totals, empirical results and unavailable checks are
+recorded in the [v0.3 final report](v03-final-report.md).
+
+| Track | Current implementation and evidence scope |
+|---|---|
+| MBO | IMPLEMENTED / TESTED: bounded canonical ID replay, FIFO/amendment semantics, recorded execution tracking, queue trajectories, censoring, MBO-to-L2 aggregation and explicit L2 capability refusal. LIMITATION: fixture validation only; no licensed historical MBO feed was available. |
+| Calibration | IMPLEMENTED / TESTED: IID and two-state spread Markov observable families; expanding/rolling chronological folds, validation-only selection, embargoes, frozen internal/external evaluation, fixed gates and failure diagnostics. LIMITATION: the new bundled study is synthetic smoke evidence. |
+| Historical failures | FAILED: April/May observable WARNING/FAIL results and all six July–September simulator external FAIL gates remain preserved. Consumed holdouts cannot be reclassified as fresh evidence. |
+| RL | IMPLEMENTED / TESTED: PPO plus DQN for five discrete actions, three training seeds, frozen paired market seeds, six controls, three regimes, two ablations, training traces, checkpoint provenance, crossed uncertainty and a fixed 48-comparison family. EMPIRICALLY OBSERVED: all 18 fits and 576 evaluations completed; substantive completion failures remain below. |
+| Performance | IMPLEMENTED / TESTED: profiling and repeated small/medium/deep book, L2, MBO, snapshot and replay workloads; complete simulation-episode timing; p50/p95/p99 and separate Python allocations with portable runtime/source provenance. LIMITATION: local research measurements, no production latency guarantee. |
+| Reproduction | IMPLEMENTED: bootstrap, minimal container workflow, contributor/reproduction templates, synthetic smoke data, portable artifact seals and compact evidence retention. Consult [the reproduction guide](reproduction.md) for checks actually available on each platform. |
+| Claims | LIMITATION: young project, limited independent validation, no hidden-liquidity reconstruction, historical counterfactual fills, demonstrated live alpha or SOTA/production-HFT result. |
+
+**TESTED locally:** Full Python 3.14 suite: **700 passed, 2 warnings**. Isolated
+Python 3.11, 3.12 and 3.13 core environments: **691 passed, 9 optional-RL skips,
+2 warnings each**. Warnings concern the existing unbounded Gymnasium observation
+Box. These are local checks; no remote CI success is inferred from them.
+
+**EMPIRICALLY OBSERVED / FAILED — v0.3 calibration:** `spread_markov/expanding`
+won validation with loss **0.163811** versus **0.487916** for
+`iid_joint/expanding`. Frozen internal evaluation returned **WARNING / 0.290986**;
+the shifted external fixture returned **FAIL / 0.937720**. Selection and gates
+were unchanged by these later outcomes. The synthetic fixture establishes no
+real-market generalization.
+
+**EMPIRICALLY OBSERVED / FAILED — v0.3 RL smoke:** **18 fits, 18,432 training
+steps, 576 evaluations, zero INVALID/WARNING economic states**. All **48/48**
+corrected cost intervals include zero. Main PPO completion was 100% in each
+regime; main DQN completion was **0%, 4.17%, 4.17%**, with mean residual quantity
+**272.125, 205.375, 108.0833 of 300** for original, shifted and stress respectively.
+PPO stress mean cost was **3.7378 bps**, versus TWAP **2.9858** and AC **3.4108**.
+Priceable residual valuation is hypothetical and never a fill; zero INVALID
+states must not conceal DQN's material failure to complete execution. The
+short training budget and corrected intervals support no superiority claim.
+
+**EMPIRICALLY OBSERVED:** The existing September 22 core study is complete and
+separate from the new v0.3 protocol: 20 PPO fits, 704 final synthetic episodes,
+zero INVALID outcomes, and a primary PPO-minus-risk-neutral-AC cost difference
+of −1.6046 bps, 95% CI [−2.0951, −1.0152]. Actual primary fill was 86.90%; remaining
+inventory was hypothetically valued. These outcomes remain conditional on the
+simulator and its failed historical calibration gates.
+
+**PLANNED:** independent licensed MBO validation, fresh real-market holdouts,
+longer-budget learned-policy studies and profiling-supported optimization.
+Existing historical numerical records below are preserved without treating
+their test counts or baseline omissions as current state.
+
+## Historical execution study — 2026-09-22
 
 The active release is the bounded PPO-versus-AC study. The platform-wide phases
 below remain partial where their broader features are outside this scope.
@@ -59,7 +111,7 @@ Three.js frontend, dependencies, and tests. Existing working-tree changes are
 preserved. Baseline: **64 tests passed in 11.30 seconds**, Python 3.14.6 on Windows.
 This is a local measurement, not a cross-machine performance claim.
 
-## Phase checklist
+## Pre-v0.3 platform phase checklist — historical scope
 
 | Phase | Status | Scope and next required evidence |
 |---|---|---|
