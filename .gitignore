@@ -10,3 +10,4 @@ data/public/
 results/*/
 !results/baselines-100seeds/
 
+build/
