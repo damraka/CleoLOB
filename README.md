@@ -1,198 +1,412 @@
 # CLEOLOB — Market Microstructure Research Lab
 
-A Python laboratory for limit-order-book mechanics, execution strategies, historical
-reconstruction, and reproducible comparisons. The engine, accounting and experiment
-records are designed to expose invalid assumptions and failed strategies.
+**CleoLOB** is a reproducible research laboratory for limit-order-book mechanics, execution algorithms, historical L2 reconstruction, reinforcement learning, risk, and statistical strategy comparison.
 
-> A positive synthetic backtest is not evidence of live alpha. Unpriced inventory,
-> missing experiments and failed comparisons are reported rather than concealed.
+It is built around a simple principle:
 
-![Existing CLEO liquidity-canyon visualization](docs/3d-graph.png)
+> **A positive synthetic backtest is not evidence of live alpha.**
 
-## Implemented and tested
+Unpriced inventory, invalid experiments, missing comparisons, failed runs, and model limitations are reported rather than silently discarded.
 
-- **FIFO exchange:** integer ticks/lots, GTC/IOC/FOK/GTD, post-only, partial fills,
-  cancel, modify and conditional cancel/replace; explicit order states, queue
-  positions and invariant checks.
-- **Persistent event clocks:** deterministic tie-breaking, separate random streams,
-  delayed messages and cancellation races. Dividing a simulation into different
-  observation steps preserves its background event path.
-- **Accounting and execution risk:** cash, signed inventory, average-cost PnL,
-  maker/taker fees and rebates; in-flight reservations prevent parent overfills.
-  Child/position/notional/loss limits and a latched kill switch are available.
-- **Execution baselines:** TWAP, synthetic-profile VWAP, POV and Almgren–Chriss,
-  plus heuristic/random policies and the existing SB3 PPO interface. Research
-  commands require a checkpoint when PPO is requested.
-- **Historical reconstruction:** bounded CSV/JSONL input, exact order IDs,
-  snapshots and incremental events, source hashes, quality reports, step/pause/
-  resume/reset. This reconstructs recorded events without inventing agent fills.
-- **Public aggregate L2 data:** bounded Tardis sample downloads, checksum/gzip
-  verification, exact decimal price-level replay, snapshot comparisons and
-  causal one-second descriptive statistics. Two full real-market days tested.
-- **Calibration and validation:** frozen empirical L2 observable models, causal
-  features, purged chronological splits, expanding walk-forward folds,
-  later-date drift/coverage scorecards and deterministic observable generation.
-- **Settlement and portfolio risk:** post-horizon cancellation/fill reconciliation,
-  explicit late fees and timeouts; multi-currency linear portfolio accounting,
-  conservative reservations, exposure/loss limits and joint asset/FX scenarios.
-- **Registered stress families:** multi-scenario execution, frozen source/model
-  identity, complete outcome retention and family-wide statistical correction.
-- **Research configuration:** typed immutable YAML/JSON, inheritance, environment
-  and CLI overrides, schema export, validation, normalized hashes and diffs.
-- **Experiment evidence:** unique run directories, source snapshots, config and
-  checkpoint hashes, every episode outcome, order/fill/risk logs, offline HTML
-  reports, integrity verification and exact reproduction checks.
-- **Statistics and design:** paired bootstrap intervals, exact sign tests,
-  Holm/Bonferroni/BH correction, complete-pair validation and bounded sampling of
-  large finite parameter spaces. Failed or unpriced planned outcomes withhold
-  comparative inference.
+[![Research foundations](https://github.com/damraka/CleoLOB/actions/workflows/research.yml/badge.svg)](https://github.com/damraka/CleoLOB/actions/workflows/research.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Research](https://img.shields.io/badge/focus-market%20microstructure-informational)
 
-The existing FastAPI/Three.js app and legacy Streamlit dashboard remain available.
-The web comparison now displays economic effective shortfall and unpriced outcomes;
-its fallback heuristic is labeled. It is an exploration UI, while registered research
-uses the stricter CLI workflow.
+---
 
-## Quickstart
+## Highlights
 
-Python 3.11+ is supported by package metadata; this batch was tested locally on
-Python 3.14.6 / Windows 11. Linux CI for 3.11 and 3.13 is configured but has not been
-run from this workspace.
+|                               |                                                                                |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| **521 tests**                 | Integrated unit, randomized-invariant, integration and regression suite        |
+| **5,972,671**                 | Real Deribit L2 updates processed                                              |
+| **2,081,479**                 | Top-five order-book snapshots matched exactly                                  |
+| **46,195**                    | Public trade records checked                                                   |
+| **Deterministic experiments** | Separate random streams, persistent clocks and reproducible run manifests      |
+| **Execution research**        | TWAP, VWAP, POV, Almgren–Chriss, heuristics, random policies and PPO interface |
+| **Statistical inference**     | Paired bootstrap, exact sign tests and multiple-testing correction             |
+| **Historical reconstruction** | Exact event replay without inventing counterfactual fills                      |
 
-```sh
-python -m venv .venv
-# Windows PowerShell: .\.venv\Scripts\Activate.ps1
-# macOS/Linux: source .venv/bin/activate
-python -m pip install -e '.[dev]'
+CleoLOB combines a deterministic synthetic exchange with real-market reconstruction and research infrastructure designed to make experiments **auditable, reproducible and difficult to accidentally overstate**.
 
-python -m pytest -q
-cleo config validate configs/research.yaml
-cleo evaluate --config configs/research.yaml
-cleo validate-data examples/data/canonical-events.jsonl
-cleo replay examples/data/canonical-events.jsonl
-cleo benchmark --pairs 2000 --repeats 3
-cleo stress --config configs/robustness.yaml
-cleo portfolio --config configs/portfolio_example.json
-```
+![CLEO liquidity-canyon visualization](docs/3d-graph.png)
 
-Install `python -m pip install -e '.[dev,rl,web]'` for PPO and the web dashboards,
-or use the existing `requirements.txt`. Run `python server.py --no-browser` and
-open `http://127.0.0.1:8000`. No credentials or live-market connection are needed.
+---
 
-`python -m lob.cli` is equivalent to `cleo`; `python -m lob` retains the standalone
-simulation demonstration. No broker integration or real-money order submission is
-included.
+## What CleoLOB Is
 
-## A reproducible study
+CleoLOB is intended for research into:
 
-[The foundation study](examples/studies/foundation/README.md) evaluates six
-baselines/heuristics on ten paired seeds: **60 episodes**, 2,000-share sell orders,
-10 seconds, 1 bps taker fees. Full results, exact source/configuration and audit
-logs are included. No PPO/SAC comparison was run.
+* limit-order-book mechanics,
+* optimal execution,
+* market microstructure,
+* execution cost and risk,
+* reinforcement-learning execution agents,
+* historical L2 reconstruction,
+* calibration and walk-forward validation,
+* stress testing,
+* portfolio exposure,
+* and reproducible strategy comparison.
 
-Every candidate-minus-TWAP bootstrap interval in this small study includes zero,
-and all five Holm-adjusted sign-test p-values are 1.0. This study does **not**
-establish that one agent is better. The result is conditional on one uncalibrated
-synthetic market; stress, OOD and historical strategy evaluation remain NOT RUN.
+It is **not** a live trading system.
 
-```sh
+There is no broker integration, real-money order submission, or claim of demonstrated live alpha.
+
+---
+
+## Research Philosophy
+
+Market-microstructure experiments are extremely easy to overstate.
+
+A strategy can appear profitable because of:
+
+* unrealistic fills,
+* unpriced residual inventory,
+* look-ahead bias,
+* inconsistent randomness,
+* missing fees,
+* survivorship of successful experiments,
+* poorly calibrated synthetic order flow,
+* or repeated hypothesis testing without correction.
+
+CleoLOB is designed to expose these failure modes instead of hiding them.
+
+The framework therefore treats experiment validity, provenance and failure reporting as first-class parts of the research process.
+
+---
+
+# Core Capabilities
+
+## Deterministic FIFO Exchange
+
+The synthetic exchange supports:
+
+* integer price ticks and order quantities,
+* FIFO price-time priority,
+* GTC orders,
+* IOC orders,
+* FOK orders,
+* GTD orders,
+* post-only orders,
+* partial fills,
+* cancellation,
+* modification,
+* conditional cancel/replace,
+* explicit order states,
+* queue positions,
+* and invariant checks.
+
+Persistent event clocks provide deterministic tie-breaking while separate random streams isolate independent sources of stochasticity.
+
+Delayed messages and cancellation races are explicitly modeled.
+
+Changing the observation frequency of a simulation does not change its underlying exogenous event path.
+
+---
+
+## Execution Algorithms
+
+Built-in execution strategies include:
+
+* **TWAP**
+* **synthetic-profile VWAP**
+* **POV**
+* **Almgren–Chriss**
+* heuristic policies,
+* random policies,
+* and a Stable-Baselines3 **PPO** interface.
+
+Registered research commands require an actual PPO checkpoint when PPO is selected, preventing an unavailable learned policy from silently falling back to another strategy.
+
+---
+
+## Accounting and Execution Risk
+
+CleoLOB tracks:
+
+* cash,
+* signed inventory,
+* average-cost PnL,
+* realized execution effects,
+* maker/taker fees,
+* rebates,
+* working orders,
+* and in-flight reservations.
+
+Risk controls include:
+
+* child-order limits,
+* position limits,
+* notional limits,
+* loss limits,
+* conservative reservations,
+* and a latched kill switch.
+
+Outstanding orders are reconciled through a bounded post-horizon settlement phase.
+
+Late fills and fees are included when they actually occur.
+
+Unresolved orders can invalidate final economic metrics rather than being ignored.
+
+---
+
+# Real-Market L2 Reconstruction
+
+CleoLOB includes a separate historical reconstruction pipeline for recorded market data.
+
+Supported functionality includes:
+
+* bounded CSV/JSONL ingestion,
+* exact order IDs,
+* snapshots,
+* incremental events,
+* source hashing,
+* data-quality reports,
+* pause/resume/reset,
+* deterministic reconstruction,
+* and stepwise replay.
+
+Historical events are reconstructed separately from the synthetic matching engine so that recorded fills are not accidentally modified by synthetic exchange mechanics.
+
+## Public L2 Validation
+
+The public-data pipeline supports bounded Tardis samples with:
+
+* download verification,
+* gzip/checksum validation,
+* exact decimal price handling,
+* price-level reconstruction,
+* snapshot comparison,
+* trade checks,
+* and causal one-second descriptive statistics.
+
+A real-data validation study processed Deribit ETH perpetual samples from:
+
+* **April 1, 2020**
+* **May 1, 2020**
+
+with the following results:
+
+| Validation metric               |        Result |
+| ------------------------------- | ------------: |
+| L2 updates processed            | **5,972,671** |
+| Top-five snapshots compared     | **2,081,479** |
+| Exact top-five snapshot matches | **2,081,479** |
+| Trades checked                  |    **46,195** |
+
+This validates **aggregate historical reconstruction**.
+
+It does **not** establish historical strategy profitability because aggregate L2 data alone does not identify the counterfactual queue position and fills that an unobserved strategy would have received.
+
+See:
+
+* [`examples/studies/historical/README.md`](examples/studies/historical/README.md)
+* [`docs/public-market-data.md`](docs/public-market-data.md)
+
+---
+
+# Calibration and Validation
+
+Historical observable models support:
+
+* causal feature construction,
+* frozen calibration artifacts,
+* chronological train/test separation,
+* purged splits,
+* expanding walk-forward folds,
+* later-date validation,
+* drift diagnostics,
+* coverage diagnostics,
+* and deterministic observable generation.
+
+Calibration artifacts can therefore be separated from later evaluation periods rather than allowing future information to leak backward into a study.
+
+The current aggregate-L2 calibration layer does **not** identify queue-level arrival and cancellation dynamics.
+
+The synthetic FIFO order-flow model should therefore not be interpreted as a fully calibrated representation of a real exchange.
+
+---
+
+# Reproducible Experiments
+
+Every registered experiment can produce an isolated run directory containing evidence such as:
+
+* normalized configuration,
+* configuration hash,
+* source snapshot,
+* source hash,
+* checkpoint identity,
+* random seed manifest,
+* episode outcomes,
+* order logs,
+* fill logs,
+* risk events,
+* validity information,
+* statistics,
+* and offline HTML reports.
+
+Runs can be verified and compared rather than relying solely on final summary tables.
+
+Example:
+
+```bash
 cleo reproduce examples/studies/foundation/20260913T191627-0268a8fa8cb3
 cleo verify examples/studies/foundation/20260913T191627-0268a8fa8cb3
 cleo experiment diff PATH_TO_FIRST_RUN PATH_TO_SECOND_RUN
 ```
 
-Reproduction requires the recorded source/runtime/checkpoint versions and writes
-a new directory. It never executes archived Python or overwrites original results.
-The later L2 additions change the source manifest; the foundation reproduction
-command therefore requires its recorded source version, not the current checkout.
-The old 100-seed tables are preserved in `results/baselines-100seeds/` and described
-in [the archived README](docs/legacy-readme.md); they were produced by different
-market mechanics and are not validation of this engine.
+Reproduction creates a new result directory.
 
-## Real-data validation
+It does not execute archived Python code or overwrite the original experiment.
 
-[The real-data assessment](examples/studies/historical/README.md) processed
-**5,972,671 updates**, matched **2,081,479 top-five snapshots exactly**, and checked
-**46,195 trades** across Deribit ETH perpetual samples for April 1 and May 1, 2020.
-This validates aggregate reconstruction; historical strategy performance remains
-untested. See [public-data commands and limits](docs/public-market-data.md).
+---
 
-## Architecture
+# Statistical Research Design
+
+CleoLOB includes tools for paired experimental designs and uncertainty-aware comparison.
+
+Implemented methods include:
+
+* paired bootstrap intervals,
+* exact sign tests,
+* Holm correction,
+* Bonferroni correction,
+* Benjamini–Hochberg correction,
+* complete-pair validation,
+* and bounded sampling of large finite parameter spaces.
+
+Planned experiments that fail or produce economically unpriceable outcomes are retained.
+
+If the required observations for a valid comparison do not exist, comparative inference can be withheld rather than calculated from a selectively surviving subset.
+
+---
+
+# Foundation Study
+
+The included foundation study compares six baseline/heuristic execution policies using ten paired seeds:
+
+**60 total episodes**
+
+with:
+
+* 2,000-share sell orders,
+* 10-second horizons,
+* 1 bps taker fees,
+* full run evidence,
+* configuration snapshots,
+* source identity,
+* and audit logs.
+
+No PPO or SAC comparison was run in this study.
+
+Every candidate-minus-TWAP bootstrap interval contains zero, and all five Holm-adjusted sign-test p-values are `1.0`.
+
+Therefore:
+
+> **The foundation study does not establish that any tested strategy outperforms TWAP.**
+
+The experiment was performed in one uncalibrated synthetic market and should not be interpreted as evidence of live trading performance.
+
+See:
+
+[`examples/studies/foundation/README.md`](examples/studies/foundation/README.md)
+
+Older 100-seed results generated under different market mechanics are retained separately for provenance:
+
+[`results/baselines-100seeds/`](results/baselines-100seeds/)
+
+They are archived results, not validation of the current engine.
+
+---
+
+# Stress Testing
+
+Registered stress families allow strategies to be evaluated across multiple controlled scenarios while preserving:
+
+* source identity,
+* model identity,
+* configuration identity,
+* complete outcome retention,
+* and family-wide statistical correction.
+
+This allows sensitivity analysis without treating every parameter variation as an unrelated experiment.
+
+Example:
+
+```bash
+cleo stress --config configs/robustness.yaml
+```
+
+---
+
+# Portfolio Risk
+
+CleoLOB includes linear multi-asset portfolio accounting with support for:
+
+* multiple currencies,
+* joint asset/FX scenarios,
+* conservative reservations,
+* exposure limits,
+* loss limits,
+* and portfolio-level stress evaluation.
+
+Example:
+
+```bash
+cleo portfolio --config configs/portfolio_example.json
+```
+
+The current implementation is a **linear portfolio risk framework**.
+
+It is not a nonlinear derivatives pricing or Greeks engine.
+
+---
+
+# Architecture
 
 ```mermaid
 flowchart TD
-    Config[Validated immutable configuration] --> Clock[Persistent event clock]
-    Clock --> Exchange[FIFO exchange and order lifecycle]
-    Agents[Baseline or RL decision] --> Risk[Risk and in-flight reservations]
+
+    Config[Validated Immutable Configuration]
+
+    Config --> Clock[Persistent Event Clock]
+
+    Clock --> Exchange[FIFO Exchange]
+
+    Agents[Baseline / RL Policy] --> Risk[Risk + Reservations]
+
     Risk --> Exchange
-    Exchange --> Fills[Recorded fills]
-    Fills --> Ledger[Cash / inventory / fees / PnL]
-    Exchange --> State[Observable book state]
+
+    Exchange --> Fills[Recorded Fills]
+    Exchange --> State[Observable Book State]
+
     State --> Agents
-    Ledger --> Metrics[Economic outcomes and validity]
-    Metrics --> Registry[Immutable experiment records]
-    Registry --> Stats[Paired statistics and corrections]
-    Stats --> Report[Evidence report]
-    Data[Canonical historical events] --> Validate[Dataset validation]
-    Validate --> Replay[Exact ID-driven reconstruction]
+
+    Fills --> Ledger[Cash / Inventory / Fees / PnL]
+
+    Ledger --> Metrics[Economic Outcomes + Validity]
+
+    Metrics --> Registry[Immutable Experiment Record]
+
+    Registry --> Stats[Paired Statistics + Corrections]
+
+    Stats --> Report[Evidence Report]
+
+    Data[Historical Market Events] --> Validate[Data Validation]
+
+    Validate --> Replay[Exact Historical Reconstruction]
+
+    Replay --> Calibration[Calibration + Walk-Forward Validation]
+
+    Calibration --> Config
 ```
 
-| Module | Responsibility |
-|---|---|
-| `lob/engine.py` | Orders, FIFO book, deterministic exchange and synthetic flow |
-| `lob/accounting.py`, `lob/risk.py` | Reconciled ledger and execution budgets |
-| `lob/execution.py`, `lob/rl_env.py`, `lob/runner.py` | Strategies, rewards and orchestration |
-| `lob/replay/` | Canonical schemas, quality checks, reconstruction and replay |
-| `lob/config.py`, `configs/` | Strict research schema and reusable presets |
-| `lob/experiments/`, `lob/stats.py` | Provenance, finite designs, statistics and reports |
-| `lob/cli.py`, `lob/benchmarks.py` | CLI and measured matching workload |
-| `server.py`, `static/`, `app.py` | Existing web and Streamlit exploration tools |
-| `tests/` | Unit, randomized-invariant, integration and regression checks |
+## Main Modules
 
-The original `lob` package is retained. Historical execution records use a separate
-book because routing them through synthetic matching would change recorded fills.
-Correctness comes before acceleration; no Rust or GPU speedup is claimed.
-
-## Research conventions and limitations
-
-`effective_bps` includes actual fill costs and hypothetical terminal liquidation
-costs/fees only when sufficient depth exists. It excludes the separate RL completion
-penalty. If some leftover quantity cannot be priced, the economic metric is null
-and the episode is INVALID. A mark or a hypothetical liquidation is never recorded
-as a real fill.
-
-Shared seeds mean shared exogenous randomness, not identical realized books after
-agent impact. Message latency is modeled; market-data dissemination latency is not.
-Monetary risk checks are pretrade estimates, not guarantees against later price
-movement. Outstanding orders at the horizon are cancelled and drained through a
-bounded settlement phase. Late actual fills/fees are reconciled; unresolved
-orders make final economic metrics invalid. Hypothetical residual valuation
-remains distinct from actual execution.
-
-PPO training/validation use disjoint seed domains. Historical observable calibration,
-walk-forward diagnostics, registered parameter stresses and linear portfolio risk
-are now implemented. The FIFO order-flow model remains uncalibrated; L2 does not
-identify queue-level arrivals or counterfactual fills. There is no historical
-strategy-performance claim, nonlinear derivatives risk engine, exchange-native
-feed adapter, SAC implementation, full outage/flash-crash engine or alpha verdict.
-The CLI lists only implemented commands.
-
-## Verification and next work
-
-The integrated suite passes **521 tests**, Ruff checks and Python compilation.
-Two Gymnasium warnings concern the existing unbounded observation Box. The
-[implementation checklist](docs/implementation-status.md) records exact commands,
-measured benchmark evidence, discovered bugs and remaining phases. The local
-microbenchmark measures matching only; it is not full simulation throughput.
-
-- [Architecture audit](docs/architecture.md)
-- [Configuration, CLI and provenance](docs/configuration.md)
-- [Historical data format and limitations](docs/historical-replay.md)
-- [Public L2 samples and validation](docs/public-market-data.md)
-- [Calibration, stress, settlement and portfolio workflows](docs/validation-and-risk.md)
-- [Research methodology and limitations](docs/research-methodology.md)
-- [Persistent implementation status](docs/implementation-status.md)
-
-The four priority workflows are implemented and exercised; their
-[executed evidence](examples/studies/validation/README.md) records model failures
-and economic invalidity as well as successful mechanics. Advanced exchange-native
-and counterfactual execution modeling remain tracked in the full platform checklist.
+| Module              | Responsibility                                    |
+| ------------------- | ------------------------------------------------- |
+| `lob/engine.py`     | Order lifecycle, FIFO book and synthetic exchange |
+| `lob/accounting.py` | Cash, inventory, fees and PnL                     |
+| `lob/risk.py`       | Execution limits and reservations                 |
+| `lob/execution.py`  | Execut                                            |
