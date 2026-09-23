@@ -4,7 +4,7 @@
 
 ### A research-grade laboratory for limit order books, market microstructure, execution algorithms, and reinforcement learning.
 
-**CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets — from synthetic experiments to historical L2 market data.**
+**CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets; from synthetic experiments to historical L2 market data.**
 
 ## Preview
 
