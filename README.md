@@ -55,62 +55,25 @@ The project is designed for research into questions such as:
 
 ---
 
-## Highlights
+## Architecture
 
-|                               |                                                                                |
-| ----------------------------- | ------------------------------------------------------------------------------ |
-| **521 tests**                 | Integrated unit, randomized-invariant, integration and regression suite        |
-| **5,972,671**                 | Real Deribit L2 updates processed across the included April/May validation samples                                              |
-| **2,081,479**                 | Top-five order-book snapshots matched exactly across the included public validation samples                                  |
-| **46,195**                    | Public trade records checked across the included public validation samples                                                   |
-| **Deterministic experiments** | Separate random streams, persistent clocks and reproducible run manifests      |
-| **Execution research**        | TWAP, VWAP, POV, Almgren–Chriss, heuristics, random policies and PPO interface |
-| **Statistical inference**     | Paired bootstrap, exact sign tests and multiple-testing correction             |
-| **Historical reconstruction** | Exact event replay without inventing counterfactual fills                      |
+```mermaid
+flowchart LR
+    A[Market Data] --> B[Historical L2 Reconstruction]
+    A --> C[Empirical Calibration]
+    C --> D[Market Simulator]
+    B --> E[Validation Engine]
+    D --> F[Execution Algorithms]
+    D --> G[RL Environment]
+    F --> H[Evaluation]
+    G --> H
+    H --> I[Risk & Performance Metrics]
+    I --> J[Reports & Visualization]
+```
 
-CleoLOB combines a deterministic synthetic exchange with real-market reconstruction and research infrastructure designed to make experiments **auditable, reproducible and difficult to accidentally overstate**.
-![CLEO liquidity-canyon visualization](docs/3d-graph.png)
-
----
-
-## What CleoLOB Is
-
-CleoLOB is intended for research into:
-
-* limit-order-book mechanics,
-* optimal execution,
-* market microstructure,
-* execution cost and risk,
-* reinforcement-learning execution agents,
-* historical L2 reconstruction,
-* calibration and walk-forward validation,
-* stress testing,
-* portfolio exposure,
-* and reproducible strategy comparison.
-
-It is **not** a live trading system.
-There is no broker integration, real-money order submission, or claim of demonstrated live alpha.
-
----
-
-## Research Philosophy
-
-Market-microstructure experiments are extremely easy to overstate.
-A strategy can appear profitable because of:
-
-* unrealistic fills,
-* unpriced residual inventory,
-* look-ahead bias,
-* inconsistent randomness,
-* missing fees,
-* survivorship of successful experiments,
-* poorly calibrated synthetic order flow,
-* or repeated hypothesis testing without correction.
-
-CleoLOB is designed to expose these failure modes instead of hiding them.
-The framework therefore treats experiment validity, provenance and failure reporting as first-class parts of the research process.
-
----
+<p align="center">
+  <img src="docs/assets/execution-analysis.png" width="49%">
+</p>
 
 ## Empirical Validation
 
@@ -248,6 +211,65 @@ remained a warning-level diagnostic.
 - Historical replay validation and synthetic strategy evaluation are reported
 
   separately.
+
+
+
+## Highlights
+
+|                               |                                                                                |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| **521 tests**                 | Integrated unit, randomized-invariant, integration and regression suite        |
+| **5,972,671**                 | Real Deribit L2 updates processed across the included April/May validation samples                                              |
+| **2,081,479**                 | Top-five order-book snapshots matched exactly across the included public validation samples                                  |
+| **46,195**                    | Public trade records checked across the included public validation samples                                                   |
+| **Deterministic experiments** | Separate random streams, persistent clocks and reproducible run manifests      |
+| **Execution research**        | TWAP, VWAP, POV, Almgren–Chriss, heuristics, random policies and PPO interface |
+| **Statistical inference**     | Paired bootstrap, exact sign tests and multiple-testing correction             |
+| **Historical reconstruction** | Exact event replay without inventing counterfactual fills                      |
+
+CleoLOB combines a deterministic synthetic exchange with real-market reconstruction and research infrastructure designed to make experiments **auditable, reproducible and difficult to accidentally overstate**.
+![CLEO liquidity-canyon visualization](docs/3d-graph.png)
+
+---
+
+## What CleoLOB Is
+
+CleoLOB is intended for research into:
+
+* limit-order-book mechanics,
+* optimal execution,
+* market microstructure,
+* execution cost and risk,
+* reinforcement-learning execution agents,
+* historical L2 reconstruction,
+* calibration and walk-forward validation,
+* stress testing,
+* portfolio exposure,
+* and reproducible strategy comparison.
+
+It is **not** a live trading system.
+There is no broker integration, real-money order submission, or claim of demonstrated live alpha.
+
+---
+
+## Research Philosophy
+
+Market-microstructure experiments are extremely easy to overstate.
+A strategy can appear profitable because of:
+
+* unrealistic fills,
+* unpriced residual inventory,
+* look-ahead bias,
+* inconsistent randomness,
+* missing fees,
+* survivorship of successful experiments,
+* poorly calibrated synthetic order flow,
+* or repeated hypothesis testing without correction.
+
+CleoLOB is designed to expose these failure modes instead of hiding them.
+The framework therefore treats experiment validity, provenance and failure reporting as first-class parts of the research process.
+
+---
 
 ## Core Components
 
@@ -865,26 +887,8 @@ but it should still be treated as a research environment rather than a productio
 CleoLOB is provided for research and educational purposes.
 Nothing in this repository constitutes investment advice, a recommendation to trade, or evidence of future trading performance.
 
-## Architecture
-
-```mermaid
-flowchart LR
-    A[Market Data] --> B[Historical L2 Reconstruction]
-    A --> C[Empirical Calibration]
-    C --> D[Market Simulator]
-    B --> E[Validation Engine]
-    D --> F[Execution Algorithms]
-    D --> G[RL Environment]
-    F --> H[Evaluation]
-    G --> H
-    H --> I[Risk & Performance Metrics]
-    I --> J[Reports & Visualization]
-```
-
-<p align="center">
-  <img src="docs/assets/execution-analysis.png" width="49%">
-</p>
 
 ## License
 
 CleoLOB is licensed under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later). See [`LICENSE`](LICENSE) for the full terms.
+
