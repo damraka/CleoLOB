@@ -404,9 +404,328 @@ flowchart TD
 
 ## Main Modules
 
-| Module              | Responsibility                                    |
-| ------------------- | ------------------------------------------------- |
-| `lob/engine.py`     | Order lifecycle, FIFO book and synthetic exchange |
-| `lob/accounting.py` | Cash, inventory, fees and PnL                     |
-| `lob/risk.py`       | Execution limits and reservations                 |
-| `lob/execution.py`  | Execut                                            |
+| Module                 | Responsibility                                    |
+| ---------------------- | ------------------------------------------------- |
+| `lob/engine.py`        | Order lifecycle, FIFO book and synthetic exchange |
+| `lob/accounting.py`    | Cash, inventory, fees and PnL                     |
+| `lob/risk.py`          | Execution limits and reservations                 |
+| `lob/execution.py`     | Execution strategies                              |
+| `lob/rl_env.py`        | Reinforcement-learning environment                |
+| `lob/runner.py`        | Simulation and strategy orchestration             |
+| `lob/replay/`          | Historical schemas, validation and reconstruction |
+| `lob/config.py`        | Strict research configuration                     |
+| `configs/`             | Reusable experiment presets                       |
+| `lob/experiments/`     | Experiment provenance and registry                |
+| `lob/stats.py`         | Statistical comparison                            |
+| `lob/cli.py`           | Research command-line interface                   |
+| `lob/benchmarks.py`    | Matching microbenchmarks                          |
+| `server.py`, `static/` | FastAPI / Three.js exploration interface          |
+| `app.py`               | Legacy Streamlit exploration interface            |
+| `tests/`               | Unit, invariant, integration and regression tests |
+
+Correctness is currently prioritized over acceleration.
+
+No Rust, C++, GPU or low-latency production performance claim is made.
+
+---
+
+# Installation
+
+CleoLOB requires **Python 3.11+**.
+
+Clone the repository:
+
+```bash
+git clone https://github.com/damraka/CleoLOB.git
+cd CleoLOB
+```
+
+Create a virtual environment:
+
+### Linux / macOS
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### Windows PowerShell
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Install the core development environment:
+
+```bash
+python -m pip install -e '.[dev]'
+```
+
+Install the optional RL and web components:
+
+```bash
+python -m pip install -e '.[dev,rl,web]'
+```
+
+---
+
+# Quickstart
+
+Run the test suite:
+
+```bash
+python -m pytest -q
+```
+
+Validate a research configuration:
+
+```bash
+cleo config validate configs/research.yaml
+```
+
+Run an evaluation:
+
+```bash
+cleo evaluate --config configs/research.yaml
+```
+
+Validate historical events:
+
+```bash
+cleo validate-data examples/data/canonical-events.jsonl
+```
+
+Replay them:
+
+```bash
+cleo replay examples/data/canonical-events.jsonl
+```
+
+Run the matching benchmark:
+
+```bash
+cleo benchmark --pairs 2000 --repeats 3
+```
+
+Run registered stress scenarios:
+
+```bash
+cleo stress --config configs/robustness.yaml
+```
+
+Run a portfolio-risk example:
+
+```bash
+cleo portfolio --config configs/portfolio_example.json
+```
+
+`python -m lob.cli` is equivalent to the `cleo` command.
+
+The original standalone demonstration remains available through:
+
+```bash
+python -m lob
+```
+
+---
+
+# Web Visualization
+
+CleoLOB retains both its FastAPI/Three.js interface and its original Streamlit dashboard.
+
+Start the FastAPI application with:
+
+```bash
+python server.py --no-browser
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000
+```
+
+The web application is intended primarily for **exploration and visualization**.
+
+Registered research experiments use the stricter CLI workflow and immutable experiment records.
+
+---
+
+# Configuration
+
+Research configuration uses typed YAML/JSON with support for:
+
+* strict validation,
+* inheritance,
+* environment overrides,
+* CLI overrides,
+* schema export,
+* normalized hashing,
+* and configuration diffs.
+
+The experiment configuration is part of the evidence record rather than an implicit collection of runtime parameters.
+
+Example:
+
+```bash
+cleo config validate configs/research.yaml
+```
+
+---
+
+# Economic Validity
+
+CleoLOB distinguishes actual execution from hypothetical residual valuation.
+
+`effective_bps` includes:
+
+* actual fill costs,
+* and hypothetical terminal liquidation costs/fees,
+
+only when sufficient depth exists to price the remaining quantity.
+
+It does **not** include the separate RL completion penalty.
+
+If residual inventory cannot be economically priced, the metric becomes null and the episode is marked **INVALID**.
+
+A hypothetical mark or terminal liquidation is never recorded as an actual fill.
+
+This prevents unfinished execution from appearing artificially profitable simply because remaining inventory disappeared at the end of an episode.
+
+---
+
+# Current Limitations
+
+CleoLOB deliberately documents what it does **not** currently establish.
+
+### Historical strategy performance
+
+Historical L2 reconstruction is implemented and validated, but counterfactual historical execution is not yet established.
+
+Aggregate L2 data does not uniquely determine:
+
+* queue position,
+* hidden liquidity,
+* strategy-induced market response,
+* or the fills an unobserved agent would have received.
+
+Therefore the repository currently makes **no historical alpha claim**.
+
+### Synthetic order flow
+
+The FIFO exchange mechanics are explicit and tested, but the queue-level synthetic order-flow model remains uncalibrated.
+
+Historical aggregate L2 calibration does not by itself identify queue-level arrival/cancellation processes.
+
+### Latency
+
+Message latency is modeled.
+
+Full market-data dissemination latency is not.
+
+### Reinforcement learning
+
+A Stable-Baselines3 PPO interface is available.
+
+The project currently does not claim a completed PPO-vs-baseline result establishing superiority.
+
+SAC is not implemented.
+
+### Market coverage
+
+The project does not currently provide:
+
+* an exchange-native production feed adapter,
+* a complete outage engine,
+* a complete flash-crash model,
+* nonlinear derivatives portfolio risk,
+* or production live-trading connectivity.
+
+---
+
+# Verification
+
+The integrated project suite currently passes:
+
+* **521 automated tests**
+* Ruff checks
+* Python compilation
+
+CI is configured on Ubuntu for:
+
+* Python **3.11**
+* Python **3.13**
+
+The current matching benchmark is a local **matching-engine microbenchmark**.
+
+It should not be interpreted as full simulation throughput or production exchange performance.
+
+---
+
+# Documentation
+
+Detailed documentation is available in:
+
+* [Architecture audit](docs/architecture.md)
+* [Configuration, CLI and provenance](docs/configuration.md)
+* [Historical replay](docs/historical-replay.md)
+* [Public L2 data and validation](docs/public-market-data.md)
+* [Calibration, stress, settlement and portfolio workflows](docs/validation-and-risk.md)
+* [Research methodology and limitations](docs/research-methodology.md)
+* [Implementation status](docs/implementation-status.md)
+
+Executed validation evidence:
+
+* [`examples/studies/validation/README.md`](examples/studies/validation/README.md)
+
+Foundation study:
+
+* [`examples/studies/foundation/README.md`](examples/studies/foundation/README.md)
+
+Historical validation:
+
+* [`examples/studies/historical/README.md`](examples/studies/historical/README.md)
+
+---
+
+# Roadmap
+
+The highest-value remaining research work is centered on connecting historical market observations to increasingly realistic strategy evaluation.
+
+Priority areas include:
+
+* calibrated queue-level order-flow models,
+* counterfactual historical execution methodology,
+* transaction-cost attribution,
+* empirical latency modeling,
+* richer regime and stress models,
+* PPO evaluation against strong execution baselines,
+* additional RL policies,
+* market-making research,
+* multi-instrument microstructure,
+* and larger out-of-sample studies.
+
+The goal is not to maximize the number of implemented algorithms.
+
+The goal is to make increasingly strong research claims while preserving explicit assumptions, reproducibility and falsifiability.
+
+---
+
+# Project Status
+
+CleoLOB is an active research project.
+
+The framework currently provides substantial infrastructure for:
+
+**simulation → execution → accounting → risk → replay → calibration → experiments → statistics → verification**
+
+but it should still be treated as a research environment rather than a production trading system.
+
+---
+
+## Disclaimer
+
+CleoLOB is provided for research and educational purposes.
+
+Nothing in this repository constitutes investment advice, a recommendation to trade, or evidence of future trading performance.
