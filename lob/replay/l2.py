@@ -18,6 +18,7 @@ from bisect import bisect_left, insort
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+from types import MappingProxyType
 from typing import Iterator
 
 
@@ -27,6 +28,25 @@ L2_COLUMNS = (
 )
 _DECIMAL = re.compile(r"[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\Z", re.ASCII)
 Level = tuple[Decimal, Decimal]
+
+
+L2_CAPABILITIES = MappingProxyType({
+    "aggregate_depth": True,
+    "order_identity": False,
+    "exact_fifo_position": False,
+    "quantity_ahead": False,
+    "observed_order_fill": False,
+    "counterfactual_passive_fill": False,
+    "hidden_order_quantity": False,
+})
+
+
+def require_l2_capability(name: str) -> None:
+    """Fail explicitly when a consumer requests evidence absent from L2."""
+    if name not in L2_CAPABILITIES:
+        raise ValueError(f"Unknown L2 capability {name!r}")
+    if not L2_CAPABILITIES[name]:
+        raise ValueError(f"{name} is unavailable from aggregate L2: no individual order identity or FIFO")
 
 
 def exact_decimal(text: str, name: str, *, allow_zero: bool = False) -> Decimal:
@@ -66,6 +86,13 @@ class L2State:
     bid_levels: int
     ask_levels: int
     rows_in_group: int
+
+    @property
+    def capabilities(self) -> dict[str, bool]:
+        return dict(L2_CAPABILITIES)
+
+    def require_capability(self, name: str) -> None:
+        require_l2_capability(name)
 
     @property
     def crossed(self) -> bool:
@@ -152,6 +179,13 @@ class L2Replay:
     @property
     def stats(self) -> dict:
         return self._stats.copy()
+
+    @property
+    def capabilities(self) -> dict[str, bool]:
+        return dict(L2_CAPABILITIES)
+
+    def require_capability(self, name: str) -> None:
+        require_l2_capability(name)
 
     def summary(self) -> dict:
         return self.stats
