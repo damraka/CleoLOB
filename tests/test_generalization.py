@@ -266,3 +266,136 @@ def test_csv_input_requires_registered_hash_and_portable_path(config, tmp_path, 
     config["external"]["path"] = "../private.csv"
     with pytest.raises(ValueError, match="portable"):
         g._validate_config(config)
+
+
+# --- v0.3 calibration boundary regression tests ---
+
+
+def test_v03_invalid_finite_measurements_are_rejected_before_fit():
+    import pytest
+
+    from lob.generalization import fit_observable_model, synthetic_fixture
+
+    interval_us = 1_000_000
+    frame = synthetic_fixture(
+        {
+            "rows": 128,
+            "seed": 913,
+            "start_us": 1_700_000_000_000_000,
+            "shift": 1.0,
+        },
+        interval_us,
+    )
+
+    # Invalid rows are required to carry NaN measurements. A caller cannot
+    # smuggle a finite numeric payload into the fitted distribution merely by
+    # toggling valid=False.
+    frame.loc[64, "valid"] = False
+
+    with pytest.raises(
+        ValueError,
+        match="invalid samples must have NaN measurements",
+    ):
+        fit_observable_model(
+            frame,
+            family="iid_joint",
+            interval_us=interval_us,
+            seed=17,
+            max_pool_rows=128,
+        )
+
+
+def test_v03_finite_return_across_timestamp_gap_is_rejected():
+    import pytest
+
+    from lob.generalization import observe, synthetic_fixture
+
+    interval_us = 1_000_000
+    frame = synthetic_fixture(
+        {
+            "rows": 128,
+            "seed": 914,
+            "start_us": 1_700_100_000_000_000,
+            "shift": 1.0,
+        },
+        interval_us,
+    )
+
+    gap = 64
+
+    # Introduce one missing grid interval while deliberately leaving the
+    # supplied return finite. The registered feature contract must reject it
+    # rather than silently accepting or repairing it.
+    frame.loc[gap:, "timestamp_us"] += interval_us
+
+    with pytest.raises(
+        ValueError,
+        match="returns must not bridge invalid samples or sampling gaps",
+    ):
+        observe(frame, interval_us)
+
+
+def test_v03_invalid_sample_resets_return_and_rms_chain():
+    import numpy as np
+
+    from lob.calibration import FEATURES
+    from lob.generalization import observe, synthetic_fixture
+
+    interval_us = 1_000_000
+    frame = synthetic_fixture(
+        {
+            "rows": 128,
+            "seed": 915,
+            "start_us": 1_700_200_000_000_000,
+            "shift": 1.0,
+        },
+        interval_us,
+    )
+
+    invalid = 64
+    frame.loc[invalid, "valid"] = False
+
+    # The calibration schema requires every measurement on an invalid sample
+    # to be NaN.
+    frame.loc[invalid, ["mid_price", *FEATURES]] = np.nan
+
+    # The first row after an invalid sample cannot claim a causal one-step
+    # return because its predecessor is unavailable.
+    frame.loc[invalid + 1, "log_return"] = np.nan
+
+    observed = observe(frame, interval_us)
+
+    assert observed.loc[invalid, list(FEATURES)].isna().all()
+    assert np.isnan(observed.loc[invalid + 1, "log_return"])
+
+    # The trailing ten-return statistic must rebuild from fresh consecutive
+    # observations rather than bridge the invalid boundary.
+    assert observed.loc[invalid:invalid + 10, "rms_return_10"].isna().all()
+    assert np.isfinite(observed.loc[invalid + 11, "rms_return_10"])
+
+
+def test_v03_partition_start_resets_causal_return():
+    import numpy as np
+
+    from lob.generalization import _section, observe, synthetic_fixture
+
+    interval_us = 1_000_000
+    frame = synthetic_fixture(
+        {
+            "rows": 160,
+            "seed": 916,
+            "start_us": 1_700_300_000_000_000,
+            "shift": 1.0,
+        },
+        interval_us,
+    )
+
+    partition = _section(frame, 40, 140)
+    observed = observe(partition, interval_us)
+
+    assert np.isnan(partition.loc[0, "log_return"])
+    assert np.isnan(observed.loc[0, "log_return"])
+
+    # Ten fresh returns are required after the partition boundary.
+    assert observed.loc[0:9, "rms_return_10"].isna().all()
+    assert np.isfinite(observed.loc[10, "rms_return_10"])
