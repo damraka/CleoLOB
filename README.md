@@ -406,43 +406,49 @@ It is not a nonlinear derivatives pricing or Greeks engine.
 
 ---
 
-# Architecture
+## Quick Start
 
-```mermaid
-flowchart TD
+### Clone
 
-    Config[Validated Immutable Configuration]
+```bash
+git clone https://github.com/damraka/CleoLOB.git
+cd CleoLOB
+```
 
-    Config --> Clock[Persistent Event Clock]
+### Create an environment
 
-    Clock --> Exchange[FIFO Exchange]
+```bash
+python -m venv .venv
+```
 
-    Agents[Baseline / RL Policy] --> Risk[Risk + Reservations]
+Windows:
 
-    Risk --> Exchange
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
-    Exchange --> Fills[Recorded Fills]
-    Exchange --> State[Observable Book State]
+Linux/macOS:
 
-    State --> Agents
+```bash
+source .venv/bin/activate
+```
 
-    Fills --> Ledger[Cash / Inventory / Fees / PnL]
+### Install
 
-    Ledger --> Metrics[Economic Outcomes + Validity]
+```bash
+pip install -e .
+```
 
-    Metrics --> Registry[Immutable Experiment Record]
+### Explore the CLI
 
-    Registry --> Stats[Paired Statistics + Corrections]
+```bash
+cleo --help
+```
 
-    Stats --> Report[Evidence Report]
+### Run the test suite
 
-    Data[Historical Market Events] --> Validate[Data Validation]
-
-    Validate --> Replay[Exact Historical Reconstruction]
-
-    Replay --> Calibration[Calibration + Walk-Forward Validation]
-
-    Calibration --> Config
+```bash
+pytest
 ```
 
 ## Main Modules
@@ -732,28 +738,65 @@ Historical validation:
 
 ---
 
-# Roadmap
+## Historical Market Data
 
-The highest-value remaining research work is centered on connecting historical market observations to increasingly realistic strategy evaluation.
+CleoLOB supports experiments based on historical L2 market data.
 
-Priority areas include:
+A typical workflow is:
 
-* calibrated queue-level order-flow models,
-* counterfactual historical execution methodology,
-* transaction-cost attribution,
-* empirical latency modeling,
-* richer regime and stress models,
-* PPO evaluation against strong execution baselines,
-* additional RL policies,
-* market-making research,
-* multi-instrument microstructure,
-* and larger out-of-sample studies.
+```text
+Raw exchange data
+        ↓
+Parsing and validation
+        ↓
+Incremental L2 reconstruction
+        ↓
+Published snapshot comparison
+        ↓
+Empirical calibration
+        ↓
+Simulation / research experiments
+        ↓
+Evaluation and reporting
+```
 
-The goal is not to maximize the number of implemented algorithms.
+Historical data and simulation results are intentionally separated so that
+synthetic experiments are not presented as empirical market evidence.
 
-The goal is to make increasingly strong research claims while preserving explicit assumptions, reproducibility and falsifiability.
+See the documentation for supported datasets and validation methodology.
 
----
+## Roadmap
+
+### Historical execution
+- [ ] Historical event-replay execution engine
+- [ ] Counterfactual order insertion
+- [ ] Queue-position estimation
+- [ ] Conservative / neutral / optimistic fill models
+
+### Market realism
+- [ ] Latency models
+- [ ] Maker/taker fee models
+- [ ] Improved market-impact calibration
+- [ ] Additional market regimes
+
+### Data
+- [ ] Additional exchanges
+- [ ] Additional instruments
+- [ ] L3 / order-level datasets
+- [ ] Longer multi-day validation datasets
+
+### Research
+- [ ] TWAP / VWAP / POV / Almgren-Chriss benchmark suite
+- [ ] RL vs classical execution experiments
+- [ ] Bootstrap confidence intervals
+- [ ] Regime-conditioned evaluation
+- [ ] Reproducible benchmark datasets
+
+### Infrastructure
+- [ ] Expanded CI benchmarks
+- [ ] Performance profiling
+- [ ] Experiment registry
+- [ ] Improved documentation
 
 # Project Status
 
@@ -772,3 +815,23 @@ but it should still be treated as a research environment rather than a productio
 CleoLOB is provided for research and educational purposes.
 
 Nothing in this repository constitutes investment advice, a recommendation to trade, or evidence of future trading performance.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Market Data] --> B[Historical L2 Reconstruction]
+    A --> C[Empirical Calibration]
+
+    C --> D[Market Simulator]
+    B --> E[Validation Engine]
+
+    D --> F[Execution Algorithms]
+    D --> G[RL Environment]
+
+    F --> H[Evaluation]
+    G --> H
+
+    H --> I[Risk & Performance Metrics]
+    I --> J[Reports & Visualization]
+```
