@@ -41,23 +41,59 @@ def latency_summary(samples: list[int]) -> dict:
 
 
 def _measure(factory: Callable, operations: int, repeats: int, warmup: int) -> dict:
-    # Each repeat starts from an equivalent independently constructed state.
-    samples, rates = [], []
+    """Measure call latency and wall-clock throughput in separate fresh runs.
+
+    Per-call latency instrumentation is intentionally kept out of the throughput
+    pass so timer calls and sample bookkeeping do not define the reported batch
+    throughput.
+    """
+    samples = []
+    timed_call_rates = []
+    wall_clock_rates = []
+
     for _ in range(repeats):
+        # Latency pass: instrument each operation individually.
         operation, check = factory()
         for _ in range(warmup):
             operation()
+
         batch = []
         for _ in range(operations):
             started = time.perf_counter_ns()
             operation()
             batch.append(max(1, time.perf_counter_ns() - started))
+
         check()
         samples.extend(batch)
-        rates.append(len(batch) * 1e9 / sum(batch))
-    return {**latency_summary(samples), "batch_operations_per_second": rates,
-            "median_batch_operations_per_second": statistics.median(rates)}
+        timed_call_rates.append(len(batch) * 1e9 / sum(batch))
 
+        # Throughput pass: use a fresh equivalent state and one outer timer.
+        # This avoids per-operation timing and list-append instrumentation.
+        operation, check = factory()
+        for _ in range(warmup):
+            operation()
+
+        started = time.perf_counter_ns()
+        for _ in range(operations):
+            operation()
+        elapsed = max(1, time.perf_counter_ns() - started)
+
+        check()
+        wall_clock_rates.append(operations * 1e9 / elapsed)
+
+    summary = latency_summary(samples)
+
+    return {
+        **summary,
+        # Explicit alias: this rate is inferred from summed instrumented
+        # per-call latencies and is not wall-clock batch throughput.
+        "latency_derived_operations_per_second": summary["operations_per_second"],
+        "timed_call_operations_per_second": timed_call_rates,
+        "median_timed_call_operations_per_second": statistics.median(timed_call_rates),
+        # Backwards-facing batch field now has its literal wall-clock meaning.
+        "batch_operations_per_second": wall_clock_rates,
+        "median_batch_operations_per_second": statistics.median(wall_clock_rates),
+    }
 
 def _synthetic_factory(levels: int, snapshot: bool = False):
     book = _book(levels)
@@ -163,7 +199,9 @@ def benchmark_suite(*, operations: int = 200, repeats: int = 3, warmup: int = 20
               "period": "integer event clock; no historical date", "seed_policy": "fixed simulation seed 27"},
               "clock": {"implementation": time.get_clock_info("perf_counter").implementation,
                         "resolution_seconds": time.get_clock_info("perf_counter").resolution},
-              "notes": ["In-process timings include timer/call overhead and OS scheduling; no CPU affinity imposed.",
+              "notes": ["In-process timings include Python/runtime and OS scheduling effects; no CPU affinity imposed.",
+                        "Per-call p50/p95/p99 use instrumented calls; operations_per_second is derived from those sampled call durations.",
+                        "batch_operations_per_second uses a separate fresh-state outer wall-clock pass without per-call timing instrumentation.",
                         "L2 mutation excludes parsing; replay includes CSV parsing and top-five snapshots.",
                         "MBO timing excludes queue watches; memory uses a separate untimed tracemalloc pass.",
                         "Python allocations are not process RSS. Percentiles summarize calls, not worst-case guarantees."],

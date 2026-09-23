@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from lob import performance
 from lob.artifacts import portable_provenance, seal_artifacts, verify_artifacts
 from lob.performance import benchmark_suite, latency_summary
 
@@ -37,9 +38,61 @@ def test_latency_summary_units_and_workload_reconciliation():
     result = benchmark_suite(operations=3, repeats=1, warmup=1, sizes=("small",))
     assert not result["production_latency"]
     for key in ("book_modify", "snapshot_top5", "l2_update", "mbo_update"):
-        assert result["sizes"]["small"][key]["samples"] == 3
+        row = result["sizes"]["small"][key]
+        assert row["samples"] == 3
+        assert len(row["timed_call_operations_per_second"]) == 1
+        assert len(row["batch_operations_per_second"]) == 1
+        assert row["median_timed_call_operations_per_second"] > 0
+        assert row["median_batch_operations_per_second"] > 0
     assert result["sizes"]["small"]["l2_replay"]["rows_per_batch"] == 23
     assert result["simulation_episode"]["samples"] == 3
+
+
+def test_measure_separates_call_latency_from_wall_clock_throughput(monkeypatch):
+    # Two individually measured calls take 10 ns each, but the separate
+    # uninstrumented batch takes 60 ns wall-clock. The two rates therefore
+    # must remain distinct.
+    ticks = iter([0, 10, 20, 30, 100, 160])
+    monkeypatch.setattr(
+        performance.time,
+        "perf_counter_ns",
+        lambda: next(ticks),
+    )
+
+    def factory():
+        calls = 0
+
+        def operation():
+            nonlocal calls
+            calls += 1
+
+        def check():
+            assert calls == 2
+
+        return operation, check
+
+    result = performance._measure(
+        factory,
+        operations=2,
+        repeats=1,
+        warmup=0,
+    )
+
+    assert result["samples"] == 2
+    assert result["p50_ns"] == 10
+    assert result["operations_per_second"] == 100_000_000
+    assert result["latency_derived_operations_per_second"] == 100_000_000
+
+    assert result["timed_call_operations_per_second"] == [100_000_000]
+    assert result["median_timed_call_operations_per_second"] == 100_000_000
+
+    expected_wall_clock = 2 * 1e9 / 60
+    assert result["batch_operations_per_second"] == pytest.approx(
+        [expected_wall_clock]
+    )
+    assert result["median_batch_operations_per_second"] == pytest.approx(
+        expected_wall_clock
+    )
 
 
 @pytest.mark.parametrize("kwargs", [{"operations": True}, {"repeats": 0}, {"warmup": -1},
