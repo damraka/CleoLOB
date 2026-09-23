@@ -6,6 +6,14 @@
 
 **CleoLOB provides a reproducible environment for simulating, reconstructing, calibrating, and analyzing limit order book markets — from synthetic experiments to historical L2 market data.**
 
+## Preview
+
+<p align="center">
+  <img src="docs/assets/cleolob-dashboard.png"
+       alt="CleoLOB interactive market microstructure dashboard"
+       width="100%">
+</p>
+
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
 ![Research](https://img.shields.io/badge/focus-market%20microstructure-blueviolet)
 ![LOB](https://img.shields.io/badge/limit%20order%20book-simulation-orange)
@@ -146,6 +154,10 @@ Persistent event clocks provide deterministic tie-breaking while separate random
 Delayed messages and cancellation races are explicitly modeled.
 
 Changing the observation frequency of a simulation does not change its underlying exogenous event path.
+
+<p align="center">
+  <img src="docs/assets/order-book-depth.png" width="49%">
+</p>
 
 ---
 
@@ -836,6 +848,10 @@ flowchart LR
     H --> I[Risk & Performance Metrics]
     I --> J[Reports & Visualization]
 ```
+
+<p align="center">
+  <img src="docs/assets/execution-analysis.png" width="49%">
+</p>
 
 ## License
 
