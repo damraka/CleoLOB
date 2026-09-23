@@ -10,6 +10,7 @@ def test_portable_pipeline_smoke_seals_and_rejects_tampering(tmp_path, monkeypat
     assert main(["smoke", "--out", "smoke"]) == 0
     output = json.loads(capsys.readouterr().out)
     assert output["execution_episodes"] == 12
+    assert output["invalid_execution_episodes"] == 0
     assert main(["verify-artifact", "smoke"]) == 0
     result = json.loads((tmp_path / "smoke/result.json").read_text())
     assert result["mbo"]["complete"] and result["calibration"]["external_used_for_selection"] is False

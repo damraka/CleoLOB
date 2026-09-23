@@ -213,9 +213,13 @@ optimization, not a reason to mislabel research throughput as exchange latency.
   completion failure, PPO's unfavorable stress mean and old historical FAILs
   remain visible.
 
-Remote CI and container verification status is recorded in `v03-ci.json` when
-available. Local Docker/WSL were unavailable; the configured Linux CI container
-job builds and executes the smoke rather than claiming a local Docker run.
+Remote CI passed for code/evidence commit `798f882`: all eight Linux/Windows
+Python 3.11–3.14 matrix jobs, the Docker build/smoke job, both research correctness
+jobs and the PPO/DQN contract job succeeded. The optional full historical core
+study job was intentionally skipped (workflow-dispatch only). Exact run URLs,
+commit and job statuses are in [the compact CI snapshot](v03-ci.json). Final branch
+status is checked separately after later documentation/test-only commits.
+Local Docker/WSL were unavailable; the container was actually exercised in Linux CI.
 
 ## Commands executed
 
