@@ -1,11 +1,13 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "cleolob"
-version = "0.3.0"
+version = "0.4.0.dev0"
 description = "Reproducible limit-order-book execution research laboratory"
+readme = "README.md"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = [
   "numpy>=1.26", "pandas>=2.0", "gymnasium>=0.29",
@@ -20,6 +22,11 @@ dev = ["pytest>=8.0", "ruff>=0.9", "build>=1.2", "wheel>=0.44"]
 
 [project.scripts]
 cleo = "lob.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/damraka/CleoLOB"
+Documentation = "https://github.com/damraka/CleoLOB/tree/main/docs"
+Issues = "https://github.com/damraka/CleoLOB/issues"
 
 [tool.setuptools.packages.find]
 include = ["lob*"]
