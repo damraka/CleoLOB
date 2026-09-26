@@ -314,3 +314,9 @@ def test_terminal_event_audits_remaining_queue_order(tmp_path, monkeypatch):
     result = validate_mbo(item)
     assert result["status"] == "FAILED"
     assert result["counts"]["queue_inconsistencies"] == 1
+
+
+def test_source_hashing_resource_bound_is_enforced_while_reading(tmp_path):
+    path = source(tmp_path)
+    with pytest.raises(ValueError, match="max_file_bytes"):
+        source_sha256(path, max_bytes=10)

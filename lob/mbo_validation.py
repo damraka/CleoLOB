@@ -279,10 +279,10 @@ def run_mbo_validation(source: str | Path, manifest: str | Path | Mapping[str, A
             raise ValueError("adapter manifest exceeds 1 MiB")
         manifest = _json(manifest_path.read_text(encoding="utf-8"))
     adapter = mbo_adapter(source, manifest, max_events=max_events)
-    reference_hash = source_sha256(reference_path) if reference_path is not None else None
+    reference_hash = source_sha256(reference_path, max_bytes=128 * 1024**2) if reference_path is not None else None
     references = load_references(reference_path) if reference_path is not None else []
     result = validate_mbo(adapter, references)
-    if reference_path is not None and source_sha256(reference_path) != reference_hash:
+    if reference_path is not None and source_sha256(reference_path, max_bytes=128 * 1024**2) != reference_hash:
         raise ValueError("reference source changed during validation")
     result["reference_source_sha256"] = reference_hash
     root = Path(out)

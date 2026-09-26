@@ -20,10 +20,16 @@ from .replay.io import _json
 from .replay.l2 import L2Replay, L2State, exact_decimal
 
 
-def source_sha256(path: str | Path) -> str:
+def source_sha256(path: str | Path, *, max_bytes: int | None = None) -> str:
     digest = hashlib.sha256()
+    total = 0
+    if max_bytes is not None:
+        _positive(max_bytes, "max_bytes")
     with Path(path).open("rb") as handle:
         for block in iter(lambda: handle.read(1024**2), b""):
+            total += len(block)
+            if max_bytes is not None and total > max_bytes:
+                raise ValueError("source hashing exceeds max_file_bytes")
             digest.update(block)
     return digest.hexdigest()
 
@@ -147,9 +153,10 @@ class _Adapter:
         if self._started:
             raise ValueError("dataset adapters are one-pass; reopen for deterministic replay")
         self._started = True
+        self._max_file_bytes = max_file_bytes
         if not self.path.is_file() or self.path.stat().st_size > max_file_bytes:
             raise ValueError("source must be a regular file within max_file_bytes")
-        if source_sha256(self.path) != self.metadata.source_sha256:
+        if source_sha256(self.path, max_bytes=max_file_bytes) != self.metadata.source_sha256:
             raise ValueError("source SHA-256 does not match dataset metadata")
 
     def _identity(self, venue: str, instrument: str) -> None:
@@ -157,7 +164,7 @@ class _Adapter:
             raise ValueError("event identity does not match dataset metadata")
 
     def _finish(self, canonical_digest: str) -> None:
-        if source_sha256(self.path) != self.metadata.source_sha256:
+        if source_sha256(self.path, max_bytes=self._max_file_bytes) != self.metadata.source_sha256:
             raise ValueError("source changed during adapter iteration")
         self._stats.update(complete=True, source_sha256=self.metadata.source_sha256,
                            canonical_sha256=canonical_digest)
