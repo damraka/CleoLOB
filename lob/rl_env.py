@@ -10,8 +10,10 @@ import numpy as np
 from gymnasium import spaces
 
 from .accounting import FeeConfig, Ledger, fee_config
+from .completion import CompletionConstraint, completion_constraint, urgency_order
 from .engine import ExchangeSimulator, Side, SimConfig
 from .execution import ExecutionReport, build_report
+from .observations import FEATURES, OBSERVATION_CONTRACT, ObservationNormalization, normalization
 from .risk import ExecutionRisk, RiskConfig, risk_config
 from .settlement import (DEFAULT_SETTLEMENT_POLL_DT, DEFAULT_SETTLEMENT_TIMEOUT,
                          SettlementResult, settle_orders, validate_settlement)
@@ -49,7 +51,10 @@ class LOBExecutionEnv(gym.Env):
                  terminal_penalty_bps: float = 25.0,
                  settlement_timeout: float = DEFAULT_SETTLEMENT_TIMEOUT,
                  settlement_poll_dt: float = DEFAULT_SETTLEMENT_POLL_DT,
-                 seed_range: Optional[Tuple[int, int]] = None) -> None:
+                 seed_range: Optional[Tuple[int, int]] = None,
+                 completion: CompletionConstraint | Mapping[str, Any] | None = None,
+                 observation_version: str = "v03",
+                 observation_normalization: ObservationNormalization | Mapping[str, Any] | None = None) -> None:
         super().__init__()
         if isinstance(total_qty, bool) or not isinstance(total_qty, int) or total_qty <= 0:
             raise ValueError("total_qty must be a positive integer")
@@ -67,6 +72,14 @@ class LOBExecutionEnv(gym.Env):
         self.fees = fee_config(fees)
         self.risk_config = risk_config(risk)
         self.terminal_penalty_bps = terminal_penalty_bps
+        self.completion = completion_constraint(completion)
+        if observation_version not in {"v03", "v04"}:
+            raise ValueError("observation_version must be v03 or v04")
+        self.observation_version = observation_version
+        self.observation_capabilities = OBSERVATION_CONTRACT
+        self.normalization = normalization(observation_normalization)
+        if self.normalization is not None and observation_version != "v04":
+            raise ValueError("fitted normalization requires v04 observations")
         validate_settlement(settlement_timeout, settlement_poll_dt)
         self.settlement_timeout = settlement_timeout
         self.settlement_poll_dt = settlement_poll_dt
@@ -76,7 +89,8 @@ class LOBExecutionEnv(gym.Env):
         self.seed_range = seed_range
         self.n_steps = max(1, int(math.ceil(horizon / decision_dt - 1e-12)))
         self.child = max(1, total_qty // max(1, self.n_steps // 2))
-        self.observation_space = spaces.Box(-np.inf, np.inf, shape=(24,), dtype=np.float32)
+        bound = self.normalization.clip if self.normalization is not None else np.inf
+        self.observation_space = spaces.Box(-bound, bound, shape=(24 if observation_version == "v03" else len(FEATURES),), dtype=np.float32)
         self.action_space = spaces.Discrete(5)
 
     # ------------------------------------------------------------ gym API
@@ -101,6 +115,7 @@ class LOBExecutionEnv(gym.Env):
         self.remaining = self.total_qty
         self.fills: List[Any] = []
         self._cursor = len(self.sim.book.trades)
+        self.first_trade = self._cursor
         self._live_order: Optional[int] = None
         self.n_children = 0
         self.step_i = 0
@@ -139,9 +154,17 @@ class LOBExecutionEnv(gym.Env):
         bb, ba = book.best_bid(), book.best_ask()
         price = None
         submitted = None
+        forced = self.completion.active(decision_at, self.horizon, self.decision_dt)
         can_quote = bb is not None and ba is not None
         can_cross = (bb if self.side is Side.SELL else ba) is not None
-        if qty > 0 and (can_quote or (action == 4 and can_cross)):
+        if forced:
+            submitted = urgency_order(sim, self.risk, self.ledger, self.OWNER,
+                                      self.total_qty - self.remaining, elapsed=decision_at,
+                                      horizon=self.horizon, decision_dt=self.decision_dt)
+            if submitted is not None:
+                self._live_order = submitted
+                self.n_children += 1
+        elif qty > 0 and (can_quote or (action == 4 and can_cross)):
             if action == 1:                                   # passive join
                 price = ba if self.side is Side.SELL else bb
             elif action == 2:                                 # improve inside spread
@@ -188,6 +211,7 @@ class LOBExecutionEnv(gym.Env):
         self.total_reward += float(reward)
         if self.record:
             self.decisions.append({"step": self.step_i, "t": decision_at, "result_time": sim.t - self.t0, "action": int(action),
+                                   "completion_override": forced,
                                    "order_id": submitted, "reward": float(reward),
                                    "reward_terms": dict(self.reward_terms),
                                    "remaining": self.remaining, "reserved_qty": self.risk.outstanding(sim),
@@ -232,6 +256,27 @@ class LOBExecutionEnv(gym.Env):
             self.remaining / self.total_qty,
             max(0.0, 1.0 - (self.sim.t - self.t0) / self.horizon),
         ]
+        if self.observation_version == "v04":
+            # Restore physical units before applying the train-only scaler.
+            for i in range(0, 20, 2):
+                feats[i] *= 10.0
+                feats[i + 1] *= 500.0
+            own = [self.sim.orders[oid] for oid in self.risk.order_ids if not self.sim.orders[oid].is_terminal]
+            resting = {"RESTING", "PARTIALLY_FILLED"}
+            priced = [order for order in own if order.price is not None]
+            priced_qty = sum(order.remaining for order in priced)
+            feats += [self.risk.outstanding(self.sim) / self.total_qty,
+                      self.risk.available(self.sim, self.total_qty - self.remaining) / self.total_qty,
+                      sum(o.remaining for o in own if o.status.value in resting) / self.total_qty,
+                      sum(o.remaining for o in own if o.status.value == "CANCEL_PENDING") / self.total_qty,
+                      sum((o.price - mid) * o.remaining for o in priced) / priced_qty if priced_qty else 0.0,
+                      max((self.sim.t - o.ts_submit for o in own), default=0.0) / self.horizon,
+                      float(self.risk.halted),
+                      float((book.best_bid() if self.side is Side.SELL else book.best_ask()) is not None)]
+            raw = np.asarray(feats, dtype=np.float64)
+            if not np.isfinite(raw).all():
+                raise ValueError("nonfinite current-state observation")
+            return self.normalization.apply(raw) if self.normalization is not None else raw.astype(np.float32)
         return np.asarray(feats, dtype=np.float32)
 
     def _info(self) -> Dict[str, Any]:

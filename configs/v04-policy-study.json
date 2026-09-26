@@ -1,0 +1,24 @@
+{
+  "protocol_version": "v04",
+  "config": {
+    "name": "v04_completion_constrained_policy_study",
+    "market": {"limit_rate": 8.0, "market_rate": 4.0, "cancel_rate": 0.08, "resilience": 0.4},
+    "execution": {"quantity": 300, "horizon": 2.0, "decision_dt": 0.1, "warmup_seconds": 0.5,
+      "terminal_penalty_bps": 25.0},
+    "fees": {"maker_bps": 0.0, "taker_bps": 1.0},
+    "resources": {"max_episodes": 1500, "max_estimated_events": 5000000}
+  },
+  "training_seeds": [84001, 84002, 84003, 84004],
+  "evaluation_seeds": [76000, 76001, 76002, 76003, 76004, 76005, 76006, 76007, 76008, 76009, 76010, 76011],
+  "identification_seeds": [55001, 55002, 55003, 55004],
+  "normalization_seeds": [1900100, 1900101, 1900102, 1900103, 1900104, 1900105, 1900106, 1900107],
+  "completion_urgency_fraction": 0.8,
+  "completion_noninferiority_margin": 0.05,
+  "timesteps": 2048,
+  "bootstrap_samples": 20000,
+  "statistics_seed": 94001,
+  "evidence_level": "smoke",
+  "shifted_market": {"market_rate": 7.0, "cancel_rate": 0.2, "resilience": 0.25},
+  "stress_market": {"market_rate": 12.0, "cancel_rate": 0.4, "resilience": 0.1,
+    "target_level_vol": 120, "latency_base": 0.025, "latency_jitter": 0.025}
+}
