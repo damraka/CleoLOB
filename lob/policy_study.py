@@ -19,12 +19,15 @@ import numpy as np
 from pydantic import Field, model_validator
 
 from .config import ResearchConfig, Settings, canonical_json
+from .completion import CompletionConstraint
 from .controls import estimate_ac_parameters
 from .core_study import (TRAIN_MARKET_RANGE, crossed_interval, make_environment,
                          reward_summary, runner_parameters)
 from .experiments.registry import (PROJECT_ROOT, runtime_metadata, seal_experiment,
                                    sha256_file, source_manifest, utc_now, write_json)
 from .runner import cfg_from_params, run_episode
+from .observations import FEATURES, OBSERVATION_CONTRACT, fit_normalization
+from .rl_env import LOBExecutionEnv
 from .stats import bootstrap_ci
 
 CONTROLS = ("twap", "vwap", "pov", "ac", "heuristic", "random")
@@ -44,6 +47,10 @@ class PolicyDesign(Settings):
     bootstrap_samples: int = Field(default=20000, ge=100, le=100000)
     statistics_seed: int = Field(default=93001, ge=0, lt=2**32)
     evidence_level: Literal["smoke", "research"] = "smoke"
+    protocol_version: Literal["v03", "v04"] = "v03"
+    completion_urgency_fraction: float = Field(default=0.8, ge=0, le=1)
+    completion_noninferiority_margin: float = Field(default=0.05, ge=0, le=1)
+    normalization_seeds: list[int] = Field(default_factory=lambda: list(range(1900100, 1900108)), min_length=2, max_length=20)
     shifted_market: dict[str, float | int] = Field(default_factory=lambda: {
         "market_rate": 9.0, "cancel_rate": 0.25, "resilience": 0.5})
     stress_market: dict[str, float | int] = Field(default_factory=lambda: {
@@ -67,6 +74,9 @@ class PolicyDesign(Settings):
             raise ValueError("timesteps must be a multiple of 256; auxiliary seeds must fit 31 bits")
         if self.config.execution.horizon < 0.5:
             raise ValueError("horizon must be at least 0.5 seconds for AC identification")
+        if (len(set(self.normalization_seeds)) != len(self.normalization_seeds)
+                or any(not TRAIN_MARKET_RANGE[0] <= s < TRAIN_MARKET_RANGE[1] for s in self.normalization_seeds)):
+            raise ValueError("normalization seeds must be distinct and inside the training market domain")
         for overlay in (self.shifted_market, self.stress_market):
             document = self.config.model_dump(mode="json")
             document["market"].update(overlay)
@@ -93,6 +103,8 @@ def mask_observation(observation: np.ndarray, arm: str) -> np.ndarray:
     observation = np.array(observation, dtype=np.float32, copy=True)
     if arm == "no_book":
         observation[..., :22] = 0  # Preserve inventory and remaining time only.
+        if observation.shape[-1] == len(FEATURES):
+            observation[..., [28, 31]] = 0  # Own quote relative to mid and opposite-liquidity flag.
     return observation
 
 
@@ -115,9 +127,52 @@ class EvaluationPolicy:
         return self.model.predict(mask_observation(observation, self.arm), deterministic=deterministic)
 
 
-def environment(design: PolicyDesign, arm: str, *, training: bool) -> gym.Env:
+def environment(design: PolicyDesign, arm: str, *, training: bool,
+                normalization: dict | None = None) -> gym.Env:
     penalty = 0.0 if arm == "no_terminal" else design.config.execution.terminal_penalty_bps
-    return ObservationAblation(make_environment(design.config, penalty, training=training), arm)
+    if design.protocol_version == "v03":
+        return ObservationAblation(make_environment(design.config, penalty, training=training), arm)
+    params = runner_parameters(design.config, 0, penalty)
+    from .engine import Side
+    env = LOBExecutionEnv(total_qty=params["qty"], horizon=params["horizon"], decision_dt=params["dt"],
+        side=Side.BUY if params["side"] == "buy" else Side.SELL, warmup=params["warmup_seconds"],
+        cfg=cfg_from_params(params), fees=params["fees"], risk=params["risk"],
+        terminal_penalty_bps=penalty, settlement_timeout=params["settlement_timeout"],
+        settlement_poll_dt=params["settlement_poll_dt"], seed_range=TRAIN_MARKET_RANGE if training else None,
+        completion=CompletionConstraint(True, design.completion_urgency_fraction),
+        observation_version="v04", observation_normalization=normalization)
+    return ObservationAblation(env, arm)
+
+
+def fit_training_normalization(design: PolicyDesign) -> dict:
+    """Fixed exploration paths from the training domain only; never a test path."""
+    env = environment(design, "main", training=False)
+    observations = []
+    try:
+        for seed in design.normalization_seeds:
+            rng = np.random.default_rng(seed)
+            obs, _ = env.reset(seed=seed)
+            observations.append(obs)
+            while True:
+                obs, _, done, truncated, _ = env.step(int(rng.integers(0, 5)))
+                observations.append(obs)
+                if done or truncated:
+                    break
+    finally:
+        env.close()
+    return {**fit_normalization(observations), "seeds": design.normalization_seeds,
+            "source": "original-regime training-domain exploration; frozen before any policy fitting",
+            "schema": "v04-current-simulator-state-no-queue"}
+
+
+def read_normalization(out: Path, plan: dict) -> dict | None:
+    if plan["design"].get("protocol_version", "v03") != "v04":
+        return None
+    fitted = json.loads((out / "normalization.json").read_text(encoding="utf-8"))
+    seal = json.loads((out / "normalization_seal.json").read_text(encoding="utf-8"))
+    if digest(fitted) != seal["sha256"] or fitted["plan_sha256"] != digest(plan):
+        raise ValueError("normalization artifact changed")
+    return fitted["normalization"]
 
 
 def register(design: PolicyDesign, out: str | Path) -> Path:
@@ -162,6 +217,31 @@ def register(design: PolicyDesign, out: str | Path) -> Path:
                     "tail": "Empirical p95, worst cost, and mean of costs at/above empirical p95."},
         "interpretation": "Smoke exercises pipeline only. No convergence, superiority, calibrated realism, historical counterfactual PnL or live alpha claim.",
     }
+    if design.protocol_version == "v04":
+        plan.update(schema_version=2, family_size=2 * plan["family_size"],
+            primary_endpoints=["net_effective_bps", "actual_completion"],
+            hypotheses="For each registered pair, lower mean economic cost and noninferior actual completion; both endpoints in the fixed Bonferroni family.",
+            completion={"enabled": True, "urgency_fraction": design.completion_urgency_fraction,
+                        "rule": "Same final-window residual/decisions-left market schedule for every control and policy; risk reservations, limits and liquidity still bind; no new orders after horizon."},
+            observation={"features": FEATURES, "schema": "v04-current-simulator-state-no-queue",
+                         "capabilities": OBSERVATION_CONTRACT.to_dict(),
+                         "normalization_seeds": design.normalization_seeds,
+                         "normalization": "Original-regime random exploration on registered training-only seeds before fitting; frozen mean/std, raw-unit scale floor 1, clip +/-10.",
+                         "availability": "Current simulator aggregate book plus own order state; no future state, seed, exact queue, hidden liquidity or historical fill inference."},
+            success_gate={"cost": "Bonferroni upper bound of paired cost delta < 0",
+                          "completion": "Bonferroni lower bound of paired completion-fraction delta >= negative margin",
+                          "completion_noninferiority_margin": design.completion_noninferiority_margin,
+                          "scope": "Per contrast only; no global best policy label or historical superiority."},
+            interval_convention="Two-sided central percentile intervals; each tail alpha/(2*96). One-sided superiority/noninferiority gates therefore use conservative bounds from these two-sided intervals.",
+            completion_degeneracy_rule="Constant paired completion deltas give degenerate bootstrap bounds; report observed deltas but classify inference INCONCLUSIVE and withhold joint success, including observed 100% completion.",
+            planned_comparisons="48 pair definitions each with cost and completion endpoints = 96 hypotheses; all retained even when missing or INVALID.",
+            power={"status": "NOT_ESTABLISHED", "reason": "Finite CPU budget chosen before evaluation; no prospective variance-based power calibration. Four training seeds and twelve markets in supplied design remain small; null intervals cannot establish equivalence.",
+                   "training_steps_per_model": design.timesteps, "training_seeds": len(design.training_seeds),
+                   "evaluation_markets": len(design.evaluation_seeds)},
+            interpretation="Bounded synthetic completion study. More seeds and steps than v03 do not establish convergence, power, historical execution validity, profitability or live alpha.")
+        plan["metrics"].update(actual_completion="Zero actual residual after complete settlement, independent of whether residual economic valuation was available; missing outcomes withhold comparisons.",
+                               time_to_completion="Time of last actual fill, null when incomplete; can exceed horizon during separately disclosed settlement.",
+                               residual_midpoint_cost="Hypothetical arrival-versus-terminal-midpoint cost on residual only; never an actual fill.")
     write_json(out / "preregistration.json", plan)
     write_json(out / "registration_seal.json", {"plan_sha256": digest(plan)})
     for name in source:
@@ -200,6 +280,10 @@ def model_metadata(out: Path, plan: dict, stem: str) -> dict:
                         ("attempt.json", "attempt_sha256")):
         if sha256_file(out / "models" / f"{stem}.{suffix}") != metadata[key]:
             raise ValueError(f"model artifact mismatch: {stem}/{suffix}")
+    if plan["design"].get("protocol_version", "v03") == "v04":
+        read_normalization(out, plan)
+        if metadata.get("normalization_sha256") != sha256_file(out / "normalization.json"):
+            raise ValueError(f"model normalization mismatch: {stem}")
     return metadata
 
 
@@ -214,6 +298,18 @@ def train(out: str | Path) -> dict:
         raise FileExistsError("training already completed")
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
+    normalized = None
+    if design.protocol_version == "v04":
+        write_json(out / "normalization.attempt.json", {"plan_sha256": digest(plan), "started_at": utc_now()})
+        try:
+            fitted = {**fit_training_normalization(design), "plan_sha256": digest(plan)}
+            write_json(out / "normalization.json", fitted)
+            write_json(out / "normalization_seal.json", {"sha256": digest(fitted)})
+        except BaseException as exc:
+            write_json(out / "normalization.failure.json", {"plan_sha256": digest(plan),
+                "failed_at": utc_now(), "error": f"{type(exc).__name__}: {exc}"})
+            raise
+        normalized = read_normalization(out, plan)
     fits = []
     for algorithm in ALGORITHMS:
         for arm in ARMS:
@@ -254,7 +350,7 @@ def train(out: str | Path) -> dict:
                 trace, env, model = Trace(), None, None
                 started = time.monotonic()
                 try:
-                    env = Monitor(environment(design, arm, training=True))
+                    env = Monitor(environment(design, arm, training=True, **({"normalization": normalized} if normalized else {})))
                     model = {"ppo": PPO, "dqn": DQN}[algorithm]("MlpPolicy", env, seed=seed,
                                                                  verbose=0, **plan[algorithm])
                     model.learn(total_timesteps=design.timesteps, callback=trace)
@@ -268,6 +364,8 @@ def train(out: str | Path) -> dict:
                                 "model_sha256": sha256_file(out / "models" / f"{stem}.zip"),
                                 "training_sha256": sha256_file(out / "models" / f"{stem}.training.json"),
                                 "attempt_sha256": sha256_file(attempt), "reward_summary": reward_summary(trace.episodes)}
+                    if normalized:
+                        metadata["normalization_sha256"] = sha256_file(out / "normalization.json")
                     write_json(out / "models" / f"{stem}.json", metadata)
                     fits.append(metadata)
                     print(canonical_json({"trained": stem, "timesteps": model.num_timesteps}), flush=True)
@@ -325,6 +423,14 @@ def describe(rows: list[dict], design: PolicyDesign, learned: bool) -> dict:
         (None, m) for m in design.evaluation_seeds}
     actual = {(r["training_seed"], r["seed"]) for r in valid}
     complete = actual == expected and len(valid) == len(rows) == len(expected)
+    if design.protocol_version == "v04":
+        observed = [r for r in rows if isinstance(r.get("actual_completion"), bool)]
+        result.update(observed_completion_episodes=len(observed), unknown_completion_episodes=len(rows) - len(observed),
+                      actual_completion_rate=sum(r["actual_completion"] for r in observed) / len(observed) if observed else None,
+                      completion_rate_condition="all recorded settled outcomes, including INVALID economics; missing outcomes are disclosed",
+                      mean_actual_residual=float(np.mean([r["terminal_inventory"] for r in observed])) if observed else None,
+                      completion_times=[r["time_to_completion"] for r in observed if r["actual_completion"]],
+                      realized_fill_costs_bps=[r["realized_fill_cost_bps"] for r in observed])
     if not complete:
         result["mean_ci_withheld"] = "incomplete or INVALID registered training/market seed grid"
     if not len(values):
@@ -374,15 +480,19 @@ def summarize(rows: list[dict], plan: dict, design: PolicyDesign) -> dict:
                               **describe(group, design, agent in ALGORITHMS)})
         for algorithm in ALGORITHMS:
             for arm, reference in [("main", c) for c in CONTROLS] + [(a, algorithm) for a in ARMS[1:]]:
-                matrix = []
+                matrix, completion_matrix = [], []
                 for train_seed in design.training_seeds:
-                    values = []
+                    values, completions = [], []
                     for market_seed in design.evaluation_seeds:
                         left = index.get((regime, algorithm, arm, train_seed, market_seed), {})
                         right = index.get((regime, reference, "main", train_seed if reference == algorithm else None,
                                            market_seed), {})
                         values.append(_value(left) - _value(right))
+                        completions.append(float(left["actual_completion"]) - float(right["actual_completion"])
+                            if isinstance(left.get("actual_completion"), bool) and isinstance(right.get("actual_completion"), bool)
+                            else math.nan)
                     matrix.append(values)
+                    completion_matrix.append(completions)
                 comparison = {"regime": regime, "agent": algorithm, "arm": arm, "reference": reference,
                               "delta": "agent arm minus reference main; negative means cheaper",
                               "family_size": plan["family_size"]}
@@ -391,6 +501,22 @@ def summarize(rows: list[dict], plan: dict, design: PolicyDesign) -> dict:
                         samples=design.bootstrap_samples, alpha=.05 / plan["family_size"], seed=design.statistics_seed))
                 else:
                     comparison.update(status="WITHHELD", reason="Missing/INVALID planned paired outcome")
+                if design.protocol_version == "v04":
+                    endpoint = {"metric": "actual_completion", "delta": "agent minus reference; positive means more completion",
+                                "family_size": plan["family_size"]}
+                    if np.isfinite(completion_matrix).all():
+                        interval = crossed_interval(np.array(completion_matrix), samples=design.bootstrap_samples,
+                            alpha=.05 / plan["family_size"], seed=design.statistics_seed)
+                        endpoint.update(status="AVAILABLE", **{k.replace("_bps", "_fraction"): v for k, v in interval.items()})
+                        if np.ptp(completion_matrix) == 0:
+                            endpoint.update(status="INCONCLUSIVE", reason="Constant observed completion deltas produce a degenerate bootstrap; population noninferiority is not established.")
+                    else:
+                        endpoint.update(status="WITHHELD", reason="Missing or unsettled actual completion outcome")
+                    comparison["completion_comparison"] = endpoint
+                    comparison["joint_success_gate_passed"] = (
+                        comparison["status"] == endpoint["status"] == "AVAILABLE"
+                        and comparison["ci_high_bps"] < 0
+                        and endpoint["ci_low_fraction"] >= -design.completion_noninferiority_margin)
                 comparisons.append(comparison)
     return {"evidence_level": design.evidence_level, "summaries": summaries, "comparisons": comparisons,
             "planned_episodes": len(REGIMES) * len(design.evaluation_seeds)
@@ -411,6 +537,7 @@ def evaluate(out: str | Path) -> dict:
         raise ValueError("all registered training must complete before evaluation")
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
+    normalized = read_normalization(out, plan)
     models = {}
     for algorithm in ALGORITHMS:
         for arm in ARMS:
@@ -431,12 +558,15 @@ def evaluate(out: str | Path) -> dict:
                 for market_seed in design.evaluation_seeds:
                     penalty = 0.0 if arm == "no_terminal" else config.execution.terminal_penalty_bps
                     params = runner_parameters(config, market_seed, penalty)
+                    if design.protocol_version == "v04":
+                        params.update(completion={"enabled": True, "urgency_fraction": design.completion_urgency_fraction},
+                                      observation_version="v04", observation_normalization=normalized)
                     if agent == "ac":
                         params.update(controls[regime]["selected"])
                     try:
                         row = run_episode("ppo" if agent in ALGORITHMS else agent, params,
                                           model=models.get((agent, arm, training_seed)))
-                        row["terminal_inventory"] = int(round(config.execution.quantity * (1 - row["fill_frac"])))
+                        row.setdefault("terminal_inventory", int(round(config.execution.quantity * (1 - row["fill_frac"]))))
                         row["implementation"] = agent
                         row["label"] = f"{agent.upper()} / {arm}"
                     except Exception as exc:
@@ -475,6 +605,17 @@ def verify(out: str | Path) -> dict:
         result = json.loads((out / "result.json").read_text(encoding="utf-8"))
         if len(rows) != result["planned_episodes"] or len(rows) != result["actual_episodes"]:
             issues.append("incomplete registered evaluation")
+        if design.protocol_version == "v04":
+            if plan["family_size"] != len(REGIMES) * len(ALGORITHMS) * (len(CONTROLS) + len(ARMS) - 1) * 2:
+                issues.append("incorrect registered endpoint family")
+            expected_summary = summarize(rows, plan, design)
+            if canonical_json(expected_summary) != canonical_json({key: result.get(key) for key in expected_summary}):
+                issues.append("result differs from registered paired episode summary")
+            lock = json.loads((out / "evaluation_lock.json").read_text(encoding="utf-8"))
+            if lock["plan_sha256"] != digest(plan) or lock["training_summary_sha256"] != sha256_file(out / "training_summary.json"):
+                issues.append("evaluation lock registration/training mismatch")
+            if result.get("ac_identification_status") != {r: c["fit"]["status"] for r, c in lock["controls"].items()}:
+                issues.append("control identification result differs from evaluation lock")
     except (OSError, ValueError, KeyError) as exc:
         issues.append(str(exc))
     return {"valid": not issues, "issues": issues}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic",
+  "exchange": "SYNTHETIC",
+  "symbol": "TWO-STATE-OBSERVABLES",
+  "interval_us": 1000000,
+  "embargo_us": 2000000,
+  "simulation_rows": 1024,
+  "max_pool_rows": 128,
+  "block_rows": 32,
+  "bootstrap_repetitions": 999,
+  "fit_seed": 94401,
+  "diagnostic_seed": 94501,
+  "selection_seeds": [94601, 94602],
+  "internal_seeds": [94701, 94702],
+  "external_seeds": [94801, 94802],
+  "consumed_periods": [],
+  "periods": [
+    {"id": "development", "role": "development", "inspection": "synthetic", "seed": 94101, "rows": 1024, "start_us": 0, "shift": 1.0},
+    {"id": "selection-1", "role": "selection", "inspection": "synthetic", "seed": 94102, "rows": 512, "start_us": 86400000000, "shift": 1.0},
+    {"id": "selection-2", "role": "selection", "inspection": "synthetic", "seed": 94103, "rows": 512, "start_us": 172800000000, "shift": 1.0},
+    {"id": "internal", "role": "internal", "inspection": "synthetic", "seed": 94104, "rows": 512, "start_us": 259200000000, "shift": 1.0},
+    {"id": "external-1", "role": "external", "inspection": "synthetic", "seed": 94105, "rows": 512, "start_us": 345600000000, "shift": 1.8},
+    {"id": "external-2", "role": "external", "inspection": "synthetic", "seed": 94106, "rows": 512, "start_us": 432000000000, "shift": 0.6}
+  ]
+}

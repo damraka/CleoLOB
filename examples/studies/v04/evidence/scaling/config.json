@@ -1,0 +1,1 @@
+{"calibration_rows":[128,512,2048],"depths":[10,100,1000],"event_counts":[100,1000],"experiment_sizes":[2,8],"repeats":3,"snapshot_every":[1,10],"warmup":1}

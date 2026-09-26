@@ -80,9 +80,25 @@ def parser() -> argparse.ArgumentParser:
     child.add_argument("--operations", type=int, default=200)
     child.add_argument("--repeats", type=int, default=3)
     child.add_argument("--warmup", type=int, default=20)
+    child = commands.add_parser("scaling-study", help="registered synthetic workload-size scaling study")
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--config", type=Path)
+    child = commands.add_parser("verify-evidence", help="verify v0.4 registration, source, result and checkpoint bindings")
+    child.add_argument("path", type=Path)
     child = commands.add_parser("mbo-replay", help="replay genuine order-ID or clearly synthetic MBO JSONL")
     child.add_argument("path", type=Path)
     child.add_argument("--max-events", type=int, default=100_000)
+    child = commands.add_parser("validate-mbo", help="validate mapped order-identity source and optional aggregate references")
+    child.add_argument("source", type=Path)
+    child.add_argument("--manifest", type=Path, required=True)
+    child.add_argument("--references", type=Path)
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--max-events", type=int, default=100_000)
+    child = commands.add_parser("multiperiod-study", help="physically isolated chronological calibration and diagnostics")
+    child.add_argument("--config", type=Path)
+    child.add_argument("--data-root", type=Path, default=Path("."))
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--verify", action="store_true")
     child = commands.add_parser("calibration-study", help="registered chronological observable family comparison")
     child.add_argument("--config", type=Path, required=True)
     child.add_argument("--out", type=Path, required=True)
@@ -148,11 +164,39 @@ def main(argv: list[str] | None = None) -> int:
             from .performance import main as benchmark_main
             return benchmark_main(["--out", str(args.out), "--operations", str(args.operations),
                                    "--repeats", str(args.repeats), "--warmup", str(args.warmup)])
+        elif args.command == "scaling-study":
+            from .scaling import run_scaling
+            config = json.loads(args.config.read_text(encoding="utf-8")) if args.config else None
+            result = run_scaling(args.out, config)
+            _print({"status": result["status"], "workloads": len(result["metrics"]["measurements"]),
+                    "out": str(args.out)})
+        elif args.command == "verify-evidence":
+            from .evidence import verify_evidence
+            result = verify_evidence(args.path)
+            _print(result)
+            return 0 if result["valid"] else 1
         elif args.command == "mbo-replay":
             from .mbo import MBOReplay
             replay = MBOReplay(args.path, max_events=args.max_events)
             replay.run()
             _print(replay.summary())
+        elif args.command == "validate-mbo":
+            from .mbo_validation import run_mbo_validation
+            result = run_mbo_validation(args.source, args.manifest, args.out,
+                                       reference_path=args.references, max_events=args.max_events)
+            _print(result)
+            return 0 if result["status"] == "ESTABLISHED" else 1
+        elif args.command == "multiperiod-study":
+            from .multiperiod import run_study, verify_study
+            if args.verify:
+                result = verify_study(args.out)
+                _print(result)
+                return 0 if result["valid"] else 1
+            if args.config is None:
+                raise ValueError("--config is required when running a multi-period study")
+            result = run_study(json.loads(args.config.read_text(encoding="utf-8")), args.out,
+                               data_root=args.data_root)
+            _print({key: value for key, value in result.items() if key != "periods"})
         elif args.command == "calibration-study":
             from .generalization import run_study
             _print(run_study(json.loads(args.config.read_text(encoding="utf-8")), args.out))

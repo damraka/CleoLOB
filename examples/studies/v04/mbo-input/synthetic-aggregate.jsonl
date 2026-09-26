@@ -1,0 +1,5 @@
+{"sequence":100,"timestamp_ns":0,"depth":null,"bids":[[99,10]],"asks":[[101,12]]}
+{"sequence":104,"timestamp_ns":40,"depth":null,"bids":[[99,10]],"asks":[[101,12]]}
+{"sequence":106,"timestamp_ns":60,"depth":null,"bids":[[99,9]],"asks":[[101,12]]}
+{"sequence":110,"timestamp_ns":90,"depth":null,"bids":[],"asks":[]}
+{"sequence":111,"timestamp_ns":100,"depth":null,"bids":[],"asks":[[102,9]]}

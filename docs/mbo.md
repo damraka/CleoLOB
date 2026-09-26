@@ -109,21 +109,25 @@ The book retains one observation origin per ID for a bounded run.
 | Quantity ahead/behind | Current displayed quantity in integer source units |
 | Cancellation ahead | Sum of CANCEL, DELETE and same-price size reductions of orders ahead immediately before each event |
 | First-fill time | Nanoseconds from observed submission to first recorded maker EXECUTE |
-| Full-fill time | Time until cumulative recorded executions reach the initial submitted quantity |
+| Initial-quantity execution time | Time until cumulative recorded executions reach the initial submitted quantity |
+| Full-fill time | Time until the amended identity terminates through EXECUTE, with no earlier explicit CANCEL |
 | Terminal reason | Final remaining size executed, cancelled/deleted, or censored by a census |
 
-Cancellation ahead excludes executions and repricing. Full-fill time uses the
-initial quantity even if the order is later amended: cancelling four units of
-an initial ten and executing the remaining six does **not** count as a full
-initial-size fill. After a size increase, the initial-size threshold may be
-reached while additional quantity remains resting. `terminal_reason="FILLED"`
-means the final remainder was executed; it does not override this threshold.
+Cancellation ahead excludes executions and repricing. Full-fill time follows
+the v0.3 amendment fix: a same-price MODIFY reduction followed by execution of
+the entire remainder is a full fill of the amended order. An earlier explicit
+CANCEL excludes that identity from the full-fill estimand. The distinct
+`time_to_initial_quantity_executed_ns` metric keeps the original-size threshold;
+after a size increase it may be reached while quantity remains resting.
+`terminal_reason="FILLED"` means the final remainder was executed, including
+identities previously partially cancelled; it alone does not imply a full fill.
 
 `cohort_summary(horizon_ns)` computes descriptive frequencies at a fixed
 nanosecond horizon, using submission watches only:
 
 - Any passive fill: at least one recorded maker execution by the deadline.
-- Full fill: cumulative executions reach the initial quantity by the deadline.
+- Full fill: the amended identity terminates by EXECUTE without an earlier
+  explicit CANCEL, by the deadline.
 - Queue survival: identity remains resting at the deadline, even after partial
   executions or modifications.
 
@@ -185,3 +189,8 @@ python -m pytest tests/test_mbo.py tests/test_replay.py tests/test_l2_replay.py 
 **PLANNED:** Validate a genuine, licensed order-level source adapter against
 vendor/exchange semantics and independently published aggregation checks. Do
 not claim historical MBO validation until that work has actual source evidence.
+
+The [v0.4 data contracts and validation pipeline](v04-data-contracts.md) adds
+immutable contracts, explicit adapter manifests, mapped CSV ingestion, aggregate
+reference diagnostics and a sealed synthetic run. Genuine historical MBO remains
+`NOT_AVAILABLE`; source identity by itself does not grant FIFO or fill evidence.

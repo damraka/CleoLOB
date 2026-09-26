@@ -21,6 +21,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import numpy as np
 
 from .engine import ExchangeSimulator, Side, SimConfig
+from .completion import completion_constraint, execution_metrics, urgency_order
 from .execution import (AlmgrenChrissAgent, ExecutionAgent, ExecutionReport, POVAgent,
                         TWAPAgent, VWAPAgent, build_report, estimate_volume_profile)
 from .rl_env import LOBExecutionEnv
@@ -167,14 +168,23 @@ def run_baseline(p: Dict[str, Any], progress: Optional[ProgressFn] = None,
         raise ValueError("warmup_seconds must be finite and nonnegative")
     sim.step(warmup)
     t0, arrival = sim.t, sim.book.mid()
+    first_trade = len(sim.book.trades)
     agent = make_baseline(name, p, cfg, t0)
+    completion = completion_constraint(p.get("completion"))
     owner = name.upper()
     series = _new_series()
     if record:
         _push(series, 0.0, sim, qty)
     steps = max(1, int(math.ceil(horizon / dt - 1e-12)))
     for i in range(steps):
-        agent.on_step(sim, owner)
+        if completion.active(sim.t - t0, horizon, dt):
+            agent.poll_fills(sim, owner)
+            oid = urgency_order(sim, agent.risk, agent._ensure_ledger(sim), owner, agent.filled,
+                                elapsed=sim.t - t0, horizon=horizon, decision_dt=dt)
+            if oid is not None:
+                agent.child_orders += 1
+        else:
+            agent.on_step(sim, owner)
         sim.step(min(dt, max(0.0, horizon - (sim.t - t0))))
         agent.poll_fills(sim, owner)
         if record:
@@ -204,6 +214,8 @@ def run_baseline(p: Dict[str, Any], progress: Optional[ProgressFn] = None,
                           late_fees=ledger.total_fees - fees_at_stop,
                           settlement_pending_order_ids=settlement.pending_order_ids)
     out = _run_dict(agent.label, series, agent.fills, t0, arrival, report)
+    out["raw"].update(execution_metrics(sim, agent.fills, owner=owner, start_time=t0,
+                                        first_trade=first_trade, report=report))
     out["implementation"] = name
     if p.get("record_audit"):
         out["audit"] = _audit(sim, agent.risk, agent.fills, owner, t0)
@@ -243,6 +255,8 @@ def run_policy(p: Dict[str, Any], policy: str = "ppo", progress: Optional[Progre
                           terminal_penalty_bps=float(p.get("terminal_penalty_bps", 25.0)),
                           settlement_timeout=p.get("settlement_timeout", DEFAULT_SETTLEMENT_TIMEOUT),
                           settlement_poll_dt=p.get("settlement_poll_dt", DEFAULT_SETTLEMENT_POLL_DT),
+                          completion=p.get("completion"), observation_version=p.get("observation_version", "v03"),
+                          observation_normalization=p.get("observation_normalization"),
                           record=bool(p.get("record_audit")))
     obs, _ = env.reset(seed=int(p["seed"]))
 
@@ -279,6 +293,8 @@ def run_policy(p: Dict[str, Any], policy: str = "ppo", progress: Optional[Progre
         if progress:
             progress("rl", min(1.0, env.step_i / env.n_steps))
     out = _run_dict(label, series, env.fills, env.t0, env.arrival, env.report(label))
+    out["raw"].update(execution_metrics(env.sim, env.fills, owner=env.OWNER, start_time=env.t0,
+                                        first_trade=env.first_trade, report=env.report(label)))
     out["implementation"] = policy if model is not None or policy != "ppo" else "heuristic"
     out["raw"]["episode_reward"] = env.total_reward
     if p.get("record_audit"):
@@ -325,6 +341,11 @@ def run_episode(agent: str, p: Dict[str, Any], model: Optional[Any] = None) -> D
                 "fillable_leftover_qty", "outstanding_qty", "status", "invalid_reasons", "accounting",
                 "decision_horizon", "decision_duration", "settlement_duration", "total_duration",
                 "settlement_complete", "late_filled_qty", "late_fees", "settlement_pending_order_ids"):
+        row[key] = raw[key]
+    for key in ("actual_filled_qty", "terminal_inventory", "actual_completion", "time_to_completion",
+                "realized_fill_cost", "realized_fill_cost_bps", "realized_slippage_bps", "market_volume",
+                "participation", "hypothetical_residual_midpoint_cost", "participation_definition",
+                "impact_proxy_definition"):
         row[key] = raw[key]
     if "audit" in out:
         row["audit"] = out["audit"]

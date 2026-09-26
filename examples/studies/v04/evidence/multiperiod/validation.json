@@ -1,0 +1,396 @@
+{
+  "candidates": [
+    {
+      "eligible": true,
+      "error": null,
+      "family": "iid_joint",
+      "mean_loss": 0.43369716947055803,
+      "periods": [
+        {
+          "end_us": 86911000000,
+          "failure_attribution": [
+            "rms_return_10: within_regime_model_misspecification_or_sampling_error",
+            "spread_change_bps: within_regime_model_misspecification_or_sampling_error",
+            "relative_depth_change: within_regime_model_misspecification_or_sampling_error"
+          ],
+          "frame_sha256": "2684e03dfbf72c1cde5e75b591ac0702492a397415dd21d391d563b9fc35b667",
+          "loss": 0.43623422171346504,
+          "metrics": {
+            "ask_depth5": {
+              "central_95pct_coverage": 0.951171875,
+              "coverage_error": 0.0011718750000000444,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.044969324306549666,
+              "status": "PASS",
+              "train_normalization_scale": 177.91583619078972,
+              "train_relative_quantile_drift": 0.0324710391321731
+            },
+            "bid_depth5": {
+              "central_95pct_coverage": 0.9453125,
+              "coverage_error": 0.004687499999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.07836896928739912,
+              "status": "PASS",
+              "train_normalization_scale": 186.38595785603422,
+              "train_relative_quantile_drift": 0.05559301780723079
+            },
+            "imbalance5": {
+              "central_95pct_coverage": 0.94140625,
+              "coverage_error": 0.008593749999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.06427905990909771,
+              "status": "PASS",
+              "train_normalization_scale": 0.40324796978747945,
+              "train_relative_quantile_drift": 0.04178980096851583
+            },
+            "log_return": {
+              "central_95pct_coverage": 0.9315068493150684,
+              "coverage_error": 0.018493150684931514,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.14873811848330168,
+              "status": "PASS",
+              "train_normalization_scale": 0.00021918939622817655,
+              "train_relative_quantile_drift": 0.053959085842722763
+            },
+            "relative_depth_change": {
+              "central_95pct_coverage": 0.9960861056751468,
+              "coverage_error": 0.046086105675146816,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.7937433481295021,
+              "status": "FAIL",
+              "train_normalization_scale": 0.2281576783993137,
+              "train_relative_quantile_drift": 0.03201404484378719
+            },
+            "rms_return_10": {
+              "central_95pct_coverage": 0.8406374501992032,
+              "coverage_error": 0.10936254980079674,
+              "finite_samples": 502,
+              "normalized_quantile_distance": 0.18446604696869395,
+              "status": "WARNING",
+              "train_normalization_scale": 0.0001530876226750893,
+              "train_relative_quantile_drift": 0.05941959572500118
+            },
+            "spread_bps": {
+              "central_95pct_coverage": 0.900390625,
+              "coverage_error": 0.049609374999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.04026018024787876,
+              "status": "PASS",
+              "train_normalization_scale": 2.011873315336324,
+              "train_relative_quantile_drift": 0.022011877810035278
+            },
+            "spread_change_bps": {
+              "central_95pct_coverage": 1.0,
+              "coverage_error": 0.050000000000000044,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 1.944302400889569,
+              "status": "FAIL",
+              "train_normalization_scale": 0.4393040409763865,
+              "train_relative_quantile_drift": 0.02290451622570047
+            }
+          },
+          "model_sha256": "290e7db5954ffb742ec6fd1999d0f0876e974bde23476af3f75d0abb6f06a7a4",
+          "model_unchanged": true,
+          "period_id": "selection-1",
+          "rows": 512,
+          "simulation_rows_per_seed": 1024,
+          "simulation_seeds": [
+            94601,
+            94602
+          ],
+          "start_us": 86400000000,
+          "status": "FAIL",
+          "valid_fraction": 1.0
+        },
+        {
+          "end_us": 173311000000,
+          "failure_attribution": [
+            "rms_return_10: within_regime_model_misspecification_or_sampling_error",
+            "spread_change_bps: within_regime_model_misspecification_or_sampling_error",
+            "relative_depth_change: within_regime_model_misspecification_or_sampling_error"
+          ],
+          "frame_sha256": "25902f5a3718c98182c98bfa82459d829295ddbd8970ab01d3dde72b1c968739",
+          "loss": 0.43116011722765096,
+          "metrics": {
+            "ask_depth5": {
+              "central_95pct_coverage": 0.947265625,
+              "coverage_error": 0.0027343749999999556,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.06298624010151986,
+              "status": "PASS",
+              "train_normalization_scale": 177.91583619078972,
+              "train_relative_quantile_drift": 0.06224758254750674
+            },
+            "bid_depth5": {
+              "central_95pct_coverage": 0.9453125,
+              "coverage_error": 0.004687499999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.06822597416749077,
+              "status": "PASS",
+              "train_normalization_scale": 186.38595785603422,
+              "train_relative_quantile_drift": 0.040925167853235175
+            },
+            "imbalance5": {
+              "central_95pct_coverage": 0.939453125,
+              "coverage_error": 0.010546874999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.05199826731135482,
+              "status": "PASS",
+              "train_normalization_scale": 0.40324796978747945,
+              "train_relative_quantile_drift": 0.029388750546899187
+            },
+            "log_return": {
+              "central_95pct_coverage": 0.9452054794520548,
+              "coverage_error": 0.004794520547945158,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.1672663310872643,
+              "status": "PASS",
+              "train_normalization_scale": 0.00021918939622817655,
+              "train_relative_quantile_drift": 0.04350123702287722
+            },
+            "relative_depth_change": {
+              "central_95pct_coverage": 0.9960861056751468,
+              "coverage_error": 0.046086105675146816,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.7777342537355061,
+              "status": "FAIL",
+              "train_normalization_scale": 0.2281576783993137,
+              "train_relative_quantile_drift": 0.062171066600605764
+            },
+            "rms_return_10": {
+              "central_95pct_coverage": 0.8565737051792829,
+              "coverage_error": 0.09342629482071707,
+              "finite_samples": 502,
+              "normalized_quantile_distance": 0.19476427345009523,
+              "status": "WARNING",
+              "train_normalization_scale": 0.0001530876226750893,
+              "train_relative_quantile_drift": 0.07322104920529712
+            },
+            "spread_bps": {
+              "central_95pct_coverage": 0.923828125,
+              "coverage_error": 0.026171874999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.0400907243226602,
+              "status": "PASS",
+              "train_normalization_scale": 2.011873315336324,
+              "train_relative_quantile_drift": 0.024245586790666716
+            },
+            "spread_change_bps": {
+              "central_95pct_coverage": 1.0,
+              "coverage_error": 0.050000000000000044,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 1.9438534332766546,
+              "status": "FAIL",
+              "train_normalization_scale": 0.4393040409763865,
+              "train_relative_quantile_drift": 0.018012699428473125
+            }
+          },
+          "model_sha256": "290e7db5954ffb742ec6fd1999d0f0876e974bde23476af3f75d0abb6f06a7a4",
+          "model_unchanged": true,
+          "period_id": "selection-2",
+          "rows": 512,
+          "simulation_rows_per_seed": 1024,
+          "simulation_seeds": [
+            94601,
+            94602
+          ],
+          "start_us": 172800000000,
+          "status": "FAIL",
+          "valid_fraction": 1.0
+        }
+      ]
+    },
+    {
+      "eligible": true,
+      "error": null,
+      "family": "spread_markov",
+      "mean_loss": 0.07339758056606498,
+      "periods": [
+        {
+          "end_us": 86911000000,
+          "failure_attribution": [],
+          "frame_sha256": "2684e03dfbf72c1cde5e75b591ac0702492a397415dd21d391d563b9fc35b667",
+          "loss": 0.07376086715185085,
+          "metrics": {
+            "ask_depth5": {
+              "central_95pct_coverage": 0.96484375,
+              "coverage_error": 0.014843750000000044,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.0414432730596635,
+              "status": "PASS",
+              "train_normalization_scale": 177.91583619078972,
+              "train_relative_quantile_drift": 0.0324710391321731
+            },
+            "bid_depth5": {
+              "central_95pct_coverage": 0.94140625,
+              "coverage_error": 0.008593749999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.10782085025420195,
+              "status": "PASS",
+              "train_normalization_scale": 186.38595785603422,
+              "train_relative_quantile_drift": 0.05559301780723079
+            },
+            "imbalance5": {
+              "central_95pct_coverage": 0.927734375,
+              "coverage_error": 0.022265624999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.0669532085433851,
+              "status": "PASS",
+              "train_normalization_scale": 0.40324796978747945,
+              "train_relative_quantile_drift": 0.04178980096851583
+            },
+            "log_return": {
+              "central_95pct_coverage": 0.9706457925636007,
+              "coverage_error": 0.020645792563600773,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.08166796053353376,
+              "status": "PASS",
+              "train_normalization_scale": 0.00021918939622817655,
+              "train_relative_quantile_drift": 0.053959085842722763
+            },
+            "relative_depth_change": {
+              "central_95pct_coverage": 0.9726027397260274,
+              "coverage_error": 0.022602739726027443,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.03428789383313807,
+              "status": "PASS",
+              "train_normalization_scale": 0.2281576783993137,
+              "train_relative_quantile_drift": 0.03201404484378719
+            },
+            "rms_return_10": {
+              "central_95pct_coverage": 0.9820717131474104,
+              "coverage_error": 0.03207171314741042,
+              "finite_samples": 502,
+              "normalized_quantile_distance": 0.10430471788366899,
+              "status": "PASS",
+              "train_normalization_scale": 0.0001530876226750893,
+              "train_relative_quantile_drift": 0.05941959572500118
+            },
+            "spread_bps": {
+              "central_95pct_coverage": 0.927734375,
+              "coverage_error": 0.022265624999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.07738356860610429,
+              "status": "PASS",
+              "train_normalization_scale": 2.011873315336324,
+              "train_relative_quantile_drift": 0.022011877810035278
+            },
+            "spread_change_bps": {
+              "central_95pct_coverage": 0.9667318982387475,
+              "coverage_error": 0.016731898238747545,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.023100464501111258,
+              "status": "PASS",
+              "train_normalization_scale": 0.4393040409763865,
+              "train_relative_quantile_drift": 0.02290451622570047
+            }
+          },
+          "model_sha256": "3edc3a3a8a9d69f47a904df2966f6c1ec1357b6dd2ad7984c92e5697429af3fe",
+          "model_unchanged": true,
+          "period_id": "selection-1",
+          "rows": 512,
+          "simulation_rows_per_seed": 1024,
+          "simulation_seeds": [
+            94601,
+            94602
+          ],
+          "start_us": 86400000000,
+          "status": "PASS",
+          "valid_fraction": 1.0
+        },
+        {
+          "end_us": 173311000000,
+          "failure_attribution": [],
+          "frame_sha256": "25902f5a3718c98182c98bfa82459d829295ddbd8970ab01d3dde72b1c968739",
+          "loss": 0.07303429398027911,
+          "metrics": {
+            "ask_depth5": {
+              "central_95pct_coverage": 0.94921875,
+              "coverage_error": 0.0007812499999999556,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.05034317874695439,
+              "status": "PASS",
+              "train_normalization_scale": 177.91583619078972,
+              "train_relative_quantile_drift": 0.06224758254750674
+            },
+            "bid_depth5": {
+              "central_95pct_coverage": 0.953125,
+              "coverage_error": 0.0031250000000000444,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.09158896598264578,
+              "status": "PASS",
+              "train_normalization_scale": 186.38595785603422,
+              "train_relative_quantile_drift": 0.040925167853235175
+            },
+            "imbalance5": {
+              "central_95pct_coverage": 0.9296875,
+              "coverage_error": 0.020312499999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.054319873065037716,
+              "status": "PASS",
+              "train_normalization_scale": 0.40324796978747945,
+              "train_relative_quantile_drift": 0.029388750546899187
+            },
+            "log_return": {
+              "central_95pct_coverage": 0.9765166340508806,
+              "coverage_error": 0.026516634050880672,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.07922226177129608,
+              "status": "PASS",
+              "train_normalization_scale": 0.00021918939622817655,
+              "train_relative_quantile_drift": 0.04350123702287722
+            },
+            "relative_depth_change": {
+              "central_95pct_coverage": 0.9628180039138943,
+              "coverage_error": 0.012818003913894316,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.05105944136898723,
+              "status": "PASS",
+              "train_normalization_scale": 0.2281576783993137,
+              "train_relative_quantile_drift": 0.062171066600605764
+            },
+            "rms_return_10": {
+              "central_95pct_coverage": 0.9880478087649402,
+              "coverage_error": 0.038047808764940294,
+              "finite_samples": 502,
+              "normalized_quantile_distance": 0.1272059823472919,
+              "status": "PASS",
+              "train_normalization_scale": 0.0001530876226750893,
+              "train_relative_quantile_drift": 0.07322104920529712
+            },
+            "spread_bps": {
+              "central_95pct_coverage": 0.943359375,
+              "coverage_error": 0.006640624999999956,
+              "finite_samples": 512,
+              "normalized_quantile_distance": 0.08021584718398563,
+              "status": "PASS",
+              "train_normalization_scale": 2.011873315336324,
+              "train_relative_quantile_drift": 0.024245586790666716
+            },
+            "spread_change_bps": {
+              "central_95pct_coverage": 0.9628180039138943,
+              "coverage_error": 0.012818003913894316,
+              "finite_samples": 511,
+              "normalized_quantile_distance": 0.022584426376034243,
+              "status": "PASS",
+              "train_normalization_scale": 0.4393040409763865,
+              "train_relative_quantile_drift": 0.018012699428473125
+            }
+          },
+          "model_sha256": "3edc3a3a8a9d69f47a904df2966f6c1ec1357b6dd2ad7984c92e5697429af3fe",
+          "model_unchanged": true,
+          "period_id": "selection-2",
+          "rows": 512,
+          "simulation_rows_per_seed": 1024,
+          "simulation_seeds": [
+            94601,
+            94602
+          ],
+          "start_us": 172800000000,
+          "status": "PASS",
+          "valid_fraction": 1.0
+        }
+      ]
+    }
+  ]
+}

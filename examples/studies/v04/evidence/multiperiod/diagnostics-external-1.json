@@ -1,0 +1,592 @@
+{
+  "causal_attribution": "NOT_ESTABLISHED",
+  "dynamics_change": {
+    "lag1_autocorrelation": {
+      "ask_depth5": 0.10452901490350952,
+      "bid_depth5": -0.02011736301927408,
+      "imbalance5": 0.0636187610755794,
+      "log_return": -0.00708659261122678,
+      "relative_depth_change": -0.04047323628976074,
+      "rms_return_10": 0.003680654143702111,
+      "spread_bps": 0.02376448846070045,
+      "spread_change_bps": 0.0008945798389886628
+    },
+    "pairwise_correlation": {
+      "ask_depth5:imbalance5": -0.026011405758102235,
+      "ask_depth5:log_return": 0.039697427181433646,
+      "ask_depth5:relative_depth_change": -0.03061314624146444,
+      "ask_depth5:rms_return_10": -0.06692323160593494,
+      "ask_depth5:spread_change_bps": 0.03173958655669869,
+      "bid_depth5:ask_depth5": 0.005291478783922832,
+      "bid_depth5:imbalance5": -0.027784821266782056,
+      "bid_depth5:log_return": -0.03822554669538525,
+      "bid_depth5:relative_depth_change": 0.02550576093326473,
+      "bid_depth5:rms_return_10": -0.0379451016236394,
+      "bid_depth5:spread_change_bps": 0.04030912551779976,
+      "imbalance5:log_return": -0.07840464816768805,
+      "imbalance5:relative_depth_change": 0.02297108143074733,
+      "imbalance5:rms_return_10": 0.060058297252179496,
+      "imbalance5:spread_change_bps": 0.022415460880452,
+      "log_return:relative_depth_change": 0.07687736643666314,
+      "log_return:rms_return_10": -0.0161021203786867,
+      "log_return:spread_change_bps": 0.09441296750006059,
+      "rms_return_10:relative_depth_change": 0.008937347940482586,
+      "rms_return_10:spread_change_bps": -0.004052171420177386,
+      "spread_bps:ask_depth5": -0.028881123840159506,
+      "spread_bps:bid_depth5": 0.031881326357481865,
+      "spread_bps:imbalance5": 0.07444270375313618,
+      "spread_bps:log_return": 0.018989225965017,
+      "spread_bps:relative_depth_change": 0.03518808126528794,
+      "spread_bps:rms_return_10": 0.08793481623472199,
+      "spread_bps:spread_change_bps": -0.02902540144787602,
+      "spread_change_bps:relative_depth_change": 0.14992179741151795
+    }
+  },
+  "limitations": [
+    "Associations cannot distinguish causal regime shift from model misspecification.",
+    "Block intervals require approximate stationarity and weak dependence between blocks.",
+    "Bootstrap tail precision is limited by the registered repetition budget.",
+    "No event independence, equivalence, profitability or historical fill claim."
+  ],
+  "observables": {
+    "ask_depth5": {
+      "attribution": "distribution_shift_association",
+      "central_training_95pct_coverage": 0.58984375,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": -167.51741716254122,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -206.52857344364867,
+          -133.04273209620274
+        ],
+        "reference_blocks": 32,
+        "seed": 94503,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 1.046337787738852,
+      "normalized_quantile_distance": 0.9394204625948187,
+      "outside_training_98pct_fraction": 0.333984375,
+      "quantile_errors_train_scaled": [
+        -0.40742287849570075,
+        -0.48170596222108447,
+        -0.7267824918585749,
+        -0.900692265777305,
+        -1.1307313274004953,
+        -1.5674208472041453,
+        -1.8051697039046766
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1024,
+      "reference_variance": 17185.7933666131,
+      "standardized_mean_drift": -0.9415542806594362,
+      "status": "DESCRIPTIVE",
+      "target_n": 512,
+      "target_variance": 5546.343338577932,
+      "train_scale": 177.91583619078972,
+      "variance_ratio": 0.3227283850248562
+    },
+    "bid_depth5": {
+      "attribution": "distribution_shift_association",
+      "central_training_95pct_coverage": 0.55078125,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": -172.64111749293062,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -212.25168771533177,
+          -134.1652163770729
+        ],
+        "reference_blocks": 32,
+        "seed": 94502,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 1.0014499918357784,
+      "normalized_quantile_distance": 0.9265456034799502,
+      "outside_training_98pct_fraction": 0.373046875,
+      "quantile_errors_train_scaled": [
+        -0.3742724244753669,
+        -0.427020825239154,
+        -0.6849728519832289,
+        -0.8750118627208806,
+        -1.1934039837893642,
+        -1.45394142553844,
+        -1.7774458495493348
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1024,
+      "reference_variance": 17845.776384799803,
+      "standardized_mean_drift": -0.9262560306516215,
+      "status": "DESCRIPTIVE",
+      "target_n": 512,
+      "target_variance": 5062.632063924011,
+      "train_scale": 186.38595785603422,
+      "variance_ratio": 0.28368796934136886
+    },
+    "imbalance5": {
+      "attribution": "no_large_marginal_discrepancy",
+      "central_training_95pct_coverage": 0.927734375,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": -0.014752717402391986,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -0.049796358649726986,
+          0.02126001088917788
+        ],
+        "reference_blocks": 32,
+        "seed": 94504,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 0.04336225993319038,
+      "normalized_quantile_distance": 0.039269452691383655,
+      "outside_training_98pct_fraction": 0.03515625,
+      "quantile_errors_train_scaled": [
+        -0.009943837630232233,
+        -0.03199446635132879,
+        -0.0538736073419675,
+        -0.09820838822672935,
+        -0.019970780481505725,
+        -0.026791063850731538,
+        0.020959028812323054
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1024,
+      "reference_variance": 0.05374852457154733,
+      "standardized_mean_drift": -0.03658472827567364,
+      "status": "DESCRIPTIVE",
+      "target_n": 512,
+      "target_variance": 0.055569350710659965,
+      "train_scale": 0.40324796978747945,
+      "variance_ratio": 1.0338767650577803
+    },
+    "log_return": {
+      "attribution": "distribution_shift_association",
+      "central_training_95pct_coverage": 0.7514677103718199,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": -1.0365426269411953e-05,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -5.237793278912092e-05,
+          4.0003371037966366e-05
+        ],
+        "reference_blocks": 32,
+        "seed": 94505,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 0.8424313640796901,
+      "normalized_quantile_distance": 0.7667854473276378,
+      "outside_training_98pct_fraction": 0.16634050880626222,
+      "quantile_errors_train_scaled": [
+        -2.530152671807616,
+        -2.0221290954980065,
+        -0.641906234877687,
+        -0.01681868150987576,
+        0.5079109186755019,
+        1.924307203392978,
+        2.364274414418303
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1023,
+      "reference_variance": 4.804399141887257e-08,
+      "standardized_mean_drift": -0.04757879866504309,
+      "status": "DESCRIPTIVE",
+      "target_n": 511,
+      "target_variance": 1.915837584144553e-07,
+      "train_scale": 0.00021918939622817655,
+      "variance_ratio": 3.9876736456829365
+    },
+    "relative_depth_change": {
+      "attribution": "no_large_marginal_discrepancy",
+      "central_training_95pct_coverage": 0.9510763209393346,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": -0.000851413991436005,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -0.013321419353992994,
+          0.010307578346803842
+        ],
+        "reference_blocks": 32,
+        "seed": 94508,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 0.07456044665314336,
+      "normalized_quantile_distance": 0.07558323945280121,
+      "outside_training_98pct_fraction": 0.005870841487279843,
+      "quantile_errors_train_scaled": [
+        0.1954046744766041,
+        0.022631690544014503,
+        -0.07269859933136345,
+        0.0009864956281399068,
+        0.03854537271810781,
+        0.2759623684383906,
+        -0.8537719130515425
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1023,
+      "reference_variance": 0.043528662778191195,
+      "standardized_mean_drift": -0.0037940485167426044,
+      "status": "DESCRIPTIVE",
+      "target_n": 511,
+      "target_variance": 0.04082113976362893,
+      "train_scale": 0.2281576783993137,
+      "variance_ratio": 0.9377990767058714
+    },
+    "rms_return_10": {
+      "attribution": "distribution_shift_association",
+      "central_training_95pct_coverage": 0.5,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": 0.00021643720046352858,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          0.0001253074542069733,
+          0.00029787603300483636
+        ],
+        "reference_blocks": 31,
+        "seed": 94506,
+        "status": "ESTIMATED",
+        "target_blocks": 15
+      },
+      "model_target_normalized_distance": 1.445000726384434,
+      "normalized_quantile_distance": 1.3312380979859688,
+      "outside_training_98pct_fraction": 0.45219123505976094,
+      "quantile_errors_train_scaled": [
+        0.4142557104694134,
+        0.5262577009688965,
+        0.7032244647445378,
+        1.5276080229151021,
+        1.8019294209044876,
+        1.8971353710444343,
+        2.4417922645594445
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1014,
+      "reference_variance": 9.761331605996836e-09,
+      "standardized_mean_drift": 1.3299901053570913,
+      "status": "DESCRIPTIVE",
+      "target_n": 502,
+      "target_variance": 3.297108650896788e-08,
+      "train_scale": 0.0001530876226750893,
+      "variance_ratio": 3.3777242531861353
+    },
+    "spread_bps": {
+      "attribution": "distribution_shift_association",
+      "central_training_95pct_coverage": 0.42578125,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": 2.09311066314521,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          1.2002311371742906,
+          2.979846883917805
+        ],
+        "reference_blocks": 32,
+        "seed": 94501,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 1.1020210006685471,
+      "normalized_quantile_distance": 1.0370137545905966,
+      "outside_training_98pct_fraction": 0.57421875,
+      "quantile_errors_train_scaled": [
+        0.43936225489984854,
+        0.448571355060412,
+        0.5304762936062904,
+        2.0798397314744768,
+        1.327030408510066,
+        1.3652530793192525,
+        1.3779602761461274
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1024,
+      "reference_variance": 1.0231799710592244,
+      "standardized_mean_drift": 1.0403789578546627,
+      "status": "DESCRIPTIVE",
+      "target_n": 512,
+      "target_variance": 3.260490584039849,
+      "train_scale": 2.011873315336324,
+      "variance_ratio": 3.1866247153611678
+    },
+    "spread_change_bps": {
+      "attribution": "no_large_marginal_discrepancy",
+      "central_training_95pct_coverage": 0.7592954990215264,
+      "mean_drift_uncertainty": {
+        "block_rows": 32,
+        "bootstrap_repetitions": 999,
+        "correction": "Bonferroni",
+        "estimate": 0.00669494482490751,
+        "family_confidence": 0.95,
+        "family_size": 8,
+        "interval": [
+          -0.03720283589460869,
+          0.053192882393804625
+        ],
+        "reference_blocks": 32,
+        "seed": 94507,
+        "status": "ESTIMATED",
+        "target_blocks": 16
+      },
+      "model_target_normalized_distance": 0.33455932019648743,
+      "normalized_quantile_distance": 0.33866662967132277,
+      "outside_training_98pct_fraction": 0.029354207436399216,
+      "quantile_errors_train_scaled": [
+        -2.9195247585917525,
+        -0.4171337980977345,
+        -0.21766678714809956,
+        -0.023763250630192148,
+        0.222687038098757,
+        0.4889404719826572,
+        3.6675716893458254
+      ],
+      "quantile_probabilities": [
+        0.01,
+        0.05,
+        0.25,
+        0.5,
+        0.75,
+        0.95,
+        0.99
+      ],
+      "reference_n": 1023,
+      "reference_variance": 0.19298804041818263,
+      "standardized_mean_drift": 0.014978640844497038,
+      "status": "DESCRIPTIVE",
+      "target_n": 511,
+      "target_variance": 0.4600154778103054,
+      "train_scale": 0.4393040409763865,
+      "variance_ratio": 2.3836475919103868
+    }
+  },
+  "original_status": "FAIL",
+  "overall_status": "FAIL",
+  "parameter_instability": "NOT_ESTABLISHED: no target refits permitted",
+  "reference_dynamics": {
+    "lag1_autocorrelation": {
+      "ask_depth5": 0.3363486317992398,
+      "bid_depth5": 0.4367660295878792,
+      "imbalance5": -0.04049598657281257,
+      "log_return": -0.0007161802442193608,
+      "relative_depth_change": -0.3662381342513454,
+      "rms_return_10": 0.9600952130925311,
+      "spread_bps": 0.90569840529157,
+      "spread_change_bps": -0.10484378171182883
+    },
+    "pairwise_correlation": {
+      "ask_depth5:imbalance5": -0.6167586743028166,
+      "ask_depth5:log_return": 0.013051266379765338,
+      "ask_depth5:relative_depth_change": 0.3090388395837738,
+      "ask_depth5:rms_return_10": -0.4238707144468764,
+      "ask_depth5:spread_change_bps": -0.15279312536240477,
+      "bid_depth5:ask_depth5": 0.11883589059573577,
+      "bid_depth5:imbalance5": 0.66190134747966,
+      "bid_depth5:log_return": 0.023172529066806613,
+      "bid_depth5:relative_depth_change": 0.24129221490779829,
+      "bid_depth5:rms_return_10": -0.426270507486283,
+      "bid_depth5:spread_change_bps": -0.12083606505228577,
+      "imbalance5:log_return": 0.006702600556617072,
+      "imbalance5:relative_depth_change": -0.03162694366566177,
+      "imbalance5:rms_return_10": -0.022536926864931483,
+      "imbalance5:spread_change_bps": 0.008086513775325963,
+      "log_return:relative_depth_change": 0.005669040004928527,
+      "log_return:rms_return_10": -0.01723799937801161,
+      "log_return:spread_change_bps": -0.059536039345260326,
+      "rms_return_10:relative_depth_change": 0.052790947205921104,
+      "rms_return_10:spread_change_bps": -0.09189332800149984,
+      "spread_bps:ask_depth5": -0.6357923057456043,
+      "spread_bps:bid_depth5": -0.6809566509044594,
+      "spread_bps:imbalance5": -0.05767321898026366,
+      "spread_bps:log_return": -0.03932062859675491,
+      "spread_bps:relative_depth_change": -0.10163455504501699,
+      "spread_bps:rms_return_10": 0.6281849020971997,
+      "spread_bps:spread_change_bps": 0.21652032669631535,
+      "spread_change_bps:relative_depth_change": -0.4916265254213783
+    },
+    "spread_state_threshold_from_training": 1.49649744958303,
+    "spread_transition_counts": [
+      [
+        486,
+        25
+      ],
+      [
+        25,
+        487
+      ]
+    ],
+    "spread_transition_probabilities": [
+      [
+        0.9510763209393346,
+        0.04892367906066536
+      ],
+      [
+        0.048828125,
+        0.951171875
+      ]
+    ]
+  },
+  "reference_frame_sha256": "55f736a68c97be3689e8587ec676f2dd9b1d4e4b481d21e47841e00c6021dce9",
+  "reference_rows": 1024,
+  "reference_valid_fraction": 1.0,
+  "schema_version": 1,
+  "status_changed": false,
+  "target_dynamics": {
+    "lag1_autocorrelation": {
+      "ask_depth5": 0.4408776467027493,
+      "bid_depth5": 0.4166486665686051,
+      "imbalance5": 0.02312277450276683,
+      "log_return": -0.007802772855446141,
+      "relative_depth_change": -0.4067113705411061,
+      "rms_return_10": 0.9637758672362332,
+      "spread_bps": 0.9294628937522704,
+      "spread_change_bps": -0.10394920187284017
+    },
+    "pairwise_correlation": {
+      "ask_depth5:imbalance5": -0.6427700800609188,
+      "ask_depth5:log_return": 0.05274869356119898,
+      "ask_depth5:relative_depth_change": 0.2784256933423094,
+      "ask_depth5:rms_return_10": -0.49079394605281135,
+      "ask_depth5:spread_change_bps": -0.12105353880570609,
+      "bid_depth5:ask_depth5": 0.1241273693796586,
+      "bid_depth5:imbalance5": 0.634116526212878,
+      "bid_depth5:log_return": -0.015053017628578637,
+      "bid_depth5:relative_depth_change": 0.266797975841063,
+      "bid_depth5:rms_return_10": -0.4642156091099224,
+      "bid_depth5:spread_change_bps": -0.080526939534486,
+      "imbalance5:log_return": -0.07170204761107098,
+      "imbalance5:relative_depth_change": -0.00865586223491444,
+      "imbalance5:rms_return_10": 0.03752137038724801,
+      "imbalance5:spread_change_bps": 0.030501974655777964,
+      "log_return:relative_depth_change": 0.08254640644159167,
+      "log_return:rms_return_10": -0.03334011975669831,
+      "log_return:spread_change_bps": 0.034876928154800264,
+      "rms_return_10:relative_depth_change": 0.06172829514640369,
+      "rms_return_10:spread_change_bps": -0.09594549942167722,
+      "spread_bps:ask_depth5": -0.6646734295857638,
+      "spread_bps:bid_depth5": -0.6490753245469776,
+      "spread_bps:imbalance5": 0.016769484772872517,
+      "spread_bps:log_return": -0.020331402631737914,
+      "spread_bps:relative_depth_change": -0.06644647377972905,
+      "spread_bps:rms_return_10": 0.7161197183319217,
+      "spread_bps:spread_change_bps": 0.18749492524843933,
+      "spread_change_bps:relative_depth_change": -0.34170472800986035
+    },
+    "spread_state_threshold_from_training": 1.49649744958303,
+    "spread_transition_counts": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        511
+      ]
+    ],
+    "spread_transition_probabilities": [
+      [
+        null,
+        null
+      ],
+      [
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "target_frame_sha256": "2c3e27ff954258ba0e175ee50567b3c63f1e1dc9774e2f3391b5d89b412e5c05",
+  "target_rows": 512,
+  "target_valid_fraction": 1.0,
+  "unsupported_observability": {
+    "arrival_intensity": "Sampled aggregate depth does not identify individual arrivals.",
+    "book_update_intensity": "Fixed-grid samples are not source event counts.",
+    "cancellation_intensity": "Net level changes do not identify cancellations.",
+    "causal_price_impact": "Observed co-movement does not identify counterfactual impact.",
+    "order_size_distribution": "Visible level quantities are not individual order sizes.",
+    "queue_position": "Aggregate L2 has no source-native order identities or FIFO state.",
+    "top_level_depth": "The canonical calibration table retains top-five sums only.",
+    "trade_intensity": "This feature schema has no trade-event stream."
+  }
+}

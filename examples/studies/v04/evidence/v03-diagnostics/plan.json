@@ -1,0 +1,16 @@
+{
+  "fit_permitted": false,
+  "kind": "consumed_v03_synthetic_diagnostics",
+  "original_artifacts": {
+    "external.json": "83a1cd7854b4582d59b0cd4c693b44372813b08f131c65fb1d252c5136868bda",
+    "internal.json": "d8ed95f9f8c43c4535303f2a9e47c6dd28f31746c15bf1af212cdcebcb8b06f2",
+    "model.json": "a63492de1b256929abb3a2301aee279569452df179ee3587bdc6cb84ccc65ca4",
+    "plan.json": "d33503d2ffc7463d7e8ffdb2f6c479927b8164631b6f8ea0da640d056f86de23"
+  },
+  "real_market_evidence": false,
+  "settings": {
+    "block_rows": 32,
+    "bootstrap_repetitions": 999,
+    "diagnostic_seed": 95201
+  }
+}

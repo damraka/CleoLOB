@@ -46,6 +46,8 @@ jobs:
           "$PY" -m lob.cli verify-artifact "wheel-smoke-${{ matrix.python-version }}"
       - name: Verify committed compact evidence
         run: python -m lob.cli verify-artifact examples/studies/v03
+      - name: Verify v0.4 compact evidence
+        run: python -m lob.cli verify-artifact examples/studies/v04/evidence
 
   container:
     runs-on: ubuntu-latest

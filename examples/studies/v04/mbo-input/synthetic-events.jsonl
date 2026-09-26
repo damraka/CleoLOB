@@ -1,0 +1,12 @@
+{"timestamp_ns":0,"exchange_timestamp_ns":0,"sequence":100,"event_type":"SNAPSHOT","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","orders":[{"order_id":"b1","side":"BUY","price_ticks":99,"quantity":10},{"order_id":"a1","side":"SELL","price_ticks":101,"quantity":12}]}
+{"timestamp_ns":10,"exchange_timestamp_ns":8,"sequence":101,"event_type":"ADD","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b2","side":"BUY","price_ticks":99,"quantity":6}
+{"timestamp_ns":20,"exchange_timestamp_ns":18,"sequence":102,"event_type":"ADD","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b3","side":"BUY","price_ticks":99,"quantity":4}
+{"timestamp_ns":30,"exchange_timestamp_ns":28,"sequence":103,"event_type":"CANCEL","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b1","quantity":4}
+{"timestamp_ns":40,"exchange_timestamp_ns":38,"sequence":104,"event_type":"EXECUTE","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b1","quantity":6}
+{"timestamp_ns":50,"exchange_timestamp_ns":48,"sequence":105,"event_type":"EXECUTE","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b2","quantity":2}
+{"timestamp_ns":60,"exchange_timestamp_ns":58,"sequence":106,"event_type":"MODIFY","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b3","quantity":5}
+{"timestamp_ns":70,"exchange_timestamp_ns":68,"sequence":107,"event_type":"EXECUTE","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b2","quantity":4}
+{"timestamp_ns":70,"exchange_timestamp_ns":68,"sequence":108,"event_type":"TRADE","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","price_ticks":99,"quantity":4}
+{"timestamp_ns":80,"exchange_timestamp_ns":78,"sequence":109,"event_type":"DELETE","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"b3"}
+{"timestamp_ns":90,"exchange_timestamp_ns":88,"sequence":110,"event_type":"RESET","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE"}
+{"timestamp_ns":100,"exchange_timestamp_ns":98,"sequence":111,"event_type":"ADD","symbol":"SYNTHETIC-MBO","venue":"SYNTHETIC-FIXTURE","order_id":"a2","side":"SELL","price_ticks":102,"quantity":9}
