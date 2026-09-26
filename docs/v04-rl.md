@@ -133,3 +133,44 @@ The v0.4 verifier also recomputes registered paired summaries from the episode
 journal and checks evaluation-lock, training and control-result links; a rehashed
 but numerically altered result cannot pass this semantic check.
 Results are reported only after an actual frozen run, never inferred from tests.
+
+## Registered run obtained on 2026-09-26
+
+The study at `results/v04/policy-completion-20260926` ran from clean source commit
+`9072bb80c4a823d940d2b752e34f08881a4841de`. All 24 models completed 49,152 training
+steps and all 1,080 evaluation episodes were retained. There were zero INVALID or
+WARNING rows. Artifact and semantic verification returned `valid: true`.
+
+Every episode completed by the end of settlement, with zero final residual. This
+held across every regime, arm, training seed and control. **19 episodes completed
+after the 2-second decision horizon**, during settlement; 1,061 completed within
+the horizon. The latest completion was 2.056912619 seconds. This bounded synthetic
+result does not guarantee completion at other quantities, liquidity or latencies,
+and cannot isolate the constraint's causal effect from the changed state, budget
+and seeds relative to v0.3.
+
+Of the 48 economic contrasts, 47 multiplicity-adjusted intervals included zero.
+The exception was main DQN minus POV in stress: mean −2.133149109 bps, adjusted
+interval [−4.549744191, −0.075293572] bps. All 48 completion contrasts were
+**INCONCLUSIVE** because observed paired completion differences were constant.
+Consequently **zero joint success gates passed**. Learned-policy superiority
+remains **NOT_ESTABLISHED**; the single economic contrast must not be promoted to
+a general winning-policy claim. All three separate AC identification fits passed.
+
+Main-arm mean economic cost, in bps, was:
+
+| Regime | TWAP | POV | PPO | DQN |
+| --- | ---: | ---: | ---: | ---: |
+| Original | 1.7963 | 1.8388 | 1.8280 | 1.7700 |
+| Shifted | 2.0782 | 2.0568 | 2.1159 | 1.9036 |
+| Stress | 2.5834 | 3.5446 | 2.1587 | 1.4114 |
+
+These sample means are descriptive. All main PPO/DQN training-seed completion
+rates were 100%, but stress PPO training-seed cost means ranged from 1.1736 to
+3.1013 bps, illustrating remaining seed sensitivity. Full seed-level outcomes and
+learning traces remain in the sealed run. Power and convergence are unestablished.
+
+The plan SHA-256 is
+`c037f9f87070adeac98078bcb1886bcfcf980b542ec2b4cdf6236528a2be0b56`;
+the canonical source-manifest digest is
+`2c58cf1fe9fa0fdaa006548addc2411309bd2fe66f275442206c8a7655e5ccff`.

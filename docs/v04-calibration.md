@@ -71,7 +71,9 @@ without fitting parameters or changing the original assessment. It reports:
   to the training spread median and no transitions across missing observations.
 - Chronological block-bootstrap uncertainty for mean drift. The interval uses
   independent resampling of complete nonoverlapping block means, at least eight
-  eligible blocks per period and Bonferroni correction across eight observables.
+  eligible blocks per period and Bonferroni correction across eight observables
+  within each target diagnosis. These exploratory intervals are not a simultaneous
+  guarantee across all targets or studies.
 
 Partial blocks and blocks with less than 80% finite values are excluded from the
 interval estimator; their observations remain in marginal metrics and validity
@@ -129,6 +131,38 @@ requires the appropriate permission. Existing v0.3 evidence is preserved.
 The checked-in protocol contains the exact source, access date, checksums and
 reproduction prerequisites. It does not silently recreate a missing original fit.
 
-Observed v0.4 run outcomes are recorded in the technical report and local sealed
-artifacts. The software can support further chronological periods, but additional
-fresh evidence and redistribution permission remain separate requirements.
+## Executed synthetic checks
+
+The registered source commit was `9072bb80c4a823d940d2b752e34f08881a4841de`.
+The multi-period run selected `spread_markov` on development/selection data only.
+Its selection loss was 0.073398; final results were:
+
+| Registered synthetic period | Gate | Loss |
+|---|---|---:|
+| Internal | PASS | 0.108912 |
+| External scale 1.8 | FAIL | 0.976637 |
+| External scale 0.6 | FAIL | 0.552638 |
+
+The original v0.3 fixture independently reproduced its internal WARNING and
+external FAIL, with original frame hashes and model bytes unchanged. Its external
+discrepancies were associated with spread, side-depth and return/volatility
+distribution shifts. This is consumed synthetic evidence, not real-market proof.
+All multi-period and v0.3 diagnostic bundle hashes verified.
+
+The local historical diagnostic run reproduced April validation WARNING,
+April internal FAIL and May external FAIL using the unchanged original model
+and exact preserved frame hashes. Its first June acquisition attempt was denied
+by the sandbox network; that sealed `NOT_AVAILABLE` attempt was retained. An
+unsandboxed acquisition retry used a new output directory and the same frozen
+scientific configuration. The genuine, preregistered June 1 external period also
+**FAILED**: spread and both side-depth gates failed; imbalance and return gates
+warned. The old model and all scientific source hashes remained unchanged.
+Distribution shifts were associated with spread/depth discrepancies; causal
+attribution remains unidentified. The new failure strengthens the negative
+external evidence without establishing generalization across regimes.
+
+The original attempt's 13 files and the retry's 16 files passed exact-file/hash
+verification. Detailed results remain in `results/v04/historical-diagnostics`
+and `results/v04/historical-diagnostics-network-retry`. June is now recorded as
+consumed in the current registry. Further fresh evidence and redistribution
+permission remain separate requirements.
