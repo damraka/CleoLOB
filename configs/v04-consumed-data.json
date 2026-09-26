@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "scope": "Known repository inspection history as of v0.4 protocol; absence is not proof of freshness.",
+  "consumed_periods": [
+    {"independent_period_id": "deribit:ETH-PERPETUAL:2020-04-01", "source_sha256": "dc4a84aba8f311235f76eef80248efae68bdb053dc4543323e7d4e36cc998a76", "evidence": "examples/studies/calibration/deribit-eth-perpetual-apr-may-2020/result.json"},
+    {"independent_period_id": "deribit:ETH-PERPETUAL:2020-05-01", "source_sha256": "e2b858a9a3d0eab635deabc578c4215e9d47a60d312927850d8f18800ced18b4", "evidence": "examples/studies/calibration/deribit-eth-perpetual-apr-may-2020/result.json"},
+    {"independent_period_id": "deribit:ETH-PERPETUAL:2026-07-01", "evidence": "examples/studies/core/calibration/COHORT_PLAN.json"},
+    {"independent_period_id": "deribit:BTC-PERPETUAL:2026-07-01", "evidence": "examples/studies/core/calibration/COHORT_PLAN.json"},
+    {"independent_period_id": "deribit:ETH-PERPETUAL:2026-08-01", "evidence": "examples/studies/core/calibration/frozen-external-evaluation/summary.json"},
+    {"independent_period_id": "deribit:BTC-PERPETUAL:2026-08-01", "evidence": "examples/studies/core/calibration/frozen-external-evaluation/summary.json"},
+    {"independent_period_id": "deribit:ETH-PERPETUAL:2026-09-01", "evidence": "examples/studies/core/calibration/frozen-external-evaluation/summary.json"},
+    {"independent_period_id": "deribit:BTC-PERPETUAL:2026-09-01", "evidence": "examples/studies/core/calibration/frozen-external-evaluation/summary.json"}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "frozen_2020_local_diagnostics",
+  "model_path": "results/calibration/20260923T111957-c614db523899/model.json",
+  "model_file_sha256": "55853acb27dfdf378574ec0a4bddb5150648e41be213c49dedf08ca8b929582d",
+  "original_result_path": "results/calibration/20260923T111957-c614db523899/result.json",
+  "original_result_sha256": "d7464ac61a9146abdb3d577cea17f2c3684eb8bf3ed59280cd8c6b95049ce4c3",
+  "development_path": "data/public/deribit_incremental_book_L2_2020-04-01_ETH-PERPETUAL.csv.gz",
+  "development_sha256": "dc4a84aba8f311235f76eef80248efae68bdb053dc4543323e7d4e36cc998a76",
+  "consumed_external_path": "data/public/deribit_incremental_book_L2_2020-05-01_ETH-PERPETUAL.csv.gz",
+  "consumed_external_sha256": "e2b858a9a3d0eab635deabc578c4215e9d47a60d312927850d8f18800ced18b4",
+  "simulation_rows": 4096,
+  "generation_seed": 95101,
+  "diagnostic_seed": 95201,
+  "block_rows": 60,
+  "bootstrap_repetitions": 1999,
+  "fresh_source": {
+    "exchange": "deribit",
+    "symbol": "ETH-PERPETUAL",
+    "date": "2020-06-01",
+    "data_type": "incremental_book_L2",
+    "directory": "data/public",
+    "selection_rule": "Next first-of-month date after consumed May 2020; fixed before access, no substitutions.",
+    "freshness_audit": "No June 2020 references found in repository docs/configs/studies/tools or current data inventory before registration. This does not prove human non-inspection outside the repository."
+  },
+  "provider_terms": {
+    "access_date": "2026-09-26",
+    "source": "https://docs.tardis.dev/historical-data-details/deribit",
+    "terms": "https://docs.tardis.dev/legal/terms-of-service",
+    "terms_last_modified": "2026-09-13",
+    "use": "Internal task-specific quantitative research. Raw data, features, fitted model and detailed derived output are not included in public v0.4 export. Additional distribution requires provider permission under clauses 9.2 and 9.5."
+  }
+}
