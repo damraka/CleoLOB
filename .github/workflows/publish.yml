@@ -11,6 +11,13 @@ on:
         required: true
         type: string
 
+
+# Only one publish attempt for a given release tag may run at a time.
+# A manually dispatched recovery run waits for an automatic release run.
+concurrency:
+  group: pypi-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Build release distributions
@@ -96,3 +103,6 @@ jobs:
 
       - name: Publish distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # Recovery/manual runs are idempotent if files already exist.
+          skip-existing: true
