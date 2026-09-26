@@ -1,3 +1,8 @@
+# Implementation hashes must survive Windows/Linux checkout conventions.
+*.py text eol=lf
+pyproject.toml text eol=lf
+requirements.txt text eol=lf
+
 # Research evidence preserves original bytes, including whitespace, for its seals.
 examples/studies/** -text -whitespace
 configs/core-study*.json -text
