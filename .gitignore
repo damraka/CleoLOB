@@ -12,3 +12,6 @@ results/*/
 
 build/
 dist/
+
+# v0.5 local raw data (restricted provider terms; never committed)
+data/v05/

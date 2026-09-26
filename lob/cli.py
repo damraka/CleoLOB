@@ -120,6 +120,9 @@ def parser() -> argparse.ArgumentParser:
     op = child.add_subparsers(dest="operation", required=True).add_parser("diff")
     op.add_argument("left", type=Path)
     op.add_argument("right", type=Path)
+    child = commands.add_parser("protocol", help="verify the frozen v0.5 protocol, ledger and holdout freshness")
+    child.add_argument("operation", choices=("verify", "status"))
+    child.add_argument("--root", type=Path, default=Path("."))
     return result
 
 
@@ -270,6 +273,11 @@ def main(argv: list[str] | None = None) -> int:
             result = reproduce(args.experiment, args.out)
             _print(result)
             return 0 if result["valid_reproduction"] else 1
+        elif args.command == "protocol":
+            from .preregistration import verify_protocol_files
+            result = verify_protocol_files(args.root)
+            _print(result)
+            return 0 if result["valid"] else 1
         elif args.command == "experiment":
             from .experiments import read_experiment
             left, right = read_experiment(args.left), read_experiment(args.right)

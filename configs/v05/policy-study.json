@@ -1,0 +1,32 @@
+{
+  "protocol_version": "v05",
+  "config": {
+    "name": "v05_registered_execution_policy_study",
+    "market": {"limit_rate": 8.0, "market_rate": 4.0, "cancel_rate": 0.08, "resilience": 0.4},
+    "execution": {"quantity": 300, "horizon": 2.0, "decision_dt": 0.1, "warmup_seconds": 0.5,
+      "terminal_penalty_bps": 25.0},
+    "fees": {"maker_bps": 0.0, "taker_bps": 1.0},
+    "resources": {"max_episodes": 40000, "max_estimated_events": 400000000}
+  },
+  "training_seeds": [85001, 85002, 85003, 85004, 85005, 85006, 85007, 85008],
+  "evaluation_seed_start": 77000,
+  "evaluation_seed_count": 160,
+  "identification_seeds": [56001, 56002, 56003, 56004],
+  "normalization_seeds": [1900200, 1900201, 1900202, 1900203, 1900204, 1900205, 1900206, 1900207],
+  "completion_urgency_fraction": 0.8,
+  "completion_noninferiority_margin": 0.05,
+  "timesteps": 16384,
+  "bootstrap_samples": 20000,
+  "statistics_seed": 95001,
+  "evidence_level": "research",
+  "regimes": ["original", "shifted", "stress", "calibrated"],
+  "shifted_market": {"market_rate": 7.0, "cancel_rate": 0.2, "resilience": 0.25},
+  "stress_market": {"market_rate": 12.0, "cancel_rate": 0.4, "resilience": 0.1,
+    "target_level_vol": 120, "latency_base": 0.025, "latency_jitter": 0.025},
+  "calibrated_market": {"source": "M3 selected calibration-v2 simulator configuration, bound by hash in the M6 environment freeze; if M3 selects no model this regime is NOT_AVAILABLE and its planned comparisons are retained as WITHHELD in the family"},
+  "ppo": {"n_steps": 256, "batch_size": 64, "n_epochs": 5, "learning_rate": 0.0003, "gamma": 0.999, "ent_coef": 0.005, "device": "cpu"},
+  "dqn": {"buffer_size": 10000, "learning_starts": 64, "batch_size": 64, "train_freq": 4, "gradient_steps": 1,
+    "target_update_interval": 128, "exploration_fraction": 0.4, "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05, "learning_rate": 0.0003, "gamma": 0.999, "device": "cpu"},
+  "checkpoint": "Final fixed-budget checkpoint only; no early stopping or held-out selection."
+}

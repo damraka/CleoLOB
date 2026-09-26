@@ -6,3 +6,8 @@ requirements.txt text eol=lf
 # Research evidence preserves original bytes, including whitespace, for its seals.
 examples/studies/** -text -whitespace
 configs/core-study*.json -text
+
+# v0.5 frozen protocol inputs are hashed byte-for-byte.
+configs/v05/** text eol=lf
+configs/v04-consumed-data.json text eol=lf
+configs/v04-policy-study.json text eol=lf
