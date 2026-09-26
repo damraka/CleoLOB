@@ -117,10 +117,11 @@ def scaling_suite(config: dict) -> dict:
         scratch = Path(temp)
         for depth in config["depths"]:
             for events in config["event_counts"]:
-                dims = {"levels_per_side": depth, "active_orders": depth * 2, "events": events}
+                dims = {"levels_per_side": depth, "price_levels": depth * 2, "events": events}
                 for stride in config["snapshot_every"]:
                     for family in ("engine", "mbo"):
-                        record(family + "_mutation_and_snapshot", {**dims, "snapshot_every": stride},
+                        record(family + "_mutation_and_snapshot", {**dims, "active_orders": depth * 2,
+                               "snapshot_every": stride, "snapshot_depth": 5 if family == "engine" else "full"},
                                _mutation_batch(family, depth, events, stride), events, "mutation events")
                 l2 = scratch / f"l2-{depth}-{events}.csv"
                 _fixture(l2, depth, events)
@@ -129,7 +130,7 @@ def scaling_suite(config: dict) -> dict:
                     replay = L2Replay(l2)
                     assert sum(1 for _ in replay) == events + 1 and replay.stats["complete"]
 
-                record("l2_csv_replay", {**dims, "file_bytes": l2.stat().st_size}, replay_l2,
+                record("l2_csv_replay", {**dims, "snapshot_depth": 5, "file_bytes": l2.stat().st_size}, replay_l2,
                        2 * depth + events, "CSV rows including initial snapshot")
                 mbo = scratch / f"mbo-{depth}-{events}.jsonl"
                 _mbo_fixture(mbo, depth, events)
@@ -138,7 +139,8 @@ def scaling_suite(config: dict) -> dict:
                     replay = MBOReplay(mbo, max_events=events + 2)
                     assert replay.run() == events + 1
 
-                record("mbo_jsonl_replay", {**dims, "file_bytes": mbo.stat().st_size}, replay_mbo,
+                record("mbo_jsonl_replay", {**dims, "active_orders": depth * 2,
+                       "snapshot_depth": "none", "file_bytes": mbo.stat().st_size}, replay_mbo,
                        events + 1, "canonical events including initial census")
         for count in config["calibration_rows"]:
             frame = synthetic_fixture({"rows": count, "seed": 27401, "start_us": 0}, 1_000_000)

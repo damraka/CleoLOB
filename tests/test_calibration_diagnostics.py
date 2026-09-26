@@ -40,6 +40,21 @@ def test_insufficient_blocks_do_not_get_spurious_confidence():
     assert result["status"] == "INCONCLUSIVE" and result["interval"] is None
 
 
+def test_entirely_invalid_reference_is_inconclusive_without_target_fitted_threshold():
+    reference = fixture(1, 0)
+    reference["valid"] = False
+    reference.loc[:, ["mid_price", "spread_bps", "bid_depth5", "ask_depth5", "imbalance5", "log_return"]] = np.nan
+    result = diagnose_period(reference, fixture(2, 2_000_000_000), interval_us=1_000_000,
+                             original_status="NOT_ESTABLISHED", block_rows=32, repetitions=99)
+    assert all(value["status"] == "INCONCLUSIVE" for value in result["observables"].values())
+    assert result["reference_valid_fraction"] == 0
+    for key in ("reference_dynamics", "target_dynamics"):
+        assert result[key]["spread_state_threshold_from_training"] is None
+        assert result[key]["spread_transition_status"] == "NOT_AVAILABLE"
+        assert result[key]["spread_transition_probabilities"] == [[None, None], [None, None]]
+    json.dumps(result, allow_nan=False)
+
+
 def test_constant_marginals_are_finite_and_undefined_correlations_are_null():
     train, target = fixture(1, 0), fixture(2, 2_000_000_000)
     train["spread_bps"] = target["spread_bps"] = 1.

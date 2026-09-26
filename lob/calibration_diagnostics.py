@@ -83,7 +83,7 @@ def mean_drift_interval(reference: np.ndarray, target: np.ndarray, *, block_rows
 
 
 def _dynamics(frame: pd.DataFrame, values: pd.DataFrame, interval_us: int,
-              spread_threshold: float) -> dict:
+              spread_threshold: float | None) -> dict:
     adjacent = np.diff(frame.timestamp_us.to_numpy()) == interval_us
     acf = {}
     for name in OBSERVABLES:
@@ -93,7 +93,13 @@ def _dynamics(frame: pd.DataFrame, values: pd.DataFrame, interval_us: int,
         acf[name] = _correlation(left, right)
     spread = values.spread_bps.to_numpy()
     eligible = adjacent & np.isfinite(spread[:-1]) & np.isfinite(spread[1:])
-    states = (spread > spread_threshold).astype(int)
+    if spread_threshold is None:
+        # Without a finite training spread, the registered state partition is
+        # unidentified. Do not estimate its threshold using the target.
+        eligible[:] = False
+        states = np.zeros(len(spread), dtype=int)
+    else:
+        states = (spread > spread_threshold).astype(int)
     counts = np.zeros((2, 2), dtype=int)
     for i in np.flatnonzero(eligible):
         counts[states[i], states[i + 1]] += 1
@@ -107,6 +113,7 @@ def _dynamics(frame: pd.DataFrame, values: pd.DataFrame, interval_us: int,
                 values[name].to_numpy(), values[other].to_numpy())
     return {"lag1_autocorrelation": acf, "pairwise_correlation": dependence,
             "spread_state_threshold_from_training": spread_threshold,
+            "spread_transition_status": "NOT_AVAILABLE" if spread_threshold is None else "DESCRIPTIVE",
             "spread_transition_counts": counts.tolist(),
             "spread_transition_probabilities": probabilities}
 
@@ -165,7 +172,8 @@ def diagnose_period(reference: pd.DataFrame, target: pd.DataFrame, *, interval_u
                              (right < reference_q[0]) | (right > reference_q[-1]))),
                          "mean_drift_uncertainty": drift_ci,
                          "model_target_normalized_distance": model_distance, "attribution": attribution}
-    threshold = float(training.spread_bps.median())
+    finite_spreads = training.spread_bps.dropna()
+    threshold = float(finite_spreads.median()) if len(finite_spreads) else None
     reference_dynamics = _dynamics(reference, training, interval_us, threshold)
     target_dynamics = _dynamics(target, actual, interval_us, threshold)
     changes = {}

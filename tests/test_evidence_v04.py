@@ -88,6 +88,17 @@ def test_missing_registration_is_invalid(tmp_path):
     assert not evidence.verify_evidence(tmp_path)["valid"]
 
 
+def test_one_model_identity_cannot_resolve_to_two_checkpoints(registered):
+    root, _ = registered
+    models = []
+    for name in ("first.bin", "second.bin"):
+        path = root / name
+        path.write_bytes(name.encode())
+        models.append({"identity": "same-final-model", "path": name, "sha256": sha256_file(path)})
+    with pytest.raises(ValueError, match="identities must be unique"):
+        evidence.finalize_evidence(root, status="INCONCLUSIVE", metrics={}, models=models)
+
+
 def test_nan_metrics_and_ambiguous_status_refused(registered):
     root, _ = registered
     with pytest.raises(ValueError, match="status"):

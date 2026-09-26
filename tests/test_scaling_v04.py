@@ -21,6 +21,10 @@ def test_scaling_covers_real_paths_and_counts_work():
         assert row["process_rss"] is None
     l2 = next(r for r in rows if r["family"] == "l2_csv_replay")
     assert l2["units_per_batch"] == 7
+    assert "active_orders" not in l2["dimensions"]
+    assert l2["dimensions"]["price_levels"] == 4
+    mbo = next(r for r in rows if r["family"] == "mbo_mutation_and_snapshot")
+    assert mbo["dimensions"]["snapshot_depth"] == "full"
 
 
 def test_batch_memory_does_not_contaminate_timing(monkeypatch):

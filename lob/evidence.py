@@ -143,10 +143,14 @@ def finalize_evidence(root: str | Path, *, status: str, metrics: dict,
 
 def _verify_models(root: Path, models: list[dict]) -> None:
     seen = set()
+    identities = set()
     for model in models:
         name = model["path"]
         if name in seen or not isinstance(model.get("identity"), str) or not model["identity"]:
             raise ValueError("model identity required and checkpoint paths must be unique")
+        if model["identity"] in identities:
+            raise ValueError("model identities must be unique")
+        identities.add(model["identity"])
         seen.add(name)
         target = _relative(root, name)
         if not _digest(model.get("sha256")) or not target.is_file() or sha256_file(target) != model["sha256"]:
