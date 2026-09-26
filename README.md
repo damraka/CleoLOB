@@ -29,8 +29,8 @@
 CleoLOB is an open-source quantitative research platform for limit order books, historical replay,
 execution algorithms, empirical calibration, reinforcement learning, and reproducible experiments.
 
-Its design goal is simple: make invalid assumptions, incomplete fills, data leakage, and selective
-reporting harder to mistake for evidence.
+Its design goal is simple: make invalid assumptions, incomplete fills, data leakage, unsupported
+market-data inference, and selective reporting harder to mistake for evidence.
 
 It is a research framework, not a production trading system.
 
@@ -38,30 +38,35 @@ It is a research framework, not a production trading system.
 
 | Question | Current result |
 |---|---|
-| Historical L2 reconstruction | On the registered Deribit datasets, 5,972,671 L2 updates and 2,081,479 published top-five snapshots were processed; all compared top-five snapshots matched exactly. |
-| Real queue / order-identity research | Implemented at the MBO layer, but real historical MBO validation is still pending. |
-| Cross-regime calibration | Not established. The registered shifted external evaluation fails its acceptance threshold. |
-| PPO / DQN superiority | Not established. All 48 multiplicity-adjusted intervals in the registered v0.3 study include zero. |
-| Incomplete execution | Actual fills and hypothetical residual liquidation are reported separately. |
-| Performance | Local Python research benchmarks only; no production/HFT latency claim. |
+| Historical L2 reconstruction | Across the preserved Deribit April/May validation samples, 5,972,671 L2 updates and 2,081,479 published top-five snapshots were processed; all compared top-five snapshots matched exactly. |
+| Real queue / order-identity research | Identity-preserving MBO replay, lifecycle validation, queue semantics and MBO-to-L2 aggregation are implemented. Genuine historical MBO validation remains unavailable. |
+| Cross-regime calibration | Not established. The preserved v0.3 external failure remains, and the fresh June 2020 Deribit ETH-PERPETUAL holdout also failed its frozen acceptance gate. |
+| Completion-constrained execution | In the registered v0.4 policy study, 1,061 / 1,080 episodes completed within the decision horizon and 19 completed during post-horizon settlement. |
+| PPO / DQN superiority | Not established. Of 48 registered v0.4 economic contrasts, 47 multiplicity-adjusted intervals included zero; one stress DQN-vs-POV contrast excluded zero, but zero joint cost-and-completion success gates passed. |
+| Performance | Registered local Python research benchmarks only; no production/HFT or exchange-colocation latency claim. |
 
-Negative results are retained rather than removed from the research record.
+Negative, null, and failed results are retained rather than removed from the research record.
 
-The [v0.4 development report](docs/v04-final-report.md) adds capability contracts,
-completion-constrained studies and a fresh historical holdout failure. Real MBO
-validation and learned-policy superiority remain unestablished.
+The [v0.4 final report](docs/v04-final-report.md) documents the latest external-validity work,
+including formal market-data capability contracts, completion-constrained execution, stronger
+artifact verification, multi-period diagnostics, scaling measurements, and the failed fresh
+historical holdout.
 
 ## Core capabilities
 
 - deterministic FIFO synthetic exchange with limit/market orders, partial fills, cancellation and modification
 - historical aggregate-L2 reconstruction and snapshot validation
-- identity-preserving MBO replay with queue trajectories and priority-reset handling
-- chronological calibration with rolling/expanding validation and sealed holdouts
+- formal trades/L1/L2/MBO/simulator capability contracts
+- identity-preserving MBO replay with lifecycle, queue and priority-reset semantics
+- chronological calibration with sealed holdouts and consumed-dataset tracking
+- calibration-failure diagnostics across distributions, tails, coverage, persistence and dependence
 - TWAP, VWAP, POV, Almgren-Chriss and heuristic execution controls
 - Stable-Baselines3 PPO and discrete-action DQN research workflows
-- paired bootstrap and multiple-comparison correction
-- experiment provenance, hashes and artifact verification
+- completion-constrained execution with actual-fill and residual-valuation separation
+- paired bootstrap inference and multiplicity-aware registered comparisons
+- experiment provenance, source/config/data/model hashes and artifact verification
 - risk, settlement and residual-inventory accounting
+- registered performance and scaling studies
 - FastAPI/Three.js and Streamlit exploration interfaces
 
 ## Quick start
@@ -124,10 +129,18 @@ Example commands:
 cleo config validate configs/research.yaml
 cleo validate-data examples/data/canonical-events.jsonl
 cleo replay examples/data/canonical-events.jsonl
-cleo benchmark --pairs 2000 --repeats 3
+cleo validate-mbo examples/studies/v04/mbo-input/synthetic-events.jsonl \
+  --manifest examples/studies/v04/mbo-input/adapter-manifest.json \
+  --references examples/studies/v04/mbo-input/synthetic-aggregate.jsonl \
+  --out results/mbo-check
+cleo multiperiod-study --config configs/v04-multiperiod-smoke.json --out results/multiperiod
+cleo scaling-study --out results/scaling
+cleo smoke --out results/smoke
+cleo verify-artifact results/smoke
 ```
 
-See [docs/reproduction.md](docs/reproduction.md) for the full reproduction workflow.
+See [docs/reproduction.md](docs/reproduction.md) and
+[docs/v04-reproduction.md](docs/v04-reproduction.md) for the full reproduction workflows.
 
 ## Historical reconstruction
 
@@ -146,98 +159,168 @@ One registered approximately 24-hour April stream contained 2,321,160 incrementa
 1,531,713 reconstructed states and 988,235 exact top-five snapshot matches.
 
 This demonstrates reconstruction consistency with published source snapshots. It does not establish
-exchange truth, hidden liquidity, passive-fill counterfactuals or strategy profitability.
+exchange truth, hidden liquidity, exact passive-fill counterfactuals, or strategy profitability.
 
 See [historical validation](examples/studies/historical/README.md) and
 [public market-data documentation](docs/public-market-data.md).
 
-## MBO and queue research
+## Market-data capabilities, MBO and queue research
 
 Aggregate L2 does not reveal individual order identities or exact FIFO queue positions, so CleoLOB
-keeps L2 and MBO evidence separate.
+keeps L2 and MBO evidence mechanically separated.
 
-The MBO layer supports source order identities, ADD/MODIFY/CANCEL/EXECUTE events, deterministic
-replay, queue-ahead tracking, priority resets, observed maker executions, censoring and exact
-MBO-to-L2 aggregation.
+The v0.4 capability layer distinguishes trades, L1, aggregate L2, genuine order-level MBO, and
+simulator-internal information. Consumers are expected to fail explicitly when they request evidence
+the underlying source cannot establish.
 
-The bundled MBO fixtures are synthetic. **Real historical MBO validation is still pending.**
+The MBO layer supports source-native identities where available, ADD/MODIFY/CANCEL/EXECUTE events,
+deterministic replay, lifecycle validation, queue-ahead tracking, priority resets, observed maker
+executions, censoring and MBO-to-L2 aggregation.
 
-See [docs/mbo.md](docs/mbo.md).
+The bundled MBO fixtures are synthetic. **Genuine historical MBO validation remains NOT_AVAILABLE.**
 
-## Calibration
+See [docs/mbo.md](docs/mbo.md) and
+[docs/v04-data-contracts.md](docs/v04-data-contracts.md).
 
-The v0.3 calibration workflow uses chronological rather than random train/test evaluation and
-supports causal features, frozen selection, expanding/rolling validation, sealed internal
-evaluation, external evaluation and drift diagnostics.
+## Calibration and historical generalization
 
-The registered shifted external evaluation fails its configured acceptance gate. CleoLOB therefore
-does not currently claim that its calibrated synthetic market generalizes to unseen real-market
-regimes.
+CleoLOB uses chronological rather than random train/test evaluation and supports frozen selection,
+sealed holdouts, consumed-dataset tracking and observable-level failure diagnostics.
 
-See [docs/calibration-v03.md](docs/calibration-v03.md).
+The preserved v0.3 external calibration failure remains part of the evidence record. v0.4 also
+evaluated the immutable historical model against a fresh June 2020 Deribit ETH-PERPETUAL period
+under the frozen design. That fresh holdout failed as well.
+
+CleoLOB therefore does not currently claim that its calibrated synthetic market generalizes across
+unseen real-market regimes.
+
+The diagnostics can describe associations with distribution shift, tails, coverage, persistence,
+dependence and regime behavior, but they do not by themselves establish a unique causal explanation
+for calibration failure.
+
+See [docs/calibration-v03.md](docs/calibration-v03.md) and
+[docs/v04-calibration.md](docs/v04-calibration.md).
 
 ## Execution and reinforcement learning
 
-The registered v0.3 PPO/DQN study used independent training seeds, unseen evaluation seeds, common
-market seeds, three regimes, six controls and finite ablations.
+The registered v0.4 policy study applies the same completion mechanism to PPO, DQN and the classical
+control family.
 
-It completed **18 trained models**, **18,432 training steps** and **576 evaluation episodes**.
+It trained **24 final models**, totaling **49,152 training steps**, and retained **1,080 registered
+evaluation episodes** across three regimes, four training seeds and twelve evaluation market seeds.
 
-All **48/48** multiplicity-adjusted cost intervals include zero, so the study does not establish
-learned-policy superiority.
+Observed completion:
 
-DQN also showed poor completion in the registered study. Remaining inventory is valued separately
-and is never converted into an actual fill.
+| Metric | Result |
+|---|---:|
+| Completed within decision horizon | 1,061 / 1,080 |
+| Completed during post-horizon settlement | 19 / 1,080 |
+| Final unresolved residuals | 0 / 1,080 |
 
-See [docs/rl-v03.md](docs/rl-v03.md).
+No new orders are submitted after the decision horizon. Post-horizon settlement is reported
+separately, and hypothetical residual valuation never creates an actual fill.
+
+Of the 48 registered economic contrasts, **47 multiplicity-adjusted intervals included zero**.
+The single exception was stress DQN minus POV, but **zero joint cost-and-completion success gates
+passed**. Learned-policy superiority, equivalence, adequate power, convergence and live
+profitability therefore remain **NOT_ESTABLISHED**.
+
+The v0.3 PPO/DQN study remains preserved separately rather than being overwritten.
+
+See [docs/rl-v03.md](docs/rl-v03.md) and [docs/v04-rl.md](docs/v04-rl.md).
+
+## Performance and scaling
+
+v0.4 includes a registered study covering **45 workload configurations** across replay,
+simulation, parsing, calibration, serialization and related research paths.
+
+The results characterize local Python research workloads. They are not production trading,
+exchange-colocation or HFT latency measurements.
+
+See [docs/v04-performance.md](docs/v04-performance.md).
 
 ## Reproducibility
 
-Registered experiments can retain normalized configuration, source identity and hashes,
-model/checkpoint identity, random seeds, outcomes, validity status and statistical results.
+Registered experiments can retain:
 
-Committed v0.3 artifacts can be verified with:
+- normalized configuration
+- source identity and hashes
+- dataset identity and hashes
+- model/checkpoint identity
+- normalization identity
+- random seeds
+- study registration
+- evaluation locks
+- outcomes and validity status
+- statistical results
+- provenance metadata
+
+Committed evidence can be verified with:
 
 ```bash
 cleo verify-artifact examples/studies/v03
+cleo verify-artifact examples/studies/v04/evidence
 ```
 
-The v0.3 release passed local validation and cross-platform GitHub CI on Windows/Linux with
-Python 3.11-3.14.
+The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
+Python 3.11-3.14, package builds, clean-wheel installation, CLI smoke tests and compact-evidence
+verification.
+
+Byte-integrity verification establishes artifact consistency, not independent scientific replication.
 
 ## Limitations
 
 CleoLOB does not currently establish:
 
-- real historical MBO queue validity
+- genuine historical MBO queue validity
 - hidden liquidity
 - exact passive-fill counterfactuals from aggregate L2
-- successful cross-regime simulator calibration
-- PPO/DQN superiority
+- successful broad cross-regime simulator calibration
+- PPO/DQN or learned-policy superiority
+- adequate power for broad policy-superiority claims
 - live alpha or profitability
 - production HFT or exchange-colocated performance
+- universal cross-instrument or cross-venue transfer
 
 These are explicit research boundaries rather than hidden assumptions.
 
 ## Roadmap
 
-v0.4 focuses on stronger external validity and real-market evidence, including real historical MBO,
-formal market-data capability contracts, fresh multi-period holdouts, calibration failure attribution,
-completion-aware policies, stronger registered RL studies, scaling analysis and independent reproduction.
+v0.5 focuses on **real-market execution validation**.
 
-See the full [v0.4 roadmap](docs/v04-roadmap.md).
+Planned work includes:
+
+- genuine historical MBO validation where legally and practically available
+- bounded historical counterfactual execution rather than invented exact fills
+- calibration v2 and explicit model-class comparison
+- market-impact and resilience validation
+- within-horizon completion as a formal execution endpoint
+- multi-regime and cross-instrument external validity
+- stronger registered classical/RL execution studies
+- historical-vs-synthetic policy-transfer analysis
+- paper-style research reporting
+- stronger evidence provenance, verification and scaling analysis
+
+See the full [v0.5 roadmap](docs/v05-roadmap.md).
 
 ## Documentation
 
 - [Architecture](docs/architecture.md)
 - [MBO semantics](docs/mbo.md)
 - [Public market data](docs/public-market-data.md)
-- [v0.3 calibration protocol](docs/calibration-v03.md)
-- [v0.3 RL protocol](docs/rl-v03.md)
 - [Research methodology](docs/research-methodology.md)
 - [Reproduction guide](docs/reproduction.md)
+- [v0.3 calibration protocol](docs/calibration-v03.md)
+- [v0.3 RL protocol](docs/rl-v03.md)
 - [v0.3 final report](docs/v03-final-report.md)
 - [v0.4 roadmap](docs/v04-roadmap.md)
+- [v0.4 data contracts](docs/v04-data-contracts.md)
+- [v0.4 calibration](docs/v04-calibration.md)
+- [v0.4 RL study](docs/v04-rl.md)
+- [v0.4 performance](docs/v04-performance.md)
+- [v0.4 reproduction](docs/v04-reproduction.md)
+- [v0.4 final report](docs/v04-final-report.md)
+- [v0.5 roadmap](docs/v05-roadmap.md)
 
 ## Citation
 
@@ -245,7 +328,8 @@ Academic users can use the metadata in [`CITATION.cff`](CITATION.cff).
 
 ## License
 
-CleoLOB is licensed under the **GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later)**.
+CleoLOB is licensed under the **GNU Lesser General Public License v3.0 or later
+(LGPL-3.0-or-later)**.
 
 ## Disclaimer
 
