@@ -1,10 +1,12 @@
 <h1 align="center">CleoLOB</h1>
 
-<p align="center"><strong>Reproducible market-microstructure and execution research.</strong></p>
+<p align="center">
+  <strong>Reproducible market-microstructure and execution research.</strong>
+</p>
 
 <p align="center">
-CleoLOB studies execution strategies under explicit constraints around historical reconstruction,
-calibration, queue observability, incomplete execution, and out-of-sample evaluation.
+  CleoLOB studies execution strategies under explicit constraints around historical reconstruction,
+  calibration, queue observability, incomplete execution, and out-of-sample evaluation.
 </p>
 
 <p align="center">
@@ -12,12 +14,15 @@ calibration, queue observability, incomplete execution, and out-of-sample evalua
   <a href="https://github.com/damraka/CleoLOB/actions/workflows/research.yml"><img src="https://github.com/damraka/CleoLOB/actions/workflows/research.yml/badge.svg" alt="Research"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+">
   <img src="https://img.shields.io/github/v/release/damraka/CleoLOB" alt="Release">
+  <a href="https://pypi.org/project/cleolob/"><img src="https://img.shields.io/pypi/v/cleolob" alt="PyPI"></a>
   <img src="https://img.shields.io/github/license/damraka/CleoLOB" alt="License">
 </p>
 
 <p align="center">
   <img src="docs/assets/cleolob-dashboard.png" alt="CleoLOB market microstructure dashboard" width="100%">
 </p>
+
+---
 
 ## What it is
 
@@ -59,6 +64,20 @@ Negative results are retained rather than removed from the research record.
 
 Requires **Python 3.11+**.
 
+Install the latest release from PyPI:
+
+```bash
+python -m pip install cleolob
+```
+
+Verify:
+
+```bash
+cleo --help
+```
+
+For development:
+
 ```bash
 git clone https://github.com/damraka/CleoLOB.git
 cd CleoLOB
@@ -89,11 +108,10 @@ Optional RL and web dependencies:
 python -m pip install -e '.[dev,rl,web]'
 ```
 
-Verify:
+Run the test suite:
 
 ```bash
 python -m pytest -q
-cleo --help
 ```
 
 Example commands:
@@ -160,6 +178,7 @@ The registered v0.3 PPO/DQN study used independent training seeds, unseen evalua
 market seeds, three regimes, six controls and finite ablations.
 
 It completed **18 trained models**, **18,432 training steps** and **576 evaluation episodes**.
+
 All **48/48** multiplicity-adjusted cost intervals include zero, so the study does not establish
 learned-policy superiority.
 
