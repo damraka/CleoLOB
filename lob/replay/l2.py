@@ -21,6 +21,8 @@ from pathlib import Path
 from types import MappingProxyType
 from typing import Iterator
 
+from ..capabilities import CapabilityContract, CapabilityError, L2_CONTRACT
+
 
 L2_COLUMNS = (
     "exchange", "symbol", "timestamp", "local_timestamp", "is_snapshot",
@@ -43,10 +45,14 @@ L2_CAPABILITIES = MappingProxyType({
 
 def require_l2_capability(name: str) -> None:
     """Fail explicitly when a consumer requests evidence absent from L2."""
-    if name not in L2_CAPABILITIES:
-        raise ValueError(f"Unknown L2 capability {name!r}")
-    if not L2_CAPABILITIES[name]:
-        raise ValueError(f"{name} is unavailable from aggregate L2: no individual order identity or FIFO")
+    # Keep the v0.3 public error wording and mapping while the formal contract
+    # supports additional price-level observations used by new consumers.
+    try:
+        L2_CONTRACT.require(name)
+    except ValueError as exc:
+        if "Unknown capability" in str(exc):
+            raise CapabilityError(name, f"Unknown L2 capability {name!r}") from exc
+        raise CapabilityError(name, f"{name} is unavailable from aggregate L2: no individual order identity or FIFO") from exc
 
 
 def exact_decimal(text: str, name: str, *, allow_zero: bool = False) -> Decimal:
@@ -86,6 +92,10 @@ class L2State:
     bid_levels: int
     ask_levels: int
     rows_in_group: int
+
+    @property
+    def capability_contract(self) -> CapabilityContract:
+        return L2_CONTRACT
 
     @property
     def capabilities(self) -> dict[str, bool]:
@@ -175,6 +185,10 @@ class L2Replay:
             "expanded_bytes": 0, "exchange": None, "symbol": None,
             "complete": False,
         }
+
+    @property
+    def capability_contract(self) -> CapabilityContract:
+        return L2_CONTRACT
 
     @property
     def stats(self) -> dict:

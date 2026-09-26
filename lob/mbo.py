@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterator, Mapping
 
+from .capabilities import CANONICAL_MBO_CONTRACT, Capability, CapabilityContract, CapabilityError, DataLevel
 from .replay.book import HistoricalBook, ReconstructionError
 from .replay.io import _json
 from .replay.schema import EventSchemaError, MarketEvent, ReplaySide, SnapshotOrder, _integer
@@ -98,6 +99,18 @@ class MBOEvent:
         return result
 
 
+@dataclass(frozen=True)
+class _UnorderedIdentity:
+    order_id: str
+    side: ReplaySide
+    price_ticks: int
+    quantity: int
+
+    @property
+    def priority(self) -> int:
+        raise CapabilityError("exact_fifo_position", "source order priority is unavailable without FIFO capability")
+
+
 @dataclass
 class _Watch:
     order_id: str
@@ -129,7 +142,12 @@ class MBOBook:
 
     def __init__(self, *, max_events: int = 1_000_000, max_orders: int = 100_000,
                  max_total_order_records: int = 1_000_000, max_watches: int = 1000,
-                 max_observations: int = 100_000):
+                 max_observations: int = 100_000,
+                 capability_contract: CapabilityContract = CANONICAL_MBO_CONTRACT):
+        if capability_contract.level != DataLevel.MBO:
+            raise ValueError("MBOBook requires an order-level capability contract")
+        capability_contract.require(Capability.ORDER_IDENTITY, Capability.AGGREGATE_DEPTH)
+        self._capability_contract = capability_contract
         self._limits = {name: _positive(value, name) for name, value in {
             "max_events": max_events, "max_orders": max_orders,
             "max_total_order_records": max_total_order_records,
@@ -146,10 +164,22 @@ class MBOBook:
         self._last_exchange_timestamp_ns: int | None = None
 
     @property
+    def capability_contract(self) -> CapabilityContract:
+        return self._capability_contract
+
+    def require_capability(self, name: Capability | str) -> None:
+        self._capability_contract.require(name)
+
+    @property
     def orders(self):
-        return self._book.orders
+        orders = self._book.orders
+        if self.capability_contract.supports(Capability.EXACT_FIFO_POSITION):
+            return orders
+        return {oid: _UnorderedIdentity(o.order_id, o.side, o.price_ticks, o.quantity)
+                for oid, o in orders.items()}
 
     def queue(self, side: ReplaySide | str, price_ticks: int) -> tuple[str, ...]:
+        self.require_capability(Capability.EXACT_FIFO_POSITION)
         return self._book.queue(side, _integer(price_ticks, "price_ticks"))
 
     def aggregate_l2(self, depth: int | None = None) -> dict[str, list[list[int]]]:
@@ -159,12 +189,18 @@ class MBOBook:
 
     def snapshot(self) -> dict[str, Any]:
         state = self._book.snapshot()
+        if not self.capability_contract.supports(Capability.EXACT_FIFO_POSITION):
+            # Stable identity ordering does not masquerade as source FIFO.
+            state["orders"] = sorted(state["orders"], key=lambda order: order["order_id"])
+            for order in state["orders"]:
+                order.pop("priority")
         state.update(evidence_level="MBO_SOURCE_IDENTITIES",
                      exchange_timestamp_ns=None if self._last is None else self._last.exchange_timestamp_ns)
         return state
 
     def queue_metrics(self, order_id: str) -> dict[str, Any]:
         """Current same-price queue, conditional on complete source FIFO data."""
+        self.require_capability(Capability.QUANTITY_AHEAD)
         orders = self._book.orders
         if order_id not in orders:
             raise ReconstructionError("UNKNOWN_ORDER_ID", f"no resting order {order_id!r}")
@@ -191,6 +227,7 @@ class MBOBook:
         registrations have a distinct observation origin and remain ineligible
         for the submission-cohort probability estimator.
         """
+        self.require_capability(Capability.OBSERVED_ORDER_FILL)
         if order_id in self._watches:
             raise ValueError("order_id is already watched; each ID has one observation origin")
         if len(self._watches) >= self._limits["max_watches"]:
@@ -281,6 +318,8 @@ class MBOBook:
     def apply(self, event: MBOEvent) -> None:
         if not isinstance(event, MBOEvent):
             raise TypeError("apply requires an MBOEvent")
+        if event.event_type == "EXECUTE":
+            self.require_capability(Capability.OBSERVED_ORDER_FILL)
         if self._last is None and event.event_type not in {"SNAPSHOT", "RESET"}:
             raise ReconstructionError("INITIAL_SNAPSHOT_REQUIRED", "MBO replay requires an initial SNAPSHOT or RESET")
         if self._events >= self._limits["max_events"]:
@@ -402,6 +441,7 @@ class MBOBook:
         estimand. No independent-censoring or causal assumption is made; this
         complete-case frequency is not a population fill-probability model.
         """
+        self.require_capability(Capability.OBSERVED_ORDER_FILL)
         horizon_ns = _integer(horizon_ns, "horizon_ns", minimum=0)
         eligible = [w for w in self._watches.values() if w.submission_timestamp_ns is not None]
         evaluated = []
@@ -487,6 +527,13 @@ class MBOReplay:
         self._started = False
         self._stats = {"complete": False, "events": 0, "expanded_bytes": 0,
                        "source_sha256": None, "canonical_sha256": None}
+
+    @property
+    def capability_contract(self) -> CapabilityContract:
+        return self.book.capability_contract
+
+    def require_capability(self, name: Capability | str) -> None:
+        self.capability_contract.require(name)
 
     @property
     def stats(self) -> dict[str, Any]:
