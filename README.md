@@ -47,6 +47,10 @@ It is a research framework, not a production trading system.
 
 Negative results are retained rather than removed from the research record.
 
+The [v0.4 development report](docs/v04-final-report.md) adds capability contracts,
+completion-constrained studies and a fresh historical holdout failure. Real MBO
+validation and learned-policy superiority remain unestablished.
+
 ## Core capabilities
 
 - deterministic FIFO synthetic exchange with limit/market orders, partial fills, cancellation and modification

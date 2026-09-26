@@ -32,6 +32,7 @@ cleo verify-artifact results/v04/calls-reproduced
 cleo smoke --out results/v04/smoke-reproduced
 cleo verify-artifact results/v04/smoke-reproduced
 cleo verify-artifact examples/studies/v03
+cleo verify-artifact examples/studies/v04/evidence
 ```
 
 MBO inputs and multi-period fixtures here are explicitly synthetic. A failed
@@ -39,6 +40,17 @@ calibration gate is a retained scientific result, not a command failure. Failed
 input integrity is different and stops evaluation. The 24-model RL run requires
 the optional RL dependencies and is a bounded study, not adequately powered
 confirmation of superiority. All 1,080 cells and final checkpoints must remain.
+
+After the independent runs above finish, export their permitted compact summaries
+to a new directory and verify that bundle:
+
+```sh
+python tools/compact_v04.py --policy results/v04/policy-reproduced --multiperiod results/v04/multiperiod-reproduced --mbo results/v04/mbo-reproduced --scaling results/v04/scaling-reproduced --calls results/v04/calls-reproduced --smoke results/v04/smoke-reproduced --v03-diagnostics results/v04/v03-diagnostics-reproduced --out results/v04/compact-reproduced
+cleo verify-artifact results/v04/compact-reproduced
+```
+
+The export excludes historical data, model checkpoints, source snapshots and full
+episode traces while retaining original manifest hashes and explicit exclusions.
 
 The historical command is separate:
 

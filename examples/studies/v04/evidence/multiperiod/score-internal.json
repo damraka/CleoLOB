@@ -1,0 +1,94 @@
+{
+  "end_us": 259711000000,
+  "failure_attribution": [],
+  "frame_sha256": "d37fd6acb90e2509072008be2c0de122716f15fca441f708b1f6cd404e17765a",
+  "inspection_before_run": "synthetic",
+  "loss": 0.1089124788192695,
+  "metrics": {
+    "ask_depth5": {
+      "central_95pct_coverage": 0.9296875,
+      "coverage_error": 0.020312499999999956,
+      "finite_samples": 512,
+      "normalized_quantile_distance": 0.08681279985654182,
+      "status": "PASS",
+      "train_normalization_scale": 177.91583619078972,
+      "train_relative_quantile_drift": 0.04386425106330807
+    },
+    "bid_depth5": {
+      "central_95pct_coverage": 0.91015625,
+      "coverage_error": 0.039843749999999956,
+      "finite_samples": 512,
+      "normalized_quantile_distance": 0.11923940853234363,
+      "status": "PASS",
+      "train_normalization_scale": 186.38595785603422,
+      "train_relative_quantile_drift": 0.033627116634235676
+    },
+    "imbalance5": {
+      "central_95pct_coverage": 0.904296875,
+      "coverage_error": 0.045703124999999956,
+      "finite_samples": 512,
+      "normalized_quantile_distance": 0.04189240019941213,
+      "status": "PASS",
+      "train_normalization_scale": 0.40324796978747945,
+      "train_relative_quantile_drift": 0.02728350331394447
+    },
+    "log_return": {
+      "central_95pct_coverage": 0.9784735812133072,
+      "coverage_error": 0.02847358121330723,
+      "finite_samples": 511,
+      "normalized_quantile_distance": 0.10696214785406313,
+      "status": "PASS",
+      "train_normalization_scale": 0.00021918939622817655,
+      "train_relative_quantile_drift": 0.047630252457887726
+    },
+    "relative_depth_change": {
+      "central_95pct_coverage": 0.9432485322896281,
+      "coverage_error": 0.006751467710371828,
+      "finite_samples": 511,
+      "normalized_quantile_distance": 0.061365478032426986,
+      "status": "PASS",
+      "train_normalization_scale": 0.2281576783993137,
+      "train_relative_quantile_drift": 0.07135099970033959
+    },
+    "rms_return_10": {
+      "central_95pct_coverage": 0.9820717131474104,
+      "coverage_error": 0.03207171314741042,
+      "finite_samples": 502,
+      "normalized_quantile_distance": 0.2039850515143973,
+      "status": "PASS",
+      "train_normalization_scale": 0.0001530876226750893,
+      "train_relative_quantile_drift": 0.04387102650413744
+    },
+    "spread_bps": {
+      "central_95pct_coverage": 0.953125,
+      "coverage_error": 0.0031250000000000444,
+      "finite_samples": 512,
+      "normalized_quantile_distance": 0.12059695747345893,
+      "status": "PASS",
+      "train_normalization_scale": 2.011873315336324,
+      "train_relative_quantile_drift": 0.02103125557102945
+    },
+    "spread_change_bps": {
+      "central_95pct_coverage": 0.9510763209393346,
+      "coverage_error": 0.0010763209393346296,
+      "finite_samples": 511,
+      "normalized_quantile_distance": 0.017834744381140494,
+      "status": "PASS",
+      "train_normalization_scale": 0.4393040409763865,
+      "train_relative_quantile_drift": 0.015181220021288092
+    }
+  },
+  "model_sha256": "3edc3a3a8a9d69f47a904df2966f6c1ec1357b6dd2ad7984c92e5697429af3fe",
+  "model_unchanged": true,
+  "period_id": "internal",
+  "role": "internal",
+  "rows": 512,
+  "simulation_rows_per_seed": 1024,
+  "simulation_seeds": [
+    94701,
+    94702
+  ],
+  "start_us": 259200000000,
+  "status": "PASS",
+  "valid_fraction": 1.0
+}

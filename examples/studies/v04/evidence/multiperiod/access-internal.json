@@ -1,0 +1,8 @@
+{
+  "id": "internal",
+  "independent_period_id": null,
+  "inspection": "consumed",
+  "previous_inspection": "synthetic",
+  "role": "internal",
+  "source_sha256": null
+}

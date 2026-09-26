@@ -1,0 +1,18 @@
+{
+  "kind": "synthetic_retrospective",
+  "model_unchanged": true,
+  "periods": [
+    {
+      "original_status": "WARNING",
+      "period": "internal",
+      "status_changed": false
+    },
+    {
+      "original_status": "FAIL",
+      "period": "external",
+      "status_changed": false
+    }
+  ],
+  "real_market_generalization": "NOT_ESTABLISHED",
+  "schema_version": 1
+}

@@ -1,0 +1,101 @@
+{
+  "candidates": [
+    "iid_joint",
+    "spread_markov"
+  ],
+  "claim_scope": "observable calibration only; no fills, trading edge or exchange truth",
+  "config": {
+    "block_rows": 32,
+    "bootstrap_repetitions": 999,
+    "consumed_periods": [],
+    "diagnostic_seed": 94501,
+    "embargo_us": 2000000,
+    "exchange": "SYNTHETIC",
+    "external_seeds": [
+      94801,
+      94802
+    ],
+    "fit_seed": 94401,
+    "internal_seeds": [
+      94701,
+      94702
+    ],
+    "interval_us": 1000000,
+    "kind": "synthetic",
+    "max_pool_rows": 128,
+    "periods": [
+      {
+        "id": "development",
+        "inspection": "synthetic",
+        "role": "development",
+        "rows": 1024,
+        "seed": 94101,
+        "shift": 1.0,
+        "start_us": 0
+      },
+      {
+        "id": "selection-1",
+        "inspection": "synthetic",
+        "role": "selection",
+        "rows": 512,
+        "seed": 94102,
+        "shift": 1.0,
+        "start_us": 86400000000
+      },
+      {
+        "id": "selection-2",
+        "inspection": "synthetic",
+        "role": "selection",
+        "rows": 512,
+        "seed": 94103,
+        "shift": 1.0,
+        "start_us": 172800000000
+      },
+      {
+        "id": "internal",
+        "inspection": "synthetic",
+        "role": "internal",
+        "rows": 512,
+        "seed": 94104,
+        "shift": 1.0,
+        "start_us": 259200000000
+      },
+      {
+        "id": "external-1",
+        "inspection": "synthetic",
+        "role": "external",
+        "rows": 512,
+        "seed": 94105,
+        "shift": 1.8,
+        "start_us": 345600000000
+      },
+      {
+        "id": "external-2",
+        "inspection": "synthetic",
+        "role": "external",
+        "rows": 512,
+        "seed": 94106,
+        "shift": 0.6,
+        "start_us": 432000000000
+      }
+    ],
+    "schema_version": 1,
+    "selection_seeds": [
+      94601,
+      94602
+    ],
+    "simulation_rows": 1024,
+    "symbol": "TWO-STATE-OBSERVABLES"
+  },
+  "freshness": "declaration checked against consumed registry; hashes cannot prove non-inspection",
+  "gate": {
+    "coverage_fail_below": 0.75,
+    "coverage_warning_below": 0.9,
+    "distance_fail_above": 0.5,
+    "distance_warning_above": 0.25,
+    "minimum_finite_samples": 32,
+    "valid_fail_below": 0.9,
+    "valid_warning_below": 0.99
+  },
+  "selection": "minimum mean selection-period loss, lexical family tie-break; no final refit"
+}
