@@ -234,6 +234,10 @@ def _run_v05(args) -> int | None:
     return 0
 
 
+OPTIONAL_EXTRAS = {"rl": ("stable_baselines3", "torch", "tensorboard"), "plots": ("plotly",),
+                   "web": ("fastapi", "uvicorn", "streamlit")}
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
@@ -395,6 +399,14 @@ def main(argv: list[str] | None = None) -> int:
                     "provenance": config_diff(left["metadata"], right["metadata"]),
                     "results": config_diff(left["result"], right["result"])})
         return 0
+    except ModuleNotFoundError as exc:
+        extra = next((name for name, modules in OPTIONAL_EXTRAS.items() if (exc.name or "").split(".")[0] in modules),
+                     None)
+        if extra is None:
+            raise
+        _print({"status": "MISSING_DEPENDENCY", "module": exc.name, "extra": extra,
+                "install": f'python -m pip install "cleolob[{extra}]"'})
+        return 2
     except (ValueError, TypeError, OSError, KeyError, yaml.YAMLError, RecursionError) as exc:
         # Typed data validation errors preserve machine-readable quality details.
         report = getattr(exc, "report", None)

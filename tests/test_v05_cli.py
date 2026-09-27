@@ -37,3 +37,26 @@ def test_dataset_registry_and_protocol_commands(capsys):
 
 def test_verify_v05_rejects_non_run(capsys, tmp_path):
     assert main(["verify-v05", str(tmp_path)]) == 1
+
+
+def test_missing_optional_dependency_names_the_extra(capsys, tmp_path, monkeypatch):
+    import lob.benchmarks_v05 as bench
+
+    def missing(*args, **kwargs):
+        raise ModuleNotFoundError("No module named 'stable_baselines3'", name="stable_baselines3")
+
+    monkeypatch.setattr(bench, "run", missing)
+    assert main(["v05-benchmark", "--out", str(tmp_path / "b")]) == 2
+    out = json.loads(capsys.readouterr().out)
+    assert out["status"] == "MISSING_DEPENDENCY" and out["extra"] == "rl" and "cleolob[rl]" in out["install"]
+
+
+def test_unrelated_missing_module_is_not_masked(tmp_path, monkeypatch):
+    import lob.benchmarks_v05 as bench
+
+    def missing(*args, **kwargs):
+        raise ModuleNotFoundError("No module named 'nonexistent'", name="nonexistent")
+
+    monkeypatch.setattr(bench, "run", missing)
+    with pytest.raises(ModuleNotFoundError):
+        main(["v05-benchmark", "--out", str(tmp_path / "b")])
