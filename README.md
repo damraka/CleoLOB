@@ -50,8 +50,8 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
-The [v0.5 research report](docs/v05-paper.md) (branch `research/v0.5-real-market-validation`,
-version `0.5.0.dev0`, not released) documents the real-market validation study. The
+The [v0.5 research report](docs/v05-paper.md) documents the real-market validation study
+released as `v0.5.0`. The
 [v0.4 final report](docs/v04-final-report.md) documents the latest release.
 
 ## Core capabilities
