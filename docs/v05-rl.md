@@ -60,7 +60,7 @@ and checks every checkpoint, normalization and lock hash. It is valid.
   against the heuristic and random controls, and no regime result transfers to stress or the
   calibrated regime.
 - Economic magnitudes are small: 0.12–0.42 bps.
-- The M8 transfer study tests whether these directions survive history.
+- The M8 transfer study ([v05-transfer.md](v05-transfer.md)) tests whether these directions survive history.
 
 ## M5 endpoint: within-horizon versus settlement completion (main arms)
 

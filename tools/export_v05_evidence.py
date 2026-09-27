@@ -88,6 +88,8 @@ def summarize_result(analysis: str, result: dict) -> dict:
     if analysis == "m8-transfer":
         return _pick(result, ("mapping", "family_size", "alpha", "comparisons", "classification_counts", "rankings",
                               "synthetic_ranking_original_regime", "invalid_rows", "rows", "interpretation"))
+    if analysis == "m8-regime-sensitivity":
+        return _pick(result, ("source_run", "alpha", "min_episodes", "datasets", "interpretation"))
     if analysis == "m11-benchmarks":
         return result
     raise ValueError(f"no export rule for analysis {analysis!r}")
