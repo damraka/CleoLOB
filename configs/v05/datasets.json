@@ -1,0 +1,13 @@
+{
+  "schema": "cleolob-v05-dataset-facts-1",
+  "note": "Static source facts. Access times, source hashes, freshness and consumption are taken from the ledger, never from this file.",
+  "instruments": {
+    "deribit:ETH-PERPETUAL": {"instrument_type": "inverse_perpetual", "contract": "1 USD face per contract; amounts in USD", "tick_size": "0.05 USD (2020)", "lot_size": "1 USD", "quote_currency": "USD", "base_asset": "ETH"},
+    "deribit:BTC-PERPETUAL": {"instrument_type": "inverse_perpetual", "contract": "10 USD face per contract; amounts in USD", "tick_size": "0.5 USD (2020)", "lot_size": "10 USD", "quote_currency": "USD", "base_asset": "BTC"},
+    "bitstamp:btcusd": {"instrument_type": "spot", "contract": "spot BTC; amounts in BTC", "tick_size": "0.01 USD", "lot_size": "0.00000001 BTC", "quote_currency": "USD", "base_asset": "BTC"}
+  },
+  "providers": {
+    "Tardis.dev": {"timezone": "UTC", "date_range": "one UTC calendar day 00:00-24:00", "sequence_semantics": "capture order with provider local timestamps; no exchange sequence numbers in the CSV; gaps are undetectable beyond timestamp gaps", "license": "Tardis.dev terms of service (checked 2026-09-26): internal quantitative research; raw and detailed derived data not redistributed", "capability": "aggregate_l2 plus trade prints"},
+    "Bitstamp public API (self-recorded capture)": {"timezone": "UTC (microsecond epoch)", "date_range": "capture window from the capture manifest", "sequence_semantics": "order channel event_id/pre_event_id chain; trades and book references unsequenced", "license": "Bitstamp API terms (checked 2026-09-26): public market data; commercial use requires a data licence; raw capture not redistributed", "capability": "order_level_mbo with source identities; FIFO not established"}
+  }
+}

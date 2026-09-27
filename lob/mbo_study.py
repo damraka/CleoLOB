@@ -31,7 +31,9 @@ def frozen_semantics(design: dict) -> LifecycleSemantics:
 
 
 def run(capture_dir: str | Path, out: str | Path, *, dataset_id: str, root: Path = PROJECT_ROOT,
-        record_access: bool = True) -> dict:
+        record_access: bool = True, posthoc: bool = False) -> dict:
+    """``posthoc=True`` is exploratory only: it enables adapter rules added after the frozen
+    validation outcome and can never replace or upgrade that outcome."""
     capture_dir = Path(capture_dir)
     manifest = json.loads((capture_dir / "capture-manifest.json").read_text(encoding="utf-8"))
     source = capture_dir / manifest["file"]
@@ -47,8 +49,9 @@ def run(capture_dir: str | Path, out: str | Path, *, dataset_id: str, root: Path
                         protocol=protocol)
     out = new_run(out)
     semantics = frozen_semantics(design)
-    adapter = BitstampCaptureAdapter(source, alignment=design["m1"]["adapter"]["reference_alignment"])
-    if adapter.contract.adapter_version != design["m1"]["adapter"]["adapter_version"]:
+    adapter = BitstampCaptureAdapter(source, alignment=design["m1"]["adapter"]["reference_alignment"],
+                                     posthoc_instant_orders=posthoc)
+    if not posthoc and adapter.contract.adapter_version != design["m1"]["adapter"]["adapter_version"]:
         raise ValueError("adapter version differs from the frozen design")
     validation = validate_source(adapter, semantics, depth=design["m1"]["reference_depth"])
     events, references = adapter.build()
@@ -57,8 +60,13 @@ def run(capture_dir: str | Path, out: str | Path, *, dataset_id: str, root: Path
     m2 = run_mbo(events, design["m2"]["mbo_design"], semantics=semantics, dataset_id=dataset_id,
                  observed_lifetime_s=design["m2"]["mbo_observed_order_window_s"])
     write_json(out, "m2-orders.json", m2["orders"])
+    if posthoc:
+        gate = {"status": "EXPLORATORY_POST_HOC", "frozen_gate_would_be": gate["status"],
+                **{k: v for k, v in gate.items() if k != "status"},
+                "note": "Adapter rule added after the frozen outcome; not evidence for the registered gate."}
     result = {
         "dataset_id": dataset_id, "capture_status": manifest["status"], "capture_sha256": digest,
+        "post_hoc_exploratory": posthoc,
         "m1": {"gate": gate, "validation": {k: v for k, v in validation.items() if k != "report"},
                "lifecycle_report": validation["report"], "secondary_tolerant_reference_agreement": tolerant},
         "m2": {"summary": m2["summary"], "observed_order_validation": m2["observed_order_validation"],
@@ -69,7 +77,8 @@ def run(capture_dir: str | Path, out: str | Path, *, dataset_id: str, root: Path
     }
     config = {"design": design, "design_sha256": pr.document_sha256(design), "contract": adapter.contract.to_dict(),
               "semantics": semantics.to_dict(), "capture_manifest": manifest}
-    finalize(out, analysis=f"m1-m2-{dataset_id}", dataset_ids=[dataset_id], config=config, result=result, root=root)
+    finalize(out, analysis=f"m1-m2-{'posthoc-' if posthoc else ''}{dataset_id}", dataset_ids=[dataset_id],
+             config=config, result=result, root=root)
     return result
 
 
@@ -78,8 +87,9 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("capture_dir", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--dataset-id", required=True)
+    parser.add_argument("--posthoc", action="store_true", help="exploratory post-hoc adapter rules")
     args = parser.parse_args(argv)
-    result = run(args.capture_dir, args.out, dataset_id=args.dataset_id)
+    result = run(args.capture_dir, args.out, dataset_id=args.dataset_id, posthoc=args.posthoc)
     print(json.dumps({"m1_gate": result["m1"]["gate"], "m2_summary": result["m2"]["summary"],
                       "observed": result["m2"]["observed_order_validation"]}, indent=2, sort_keys=True, default=str))
 

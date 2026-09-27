@@ -162,3 +162,15 @@ def test_run_mbo_observed_order_coverage():
     assert coverage["fifo_point_agreement"] == 1.0
     hypo = result["orders"]
     assert hypo[0]["fifo_lower"] == 2 and hypo[0]["classification"] == "POSSIBLE_FILL"
+
+
+def test_observed_order_with_zero_length_window_is_excluded_not_crashing():
+    census = (CensusOrder("a", "BUY", 100, 5), CensusOrder("s", "SELL", 105, 5))
+    s = 1_000_000_000
+    events = [E(0, "SNAPSHOT", exchange_ts_ns=0, orders=census),
+              E(1, "ADD", exchange_ts_ns=s, order_id="flash", side="BUY", price=100, quantity=3),
+              E(2, "CANCEL", exchange_ts_ns=s, order_id="flash"),
+              E(3, "ADD", exchange_ts_ns=9 * s, order_id="z", side="BUY", price=99, quantity=1)]
+    design = dict(DESIGN, start_offset_s=0.5, interval_s=100, end_margin_s=0, lifetimes_s=[5], sizes=["2"])
+    result = run_mbo(events, design, semantics=LifecycleSemantics(), dataset_id="synthetic", observed_lifetime_s=5)
+    assert result["observed_order_validation"]["zero_length_windows_excluded"] == 1

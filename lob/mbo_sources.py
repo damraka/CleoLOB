@@ -73,7 +73,8 @@ def exact_units(text: Any, unit: str, name: str) -> int:
 
 # ----------------------------------------------------------------------------- Bitstamp
 
-def bitstamp_contract(pair: str = "btcusd", alignment: str = "exchange_ms_strict") -> SourceContract:
+def bitstamp_contract(pair: str = "btcusd", alignment: str = "exchange_ms_strict",
+                      posthoc_instant_orders: bool = False) -> SourceContract:
     if alignment not in ALIGNMENTS:
         raise ValueError(f"alignment must be one of {ALIGNMENTS}")
     return SourceContract(
@@ -95,7 +96,10 @@ def bitstamp_contract(pair: str = "btcusd", alignment: str = "exchange_ms_strict
                   "An order created through the opposite best is an incoming aggressor (transient; its "
                   "executions are taker fills). Zero-price orders are market orders and never rest.",
         hidden_liquidity="Not observable; no hidden quantity is inferred.",
-        fifo_established=False, reference_alignment=alignment, adapter_version="bitstamp-capture-4")
+        fifo_established=False, reference_alignment=alignment,
+        # The post-hoc rule was added only after the frozen v4 adapter was INVALID on the
+        # validation capture; results using it are exploratory, never the frozen gate.
+        adapter_version="bitstamp-capture-5-posthoc" if posthoc_instant_orders else "bitstamp-capture-4")
 
 
 def _read_capture(path: Path) -> Iterator[dict]:
@@ -117,9 +121,11 @@ class BitstampCaptureAdapter:
     capture error becomes an explicit GAP.
     """
 
-    def __init__(self, path: str | Path, *, alignment: str = "exchange_ms_strict", pair: str = "btcusd"):
+    def __init__(self, path: str | Path, *, alignment: str = "exchange_ms_strict", pair: str = "btcusd",
+                 posthoc_instant_orders: bool = False):
         self.path = Path(path)
-        self.contract = bitstamp_contract(pair, alignment)
+        self.contract = bitstamp_contract(pair, alignment, posthoc_instant_orders)
+        self.posthoc_instant_orders = posthoc_instant_orders
         self.alignment = alignment
         self.pair = pair
         self.stats: dict[str, Any] = {}
@@ -273,7 +279,11 @@ class BitstampCaptureAdapter:
     def _order_event(self, kind, ts_us, recv_ns, data, state, emit, boundary, census_ids) -> None:
         oid = str(data["id_str"]) if kind != "trade" else None
         ts = ts_us * 1000
-        if kind != "trade" and (oid in self._market_orders or (kind == "order_created" and data["price_str"] in {"0", "0.00"})):
+        instant = (self.posthoc_instant_orders and kind == "order_created"
+                   and (Decimal(data["amount_str"]) == 0 or Decimal(data["price_str"]) == 0
+                        or Decimal(data["price_str"]) >= Decimal("999999999")))
+        if kind != "trade" and (oid in self._market_orders or instant
+                                or (kind == "order_created" and data["price_str"] in {"0", "0.00"})):
             # A zero-price order is a market order: it never rests; its fills appear on the makers.
             self._market_orders.add(oid)
             self.stats["market_order_events_skipped"] += 1

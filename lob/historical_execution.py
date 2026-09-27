@@ -259,6 +259,11 @@ def run_mbo(events: Iterable[LifecycleEvent], design: dict, *, semantics: Lifecy
         if event.order_id in observed and book.order(event.order_id) is None:
             item = observed.pop(event.order_id)
             tracker = item["tracker"]
+            if ts is None or ts <= tracker.order.submit_ts:
+                # Joined and left within one source timestamp: no observation window exists.
+                observed_results.append({"order_id": tracker.order.order_id, "indeterminate": True,
+                                         "zero_length_window": True, "observed_fill": item["filled"]})
+                continue
             tracker.order = ChildOrder(tracker.order.order_id, tracker.order.side, tracker.order.price,
                                        tracker.order.quantity, tracker.order.submit_ts, ts)
             observed_results.append(_observed_outcome(item, close(tracker)))
@@ -283,15 +288,16 @@ def _observed_outcome(item: dict, bound: FillBound) -> dict:
 def _coverage(rows: list[dict]) -> dict:
     usable = [r for r in rows if not r["indeterminate"]]
     n = len(usable)
+    zero_length = sum(bool(r.get("zero_length_window")) for r in rows)
     if not n:
-        return {"orders": len(rows), "evaluable": 0}
+        return {"orders": len(rows), "evaluable": 0, "zero_length_windows_excluded": zero_length}
     inside = sum(r["conservative_lower"] <= r["observed_fill"] <= r["optimistic_upper"] for r in usable)
     exact = sum(r["observed_fill"] == r["fifo_point"] for r in usable)
     above = sum(r["observed_fill"] > r["fifo_point"] for r in usable)
     below = sum(r["observed_fill"] < r["fifo_point"] for r in usable)
     violations = sum(1 for r in usable if r["later_executed_while_ahead_resting"])
     filled = sum(r["observed_fill"] > 0 for r in usable)
-    return {"orders": len(rows), "evaluable": n, "observed_filled": filled,
+    return {"orders": len(rows), "evaluable": n, "zero_length_windows_excluded": zero_length, "observed_filled": filled,
             "within_conservative_optimistic_bounds": inside, "coverage_fraction": inside / n,
             "equal_to_identity_fifo_point": exact, "fifo_point_agreement": exact / n,
             "observed_above_fifo_point": above, "observed_below_fifo_point": below,
