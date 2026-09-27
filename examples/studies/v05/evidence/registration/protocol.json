@@ -1,0 +1,136 @@
+{
+  "schema": "cleolob-v05-protocol-1",
+  "protocol_id": "cleolob-v0.5-real-market-execution-validation",
+  "frozen_at_utc": "2026-09-26T21:30:00+00:00",
+  "base_commit": "224415dcf8a662589f431beefa1fe73c87c15bb1",
+  "branch": "research/v0.5-real-market-validation",
+  "roadmap": "docs/v05-roadmap.md",
+  "statuses": ["ESTABLISHED", "NOT_ESTABLISHED", "FAILED", "NOT_AVAILABLE", "INVALID", "INCONCLUSIVE"],
+  "status_meaning": {
+    "ESTABLISHED": "The frozen success gate for the stated question passed on the registered evidence.",
+    "NOT_ESTABLISHED": "The analysis ran validly but the gate did not pass; no claim follows.",
+    "FAILED": "A preregistered acceptance criterion was evaluated and explicitly failed.",
+    "NOT_AVAILABLE": "Required data, access, capability or compute was unavailable; nothing was substituted.",
+    "INVALID": "Input integrity, execution or binding failed; outcome counts beyond the failure are unknown.",
+    "INCONCLUSIVE": "The registered evidence cannot discriminate (degenerate, ambiguous or underpowered)."
+  },
+  "research_questions": [
+    {"id": "RQ1", "milestone": "M1", "question": "Do CleoLOB identity-preserving MBO semantics reproduce a genuine venue order-level feed: valid lifecycles, deterministic replay, and agreement with independently published source aggregate books?"},
+    {"id": "RQ2", "milestone": "M2", "question": "For preregistered hypothetical passive child orders, how much of the historical fill outcome is determinate from aggregate L2 versus genuine order-level evidence, and how wide are the honest bounds?"},
+    {"id": "RQ3", "milestone": "M3", "question": "Does a richer, justified simulator family improve out-of-sample observable fit over the v0.4 baseline simulator, and does the selected model pass the frozen gate on sealed internal, fresh external and cross-instrument holdouts?"},
+    {"id": "RQ4", "milestone": "M4", "question": "Do simulator conditional price-impact and resilience responses agree in direction, magnitude and persistence with historical responses at preregistered horizons?"},
+    {"id": "RQ5", "milestone": "M5", "question": "How often is a mandate completed within its decision horizon versus only after post-horizon settlement, under identical rules for every policy?"},
+    {"id": "RQ6", "milestone": "M6", "question": "Which calibration and response conclusions survive across objectively defined regimes, an unseen period of the same instrument, and a different instrument on the same venue?"},
+    {"id": "RQ7", "milestone": "M7", "question": "Does any main-arm PPO or DQN policy pass the frozen joint cost-and-within-horizon-completion gate against a registered control in a registered regime?"},
+    {"id": "RQ8", "milestone": "M8", "question": "Do simulator policy rankings and pairwise directions agree with bounded historical execution evidence, and which conclusions survive conservative fill assumptions?"}
+  ],
+  "datasets": [
+    {"id": "deribit-eth-perp-2020-04-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "ETH-PERPETUAL", "date": "2020-04-01", "data_types": ["incremental_book_L2", "trades", "book_snapshot_5"], "capability_level": "aggregate_l2", "role": "development", "freshness_at_freeze": "consumed", "consumed_evidence": "configs/v04-consumed-data.json"},
+    {"id": "deribit-eth-perp-2020-05-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "ETH-PERPETUAL", "date": "2020-05-01", "data_types": ["incremental_book_L2", "trades"], "capability_level": "aggregate_l2", "role": "selection", "freshness_at_freeze": "consumed", "consumed_evidence": "configs/v04-consumed-data.json"},
+    {"id": "deribit-eth-perp-2020-06-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "ETH-PERPETUAL", "date": "2020-06-01", "data_types": ["incremental_book_L2", "trades"], "capability_level": "aggregate_l2", "role": "internal_holdout", "freshness_at_freeze": "consumed", "consumed_evidence": "configs/v04-consumed-data.json", "note": "Sealed from all v0.5 fitting and selection, but inspected by v0.4; results are retrospective internal-holdout evidence, never fresh confirmation."},
+    {"id": "deribit-eth-perp-2020-07-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "ETH-PERPETUAL", "date": "2020-07-01", "data_types": ["incremental_book_L2", "trades"], "capability_level": "aggregate_l2", "role": "external_holdout", "freshness_at_freeze": "fresh", "selection_rule": "Next first-of-month period after consumed June 2020; fixed before access; no substitution.", "layers": ["unseen_period_same_instrument"]},
+    {"id": "deribit-btc-perp-2020-07-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "BTC-PERPETUAL", "date": "2020-07-01", "data_types": ["incremental_book_L2", "trades"], "capability_level": "aggregate_l2", "role": "external_holdout", "freshness_at_freeze": "fresh", "selection_rule": "Same venue, different instrument, same unseen day as the ETH external holdout; fixed before access; no substitution.", "layers": ["different_instrument_same_venue"]},
+    {"id": "deribit-eth-perp-2020-08-01", "provider": "Tardis.dev", "venue": "deribit", "instrument": "ETH-PERPETUAL", "date": "2020-08-01", "data_types": ["incremental_book_L2", "trades"], "capability_level": "aggregate_l2", "role": "transfer_holdout", "freshness_at_freeze": "fresh", "selection_rule": "Reserved exclusively for M8 historical policy transfer; not accessed before the M7 evaluation lock.", "layers": ["unseen_period_same_instrument"]},
+    {"id": "bitstamp-btcusd-mbo-dev", "provider": "Bitstamp public API (self-recorded capture)", "venue": "bitstamp", "instrument": "btcusd", "date": "capture after M0 freeze", "data_types": ["live_orders", "live_trades", "order_book_top100", "rest_order_book_group2"], "capability_level": "order_level_mbo", "role": "mbo_development", "freshness_at_freeze": "fresh", "selection_rule": "One 900-second capture used only to develop and debug the source adapter; its results are development evidence.", "note": "Genuine venue order-level messages recorded live; replayed offline. It is not a vendor-certified historical MBO archive."},
+    {"id": "bitstamp-btcusd-mbo-validation", "provider": "Bitstamp public API (self-recorded capture)", "venue": "bitstamp", "instrument": "btcusd", "date": "capture after the adapter source hash is frozen", "data_types": ["live_orders", "live_trades", "order_book_top100", "rest_order_book_group2"], "capability_level": "order_level_mbo", "role": "mbo_validation", "freshness_at_freeze": "fresh", "selection_rule": "One 1800-second capture recorded only after the adapter source hash is frozen; evaluated once; a failed capture may be retried once in a new directory with the same frozen design."}
+  ],
+  "chronology": "development -> selection -> sealed internal holdout -> fresh external holdout -> cross-instrument external holdout -> M8 transfer holdout",
+  "holdout_rules": [
+    "A fresh dataset becomes consumed at its first access (download), recorded in the append-only consumption ledger before the download starts.",
+    "No consumed dataset can be relabeled fresh; freshness is derived from the ledger, never from a mutable field.",
+    "External and transfer holdouts may not influence feature, model family, parameter, threshold, horizon, endpoint or gate choices.",
+    "Every analysis that will read an external holdout must have its design frozen (sealed) before that holdout's first access.",
+    "Protocol amendments must be appended to the ledger before first access of every dataset they affect."
+  ],
+  "endpoints": {
+    "primary": [
+      {"id": "E1", "rq": "RQ1", "name": "source_aggregate_agreement", "definition": "Fraction of independently published top-10 aggregate reference books (order_book channel) exactly matched by replayed MBO aggregated state at the reference microtimestamp, on the validation capture."},
+      {"id": "E2", "rq": "RQ2", "name": "fill_bound_determinacy", "definition": "Share of preregistered hypothetical child orders classified GUARANTEED_FILL or GUARANTEED_NON_FILL under conservative assumptions, per capability level; with mean normalized bound width (upper - lower) / quantity."},
+      {"id": "E3", "rq": "RQ3", "name": "out_of_sample_observable_loss", "definition": "Mean over frozen observable families of the family error (dimensionless quantile/moment distance, v0.4 zi_calibration convention) between simulated and historical observables; per-family max error gate 0.60."},
+      {"id": "E4", "rq": "RQ4", "name": "conditional_response_agreement", "definition": "Per preregistered size bucket and horizon: sign agreement and log magnitude ratio of mean signed mid-price response between simulator and history."},
+      {"id": "E5", "rq": "RQ5/RQ7", "name": "within_horizon_completion", "definition": "Indicator that actual fills with fill time <= decision horizon end (inclusive) equal the target quantity. Settlement fills never count."},
+      {"id": "E6", "rq": "RQ7", "name": "completion_adjusted_cost_bps", "definition": "Fee-inclusive realized cost of actual fills plus separately reported hypothetical residual valuation at the terminal book, over target notional at arrival, in basis points; excludes any reward penalty. Components are always reported separately."},
+      {"id": "E7", "rq": "RQ8", "name": "bounded_transfer_classification", "definition": "For each registered policy pair and transfer dataset: agrees, reverses, indeterminate, optimistic-assumption dependent, survives conservative assumptions, or not evaluable."}
+    ],
+    "secondary": [
+      "final_settlement_completion", "residual_inventory_at_horizon", "residual_inventory_after_settlement",
+      "post_horizon_fill_quantity", "lateness_seconds", "time_to_completion", "fill_fraction_at_horizon",
+      "final_fill_fraction", "realized_fill_cost_bps", "hypothetical_residual_valuation_bps", "fees",
+      "participation", "implementation_shortfall_bps", "tail_cost_p95", "seed_sensitivity",
+      "regime_robustness", "lifecycle_anomaly_counts", "end_snapshot_order_agreement",
+      "spread_response", "depth_depletion", "depth_replenishment", "recovery_time",
+      "volatility_response", "imbalance_response", "almgren_chriss_proxies"
+    ]
+  },
+  "hypotheses": {
+    "RQ1": "H1: On the frozen validation capture, replay is deterministic, lifecycle anomalies are fully explained by declared censoring, and E1 >= 0.99.",
+    "RQ2": "H2 (descriptive): conservative L2 bounds leave a materially larger indeterminate share than order-level evidence; no fill is ever labeled exact from aggregate L2.",
+    "RQ3": "H3a: the selected calibration-v2 model has lower E3 than the v0.4 baseline simulator on each holdout (paired chronological block bootstrap, Bonferroni over 3 holdouts). H3b: the selected model passes the per-family gate on each holdout.",
+    "RQ4": "H4: for at least two thirds of size buckets at each horizon, simulator and historical mean signed responses agree in sign and their magnitude ratio lies in [0.5, 2].",
+    "RQ5": "H5 (descriptive): within-horizon completion and settlement completion are reported separately; no settlement completion is counted as mandate completion.",
+    "RQ6": "H6: conclusions for RQ3/RQ4 are reported per layer and per regime; a conclusion is regime-robust only if it holds in every regime with at least 30 minutes of valid observations.",
+    "RQ7": "H7: per contrast, the Bonferroni upper bound of paired E6 difference < 0 AND the E5 noninferiority lower bound >= -0.05.",
+    "RQ8": "H8 (descriptive classification): no transfer conclusion is labeled agrees/reverses unless it holds at both conservative and optimistic historical fill bounds."
+  },
+  "statistics": {
+    "M3": {"comparison_family": "selected model vs v0.4 baseline on internal, external-ETH and external-BTC holdouts", "family_size": 3, "correction": "bonferroni", "alpha": 0.05, "method": "paired chronological block bootstrap over 10-minute blocks of historical observables with fixed simulated paths", "bootstrap_samples": 2000, "effect_direction": "negative loss difference favors calibration v2"},
+    "M4": {"comparison_family": "size bucket x horizon x historical dataset response differences", "correction": "bonferroni", "alpha": 0.05, "method": "chronological block bootstrap (10-minute blocks) for historical means; simulation-seed bootstrap for simulator means", "bootstrap_samples": 2000},
+    "M7": {"comparison_family": "4 regimes x 2 algorithms (PPO, DQN) x 8 references (TWAP, VWAP, POV, AC, heuristic, random, no_book ablation, no_terminal ablation) x 2 endpoints (E6, E5)", "family_size": 128, "correction": "bonferroni", "alpha": 0.05, "cost_method": "crossed training-seed x market-seed percentile bootstrap, two-sided central interval at 1 - 0.05/128, conservative for one-sided gate", "bootstrap_samples": 20000, "completion_method": "Distribution-free market-level bound: Z_m = 1 if any training seed of the policy fails E5 in market m while the reference completes; E[delta] >= -pi; pi bounded by one-sided exact Clopper-Pearson upper limit at alpha 0.05/128 over independent market seeds. A nondegenerate crossed bootstrap interval is also reported descriptively.", "effect_direction": "cost delta negative favors the policy; completion delta positive favors the policy", "noninferiority_margin": 0.05, "statistics_seed": 95001},
+    "M8": {"comparison_family": "registered policy pairs x transfer datasets", "correction": "bonferroni", "alpha": 0.05, "method": "episode bootstrap within dataset evaluated separately at conservative and optimistic fill bounds", "bootstrap_samples": 5000},
+    "rules": ["Statistical significance is reported separately from economic magnitude.", "One significant contrast does not establish global superiority.", "Missing or INVALID planned outcomes withhold the comparison and never shrink the family.", "No acceptance criterion is changed after its data are accessed."]
+  },
+  "success_gates": {
+    "M1": {"ESTABLISHED": "deterministic replay AND zero unexplained lifecycle anomalies AND E1 >= 0.99", "INCONCLUSIVE": "deterministic replay AND 0.90 <= E1 < 0.99", "FAILED": "E1 < 0.90 OR nondeterministic replay OR unexplained lifecycle anomalies", "NOT_AVAILABLE": "no validation capture obtained after one retry", "real_mbo_status_if_no_capture": "NOT_AVAILABLE"},
+    "M3": {"improvement": "ESTABLISHED per holdout only if the Bonferroni interval of (v2 loss - baseline loss) lies strictly below 0", "generalization": "ESTABLISHED per holdout only if every observable family error <= 0.60 with valid fraction >= 0.95 and >= 1000 valid samples", "selection": "minimum mean E3 on the selection period only; ties broken by fewer free parameters"},
+    "M4": {"agreement": "ESTABLISHED per horizon if H4 holds with Bonferroni-significant nonzero historical responses in at least half the buckets; otherwise NOT_ESTABLISHED; buckets with fewer than 100 historical events are NOT_AVAILABLE"},
+    "M7": {"joint_gate": "cost Bonferroni upper bound < 0 AND completion lower bound >= -0.05", "scope": "per contrast only; no global best-policy label"},
+    "M8": {"classification_only": true}
+  },
+  "completion_semantics": {
+    "decision_horizon": "Orders may be submitted only while elapsed < horizon; none at or after horizon.",
+    "within_horizon_completion": "Sum of actual fills with fill time <= horizon end equals target quantity; a fill exactly at the boundary counts as within horizon.",
+    "settlement": "After the horizon only cancellations and exchange events are processed; fills during settlement are post-horizon fills.",
+    "final_settlement_completion": "Target quantity filled by the end of settlement; always reported separately and never labeled mandate completion.",
+    "hypothetical_residual_valuation": "Residual inventory valued at the terminal book walk or midpoint; never an actual fill, never changes completion.",
+    "lateness": "Time of the completing fill minus horizon end when positive, else 0; null if never completed.",
+    "unresolved": "Unresolved settlement withholds final completion; within-horizon completion is still determined from fills observed by horizon end."
+  },
+  "invalid_episode_treatment": "INVALID rows are retained with error text; any planned comparison with a missing or INVALID cell is WITHHELD and counts as not passing; family size is unchanged; no rerun replaces an INVALID row.",
+  "historical_fill_uncertainty": {
+    "classes": ["OBSERVED_FILL", "GUARANTEED_FILL", "POSSIBLE_FILL", "GUARANTEED_NON_FILL", "INDETERMINATE", "UNSUPPORTED"],
+    "OBSERVED_FILL": "A source-observed execution of an identified source order; never used for a hypothetical order.",
+    "GUARANTEED_FILL": "Conservative lower fill bound equals the child quantity under the declared assumption set.",
+    "POSSIBLE_FILL": "0 <= lower bound < upper bound and upper bound > 0.",
+    "GUARANTEED_NON_FILL": "Optimistic upper bound equals 0.",
+    "INDETERMINATE": "Source gaps, invalid book states or missing trade evidence prevent any bound over the order lifetime.",
+    "UNSUPPORTED": "The source capability cannot express the question (for example trades-only data for a resting quote).",
+    "bound_sets": {"conservative": "Only prints strictly through the order price fill it (price priority; unknown hidden or priority-ahead quantity).", "observable_fifo": "Displayed quantity ahead under price-time priority with non-trade decreases attributed behind (lower) or ahead (upper); assumes no hidden liquidity.", "optimistic": "Order at the front of its price level: every print at or through its price fills it."},
+    "common_assumptions": ["The hypothetical order does not change other participants' behaviour (no market impact).", "Prints are attributed to the aggressor side recorded by the source.", "Exact FIFO, hidden liquidity and order identity are never inferred from aggregate L2."]
+  },
+  "seeds": {
+    "M3": {"search_seed": 45100, "fit_simulation_seeds": [41101, 41102, 41103], "selection_simulation_seeds": [42101, 42102, 42103], "holdout_simulation_seeds": [43101, 43102, 43103, 43104, 43105], "bootstrap_seed": 45901},
+    "M4": {"simulation_seeds": [46101, 46102, 46103, 46104, 46105, 46106, 46107, 46108, 46109, 46110], "bootstrap_seed": 46901},
+    "M7": {"config": "configs/v05/policy-study.json"},
+    "M8": {"bootstrap_seed": 48901}
+  },
+  "compute_budget": {
+    "M3": {"max_candidates_per_family": 48, "simulated_seconds_per_seed": 900, "max_families": 10},
+    "M4": {"simulated_seconds_per_seed": 1800},
+    "M7": {"max_models": 48, "timesteps_per_model": 16384, "max_evaluation_episodes": 40000},
+    "M8": {"episodes_per_dataset_per_policy": 144},
+    "note": "Budgets are fixed before evaluation. A reduced run is labeled pilot or smoke and is never presented as the registered study."
+  },
+  "model_families": {
+    "M3": {"control": "v04_zi_baseline (lob.zi_calibration search space, unchanged)", "simple_controls": ["static_book_resampling: IID joint resampling of development observables (lob.generalization iid_joint)"], "candidates": ["empirical_sizes", "spread_conditioned_arrivals", "depth_conditioned_cancellation", "imbalance_conditioned_market_flow", "markov_activity_regime", "self_exciting_market_orders (only if development trade interarrivals show dispersion index > 1.5)"], "combined": "Union of the individual extensions whose selection-period loss improves on the baseline; one combined model"},
+    "M7": {"learned": ["ppo", "dqn"], "controls": ["twap", "vwap", "pov", "ac", "heuristic", "random"], "arms": ["main", "no_book", "no_terminal"]}
+  },
+  "normalization_sources": {
+    "M3": "Native depth to simulator lots and all observable scales from the development period only.",
+    "M4": "Size buckets, participation proxy and regime thresholds from the development period only.",
+    "M6": "Regime thresholds from development-period 5-minute block distributions only.",
+    "M7": "Observation mean/std from registered training-domain exploration seeds only, sealed before policy fitting.",
+    "M8": "Historical-to-simulator quantity and decision-clock mapping from the development period only."
+  },
+  "referenced_configs": ["configs/v04-consumed-data.json", "configs/v04-policy-study.json", "configs/v05/policy-study.json"],
+  "exclusions": ["No live profitability, alpha, production HFT, colocation, universal calibration or universal transfer claim follows from any v0.5 result."]
+}
