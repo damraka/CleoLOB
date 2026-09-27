@@ -43,7 +43,7 @@ def source_manifest() -> dict[str, str]:
 
 def runtime_metadata() -> dict[str, Any]:
     versions: dict[str, str | None] = {}
-    for package in ("numpy", "pandas", "gymnasium", "stable-baselines3", "torch", "pydantic", "PyYAML"):
+    for package in ("cleolob", "numpy", "pandas", "gymnasium", "stable-baselines3", "torch", "pydantic", "PyYAML"):
         try:
             versions[package] = importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:

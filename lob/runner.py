@@ -25,6 +25,7 @@ from .completion import completion_constraint, execution_metrics, urgency_order
 from .execution import (AlmgrenChrissAgent, ExecutionAgent, ExecutionReport, POVAgent,
                         TWAPAgent, VWAPAgent, build_report, estimate_volume_profile)
 from .rl_env import LOBExecutionEnv
+from .simulators import make_simulator
 from .settlement import (DEFAULT_SETTLEMENT_POLL_DT, DEFAULT_SETTLEMENT_TIMEOUT,
                          settle_orders, validate_settlement)
 
@@ -64,8 +65,10 @@ def cfg_from_params(p: Dict[str, Any]) -> SimConfig:
 
 
 @lru_cache(maxsize=64)
-def _volume_profile(cfg_items: Tuple[Tuple[str, Any], ...], horizon: float) -> Tuple[float, ...]:
-    return tuple(estimate_volume_profile(SimConfig(**dict(cfg_items)), horizon, N_SLICES))
+def _volume_profile(cfg_items: Tuple[Tuple[str, Any], ...], horizon: float,
+                    ext_items: Tuple[Tuple[str, Any], ...] = ()) -> Tuple[float, ...]:
+    return tuple(estimate_volume_profile(SimConfig(**dict(cfg_items)), horizon, N_SLICES,
+                                         flow_extensions=dict(ext_items) or None))
 
 
 def make_baseline(name: str, p: Dict[str, Any], cfg: SimConfig, start_time: float) -> ExecutionAgent:
@@ -80,7 +83,9 @@ def make_baseline(name: str, p: Dict[str, Any], cfg: SimConfig, start_time: floa
     if name == "twap":
         return TWAPAgent(qty, horizon, n_slices=N_SLICES, side=side, start_time=start_time, **kwargs)
     if name == "vwap":
-        profile = _volume_profile(tuple(sorted(cfg.__dict__.items())), horizon)
+        ext = p.get("flow_extensions") or {}
+        profile = _volume_profile(tuple(sorted(cfg.__dict__.items())), horizon,
+                                  tuple(sorted((k, tuple(v) if isinstance(v, list) else v) for k, v in ext.items())))
         return VWAPAgent(qty, horizon, n_slices=N_SLICES, side=side,
                          start_time=start_time, volume_profile=list(profile), **kwargs)
     if name == "pov":
@@ -162,7 +167,7 @@ def run_baseline(p: Dict[str, Any], progress: Optional[ProgressFn] = None,
     cfg = cfg_from_params(p)
     if qty % getattr(cfg, "lot_size", 1):
         raise ValueError("qty must be a multiple of lot_size")
-    sim = ExchangeSimulator(cfg)
+    sim = make_simulator(cfg, p.get("flow_extensions"), p.get("historical"))
     warmup = float(p.get("warmup_seconds", WARMUP_S))
     if not math.isfinite(warmup) or warmup < 0:
         raise ValueError("warmup_seconds must be finite and nonnegative")
@@ -257,6 +262,7 @@ def run_policy(p: Dict[str, Any], policy: str = "ppo", progress: Optional[Progre
                           settlement_poll_dt=p.get("settlement_poll_dt", DEFAULT_SETTLEMENT_POLL_DT),
                           completion=p.get("completion"), observation_version=p.get("observation_version", "v03"),
                           observation_normalization=p.get("observation_normalization"),
+                          flow_extensions=p.get("flow_extensions"), historical=p.get("historical"),
                           record=bool(p.get("record_audit")))
     obs, _ = env.reset(seed=int(p["seed"]))
 
@@ -347,6 +353,7 @@ def run_episode(agent: str, p: Dict[str, Any], model: Optional[Any] = None) -> D
                 "participation", "hypothetical_residual_midpoint_cost", "participation_definition",
                 "impact_proxy_definition"):
         row[key] = raw[key]
+    row.update({key: value for key, value in raw.items() if key.startswith("mandate_")})
     if "audit" in out:
         row["audit"] = out["audit"]
     if "episode_reward" in raw:

@@ -1,0 +1,16 @@
+{
+  "schema": "cleolob-v05-m4-design-1",
+  "events": "aggressive events on the shared lob.observables_v2 tape (prints grouped by source time and aggressor)",
+  "horizons_s": [0.1, 1.0, 10.0, 60.0],
+  "gate_horizons_s": [1.0, 10.0, 60.0],
+  "responses": ["signed mid change (bps)", "spread change (bps)", "signed imbalance change", "opposite top-5 depth ratio", "absolute mid move 10 s after vs before", "recovery of opposite best-level depth to 90% (censored 60 s)", "net top-5 replenishment curve"],
+  "conditioning": {"size": "development terciles of event size (lots)", "participation": "development terciles of size / opposite top-5 depth", "spread": "development median", "volatility": "development median trailing 60 s realized volatility", "depth": "development median total top-5 depth", "imbalance_alignment": "sign(trade) * imbalance above/below 0", "activity": "development median trailing 60 s event count", "direction": "buy/sell aggressor"},
+  "thresholds_source": "deribit-eth-perp-2020-04-01 only; frozen in the development run and reused unchanged",
+  "datasets": ["deribit-eth-perp-2020-04-01", "deribit-eth-perp-2020-06-01", "deribit-eth-perp-2020-07-01", "deribit-btc-perp-2020-07-01"],
+  "simulators": "M3 selected model and v0.4 ZI control, exactly as sealed in the m3-selection ledger entry",
+  "simulation_seeds": [46101, 46102, 46103, 46104, 46105, 46106, 46107, 46108, 46109, 46110],
+  "simulated_seconds_per_seed": 1800,
+  "statistics": {"alpha_family": 0.001388888888888889, "family": "3 size buckets x 3 gate horizons x 4 datasets = 36 (Bonferroni)", "bootstrap_samples": 2000, "bootstrap_seed": 46901, "historical_interval": "chronological 600 s block bootstrap of event means", "simulated_interval": "simulation-seed bootstrap"},
+  "gate": "per horizon ESTABLISHED iff >= 2/3 of evaluable size buckets agree in sign with |log magnitude ratio| <= log 2 AND >= half have Bonferroni-nonzero historical means; buckets with < 100 events are NOT_AVAILABLE",
+  "almgren_chriss": "empirical proxies only: sigma from 1 s returns, temporary proxy = OLS slope of 0.1 s response on participation, persistent proxy = OLS slope of 60 s response on size, liquidity scale = median top-5 depth"
+}

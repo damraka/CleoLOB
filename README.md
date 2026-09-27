@@ -39,18 +39,20 @@ It is a research framework, not a production trading system.
 | Question | Current result |
 |---|---|
 | Historical L2 reconstruction | Across the preserved Deribit April/May validation samples, 5,972,671 L2 updates and 2,081,479 published top-five snapshots were processed; all compared top-five snapshots matched exactly. |
-| Real queue / order-identity research | Identity-preserving MBO replay, lifecycle validation, queue semantics and MBO-to-L2 aggregation are implemented. Genuine historical MBO validation remains unavailable. |
-| Cross-regime calibration | Not established. The preserved v0.3 external failure remains, and the fresh June 2020 Deribit ETH-PERPETUAL holdout also failed its frozen acceptance gate. |
-| Completion-constrained execution | In the registered v0.4 policy study, 1,061 / 1,080 episodes completed within the decision horizon and 19 completed during post-horizon settlement. |
-| PPO / DQN superiority | Not established. Of 48 registered v0.4 economic contrasts, 47 multiplicity-adjusted intervals included zero; one stress DQN-vs-POV contrast excluded zero, but zero joint cost-and-completion success gates passed. |
+| Real queue / order-identity research | Identity-preserving MBO replay, lifecycle validation, queue semantics and MBO-to-L2 aggregation are implemented. The registered v0.5 validation on a genuine Bitstamp order-level capture is INVALID (unseen venue message types); a post-hoc analysis would fail the frozen agreement gate (0.867 < 0.90). A historical vendor MBO archive remains NOT_AVAILABLE. |
+| Historical passive fills from L2 | Reported as bounds, never point estimates: 30–41% of hypothetical join-the-best orders remain undetermined; conservative-to-optimistic width given a possible fill is 17–21% of size on ETH and 52% on BTC (v0.5). |
+| Cross-regime calibration | Absolute calibration not established. v0.5 calibration v2 improves out-of-sample fit over the v0.4 class on a fresh July 2020 ETH holdout (established), but every per-family gate fails, and the improvement is not established on BTC. |
+| Impact and resilience | Simulator-versus-history agreement not established at any horizon (v0.5); historical impact persists while simulated impact partially reverts. |
+| Completion-constrained execution | In the registered v0.4 policy study, 1,061 / 1,080 episodes completed within the decision horizon and 19 completed during post-horizon settlement. In v0.5 stress regimes up to 8% of mandates complete only after the horizon. |
+| PPO / DQN superiority | Not established. v0.4: zero joint cost-and-completion gates passed. v0.5 (34,560 synthetic episodes): 5 of 64 contrasts pass, all DQN in two synthetic regimes, none for PPO. |
+| Simulator-to-history policy transfer | Not established. On a fresh August 2020 ETH holdout, learned policies were costlier than TWAP, VWAP and Almgren-Chriss under both bounded fill modes; the one original-regime DQN gate pass was indeterminate. |
 | Performance | Registered local Python research benchmarks only; no production/HFT or exchange-colocation latency claim. |
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
-The [v0.4 final report](docs/v04-final-report.md) documents the latest external-validity work,
-including formal market-data capability contracts, completion-constrained execution, stronger
-artifact verification, multi-period diagnostics, scaling measurements, and the failed fresh
-historical holdout.
+The [v0.5 research report](docs/v05-paper.md) (branch `research/v0.5-real-market-validation`,
+version `0.5.0.dev0`, not released) documents the real-market validation study. The
+[v0.4 final report](docs/v04-final-report.md) documents the latest release.
 
 ## Core capabilities
 
@@ -63,6 +65,8 @@ historical holdout.
 - TWAP, VWAP, POV, Almgren-Chriss and heuristic execution controls
 - Stable-Baselines3 PPO and discrete-action DQN research workflows
 - completion-constrained execution with actual-fill and residual-valuation separation
+- bounded historical counterfactual execution (conservative / observable-FIFO / optimistic fill bounds) and historical policy replay
+- frozen protocols with a hash-chained dataset-consumption ledger
 - paired bootstrap inference and multiplicity-aware registered comparisons
 - experiment provenance, source/config/data/model hashes and artifact verification
 - risk, settlement and residual-inventory accounting
@@ -177,7 +181,9 @@ The MBO layer supports source-native identities where available, ADD/MODIFY/CANC
 deterministic replay, lifecycle validation, queue-ahead tracking, priority resets, observed maker
 executions, censoring and MBO-to-L2 aggregation.
 
-The bundled MBO fixtures are synthetic. **Genuine historical MBO validation remains NOT_AVAILABLE.**
+The bundled MBO fixtures are synthetic. v0.5 adds a Bitstamp adapter for genuine venue order-level
+messages recorded live; its registered validation is **INVALID** and genuine *historical vendor*
+MBO validation remains **NOT_AVAILABLE** ([v0.5 MBO](docs/v05-mbo.md)).
 
 See [docs/mbo.md](docs/mbo.md) and
 [docs/v04-data-contracts.md](docs/v04-data-contracts.md).
@@ -260,11 +266,14 @@ Committed evidence can be verified with:
 ```bash
 cleo verify-artifact examples/studies/v03
 cleo verify-artifact examples/studies/v04/evidence
+cleo verify-artifact examples/studies/v05/evidence
 ```
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
 Python 3.11-3.14, package builds, clean-wheel installation, CLI smoke tests and compact-evidence
-verification.
+verification. The v0.5 research branch passes 974 tests locally (Windows, Python 3.14); every v0.5
+study is bound to a frozen protocol and a hash-chained dataset-consumption ledger
+([v0.5 reproduction](docs/v05-reproduction.md)).
 
 Byte-integrity verification establishes artifact consistency, not independent scientific replication.
 
@@ -276,6 +285,8 @@ CleoLOB does not currently establish:
 - hidden liquidity
 - exact passive-fill counterfactuals from aggregate L2
 - successful broad cross-regime simulator calibration
+- agreement of simulated impact and resilience with history
+- transfer of simulated policy conclusions to historical execution
 - PPO/DQN or learned-policy superiority
 - adequate power for broad policy-superiority claims
 - live alpha or profitability
@@ -286,22 +297,11 @@ These are explicit research boundaries rather than hidden assumptions.
 
 ## Roadmap
 
-v0.5 focuses on **real-market execution validation**.
-
-Planned work includes:
-
-- genuine historical MBO validation where legally and practically available
-- bounded historical counterfactual execution rather than invented exact fills
-- calibration v2 and explicit model-class comparison
-- market-impact and resilience validation
-- within-horizon completion as a formal execution endpoint
-- multi-regime and cross-instrument external validity
-- stronger registered classical/RL execution studies
-- historical-vs-synthetic policy-transfer analysis
-- paper-style research reporting
-- stronger evidence provenance, verification and scaling analysis
-
-See the full [v0.5 roadmap](docs/v05-roadmap.md).
+v0.5, **real-market execution validation**, is implemented on the research branch: order-level
+validation, bounded historical execution, calibration v2, impact and resilience, strict completion,
+multi-regime external validity, a registered policy study and historical transfer. Its outcomes,
+including every negative and invalid one, are in the [v0.5 report](docs/v05-paper.md) and the
+[final report](docs/v05-final-report.md). See the [v0.5 roadmap](docs/v05-roadmap.md).
 
 ## Documentation
 
@@ -321,6 +321,13 @@ See the full [v0.5 roadmap](docs/v05-roadmap.md).
 - [v0.4 reproduction](docs/v04-reproduction.md)
 - [v0.4 final report](docs/v04-final-report.md)
 - [v0.5 roadmap](docs/v05-roadmap.md)
+- [v0.5 research report](docs/v05-paper.md) and [final report](docs/v05-final-report.md)
+- v0.5 details: [protocol](docs/v05-research-protocol.md), [data](docs/v05-data.md),
+  [MBO](docs/v05-mbo.md), [historical execution](docs/v05-historical-execution.md),
+  [calibration](docs/v05-calibration.md), [impact](docs/v05-impact.md),
+  [execution](docs/v05-execution.md), [external validity](docs/v05-external-validity.md),
+  [RL](docs/v05-rl.md), [transfer](docs/v05-transfer.md), [statistics](docs/v05-statistics.md),
+  [performance](docs/v05-performance.md), [reproduction](docs/v05-reproduction.md)
 
 ## Citation
 
