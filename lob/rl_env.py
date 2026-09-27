@@ -11,8 +11,9 @@ from gymnasium import spaces
 
 from .accounting import FeeConfig, Ledger, fee_config
 from .completion import CompletionConstraint, completion_constraint, urgency_order
-from .engine import ExchangeSimulator, Side, SimConfig
+from .engine import Side, SimConfig
 from .execution import ExecutionReport, build_report
+from .simulators import make_simulator
 from .observations import FEATURES, OBSERVATION_CONTRACT, ObservationNormalization, normalization
 from .risk import ExecutionRisk, RiskConfig, risk_config
 from .settlement import (DEFAULT_SETTLEMENT_POLL_DT, DEFAULT_SETTLEMENT_TIMEOUT,
@@ -54,7 +55,9 @@ class LOBExecutionEnv(gym.Env):
                  seed_range: Optional[Tuple[int, int]] = None,
                  completion: CompletionConstraint | Mapping[str, Any] | None = None,
                  observation_version: str = "v03",
-                 observation_normalization: ObservationNormalization | Mapping[str, Any] | None = None) -> None:
+                 observation_normalization: ObservationNormalization | Mapping[str, Any] | None = None,
+                 flow_extensions: Mapping[str, Any] | None = None,
+                 historical: Mapping[str, Any] | None = None) -> None:
         super().__init__()
         if isinstance(total_qty, bool) or not isinstance(total_qty, int) or total_qty <= 0:
             raise ValueError("total_qty must be a positive integer")
@@ -68,6 +71,10 @@ class LOBExecutionEnv(gym.Env):
         self.side = side
         self.warmup = warmup
         self.base_cfg = cfg or SimConfig()
+        # Optional calibration-v2 flow extensions; None keeps the unchanged v0.4 engine.
+        self.flow_extensions = dict(flow_extensions) if flow_extensions else None
+        # Optional historical replay episode with a declared bounded fill mode (M8).
+        self.historical = historical
         self.record = record
         self.fees = fee_config(fees)
         self.risk_config = risk_config(risk)
@@ -107,7 +114,7 @@ class LOBExecutionEnv(gym.Env):
         if self.total_qty % getattr(cfg, "lot_size", 1):
             raise ValueError("total_qty must be a multiple of lot_size")
         self.child = max(getattr(cfg, "lot_size", 1), self.child)
-        self.sim = ExchangeSimulator(cfg)
+        self.sim = make_simulator(cfg, self.flow_extensions, self.historical)
         while self.sim.t < self.warmup - 1e-12:
             self.sim.step(min(0.1, self.warmup - self.sim.t))
         self.t0 = self.sim.t

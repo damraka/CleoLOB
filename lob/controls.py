@@ -18,7 +18,7 @@ from typing import Any, Sequence
 import numpy as np
 import pandas as pd
 
-from .engine import ExchangeSimulator, Side, SimConfig
+from .engine import Side, SimConfig
 from .experiments.registry import sha256_file, write_json
 from .runner import run_episode
 from .stats import adjust_pvalues, bootstrap_ci, sign_test_p
@@ -36,7 +36,8 @@ def _seeds(values: Sequence[int]) -> list[int]:
 def estimate_ac_parameters(cfg: SimConfig, seeds: Sequence[int], *, horizon: float = 60,
                            sample_dt: float = 1, execution_interval: float = 1,
                            warmup_seconds: float = 5,
-                           fractions: Sequence[float] = (.1, .25, .5, 1., 2.)) -> dict:
+                           fractions: Sequence[float] = (.1, .25, .5, 1., 2.),
+                           flow_extensions: dict | None = None) -> dict:
     """Identify eta and sigma on no-parent simulator paths only.
 
     Each sample evaluates both sides of the frozen current book at quantities
@@ -59,7 +60,8 @@ def estimate_ac_parameters(cfg: SimConfig, seeds: Sequence[int], *, horizon: flo
     probes, increments, depths, spreads = [], [], [], []
     attempted = 0
     for seed in seeds:
-        sim = ExchangeSimulator(replace(cfg, seed=seed, record_events=False))
+        from .simulators import make_simulator
+        sim = make_simulator(replace(cfg, seed=seed, record_events=False), flow_extensions)
         sim.step(warmup_seconds)
         previous = sim.book.mid() * cfg.tick_size
         path_increments = []

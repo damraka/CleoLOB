@@ -401,7 +401,7 @@ class POVAgent(ExecutionAgent):
 # ------------------------------------------------------------------ helpers
 def estimate_volume_profile(cfg: SimConfig, horizon: float, n_slices: int,
                             warmup: float = 5.0, n_days: int = 5,
-                            seed_offset: int = 1000) -> List[float]:
+                            seed_offset: int = 1000, flow_extensions: Optional[Dict[str, Any]] = None) -> List[float]:
     """Traded volume per slice averaged over ``n_days`` 'previous days' (same config,
     shifted seeds), normalised to sum to 1.
 
@@ -411,7 +411,8 @@ def estimate_volume_profile(cfg: SimConfig, horizon: float, n_slices: int,
     acc = [0.0] * n_slices
     for d in range(n_days):
         prev = SimConfig(**{**cfg.__dict__, "seed": cfg.seed + seed_offset + d})
-        sim = ExchangeSimulator(prev)
+        from .simulators import make_simulator
+        sim = make_simulator(prev, flow_extensions)
         for _ in range(int(warmup / 0.1)):
             sim.step(0.1)
         for j in range(n_slices):

@@ -123,7 +123,104 @@ def parser() -> argparse.ArgumentParser:
     child = commands.add_parser("protocol", help="verify the frozen v0.5 protocol, ledger and holdout freshness")
     child.add_argument("operation", choices=("verify", "status"))
     child.add_argument("--root", type=Path, default=Path("."))
+    _v05_commands(commands)
     return result
+
+
+def _v05_commands(commands) -> None:
+    """v0.5 research workflows. Each writes a write-once, protocol-bound, sealed run directory."""
+    child = commands.add_parser("validate-mbo-source", help="v0.5 frozen order-level source validation (M1/M2)")
+    child.add_argument("capture_dir", type=Path)
+    child.add_argument("--dataset-id", required=True)
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--posthoc", action="store_true", help="exploratory post-hoc adapter rules (never the gate)")
+    for name in ("fill-bounds", "historical-execution"):
+        child = commands.add_parser(name, help="frozen M2 hypothetical child orders with bounded L2 fill evidence")
+        child.add_argument("dataset_id")
+        child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("calibration-v2", help="M3 calibration v2: develop, select (seals), evaluate holdouts")
+    child.add_argument("phase", choices=("develop", "select", "evaluate"))
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--from", dest="source", type=Path)
+    for name in ("impact-study", "resilience-study"):
+        child = commands.add_parser(name, help="M4 conditional impact and resilience versus the simulator")
+        child.add_argument("dataset_id")
+        child.add_argument("--select", type=Path, required=True)
+        child.add_argument("--out", type=Path, required=True)
+        child.add_argument("--thresholds-from", type=Path)
+    child = commands.add_parser("regime-study", help="M6 regime thresholds (development) or external evaluation")
+    child.add_argument("phase", choices=("thresholds", "evaluate"))
+    child.add_argument("--dataset")
+    child.add_argument("--select", type=Path, required=True)
+    child.add_argument("--m4-dev", type=Path)
+    child.add_argument("--m6", type=Path)
+    child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("policy-study-v05", help="M7 registered v0.5 execution-policy study (rl extra)")
+    child.add_argument("operation", choices=("register", "train", "evaluate", "verify"))
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--pilot", action="store_true")
+    child = commands.add_parser("transfer-study", help="M8 historical-versus-synthetic policy transfer")
+    child.add_argument("--m7", type=Path, required=True)
+    child.add_argument("--m3-develop", type=Path, required=True)
+    child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("v05-benchmark", help="M11 local benchmarks of v0.5 research paths")
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--scale", type=float, default=1.0)
+    child = commands.add_parser("verify-v05", help="verify a v0.5 run directory's bytes and protocol/ledger binding")
+    child.add_argument("path", type=Path)
+    commands.add_parser("dataset-registry", help="print the v0.5 dataset registry (ledger-derived freshness)")
+
+
+def _run_v05(args) -> int | None:
+    """Dispatch v0.5 commands; returns an exit code or None when the command is not v0.5."""
+    command = args.command
+    if command == "validate-mbo-source":
+        from .mbo_study import run
+        result = run(args.capture_dir, args.out, dataset_id=args.dataset_id, posthoc=args.posthoc)
+        _print({"m1_gate": result["m1"]["gate"], "m2": result["m2"]["summary"]})
+    elif command in {"fill-bounds", "historical-execution"}:
+        from .l2_execution_study import run
+        _print(run(args.dataset_id, args.out)["summary"])
+    elif command == "calibration-v2":
+        from .calibration_v2_study import develop, evaluate, select
+        if args.phase != "develop" and args.source is None:
+            raise ValueError(f"calibration-v2 {args.phase} requires --from")
+        result = (develop(args.out) if args.phase == "develop" else select(args.source, args.out)
+                  if args.phase == "select" else evaluate(args.source, args.out))
+        _print({k: v for k, v in result.items() if k in {"training_losses", "selected", "selection_losses", "selected_family"}})
+    elif command in {"impact-study", "resilience-study"}:
+        from .impact_validation import run
+        result = run(args.dataset_id, args.select, args.out, thresholds_from=args.thresholds_from)
+        _print({name: c["H4_by_horizon"] for name, c in result["comparison"].items()})
+    elif command == "regime-study":
+        from .external_validity import evaluate, fit
+        if args.phase == "thresholds":
+            _print(fit(args.select, args.out))
+        else:
+            if not (args.dataset and args.m4_dev and args.m6):
+                raise ValueError("regime-study evaluate requires --dataset, --m4-dev and --m6")
+            _print(evaluate(args.dataset, args.select, args.m4_dev, args.m6, args.out)["regime_robustness"])
+    elif command == "policy-study-v05":
+        from .policy_study_v05 import main as study_main
+        study_main([args.operation, "--out", str(args.out)] + (["--pilot"] if args.pilot else []))
+    elif command == "transfer-study":
+        from .policy_transfer import run
+        _print(run(args.m7, args.m3_develop, args.out)["classification_counts"])
+    elif command == "v05-benchmark":
+        from .benchmarks_v05 import run
+        result = run(args.out, scale=args.scale)
+        _print({"workloads": len(result["workloads"]), "out": str(args.out)})
+    elif command == "verify-v05":
+        from .v05_evidence import verify_run
+        result = verify_run(args.path)
+        _print(result)
+        return 0 if result["valid"] else 1
+    elif command == "dataset-registry":
+        from .dataset_registry import build
+        _print(build())
+    else:
+        return None
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -273,6 +370,8 @@ def main(argv: list[str] | None = None) -> int:
             result = reproduce(args.experiment, args.out)
             _print(result)
             return 0 if result["valid_reproduction"] else 1
+        elif (code := _run_v05(args)) is not None:
+            return code
         elif args.command == "protocol":
             from .preregistration import verify_protocol_files
             result = verify_protocol_files(args.root)
