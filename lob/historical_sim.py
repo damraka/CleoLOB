@@ -100,6 +100,22 @@ class HistoricalSimulator(ExchangeSimulator):
             self.book_valid = False
             return
         self.book_valid = bool(bids) and bool(asks)
+        # Displayed liquidity at or through one of our own resting prices would have met that
+        # order; its interaction is represented only by the fill-bound trackers, so such levels
+        # are withheld from the engine book instead of creating a crossed book.
+        own = [o for o in self.book.orders.values() if o.owner != HIST]
+        own_bid = max((o.price for o in own if o.side is Side.BUY), default=None)
+        own_ask = min((o.price for o in own if o.side is Side.SELL), default=None)
+        if own_bid is not None:
+            withheld = [p for p in asks if p <= own_bid]
+            asks = {p: q for p, q in asks.items() if p > own_bid}
+            self.stats["levels_withheld_against_own_orders"] = self.stats.get(
+                "levels_withheld_against_own_orders", 0) + len(withheld)
+        if own_ask is not None:
+            withheld = [p for p in bids if p >= own_ask]
+            bids = {p: q for p, q in bids.items() if p < own_ask}
+            self.stats["levels_withheld_against_own_orders"] = self.stats.get(
+                "levels_withheld_against_own_orders", 0) + len(withheld)
         for side, levels in ((Side.BUY, bids), (Side.SELL, asks)):
             for key in [k for k in self._hist_orders if k[0] is side and k[1] not in levels]:
                 order = self._hist_orders.pop(key)

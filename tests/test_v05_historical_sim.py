@@ -102,3 +102,15 @@ def test_kendall_tau_between_rankings():
     assert _kendall(["a", "b", "c"], ["a", "b", "c"]) == 1.0
     assert _kendall(["a", "b", "c"], ["c", "b", "a"]) == -1.0
     assert _kendall(["a"], ["a"]) is None
+
+
+def test_history_moving_through_own_resting_order_never_crosses_the_engine_book():
+    from lob.engine import SimConfig as Cfg
+    updates = [(0.0, {999: 50.0, 998: 80.0}, {1001: 50.0, 1002: 80.0}),
+               (0.2, {998: 80.0, 997: 40.0}, {999: 30.0, 1000: 60.0})]   # ask falls onto our bid
+    episode = HistoricalEpisode(0.0, updates, [(0.25, 999, 10.0, "SELL")], 0.05, 1.0)
+    sim = HistoricalSimulator(Cfg(latency_base=0, latency_jitter=0, check_invariants=True), episode, "optimistic")
+    sim.submit(Side.BUY, 20, "ME", price_ticks=999)
+    sim.step(0.5)  # previously raised "crossed or locked book"
+    assert sim.stats["levels_withheld_against_own_orders"] >= 1
+    assert sim.book.best_bid() < sim.book.best_ask()
