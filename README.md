@@ -52,7 +52,7 @@ Negative, null, and failed results are retained rather than removed from the res
 
 The [v0.5 research report](docs/v05-paper.md) documents the real-market validation study
 released as `v0.5.0`. The
-[v0.4 final report](docs/v04-final-report.md) documents the latest release.
+[v0.5 final report](docs/v05-final-report.md) documents the latest release.
 
 ## Core capabilities
 
@@ -271,8 +271,9 @@ cleo verify-artifact examples/studies/v05/evidence
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
 Python 3.11-3.14, package builds, clean-wheel installation, CLI smoke tests and compact-evidence
-verification. The v0.5 research branch passes 974 tests locally (Windows, Python 3.14); every v0.5
-study is bound to a frozen protocol and a hash-chained dataset-consumption ledger
+verification. The v0.5.0 release passed 974 tests locally (Windows, Python 3.14) and its release CI
+passed across the supported Windows/Linux Python matrix; every v0.5 study is bound to a frozen
+protocol and a hash-chained dataset-consumption ledger
 ([v0.5 reproduction](docs/v05-reproduction.md)).
 
 Byte-integrity verification establishes artifact consistency, not independent scientific replication.
@@ -297,7 +298,7 @@ These are explicit research boundaries rather than hidden assumptions.
 
 ## Roadmap
 
-v0.5, **real-market execution validation**, is implemented on the research branch: order-level
+v0.5, **real-market execution validation**, was released as `v0.5.0`: order-level
 validation, bounded historical execution, calibration v2, impact and resilience, strict completion,
 multi-regime external validity, a registered policy study and historical transfer. Its outcomes,
 including every negative and invalid one, are in the [v0.5 report](docs/v05-paper.md) and the
