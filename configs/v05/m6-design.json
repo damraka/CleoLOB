@@ -1,0 +1,18 @@
+{
+  "schema": "cleolob-v05-m6-design-1",
+  "regimes": {"module": "lob.regimes", "block_s": 300, "dimensions": ["volatility", "spread", "depth", "activity", "imbalance", "trend"],
+              "thresholds": "development-period (deribit-eth-perp-2020-04-01) block medians; stress = volatility and spread both above the development 90th percentile",
+              "minimum_valid_share_per_block": 0.8},
+  "layers": {
+    "unseen_period_same_instrument": ["deribit-eth-perp-2020-07-01"],
+    "different_instrument_same_venue": ["deribit-btc-perp-2020-07-01"],
+    "different_regime": "regime-conditioned results on every holdout, including regimes rare in development",
+    "different_venue": "bitstamp-btcusd order-level captures versus Deribit perpetual L2: evaluated only if lob.dataset_registry.comparable accepts the pair; otherwise refused with reasons"
+  },
+  "retrospective": ["deribit-eth-perp-2020-06-01"],
+  "analyses": {"M3": "selected model and control E3 and family gates per regime label (blocks pooled within label)",
+               "M4": "H4 status per regime label using the frozen M4 thresholds and simulator tables",
+               "M2": "frozen M2 aggregate-L2 design on the external holdouts"},
+  "robustness_rule": "a conclusion is regime-robust only if it holds in every regime label with at least 6 valid blocks (30 minutes); labels with fewer blocks are NOT_AVAILABLE",
+  "consumed_periods_never_fresh": true
+}
