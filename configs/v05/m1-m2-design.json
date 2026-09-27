@@ -1,0 +1,24 @@
+{
+  "schema": "cleolob-v05-m1-m2-design-1",
+  "frozen_before": "first access of bitstamp-btcusd-mbo-validation and of every Deribit external/transfer holdout",
+  "m1": {
+    "dataset": "bitstamp-btcusd-mbo-validation",
+    "capture": {"pair": "btcusd", "seconds": 1800, "snapshot_every_seconds": 300, "tool": "tools/capture_bitstamp.py", "retries_allowed": 1},
+    "adapter": {"class": "lob.mbo_sources.BitstampCaptureAdapter", "adapter_version": "bitstamp-capture-4", "reference_alignment": "exchange_ms_strict"},
+    "semantics": {"priority_rule": "reduction_keeps_increase_or_reprice_resets", "source_sequence_contiguous": false, "census_complete": true, "fifo_established": false, "crossing_add": "transient_aggressor"},
+    "reference_depth": 10,
+    "gate": "configs/v05/protocol.json success_gates.M1; unexplained anomalies exclude declared censoring and clock-order observations (EXCHANGE/RECEIVE_TIMESTAMP_INVERSION)",
+    "secondary": ["tolerant_reference_agreement window_ms=100 (diagnostic only)", "census order agreement per REST check", "adjacent priority concordance within levels", "order event chain continuity", "trade-to-maker linkage (exact key and maker level)", "adapter field cross-check counters"],
+    "development_basis": "Adapter rules derived from bitstamp-btcusd-mbo-dev (900 s) and a 20 s tool smoke capture; development E1 = 0.8869 under this alignment."
+  },
+  "m2": {
+    "l2_design": {"start_offset_s": 60, "interval_s": 60, "end_margin_s": 120, "sides": ["BUY", "SELL"], "sizes": ["1000", "10000"], "lifetimes_s": [10, 60], "price_rule": "join_best", "max_gap_s": 10, "max_staleness_s": 5},
+    "l2_units": "Deribit perpetual amounts in USD contracts for both ETH-PERPETUAL and BTC-PERPETUAL",
+    "l2_datasets": ["deribit-eth-perp-2020-04-01", "deribit-eth-perp-2020-05-01", "deribit-eth-perp-2020-06-01", "deribit-eth-perp-2020-07-01", "deribit-btc-perp-2020-07-01"],
+    "mbo_design": {"start_offset_s": 60, "interval_s": 60, "end_margin_s": 120, "sides": ["BUY", "SELL"], "sizes": ["1000000", "10000000"], "lifetimes_s": [10, 60], "price_rule": "join_best", "max_gap_s": 10, "max_staleness_s": 5},
+    "mbo_units": "Bitstamp lots of 0.00000001 BTC (sizes 0.01 and 0.1 BTC)",
+    "mbo_observed_order_window_s": 60,
+    "mbo_datasets": ["bitstamp-btcusd-mbo-validation"],
+    "endpoint": "E2 per capability level; observed-order coverage and identity-FIFO agreement on genuine order-level data"
+  }
+}
