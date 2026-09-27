@@ -13,7 +13,7 @@ No global "best" label is produced from sample means.
 | M4 | 3 size buckets × 3 horizons × 4 datasets = 36 | Bonferroni, α = 0.05/36 | historical: 600 s block bootstrap of event means; simulator: seed bootstrap | H4 per horizon |
 | M6 | per regime label | inherits M3/M4 | as M3/M4, within regime blocks | regime-robust only if the conclusion holds in every label with ≥ 6 blocks |
 | M7 | 4 regimes × 2 algorithms × 8 references × 2 endpoints = 128 | Bonferroni, α = 0.05/128 | cost: crossed training-seed × market-seed bootstrap (20,000 resamples); completion: market-level Clopper–Pearson | cost upper bound < 0 **and** completion lower bound ≥ −0.05 |
-| M8 | pairs × datasets × fill modes | Bonferroni | episode bootstrap within dataset and fill mode (5,000 resamples) | classification only |
+| M8 | 13 pairs × 3 datasets × 2 fill modes = 78 | Bonferroni, α = 0.05/78 | percentile episode bootstrap within dataset and fill mode (5,000 resamples, ≥ 10 episodes); regime splits reuse the registered α descriptively | classification only |
 
 ## Details that matter
 

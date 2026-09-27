@@ -46,6 +46,7 @@ cleo policy-study-v05 verify --out results/v05/m7/<study>
 
 # M8 transfer on the reserved August holdout and the July periods
 cleo transfer-study --m7 results/v05/m7/<study> --m3-develop results/v05/m3/<develop> --out results/v05/m8/<new>
+cleo transfer-regimes --m8 results/v05/m8/<run> --m7 results/v05/m7/<study> --m3-select results/v05/m3/<select> --m6 results/v05/m6/<thresholds> --out results/v05/m8/<run>-regimes
 
 # M11 benchmarks, then verify any v0.5 run directory
 cleo v05-benchmark --out results/v05/m11/<new>
