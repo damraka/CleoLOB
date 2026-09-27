@@ -114,3 +114,13 @@ def test_history_moving_through_own_resting_order_never_crosses_the_engine_book(
     sim.step(0.5)  # previously raised "crossed or locked book"
     assert sim.stats["levels_withheld_against_own_orders"] >= 1
     assert sim.book.best_bid() < sim.book.best_ask()
+
+
+def test_multi_level_jump_in_one_update_never_transiently_crosses_the_engine_book():
+    from lob.engine import SimConfig as Cfg
+    updates = [(0.0, {999: 50.0, 998: 80.0}, {1001: 50.0, 1002: 80.0, 1003: 60.0}),
+               (0.2, {1003: 40.0, 1002: 70.0}, {1004: 30.0, 1005: 60.0})]   # book jumps above both old asks
+    episode = HistoricalEpisode(0.0, updates, [], 0.05, 1.0)
+    sim = HistoricalSimulator(Cfg(latency_base=0, latency_jitter=0, check_invariants=True), episode, "conservative")
+    sim.step(0.5)  # previously raised "crossed or locked book" while stale asks were cancelled
+    assert sim.book.best_bid() == 1003 and sim.book.best_ask() == 1004

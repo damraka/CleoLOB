@@ -116,11 +116,14 @@ class HistoricalSimulator(ExchangeSimulator):
             bids = {p: q for p, q in bids.items() if p < own_ask}
             self.stats["levels_withheld_against_own_orders"] = self.stats.get(
                 "levels_withheld_against_own_orders", 0) + len(withheld)
+        # Stale levels on both sides go first, so a multi-level move never leaves new levels
+        # facing not-yet-removed stale ones (the final state of each update is unchanged).
         for side, levels in ((Side.BUY, bids), (Side.SELL, asks)):
             for key in [k for k in self._hist_orders if k[0] is side and k[1] not in levels]:
                 order = self._hist_orders.pop(key)
                 if order.order_id in self.book.orders:
                     self.book.cancel(order.order_id, self.t)
+        for side, levels in ((Side.BUY, bids), (Side.SELL, asks)):
             for price, qty in levels.items():
                 lots = int(qty)
                 existing = self._hist_orders.get((side, price))
