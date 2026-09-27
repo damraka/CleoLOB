@@ -163,6 +163,12 @@ def _v05_commands(commands) -> None:
     child.add_argument("--m7", type=Path, required=True)
     child.add_argument("--m3-develop", type=Path, required=True)
     child.add_argument("--out", type=Path, required=True)
+    child = commands.add_parser("transfer-regimes", help="M8 transfer classification within frozen M6 regime labels")
+    child.add_argument("--m8", type=Path, required=True)
+    child.add_argument("--m7", type=Path, required=True)
+    child.add_argument("--m3-select", type=Path, required=True)
+    child.add_argument("--m6", type=Path, required=True)
+    child.add_argument("--out", type=Path, required=True)
     child = commands.add_parser("v05-benchmark", help="M11 local benchmarks of v0.5 research paths")
     child.add_argument("--out", type=Path, required=True)
     child.add_argument("--scale", type=float, default=1.0)
@@ -206,6 +212,11 @@ def _run_v05(args) -> int | None:
     elif command == "transfer-study":
         from .policy_transfer import run
         _print(run(args.m7, args.m3_develop, args.out)["classification_counts"])
+    elif command == "transfer-regimes":
+        from .transfer_regimes import run
+        result = run(args.m8, args.m7, args.m3_select, args.m6, args.out)
+        _print({d: {k: v["same_in_every_label"] for k, v in r["regime_robustness"].items()}
+                for d, r in result["datasets"].items()})
     elif command == "v05-benchmark":
         from .benchmarks_v05 import run
         result = run(args.out, scale=args.scale)

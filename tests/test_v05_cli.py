@@ -8,7 +8,7 @@ import pytest
 from lob.cli import main, parser
 
 V05 = ("validate-mbo-source", "fill-bounds", "historical-execution", "calibration-v2", "impact-study",
-       "resilience-study", "regime-study", "policy-study-v05", "transfer-study", "v05-benchmark", "verify-v05",
+       "resilience-study", "regime-study", "policy-study-v05", "transfer-study", "transfer-regimes", "v05-benchmark", "verify-v05",
        "dataset-registry", "protocol")
 V04 = ("validate-mbo", "multiperiod-study", "policy-study", "scaling-study", "verify-evidence", "smoke",
        "verify-artifact")
