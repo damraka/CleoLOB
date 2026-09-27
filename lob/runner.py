@@ -347,6 +347,7 @@ def run_episode(agent: str, p: Dict[str, Any], model: Optional[Any] = None) -> D
                 "participation", "hypothetical_residual_midpoint_cost", "participation_definition",
                 "impact_proxy_definition"):
         row[key] = raw[key]
+    row.update({key: value for key, value in raw.items() if key.startswith("mandate_")})
     if "audit" in out:
         row["audit"] = out["audit"]
     if "episode_reward" in raw:

@@ -56,7 +56,22 @@ def execution_metrics(sim: Any, fills: list, *, owner: str, start_time: float,
     two_sided = sim.book.best_bid() is not None and sim.book.best_ask() is not None
     residual_mark_cost = (sign * (report.arrival_price - sim.book.mid() * sim.cfg.tick_size)
                           * report.leftover_qty) if two_sided else None
-    return {
+    mandate = {}
+    if report.decision_horizon is not None:
+        from .mandate import mandate_metrics
+        notional = report.target_qty * report.arrival_price
+        priced = not report.leftover_qty or (report.unpriced_leftover_qty == 0 and report.net_effective_bps is not None)
+        residual_bps = ((report.hypothetical_liquidation_cost + report.hypothetical_liquidation_fees) / notional * 1e4
+                        if priced and report.leftover_qty else (0.0 if not report.leftover_qty else None))
+        mandate = mandate_metrics(
+            [(t.time, t.qty) for t in fills], target_qty=report.target_qty, start_time=start_time,
+            horizon=report.decision_horizon, settlement_complete=report.settlement_complete,
+            total_fees=report.total_fees, late_fees=report.late_fees,
+            realized_fill_cost_bps=report.total_cost / notional * 1e4, hypothetical_residual_cost_bps=residual_bps,
+            net_effective_bps=report.net_effective_bps,
+            participation=report.filled_qty / (report.filled_qty + market_volume)
+            if report.filled_qty + market_volume else None)
+    return {**{f"mandate_{k}": v for k, v in mandate.items()},
         "actual_filled_qty": report.filled_qty, "terminal_inventory": report.leftover_qty,
         "actual_completion": completed if settled else None,
         "time_to_completion": max(t.time - start_time for t in fills) if completed else None,
