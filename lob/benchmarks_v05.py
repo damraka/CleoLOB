@@ -10,8 +10,7 @@ platforms here and is reported as NOT_AVAILABLE.
 Workloads: Bitstamp-format MBO parsing, lifecycle replay, MBO-to-L2 aggregation,
 fill-bound updates, streaming aggregate-L2 historical execution, impact and
 resilience extraction, calibration-v2 simulation summaries, extended simulator
-stepping, historical replay episodes, policy evaluation episodes, and evidence
-serialization.
+stepping, policy evaluation episodes, and evidence serialization.
 """
 from __future__ import annotations
 
