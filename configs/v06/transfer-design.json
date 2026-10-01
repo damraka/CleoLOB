@@ -1,0 +1,158 @@
+{
+  "schema": "cleolob-v06-transfer-design-1",
+  "freeze_sha256": "9c91107b1d0db9662449176890d2a6c528e2c741490075cebe6f103743395cfe",
+  "policy_registration_sha256": "38121ccf3e4f73a776cfcce0323c577fef4b332f5624dcfc2eeb590e951a63bb",
+  "policy_run": "results/v06/m10/policies",
+  "evaluation_run": "results/v06/m10/evaluation",
+  "evaluation_result_sha256": "924c17d9e91440bca791629a7075732998c30750999625f76f4f8ca154dc6219",
+  "evaluation_episodes_sha256": "a067148d840a53d8cd190f6b89be95c19e4d9db3af29bb95e9e14f1edcef263d",
+  "datasets": {
+    "registered": "deribit-eth-perp-2020-10-01",
+    "retrospective": "deribit-eth-perp-2020-08-01"
+  },
+  "episodes": {
+    "count": 144,
+    "start": "first capture + 300 s + 600 s * k",
+    "book_levels": 20,
+    "window_s": 186.0,
+    "clock_ratio": 1.0,
+    "lots_per_native": "1 / development depth scale"
+  },
+  "agents": [
+    "twap",
+    "vwap",
+    "pov",
+    "ac",
+    "ppo:single",
+    "dqn:single",
+    "ppo:ensemble",
+    "dqn:ensemble"
+  ],
+  "fill_modes": [
+    "conservative",
+    "optimistic"
+  ],
+  "pairs": [
+    [
+      "twap",
+      "vwap"
+    ],
+    [
+      "twap",
+      "pov"
+    ],
+    [
+      "twap",
+      "ac"
+    ],
+    [
+      "twap",
+      "ppo:single"
+    ],
+    [
+      "twap",
+      "dqn:single"
+    ],
+    [
+      "vwap",
+      "pov"
+    ],
+    [
+      "vwap",
+      "ac"
+    ],
+    [
+      "vwap",
+      "ppo:single"
+    ],
+    [
+      "vwap",
+      "dqn:single"
+    ],
+    [
+      "pov",
+      "ac"
+    ],
+    [
+      "pov",
+      "ppo:single"
+    ],
+    [
+      "pov",
+      "dqn:single"
+    ],
+    [
+      "ac",
+      "ppo:single"
+    ],
+    [
+      "ac",
+      "dqn:single"
+    ],
+    [
+      "ppo:single",
+      "dqn:single"
+    ]
+  ],
+  "ac_parameters": {
+    "temp_impact": 0.0003894251582053461,
+    "sigma": 0.013986590092346119,
+    "risk_aversion": 0.00013824130302010369
+  },
+  "sources": {
+    "A_single": [
+      "selected"
+    ],
+    "B_ensemble": [
+      "selected",
+      "member:c01-round3-049"
+    ],
+    "C_regime": [
+      "regime:high",
+      "regime:low"
+    ],
+    "D_robust": [
+      "selected",
+      "member:c01-round3-049",
+      "intervention:cancel_x0.5",
+      "intervention:cancel_x2",
+      "intervention:trade_intensity_x0.5",
+      "intervention:trade_intensity_x2",
+      "intervention:limit_flow_x0.5",
+      "intervention:limit_flow_x2",
+      "intervention:depth_x0.5",
+      "intervention:depth_x2",
+      "intervention:resilience_weak",
+      "intervention:spread_distortion",
+      "intervention:persistence_removed",
+      "intervention:impact_x2",
+      "intervention:impact_x0.5",
+      "intervention:volatility_regime_x2"
+    ]
+  },
+  "H12": {
+    "alpha": 0.0016666666666666668,
+    "family_size": 30,
+    "note": "per pair and mode two-sided interval at 0.05/30"
+  },
+  "H11": {
+    "alpha": 0.0125,
+    "reference": "twap",
+    "single_worlds": [
+      "selected"
+    ],
+    "ensemble_worlds": [
+      "selected",
+      "member:c01-round3-049"
+    ]
+  },
+  "sources_alpha": 0.05,
+  "samples": 5000,
+  "seed": 69901,
+  "never_claimed": [
+    "exact historical fills",
+    "exact FIFO",
+    "profitability",
+    "live performance"
+  ]
+}
