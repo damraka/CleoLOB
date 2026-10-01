@@ -1,0 +1,25 @@
+row,column,value
+ETH Jun (retro),volatility,0.30103436744353557
+ETH Jun (retro),spread,0.51133419060559
+ETH Jun (retro),activity,0.0823529411764706
+ETH Jun (retro),stress,0.3944231355247294
+ETH Jul (retro),volatility,0.5877088815084879
+ETH Jul (retro),spread,0.8214285714285714
+ETH Jul (retro),activity,0.2578947368421053
+ETH Jul (retro),stress,0.046040515653775316
+BTC Jul (retro),volatility,0.6990034196679069
+BTC Jul (retro),spread,0.8214285714285714
+BTC Jul (retro),activity,0.14406779661016947
+BTC Jul (retro),stress,0.046040515653775316
+ETH Aug (retro),volatility,0.21406114686566383
+ETH Aug (retro),spread,0.5491965094461697
+ETH Aug (retro),activity,0.0106007067137809
+ETH Aug (retro),stress,0.34712849890929853
+ETH Sep (fresh),volatility,0.12047468775176383
+ETH Sep (fresh),spread,0.5738862287186379
+ETH Sep (fresh),activity,0.0
+ETH Sep (fresh),stress,0.046040515653775316
+BTC Sep (fresh),volatility,0.5484797515168266
+BTC Sep (fresh),spread,0.8214285714285714
+BTC Sep (fresh),activity,0.003508771929824567
+BTC Sep (fresh),stress,0.046040515653775316

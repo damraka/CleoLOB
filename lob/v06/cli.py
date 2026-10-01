@@ -62,6 +62,8 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
     child = commands.add_parser("benchmark-v06", help="M16: local research-workload benchmarks (not HFT)")
     child.add_argument("--out", type=Path, required=True)
     child.add_argument("--repeats", type=int, default=5)
+    child = commands.add_parser("report-v06", help="M17: figures and claim graph from sealed results")
+    child.add_argument("--out", type=Path, default=Path("examples/studies/v06"))
     child = commands.add_parser("claim-audit-v06", help="check claims against sealed results and documentation")
     child.add_argument("--claims", type=Path, default=Path("examples/studies/v06/evidence/claims.json"))
     child.add_argument("--docs", type=Path, nargs="*", default=[Path("docs/v06-final-report.md")])
@@ -212,6 +214,12 @@ def _benchmark(args) -> int:
     return 0
 
 
+def _report(args) -> int:
+    from .report import build
+    _print(build(args.out))
+    return 0
+
+
 def _claims(args) -> int:
     from .claims import audit
     result = audit(args.claims, args.docs)
@@ -221,7 +229,7 @@ def _claims(args) -> int:
 
 HANDLERS: dict[str, Callable] = {"identifiability-study": _identifiability, "regime-calibration": _regime,
                                  "execution-study": _execution, "holdout-study": _holdout, "claim-audit-v06": _claims,
-                                 "transfer-study-v06": _transfer, "benchmark-v06": _benchmark,
+                                 "transfer-study-v06": _transfer, "report-v06": _report, "benchmark-v06": _benchmark,
                                  "calibration-v3": _calibration, "protocol-v06": _protocol, "verify-v06": _verify, "realism-study": _realism}
 
 

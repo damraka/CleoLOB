@@ -1,0 +1,62 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='476' height='354' viewBox='0 0 476 354'><rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='16.0' y='24.0' font-family='system-ui, sans-serif' font-size='15' fill='#0b0b0b' text-anchor='start'>Regime-transition mismatch, selected v3 vs history (row TV)</text>
+<text x='16.0' y='44.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='start'>5-minute v0.5 M6 labels; simulated 8 x 6 h paths.</text>
+<text x='232.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 232.0 152)'>volatility</text>
+<text x='296.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 296.0 152)'>spread</text>
+<text x='360.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 360.0 152)'>activity</text>
+<text x='424.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 424.0 152)'>stress</text>
+<text x='192.0' y='176.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jun (retro)</text>
+<rect x='201' y='161' width='62' height='22' rx='3' fill='#63a1eb' stroke='#e4e3df'><title>ETH Jun (retro) / volatility: 0.30</title></rect>
+<text x='232.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<rect x='265' y='161' width='62' height='22' rx='3' fill='#2a72c9' stroke='#e4e3df'><title>ETH Jun (retro) / spread: 0.51</title></rect>
+<text x='296.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.51</text>
+<rect x='329' y='161' width='62' height='22' rx='3' fill='#b1d1f7' stroke='#e4e3df'><title>ETH Jun (retro) / activity: 0.08</title></rect>
+<text x='360.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.08</text>
+<rect x='393' y='161' width='62' height='22' rx='3' fill='#3f8be6' stroke='#e4e3df'><title>ETH Jun (retro) / stress: 0.39</title></rect>
+<text x='424.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.39</text>
+<text x='192.0' y='200.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jul (retro)</text>
+<rect x='201' y='185' width='62' height='22' rx='3' fill='#2162b3' stroke='#e4e3df'><title>ETH Jul (retro) / volatility: 0.59</title></rect>
+<text x='232.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.59</text>
+<rect x='265' y='185' width='62' height='22' rx='3' fill='#0d366b' stroke='#e4e3df'><title>ETH Jul (retro) / spread: 0.82</title></rect>
+<text x='296.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.82</text>
+<rect x='329' y='185' width='62' height='22' rx='3' fill='#73aaed' stroke='#e4e3df'><title>ETH Jul (retro) / activity: 0.26</title></rect>
+<text x='360.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.26</text>
+<rect x='393' y='185' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>ETH Jul (retro) / stress: 0.05</title></rect>
+<text x='424.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.05</text>
+<text x='192.0' y='224.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Jul (retro)</text>
+<rect x='201' y='209' width='62' height='22' rx='3' fill='#174c91' stroke='#e4e3df'><title>BTC Jul (retro) / volatility: 0.70</title></rect>
+<text x='232.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.70</text>
+<rect x='265' y='209' width='62' height='22' rx='3' fill='#0d366b' stroke='#e4e3df'><title>BTC Jul (retro) / spread: 0.82</title></rect>
+<text x='296.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.82</text>
+<rect x='329' y='209' width='62' height='22' rx='3' fill='#9bc3f4' stroke='#e4e3df'><title>BTC Jul (retro) / activity: 0.14</title></rect>
+<text x='360.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.14</text>
+<rect x='393' y='209' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>BTC Jul (retro) / stress: 0.05</title></rect>
+<text x='424.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.05</text>
+<text x='192.0' y='248.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Aug (retro)</text>
+<rect x='201' y='233' width='62' height='22' rx='3' fill='#82b4ef' stroke='#e4e3df'><title>ETH Aug (retro) / volatility: 0.21</title></rect>
+<text x='232.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.21</text>
+<rect x='265' y='233' width='62' height='22' rx='3' fill='#256abf' stroke='#e4e3df'><title>ETH Aug (retro) / spread: 0.55</title></rect>
+<text x='296.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.55</text>
+<rect x='329' y='233' width='62' height='22' rx='3' fill='#c9e0fa' stroke='#e4e3df'><title>ETH Aug (retro) / activity: 0.01</title></rect>
+<text x='360.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.01</text>
+<rect x='393' y='233' width='62' height='22' rx='3' fill='#5196e8' stroke='#e4e3df'><title>ETH Aug (retro) / stress: 0.35</title></rect>
+<text x='424.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.35</text>
+<text x='192.0' y='272.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Sep (fresh)</text>
+<rect x='201' y='257' width='62' height='22' rx='3' fill='#a4c8f5' stroke='#e4e3df'><title>ETH Sep (fresh) / volatility: 0.12</title></rect>
+<text x='232.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.12</text>
+<rect x='265' y='257' width='62' height='22' rx='3' fill='#2365b7' stroke='#e4e3df'><title>ETH Sep (fresh) / spread: 0.57</title></rect>
+<text x='296.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.57</text>
+<rect x='329' y='257' width='62' height='22' rx='3' fill='#cde2fb' stroke='#e4e3df'><title>ETH Sep (fresh) / activity: 0.00</title></rect>
+<text x='360.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.00</text>
+<rect x='393' y='257' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>ETH Sep (fresh) / stress: 0.05</title></rect>
+<text x='424.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.05</text>
+<text x='192.0' y='296.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Sep (fresh)</text>
+<rect x='201' y='281' width='62' height='22' rx='3' fill='#256abf' stroke='#e4e3df'><title>BTC Sep (fresh) / volatility: 0.55</title></rect>
+<text x='232.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.55</text>
+<rect x='265' y='281' width='62' height='22' rx='3' fill='#0d366b' stroke='#e4e3df'><title>BTC Sep (fresh) / spread: 0.82</title></rect>
+<text x='296.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>0.82</text>
+<rect x='329' y='281' width='62' height='22' rx='3' fill='#cce1fb' stroke='#e4e3df'><title>BTC Sep (fresh) / activity: 0.00</title></rect>
+<text x='360.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.00</text>
+<rect x='393' y='281' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>BTC Sep (fresh) / stress: 0.05</title></rect>
+<text x='424.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.05</text>
+</svg>

@@ -1,0 +1,260 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='796' height='522' viewBox='0 0 796 522'><rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='16.0' y='24.0' font-family='system-ui, sans-serif' font-size='15' fill='#0b0b0b' text-anchor='start'>Realism family errors by dataset and model</text>
+<text x='16.0' y='44.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='start'>First row: sealed real-vs-real margins (development vs selection day). Lower is closer.</text>
+<text x='232.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 232.0 152)'>book state</text>
+<text x='296.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 296.0 152)'>event activity</text>
+<text x='360.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 360.0 152)'>sizes</text>
+<text x='424.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 424.0 152)'>returns</text>
+<text x='488.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 488.0 152)'>tail</text>
+<text x='552.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 552.0 152)'>temporal</text>
+<text x='616.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 616.0 152)'>event process</text>
+<text x='680.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 680.0 152)'>dependence</text>
+<text x='744.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 744.0 152)'>resilience</text>
+<text x='192.0' y='176.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>real vs real margin</text>
+<rect x='201' y='161' width='62' height='22' rx='3' fill='#99c2f3' stroke='#e4e3df'><title>real vs real margin / book state: 0.64</title></rect>
+<text x='232.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.64</text>
+<rect x='265' y='161' width='62' height='22' rx='3' fill='#accef6' stroke='#e4e3df'><title>real vs real margin / event activity: 0.43</title></rect>
+<text x='296.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.43</text>
+<rect x='329' y='161' width='62' height='22' rx='3' fill='#cce1fb' stroke='#e4e3df'><title>real vs real margin / sizes: 0.08</title></rect>
+<text x='360.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.08</text>
+<rect x='393' y='161' width='62' height='22' rx='3' fill='#b6d4f8' stroke='#e4e3df'><title>real vs real margin / returns: 0.32</title></rect>
+<text x='424.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.32</text>
+<rect x='457' y='161' width='62' height='22' rx='3' fill='#7cb0ee' stroke='#e4e3df'><title>real vs real margin / tail: 0.95</title></rect>
+<text x='488.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.95</text>
+<rect x='521' y='161' width='62' height='22' rx='3' fill='#cde2fb' stroke='#e4e3df'><title>real vs real margin / temporal: 0.08</title></rect>
+<text x='552.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.08</text>
+<rect x='585' y='161' width='62' height='22' rx='3' fill='#c2dbf9' stroke='#e4e3df'><title>real vs real margin / event process: 0.20</title></rect>
+<text x='616.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.20</text>
+<rect x='649' y='161' width='62' height='22' rx='3' fill='#cce2fb' stroke='#e4e3df'><title>real vs real margin / dependence: 0.08</title></rect>
+<text x='680.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.08</text>
+<rect x='713' y='161' width='62' height='22' rx='3' fill='#cde2fb' stroke='#e4e3df'><title>real vs real margin / resilience: 0.08</title></rect>
+<text x='744.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.08</text>
+<text x='192.0' y='200.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jun (retro) v3</text>
+<rect x='201' y='185' width='62' height='22' rx='3' fill='#77adee' stroke='#e4e3df'><title>ETH Jun (retro) v3 / book state: 0.99</title></rect>
+<text x='232.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.99</text>
+<rect x='265' y='185' width='62' height='22' rx='3' fill='#83b4f0' stroke='#e4e3df'><title>ETH Jun (retro) v3 / event activity: 0.87</title></rect>
+<text x='296.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.87</text>
+<rect x='329' y='185' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>ETH Jun (retro) v3 / sizes: 0.25</title></rect>
+<text x='360.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.25</text>
+<rect x='393' y='185' width='62' height='22' rx='3' fill='#c5ddfa' stroke='#e4e3df'><title>ETH Jun (retro) v3 / returns: 0.17</title></rect>
+<text x='424.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.17</text>
+<rect x='457' y='185' width='62' height='22' rx='3' fill='#6fa8ec' stroke='#e4e3df'><title>ETH Jun (retro) v3 / tail: 1.08</title></rect>
+<text x='488.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.08</text>
+<rect x='521' y='185' width='62' height='22' rx='3' fill='#c3dcfa' stroke='#e4e3df'><title>ETH Jun (retro) v3 / temporal: 0.18</title></rect>
+<text x='552.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.18</text>
+<rect x='585' y='185' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>ETH Jun (retro) v3 / event process: 0.30</title></rect>
+<text x='616.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<rect x='649' y='185' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>ETH Jun (retro) v3 / dependence: 0.27</title></rect>
+<text x='680.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.27</text>
+<rect x='713' y='185' width='62' height='22' rx='3' fill='#c1dbf9' stroke='#e4e3df'><title>ETH Jun (retro) v3 / resilience: 0.20</title></rect>
+<text x='744.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.20</text>
+<text x='192.0' y='224.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jun (retro) v0.5</text>
+<rect x='201' y='209' width='62' height='22' rx='3' fill='#0f3b74' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / book state: 3.04</title></rect>
+<text x='232.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>3.04</text>
+<rect x='265' y='209' width='62' height='22' rx='3' fill='#a6caf5' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / event activity: 0.50</title></rect>
+<text x='296.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.50</text>
+<rect x='329' y='209' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / sizes: 0.27</title></rect>
+<text x='360.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.27</text>
+<rect x='393' y='209' width='62' height='22' rx='3' fill='#9ec5f4' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / returns: 0.59</title></rect>
+<text x='424.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.59</text>
+<rect x='457' y='209' width='62' height='22' rx='3' fill='#337fda' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / tail: 1.76</title></rect>
+<text x='488.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.76</text>
+<rect x='521' y='209' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / temporal: 0.31</title></rect>
+<text x='552.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.31</text>
+<rect x='585' y='209' width='62' height='22' rx='3' fill='#aecff6' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / event process: 0.41</title></rect>
+<text x='616.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.41</text>
+<rect x='649' y='209' width='62' height='22' rx='3' fill='#c0daf9' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / dependence: 0.22</title></rect>
+<text x='680.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.22</text>
+<rect x='713' y='209' width='62' height='22' rx='3' fill='#a4c9f5' stroke='#e4e3df'><title>ETH Jun (retro) v0.5 / resilience: 0.52</title></rect>
+<text x='744.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.52</text>
+<text x='192.0' y='248.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jul (retro) v3</text>
+<rect x='201' y='233' width='62' height='22' rx='3' fill='#6ba6ec' stroke='#e4e3df'><title>ETH Jul (retro) v3 / book state: 1.12</title></rect>
+<text x='232.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.12</text>
+<rect x='265' y='233' width='62' height='22' rx='3' fill='#99c2f3' stroke='#e4e3df'><title>ETH Jul (retro) v3 / event activity: 0.64</title></rect>
+<text x='296.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.64</text>
+<rect x='329' y='233' width='62' height='22' rx='3' fill='#b6d4f8' stroke='#e4e3df'><title>ETH Jul (retro) v3 / sizes: 0.33</title></rect>
+<text x='360.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.33</text>
+<rect x='393' y='233' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>ETH Jul (retro) v3 / returns: 0.33</title></rect>
+<text x='424.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.33</text>
+<rect x='457' y='233' width='62' height='22' rx='3' fill='#3480dc' stroke='#e4e3df'><title>ETH Jul (retro) v3 / tail: 1.74</title></rect>
+<text x='488.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.74</text>
+<rect x='521' y='233' width='62' height='22' rx='3' fill='#c7defa' stroke='#e4e3df'><title>ETH Jul (retro) v3 / temporal: 0.14</title></rect>
+<text x='552.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.14</text>
+<rect x='585' y='233' width='62' height='22' rx='3' fill='#b3d2f7' stroke='#e4e3df'><title>ETH Jul (retro) v3 / event process: 0.36</title></rect>
+<text x='616.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.36</text>
+<rect x='649' y='233' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>ETH Jul (retro) v3 / dependence: 0.23</title></rect>
+<text x='680.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.23</text>
+<rect x='713' y='233' width='62' height='22' rx='3' fill='#c7defa' stroke='#e4e3df'><title>ETH Jul (retro) v3 / resilience: 0.14</title></rect>
+<text x='744.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.14</text>
+<text x='192.0' y='272.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Jul (retro) v0.5</text>
+<rect x='201' y='257' width='62' height='22' rx='3' fill='#0d366b' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / book state: 3.14</title></rect>
+<text x='232.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>3.14</text>
+<rect x='265' y='257' width='62' height='22' rx='3' fill='#b4d3f7' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / event activity: 0.35</title></rect>
+<text x='296.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.35</text>
+<rect x='329' y='257' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / sizes: 0.30</title></rect>
+<text x='360.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<rect x='393' y='257' width='62' height='22' rx='3' fill='#7cb0ee' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / returns: 0.94</title></rect>
+<text x='424.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.94</text>
+<rect x='457' y='257' width='62' height='22' rx='3' fill='#164b8e' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / tail: 2.72</title></rect>
+<text x='488.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.72</text>
+<rect x='521' y='257' width='62' height='22' rx='3' fill='#bad6f8' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / temporal: 0.28</title></rect>
+<text x='552.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.28</text>
+<rect x='585' y='257' width='62' height='22' rx='3' fill='#9fc5f4' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / event process: 0.58</title></rect>
+<text x='616.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.58</text>
+<rect x='649' y='257' width='62' height='22' rx='3' fill='#bad6f8' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / dependence: 0.28</title></rect>
+<text x='680.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.28</text>
+<rect x='713' y='257' width='62' height='22' rx='3' fill='#9cc4f4' stroke='#e4e3df'><title>ETH Jul (retro) v0.5 / resilience: 0.60</title></rect>
+<text x='744.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.60</text>
+<text x='192.0' y='296.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Jul (retro) v3</text>
+<rect x='201' y='281' width='62' height='22' rx='3' fill='#317bd5' stroke='#e4e3df'><title>BTC Jul (retro) v3 / book state: 1.82</title></rect>
+<text x='232.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>1.82</text>
+<rect x='265' y='281' width='62' height='22' rx='3' fill='#a3c8f5' stroke='#e4e3df'><title>BTC Jul (retro) v3 / event activity: 0.54</title></rect>
+<text x='296.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.54</text>
+<rect x='329' y='281' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>BTC Jul (retro) v3 / sizes: 0.23</title></rect>
+<text x='360.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.23</text>
+<rect x='393' y='281' width='62' height='22' rx='3' fill='#a3c8f5' stroke='#e4e3df'><title>BTC Jul (retro) v3 / returns: 0.53</title></rect>
+<text x='424.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.53</text>
+<rect x='457' y='281' width='62' height='22' rx='3' fill='#2264b5' stroke='#e4e3df'><title>BTC Jul (retro) v3 / tail: 2.24</title></rect>
+<text x='488.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.24</text>
+<rect x='521' y='281' width='62' height='22' rx='3' fill='#c3dcfa' stroke='#e4e3df'><title>BTC Jul (retro) v3 / temporal: 0.18</title></rect>
+<text x='552.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.18</text>
+<rect x='585' y='281' width='62' height='22' rx='3' fill='#b1d1f7' stroke='#e4e3df'><title>BTC Jul (retro) v3 / event process: 0.38</title></rect>
+<text x='616.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.38</text>
+<rect x='649' y='281' width='62' height='22' rx='3' fill='#b6d4f8' stroke='#e4e3df'><title>BTC Jul (retro) v3 / dependence: 0.32</title></rect>
+<text x='680.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.32</text>
+<rect x='713' y='281' width='62' height='22' rx='3' fill='#95bff2' stroke='#e4e3df'><title>BTC Jul (retro) v3 / resilience: 0.68</title></rect>
+<text x='744.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.68</text>
+<text x='192.0' y='320.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Jul (retro) v0.5</text>
+<rect x='201' y='305' width='62' height='22' rx='3' fill='#15498b' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / book state: 2.76</title></rect>
+<text x='232.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.76</text>
+<rect x='265' y='305' width='62' height='22' rx='3' fill='#b9d5f8' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / event activity: 0.30</title></rect>
+<text x='296.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<rect x='329' y='305' width='62' height='22' rx='3' fill='#c0daf9' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / sizes: 0.22</title></rect>
+<text x='360.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.22</text>
+<rect x='393' y='305' width='62' height='22' rx='3' fill='#69a4eb' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / returns: 1.14</title></rect>
+<text x='424.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.14</text>
+<rect x='457' y='305' width='62' height='22' rx='3' fill='#12417d' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / tail: 2.93</title></rect>
+<text x='488.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.93</text>
+<rect x='521' y='305' width='62' height='22' rx='3' fill='#b9d6f8' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / temporal: 0.29</title></rect>
+<text x='552.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.29</text>
+<rect x='585' y='305' width='62' height='22' rx='3' fill='#99c2f3' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / event process: 0.64</title></rect>
+<text x='616.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.64</text>
+<rect x='649' y='305' width='62' height='22' rx='3' fill='#c1dbf9' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / dependence: 0.20</title></rect>
+<text x='680.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.20</text>
+<rect x='713' y='305' width='62' height='22' rx='3' fill='#b4d3f7' stroke='#e4e3df'><title>BTC Jul (retro) v0.5 / resilience: 0.35</title></rect>
+<text x='744.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.35</text>
+<text x='192.0' y='344.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Aug (retro) v3</text>
+<rect x='201' y='329' width='62' height='22' rx='3' fill='#4a92e7' stroke='#e4e3df'><title>ETH Aug (retro) v3 / book state: 1.44</title></rect>
+<text x='232.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.44</text>
+<rect x='265' y='329' width='62' height='22' rx='3' fill='#90bcf2' stroke='#e4e3df'><title>ETH Aug (retro) v3 / event activity: 0.73</title></rect>
+<text x='296.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.73</text>
+<rect x='329' y='329' width='62' height='22' rx='3' fill='#b9d6f8' stroke='#e4e3df'><title>ETH Aug (retro) v3 / sizes: 0.29</title></rect>
+<text x='360.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.29</text>
+<rect x='393' y='329' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>ETH Aug (retro) v3 / returns: 0.27</title></rect>
+<text x='424.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.27</text>
+<rect x='457' y='329' width='62' height='22' rx='3' fill='#5d9dea' stroke='#e4e3df'><title>ETH Aug (retro) v3 / tail: 1.26</title></rect>
+<text x='488.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.26</text>
+<rect x='521' y='329' width='62' height='22' rx='3' fill='#c5ddfa' stroke='#e4e3df'><title>ETH Aug (retro) v3 / temporal: 0.16</title></rect>
+<text x='552.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.16</text>
+<rect x='585' y='329' width='62' height='22' rx='3' fill='#aecff6' stroke='#e4e3df'><title>ETH Aug (retro) v3 / event process: 0.41</title></rect>
+<text x='616.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.41</text>
+<rect x='649' y='329' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>ETH Aug (retro) v3 / dependence: 0.27</title></rect>
+<text x='680.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.27</text>
+<rect x='713' y='329' width='62' height='22' rx='3' fill='#b9d6f8' stroke='#e4e3df'><title>ETH Aug (retro) v3 / resilience: 0.29</title></rect>
+<text x='744.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.29</text>
+<text x='192.0' y='368.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Aug (retro) v0.5</text>
+<rect x='201' y='353' width='62' height='22' rx='3' fill='#134483' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / book state: 2.86</title></rect>
+<text x='232.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.86</text>
+<rect x='265' y='353' width='62' height='22' rx='3' fill='#98c1f3' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / event activity: 0.65</title></rect>
+<text x='296.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.65</text>
+<rect x='329' y='353' width='62' height='22' rx='3' fill='#bdd8f9' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / sizes: 0.25</title></rect>
+<text x='360.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.25</text>
+<rect x='393' y='353' width='62' height='22' rx='3' fill='#a8cbf5' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / returns: 0.48</title></rect>
+<text x='424.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.48</text>
+<rect x='457' y='353' width='62' height='22' rx='3' fill='#4991e7' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / tail: 1.45</title></rect>
+<text x='488.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.45</text>
+<rect x='521' y='353' width='62' height='22' rx='3' fill='#bad7f8' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / temporal: 0.28</title></rect>
+<text x='552.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.28</text>
+<rect x='585' y='353' width='62' height='22' rx='3' fill='#a9ccf6' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / event process: 0.46</title></rect>
+<text x='616.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.46</text>
+<rect x='649' y='353' width='62' height='22' rx='3' fill='#c3dcf9' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / dependence: 0.19</title></rect>
+<text x='680.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.19</text>
+<rect x='713' y='353' width='62' height='22' rx='3' fill='#a5caf5' stroke='#e4e3df'><title>ETH Aug (retro) v0.5 / resilience: 0.51</title></rect>
+<text x='744.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.51</text>
+<text x='192.0' y='392.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Sep (fresh) v3</text>
+<rect x='201' y='377' width='62' height='22' rx='3' fill='#5296e8' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / book state: 1.37</title></rect>
+<text x='232.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.37</text>
+<rect x='265' y='377' width='62' height='22' rx='3' fill='#77adee' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / event activity: 0.99</title></rect>
+<text x='296.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.99</text>
+<rect x='329' y='377' width='62' height='22' rx='3' fill='#bcd8f8' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / sizes: 0.26</title></rect>
+<text x='360.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.26</text>
+<rect x='393' y='377' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / returns: 0.34</title></rect>
+<text x='424.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.34</text>
+<rect x='457' y='377' width='62' height='22' rx='3' fill='#4991e7' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / tail: 1.45</title></rect>
+<text x='488.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.45</text>
+<rect x='521' y='377' width='62' height='22' rx='3' fill='#c7defa' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / temporal: 0.14</title></rect>
+<text x='552.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.14</text>
+<rect x='585' y='377' width='62' height='22' rx='3' fill='#a6caf5' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / event process: 0.49</title></rect>
+<text x='616.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.49</text>
+<rect x='649' y='377' width='62' height='22' rx='3' fill='#bad6f8' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / dependence: 0.29</title></rect>
+<text x='680.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.29</text>
+<rect x='713' y='377' width='62' height='22' rx='3' fill='#b9d6f8' stroke='#e4e3df'><title>ETH Sep (fresh) v3 / resilience: 0.30</title></rect>
+<text x='744.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<text x='192.0' y='416.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ETH Sep (fresh) v0.5</text>
+<rect x='201' y='401' width='62' height='22' rx='3' fill='#134382' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / book state: 2.87</title></rect>
+<text x='232.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.87</text>
+<rect x='265' y='401' width='62' height='22' rx='3' fill='#6ea8ec' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / event activity: 1.09</title></rect>
+<text x='296.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.09</text>
+<rect x='329' y='401' width='62' height='22' rx='3' fill='#bfdaf9' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / sizes: 0.23</title></rect>
+<text x='360.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.23</text>
+<rect x='393' y='401' width='62' height='22' rx='3' fill='#abcdf6' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / returns: 0.44</title></rect>
+<text x='424.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.44</text>
+<rect x='457' y='401' width='62' height='22' rx='3' fill='#3886e3' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / tail: 1.63</title></rect>
+<text x='488.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.63</text>
+<rect x='521' y='401' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / temporal: 0.23</title></rect>
+<text x='552.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.23</text>
+<rect x='585' y='401' width='62' height='22' rx='3' fill='#a7cbf5' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / event process: 0.49</title></rect>
+<text x='616.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.49</text>
+<rect x='649' y='401' width='62' height='22' rx='3' fill='#c3dcf9' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / dependence: 0.19</title></rect>
+<text x='680.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.19</text>
+<rect x='713' y='401' width='62' height='22' rx='3' fill='#abcdf6' stroke='#e4e3df'><title>ETH Sep (fresh) v0.5 / resilience: 0.44</title></rect>
+<text x='744.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.44</text>
+<text x='192.0' y='440.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Sep (fresh) v3</text>
+<rect x='201' y='425' width='62' height='22' rx='3' fill='#63a1eb' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / book state: 1.19</title></rect>
+<text x='232.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>1.19</text>
+<rect x='265' y='425' width='62' height='22' rx='3' fill='#92bef2' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / event activity: 0.71</title></rect>
+<text x='296.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.71</text>
+<rect x='329' y='425' width='62' height='22' rx='3' fill='#c1dbf9' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / sizes: 0.20</title></rect>
+<text x='360.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.20</text>
+<rect x='393' y='425' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / returns: 0.30</title></rect>
+<text x='424.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.30</text>
+<rect x='457' y='425' width='62' height='22' rx='3' fill='#1f5dab' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / tail: 2.37</title></rect>
+<text x='488.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.37</text>
+<rect x='521' y='425' width='62' height='22' rx='3' fill='#c9e0fa' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / temporal: 0.12</title></rect>
+<text x='552.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.12</text>
+<rect x='585' y='425' width='62' height='22' rx='3' fill='#aecff6' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / event process: 0.41</title></rect>
+<text x='616.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.41</text>
+<rect x='649' y='425' width='62' height='22' rx='3' fill='#b0d0f7' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / dependence: 0.39</title></rect>
+<text x='680.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.39</text>
+<rect x='713' y='425' width='62' height='22' rx='3' fill='#9fc5f4' stroke='#e4e3df'><title>BTC Sep (fresh) v3 / resilience: 0.58</title></rect>
+<text x='744.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.58</text>
+<text x='192.0' y='464.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>BTC Sep (fresh) v0.5</text>
+<rect x='201' y='449' width='62' height='22' rx='3' fill='#0f3c74' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / book state: 3.03</title></rect>
+<text x='232.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>3.03</text>
+<rect x='265' y='449' width='62' height='22' rx='3' fill='#95bff2' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / event activity: 0.68</title></rect>
+<text x='296.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.68</text>
+<rect x='329' y='449' width='62' height='22' rx='3' fill='#c0daf9' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / sizes: 0.22</title></rect>
+<text x='360.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.22</text>
+<rect x='393' y='449' width='62' height='22' rx='3' fill='#81b3ef' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / returns: 0.89</title></rect>
+<text x='424.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.89</text>
+<rect x='457' y='449' width='62' height='22' rx='3' fill='#12427e' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / tail: 2.91</title></rect>
+<text x='488.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>2.91</text>
+<rect x='521' y='449' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / temporal: 0.23</title></rect>
+<text x='552.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.23</text>
+<rect x='585' y='449' width='62' height='22' rx='3' fill='#a2c7f5' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / event process: 0.55</title></rect>
+<text x='616.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.55</text>
+<rect x='649' y='449' width='62' height='22' rx='3' fill='#b7d5f8' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / dependence: 0.31</title></rect>
+<text x='680.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.31</text>
+<rect x='713' y='449' width='62' height='22' rx='3' fill='#bcd7f8' stroke='#e4e3df'><title>BTC Sep (fresh) v0.5 / resilience: 0.26</title></rect>
+<text x='744.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>0.26</text>
+</svg>

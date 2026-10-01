@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='318' viewBox='0 0 720 318'><rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='16.0' y='24.0' font-family='system-ui, sans-serif' font-size='15' fill='#0b0b0b' text-anchor='start'>Bounded historical cost, ETH 2020-10-01 (conservative fills)</text>
+<text x='16.0' y='44.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='start'>144 episodes; no exact fills; all pairwise contrasts indeterminate at the registered alpha.</text>
+<text x='252.0' y='84.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ac</text>
+<rect x='260' y='70' width='282.5' height='20' rx='4' fill='#256abf'><title>ac: 1.784 bps</title></rect>
+<text x='548.5' y='84.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.78</text>
+<text x='252.0' y='110.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>dqn:ensemble</text>
+<rect x='260' y='96' width='252.9' height='20' rx='4' fill='#256abf'><title>dqn:ensemble: 1.597 bps</title></rect>
+<text x='518.9' y='110.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.60</text>
+<text x='252.0' y='136.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>dqn:single</text>
+<rect x='260' y='122' width='252.1' height='20' rx='4' fill='#256abf'><title>dqn:single: 1.592 bps</title></rect>
+<text x='518.1' y='136.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.59</text>
+<text x='252.0' y='162.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>pov</text>
+<rect x='260' y='148' width='380.0' height='20' rx='4' fill='#256abf'><title>pov: 2.400 bps</title></rect>
+<text x='646.0' y='162.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>2.40</text>
+<text x='252.0' y='188.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ppo:ensemble</text>
+<rect x='260' y='174' width='278.0' height='20' rx='4' fill='#256abf'><title>ppo:ensemble: 1.755 bps</title></rect>
+<text x='544.0' y='188.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.76</text>
+<text x='252.0' y='214.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>ppo:single</text>
+<rect x='260' y='200' width='266.0' height='20' rx='4' fill='#256abf'><title>ppo:single: 1.680 bps</title></rect>
+<text x='532.0' y='214.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.68</text>
+<text x='252.0' y='240.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>twap</text>
+<rect x='260' y='226' width='285.6' height='20' rx='4' fill='#256abf'><title>twap: 1.803 bps</title></rect>
+<text x='551.6' y='240.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.80</text>
+<text x='252.0' y='266.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>vwap</text>
+<rect x='260' y='252' width='280.7' height='20' rx='4' fill='#256abf'><title>vwap: 1.773 bps</title></rect>
+<text x='546.7' y='266.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='start'>1.77</text>
+</svg>
