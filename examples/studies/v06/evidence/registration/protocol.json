@@ -1,0 +1,895 @@
+{
+  "schema": "cleolob-v06-protocol-1",
+  "protocol_id": "cleolob-v0.6-market-realism-calibration-uncertainty-model-risk",
+  "frozen_at_utc": "2026-10-01T16:35:04+00:00",
+  "base_commit": "50ed08b87ad9a43a79508d9b3a1f5537be5a37c1",
+  "branch": "research/v0.6-market-realism",
+  "roadmap": "docs/v06-roadmap.md",
+  "research_question": "When is a calibrated limit-order-book simulator sufficiently realistic and sufficiently well-identified to support reliable execution-policy conclusions under parameter uncertainty, model misspecification, regime shift and historical transfer?",
+  "contributions": {
+    "C1": "Calibration identifiability: can materially different parameter vectors produce statistically similar observable fit?",
+    "C2": "Calibration uncertainty: how much uncertainty remains after calibration when several parameter sets are plausible?",
+    "C3": "Simulator ensemble uncertainty: how much do execution results vary across plausible calibrated simulators?",
+    "C4": "Execution-ranking stability: do pairwise execution conclusions survive plausible simulators, regimes and bounded historical replay?",
+    "C5": "Execution-sensitive realism: which realism failures matter for execution conclusions?"
+  },
+  "statuses": [
+    "ESTABLISHED",
+    "NOT_ESTABLISHED",
+    "FAILED",
+    "INVALID",
+    "NOT_AVAILABLE",
+    "INCONCLUSIVE",
+    "EXPLORATORY",
+    "ASSUMPTION_DEPENDENT"
+  ],
+  "status_meaning": {
+    "ESTABLISHED": "The frozen gate for the stated question passed on the registered evidence.",
+    "NOT_ESTABLISHED": "The analysis ran validly but the gate did not pass; no claim follows (absence of significance is never equivalence).",
+    "FAILED": "A preregistered criterion was evaluated and failed in the opposite or rejecting direction.",
+    "INVALID": "Input integrity, execution or binding failed; outcomes beyond the failure are unknown.",
+    "NOT_AVAILABLE": "Required data, capability or compute was unavailable; nothing was substituted.",
+    "INCONCLUSIVE": "The registered evidence cannot discriminate (degenerate, ambiguous or underpowered).",
+    "EXPLORATORY": "Not preregistered, or run after relevant outcomes were inspected; never confirmatory.",
+    "ASSUMPTION_DEPENDENT": "The conclusion holds under one declared assumption set (for example optimistic fills) but not another."
+  },
+  "equivalence_statuses": [
+    "EQUIVALENT_WITHIN_MARGIN",
+    "NOT_ESTABLISHED",
+    "FAILED_MARGIN",
+    "NOT_EVALUABLE"
+  ],
+  "v05_history": {
+    "protocol_sha256": "feeec468fff3fd417ab024711759e19a7d10da56ae064edd8a07e3827bb32de7",
+    "ledger_entries": 80,
+    "ledger_head_sha256": "3e5d49fe9bc094b89a61e1951e3ea636f63ff52e07170fdd0a258ad110f59f71",
+    "rule": "v0.5 protocol, ledger, evidence bundle and sealed runs are read-only historical records. v0.6 imports every v0.5 consumed dataset and calendar period as consumed and never relabels them fresh. v0.5 outcomes (including INVALID, FAILED and EXPLORATORY_POST_HOC) are cited, never regenerated.",
+    "reused_artifacts": {
+      "v05_control_model": "results/v05/m3/select/result.json -> selected (calibration-v2 'combined' model), used unchanged as the v0.5 control class; its canonical hash is sealed in the v0.6 calibration design",
+      "regime_thresholds": "results/v05/m6/thresholds/result.json (development-only 5-minute block thresholds), used unchanged; hash sealed in the v0.6 regime design",
+      "depth_scale_rule": "development median top-5 side depth (native) / 1000 lots, the v0.5 M3 rule, so v0.5 and v0.6 simulators share one lot scale"
+    }
+  },
+  "datasets": [
+    {
+      "id": "deribit-eth-perp-2020-04-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-04-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "development",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.3/v0.4 calibration and v0.5 M2/M3/M4/M6 development"
+    },
+    {
+      "id": "deribit-eth-perp-2020-05-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-05-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "selection",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.4 validation and v0.5 M2/M3 selection"
+    },
+    {
+      "id": "deribit-eth-perp-2020-06-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-06-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.4 holdout and v0.5 M2/M3/M4/M6 internal holdout; never used in any v0.6 fit or selection"
+    },
+    {
+      "id": "deribit-eth-perp-2020-07-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 external holdout (M2/M3/M4/M6/M8)"
+    },
+    {
+      "id": "deribit-btc-perp-2020-07-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 cross-instrument holdout (M2/M3/M4/M6/M8)"
+    },
+    {
+      "id": "deribit-eth-perp-2020-08-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-08-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 M8 transfer holdout"
+    },
+    {
+      "id": "deribit-eth-perp-2020-09-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_external",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.4 registry, the v0.5 ledger, every repository file and git history at the base commit",
+      "selection_rule": "next first-of-month period after the last consumed ETH period (2020-08-01); fixed before access; no substitution if unavailable"
+    },
+    {
+      "id": "deribit-btc-perp-2020-09-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "cross_instrument_external",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none (as above)",
+      "selection_rule": "same venue, different instrument, same unseen day as the fresh ETH holdout; no substitution"
+    },
+    {
+      "id": "deribit-eth-perp-2020-10-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-10-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "transfer_holdout",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none (as above)",
+      "selection_rule": "reserved for historical execution transfer v2 and H11/H12; not accessed before the policy evaluation lock; no substitution"
+    }
+  ],
+  "not_used": {
+    "bitstamp-btcusd-mbo captures": "consumed by v0.5 (registered M1 outcome INVALID); short self-recorded captures of another venue; order-size and identity observables are therefore NOT_AVAILABLE in v0.6 core",
+    "vendor historical MBO": "NOT_AVAILABLE (licensed or credentialed access required)",
+    "deribit 2026 periods": "consumed by v0.3/v0.4 (imported from the v0.5 ledger); different market era; not used"
+  },
+  "chronology": "development (fit) -> selection (choose model, define near-optimal region and ensemble) -> sealed designs -> retrospective (labelled, consumed) -> fresh same-instrument external -> cross-instrument external -> transfer holdout (after the policy evaluation lock)",
+  "holdout_rules": [
+    "Freshness is derived from the append-only ledger, never from a mutable field; consumed data can never become fresh.",
+    "A holdout is consumed at its first ledger-recorded access, which precedes the download.",
+    "Every analysis that reads a holdout must be sealed (design hash in the ledger) before that holdout's first access.",
+    "Holdout data may not influence observables, binning, thresholds, margins, objectives, parameter bounds, model families, ensembles, perturbations, mandates, policies, seeds or gates.",
+    "Analyses designed after a holdout was accessed are posthoc: they are labelled EXPLORATORY and use 'evaluate_posthoc'.",
+    "Retrospective datasets were inspected by earlier versions: their results are labelled retrospective and are never fresh confirmation.",
+    "A failed download after one retry makes every dependent hypothesis NOT_AVAILABLE; no other date or instrument is substituted."
+  ],
+  "realism": {
+    "module": "lob.v06.observables (measurement), lob.v06.realism (distances, family errors, scorecard)",
+    "measurement_operator": "One operator for history and simulation: 100 ms causal samples of the top 10 displayed levels per side plus aggressor-grouped trade events (the v0.5 grouping rule). Quantities in lots (development depth scale), prices in basis points of mid or ticks. Historical samples older than 5 s are invalid.",
+    "sketch": "Each 600 s block is reduced to additive sufficient statistics (histograms on development-frozen bins, moment sums for paired statistics, count matrices). Pooling and block resampling add sketches; every distance is computed from pooled sketches.",
+    "families": {
+      "book_state": "spread (bps), L1/top-5/top-10 side depth (log lots), side asymmetry log(bid5/ask5), top-5 imbalance, depth concentration L1/top-10, book slope log(top-5/L1), level gaps (ticks, levels 1-5), microprice deviation from mid (bps)",
+      "event_activity": "counts per 10 s (log1p) of aggressive trade events, top-10 book changes, displayed additions and net cancellations; trade interarrival times (log)",
+      "sizes": "aggressive event size, displayed addition size, net cancellation size (log lots); individual order size NOT_AVAILABLE (aggregate L2)",
+      "returns": "mid log returns at 1 s, 10 s and 60 s (bps), 60 s realized volatility (log1p bps), nonzero 1 s return fraction",
+      "tail": "exceedance probabilities at development-frozen thresholds (spread > p99, top-5 depth < p1, 60 s volatility > p99, event size > p99, 10 s cancellation count > p99, |imbalance| > p99, |10 s return| > p99.9) and 1%/99% quantile errors; Hill tail index of event sizes and |10 s returns| only when at least 50 exceedances exist, else NOT_AVAILABLE",
+      "temporal": "lagged autocorrelations (1 s grid) of returns (1, 2, 5, 10), |returns| (1, 5, 10, 30), spread (1, 10), top-5 depth (1, 10, 60), imbalance (1, 10, 60); 10 s grid of signed event volume (1, 2, 5) and event counts (1, 6); partial autocorrelation of returns at lag 2; wide-spread run lengths (log)",
+      "event_process": "100 ms event-state chain over {quiet, trade, add-only, cancel-only, add-and-cancel}: state proportions, conditional transition rows, P(cancel next | trade), P(trade next | cancel); Fano factors of trade counts at 1 s and 10 s; interarrival burstiness; L1 depletion and replenishment hazards; cross-excitation proxy corr(trade count_t, cancellation count_t+1). Descriptive excitation diagnostics only, never a causal generative claim.",
+      "dependence": "rank correlations on development-frozen marginal scale: (60 s volatility, spread), (volatility, top-5 depth), (event count, volatility), (cancellation count, volatility), (|imbalance|, spread) on 60 s windows; (imbalance_t, return_t+1s), (microprice deviation_t, return_t+1s), (signed event volume_t, return_t), (top-5 depth_t, |return_t+1s|) on the 1 s grid; mean next-second return by development imbalance quintile; mutual information of imbalance quintile and next return sign",
+      "resilience": "time for opposite L1 depth to regain 90% of its pre-event level after an event removing >= 50% of it (log s, 30 s censoring), recovered fraction, wide-spread recovery time (log s), censored fraction"
+    },
+    "capability_not_available": [
+      "modify intensity (aggregate L2 cannot separate modifies)",
+      "individual order size and identity",
+      "queue position",
+      "hidden liquidity",
+      "exact passive fills"
+    ],
+    "distances": {
+      "primary": "normalized 1-Wasserstein distance on the transformed scale (log for positive heavy-tailed quantities) divided by the development interquartile range with a physical floor (1 tick for spread, returns and microprice; 0.1 log units otherwise)",
+      "also_reported": [
+        "Kolmogorov-Smirnov statistic",
+        "energy distance (1-D: 2 * integral (F - G)^2)",
+        "Jensen-Shannon divergence (base 2) on the frozen bins",
+        "quantile errors at 5/25/50/75/95%",
+        "tail quantile errors at 1/99%"
+      ],
+      "scalar_components": "absolute difference for correlations, autocorrelations and probabilities on the correlation/probability scale; |log ratio| for rates, Fano factors and exceedance probabilities (floor 1e-4)",
+      "cap": 10.0
+    },
+    "family_error": "mean of the family's evaluable component errors (also reported: max); a component is NOT_EVALUABLE when either side has fewer than its minimum samples (50 distribution samples, 300 paired samples, 30 exceedance-eligible windows)",
+    "objective_normalization": "development-only scale per family: the family error between the first and second 12 hours of the development day (floor 0.05)",
+    "calibration_objective": "mean over the nine families of (family error / development scale); this is the preregistered calibration objective, not a validity score",
+    "equivalence_margins": "per family, the real-versus-real family error between the full development day and the full selection day (both consumed), computed by the sealed observable implementation and sealed in the ledger before any holdout access",
+    "scorecard": "family-level only; no headline aggregate other than the labelled calibration objective; domain-gap, regime and execution-sensitivity dimensions are reported beside the nine families",
+    "block_seconds": 600,
+    "sample_dt_s": 0.1,
+    "book_levels": 10
+  },
+  "calibration": {
+    "module": "lob.v06.calibration",
+    "model_family": "lob.sim_v2.ExtendedSimulator (unchanged) with all v0.5 extensions available; empirical size tables fixed from development (v0.5 rule)",
+    "parameters": "14 searched parameters in a transformed unit box: 6 active base parameters (target_level_vol, limit_rate, market_rate, cancel_rate, offset_p, resilience) and 8 extension parameters (inside_spread_prob, cancel_depth_exponent, imbalance_beta, regime_multiplier, regime_switch_rate, regime_high_share, hawkes branching ratio, hawkes_decay). limit_qty_mean and market_qty_mean are inert whenever the empirical size tables are active and are fixed at the v0.5 base values (searching them would manufacture non-identifiability). Bounds and transforms are in lob.v06.calibration.PARAMETERS.",
+    "search": "8 independent seeded starts; each start: 96 global draws in the transformed box, then 3 refinement rounds of 64 perturbations around the start's incumbent (step scale 0.25, 0.12, 0.06 of the transformed range); 2304 candidates; every candidate evaluated on the same 3 fit seeds x 1800 simulated seconds after 60 s warmup",
+    "rescore": "the 64 lowest-objective distinct candidates are re-scored on development with 5 fresh seeds x 3600 s; the 32 best re-scored candidates advance to selection",
+    "selection": "the 32 candidates and the v0.5 control are scored on the selection day with 5 selection seeds x 3600 s; the selected v3 model minimizes the selection objective (ties: lower development re-score)",
+    "constraints": "none in the primary objective; family-level constraint filtering is reported as a sensitivity",
+    "pareto": "the Pareto set over the nine family errors among the 64 re-scored candidates is reported descriptively",
+    "control": "v0.5 selected calibration-v2 model, unchanged",
+    "failure": "a candidate that raises, hits max_events or yields a non-finite objective gets objective +inf, is retained and counted",
+    "event_cap": "deterministic implausibility guard: a simulated path ends with a RuntimeError after 500 engine events per simulated second (warmup included); the candidate is a retained failure with objective +inf. 500/s is 5.6x the v0.5 selected model (89/s) and about 70x the development net book-change rate."
+  },
+  "identifiability": {
+    "module": "lob.v06.identifiability",
+    "near_optimal_region": "selection-day objective <= min + max(0.10 * min, 2 * SE), SE = between-seed standard error of the selected model's selection objective; fixed from selection data only",
+    "material_distinctness": "L-infinity distance >= 0.25 between parameter vectors in the transformed unit box",
+    "distinct_set": "greedy pass over the near-optimal region in ascending selection objective, keeping a candidate if it is materially distinct from every kept candidate",
+    "diagnostics": [
+      "parameter ranges and correlations within the near-optimal region",
+      "local one-at-a-time sensitivity of every family error to +/-10% transformed-range steps around the selected model (development, 3 seeds x 1800 s)",
+      "profile diagnostics: each of the 14 parameters fixed at 5 grid points while the others are re-optimized by 24 perturbation draws",
+      "flat directions: eigen-decomposition of the near-optimal parameter covariance and of the local sensitivity Gram matrix",
+      "optional Morris elementary effects (12 trajectories), labelled EXPLORATORY"
+    ]
+  },
+  "ensemble": {
+    "module": "lob.v06.ensemble",
+    "members": "the distinct near-optimal set (selected model first), at most 8 members",
+    "single_member_rule": "if only one member exists, ensemble-based quantities are NOT_AVAILABLE and only structural perturbation worlds are used",
+    "recorded_per_member": [
+      "config hash",
+      "parameter vector",
+      "development and selection objectives",
+      "family errors",
+      "seeds",
+      "provenance"
+    ]
+  },
+  "misspecification": {
+    "module": "lob.v06.misspecification",
+    "base": "selected v3 model",
+    "interventions": {
+      "cancel_x0.5": "cancel_rate x 0.5",
+      "cancel_x2": "cancel_rate x 2",
+      "depth_x0.5": "target_level_vol x 0.5",
+      "depth_x2": "target_level_vol x 2",
+      "trade_intensity_x0.5": "market_rate x 0.5",
+      "trade_intensity_x2": "market_rate x 2",
+      "limit_flow_x0.5": "limit_rate x 0.5",
+      "limit_flow_x2": "limit_rate x 2",
+      "resilience_weak": "resilience x 0.25",
+      "spread_distortion": "offset_p shifted to its lower bound (orders placed further from the touch)",
+      "persistence_removed": "hawkes branching ratio and regime switching removed",
+      "impact_x2": "empirical market-order size quantile table x 2",
+      "impact_x0.5": "empirical market-order size quantile table x 0.5 (floored at one lot)",
+      "volatility_regime_x2": "regime_multiplier doubled (capped at 20)"
+    },
+    "interpretation": "synthetic interventions on the simulator only; no causal statement about real markets follows"
+  },
+  "execution": {
+    "module": "lob.v06.execution, lob.v06.policies",
+    "mandate": {
+      "side": "buy",
+      "quantity_rule": "round(development median L1 depth in lots)",
+      "horizon_s": 120.0,
+      "decision_dt_s": 6.0,
+      "warmup_s": 60.0,
+      "settlement_timeout_s": 5.0,
+      "fees": {
+        "maker_bps": 0.0,
+        "taker_bps": 1.0
+      },
+      "terminal_penalty_bps": 25.0,
+      "completion": "v0.5 completion constraint, urgency fraction 0.8; within-horizon and settlement completion reported separately",
+      "pov_participation": 0.3
+    },
+    "agents": {
+      "classical": [
+        "twap",
+        "vwap",
+        "pov",
+        "ac"
+      ],
+      "learned": [
+        "ppo",
+        "dqn"
+      ],
+      "excluded": "heuristic and random v0.5 controls (not execution strategies of interest) and no new baselines"
+    },
+    "learned_variants": {
+      "single": "trained on the selected v3 world only",
+      "ensemble": "trained with one ensemble member drawn uniformly at each episode reset (domain randomization derived from the v0.6 ensemble, not arbitrary ranges)"
+    },
+    "training": {
+      "seeds_per_algorithm_variant": 4,
+      "timesteps": 16384,
+      "ppo": "v0.5 M7 hyperparameters",
+      "dqn": "v0.5 M7 hyperparameters",
+      "observation": "v0.4 observation contract, normalization fitted on training-world random exploration and sealed before fitting",
+      "checkpoint": "final fixed-budget checkpoint only"
+    },
+    "ac_parameters": "identified per world on 4 identification seeds with the repository estimator",
+    "worlds": "selected v3 model, each ensemble member, each structural intervention, the regime-conditioned models and the v0.5 control",
+    "market_seeds": "200 evaluation market seeds per world, identical across worlds and agents",
+    "endpoints": {
+      "cost": "mandate_completion_adjusted_cost_bps",
+      "completion": "mandate_within_horizon_completion"
+    },
+    "environment_freeze": "configs/v06/environment-freeze.json written and sealed before any policy training or registered execution evaluation"
+  },
+  "transfer": {
+    "module": "lob.v06.transfer",
+    "replay": "lob.historical_sim.HistoricalSimulator (unchanged): identity-free displayed liquidity reset to history, bounded passive fills, no exact FIFO, no market impact of the hypothetical parent",
+    "fill_modes": [
+      "conservative",
+      "optimistic"
+    ],
+    "mapping": "clock ratio 1 (v0.6 worlds are calibrated in real seconds); lots per native unit = 1 / development depth scale",
+    "episodes": "144 episodes starting at first capture + 300 s + 600 s * k; window = warmup + horizon + settlement + 1 s; 20 book levels",
+    "datasets": {
+      "registered": "deribit-eth-perp-2020-10-01",
+      "retrospective": "deribit-eth-perp-2020-08-01"
+    },
+    "prediction_sources": {
+      "A_single": "selected v3 world",
+      "B_ensemble": "ensemble members pooled",
+      "C_regime": "regime-conditioned models pooled",
+      "D_robust": "ensemble plus structural interventions pooled"
+    },
+    "classification": "per pair and source: predicted direction (Bonferroni interval excludes zero) versus historical direction in each fill mode: agrees, reverses, assumption_dependent, indeterminate, not_evaluable",
+    "never_claimed": [
+      "exact historical fills",
+      "exact FIFO",
+      "profitability",
+      "live performance"
+    ]
+  },
+  "domain_gap": {
+    "module": "lob.v06.domain_gap",
+    "windows_s": 60,
+    "features": "scale-free window statistics only (spreads in bps, depths in development-scaled lots, returns in bps, counts, fractions, correlations); the feature whitelist is sealed in the domain-gap design",
+    "excluded": [
+      "timestamps or clock-of-day",
+      "price levels",
+      "dataset or file identifiers",
+      "seeds",
+      "simulator parameters or regime labels",
+      "row order"
+    ],
+    "split": "real windows chronological (first half train, 10-minute purge, second half test); simulated windows grouped by seed (first half of seeds train, second half test); classes balanced by deterministic subsampling",
+    "classifiers": {
+      "primary": "L2-regularized logistic regression on training-standardized features",
+      "secondary": [
+        "depth-3 decision tree",
+        "random forest of 64 depth-4 trees"
+      ]
+    },
+    "metrics": [
+      "ROC-AUC with block-bootstrap interval",
+      "balanced accuracy",
+      "Brier score",
+      "standardized coefficients and permutation importance (descriptive)"
+    ],
+    "interpretation": "a strong discriminator is evidence of a detectable domain gap; a weak discriminator is not evidence of realism"
+  },
+  "regimes": {
+    "module": "lob.v06.regimes",
+    "thresholds": "v0.5 M6 development-only 5-minute block thresholds, unchanged",
+    "conditioned_dimension": "volatility (high/low median split); one dimension only, fixed before any regime-conditioned fit",
+    "regime_fits": "high- and low-volatility development blocks, each with 4 starts of the calibration-v3 search (1152 candidates) and the same rescore/selection pipeline restricted to that regime's blocks",
+    "transition_realism": "5-minute block labels (volatility, spread, activity, stress) on simulated paths of 8 seeds x 6 h: transition matrices, dwell times, stress entry and recovery frequencies, compared with each historical dataset"
+  },
+  "ood": {
+    "module": "lob.v06.support",
+    "rule": "60 s window features standardized by development statistics; 5-nearest-neighbour distance from each historical window to the ensemble's simulated windows; threshold = 99th percentile of leave-one-seed-out simulated distances; windows above it are OUT_OF_SUPPORT",
+    "no_claim": "a dataset with more than 50% of windows out of support is labelled NO_CLAIM for absolute realism statements"
+  },
+  "hypotheses": {
+    "H1": {
+      "question": "Does the selected calibration-v3 model reduce the v0.6 calibration objective relative to the v0.5 control on retrospective data?",
+      "estimator": "objective(v3) - objective(v0.5 control) on the full retrospective day",
+      "datasets": [
+        "deribit-eth-perp-2020-06-01"
+      ],
+      "sample_unit": "600 s historical blocks; simulated seeds",
+      "uncertainty": "paired moving-block bootstrap of historical blocks with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F1_calibration",
+      "threshold": "two-sided Bonferroni interval upper bound < 0",
+      "failure_semantics": "lower bound > 0: FAILED; otherwise NOT_ESTABLISHED",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / FAILED; labelled RETROSPECTIVE",
+      "label": "retrospective"
+    },
+    "H2": {
+      "question": "Does the improvement generalize to a fresh same-instrument period?",
+      "estimator": "as H1",
+      "datasets": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "as H1",
+      "family": "F1_calibration",
+      "threshold": "as H1",
+      "failure_semantics": "as H1; download failure: NOT_AVAILABLE",
+      "status_rule": "as H1"
+    },
+    "H3": {
+      "question": "Does the improvement generalize cross-instrument?",
+      "estimator": "as H1 with the ETH development scale and tick geometry applied unchanged",
+      "datasets": [
+        "deribit-btc-perp-2020-09-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "as H1",
+      "family": "F1_calibration",
+      "threshold": "as H1",
+      "failure_semantics": "as H2",
+      "status_rule": "as H1"
+    },
+    "H4": {
+      "question": "Do multiple materially distinct parameter vectors remain within the near-optimal calibration region?",
+      "estimator": "size of the greedy materially-distinct near-optimal set",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "candidate parameter vectors",
+      "uncertainty": "near-optimal rule includes 2 x between-seed SE; descriptive count",
+      "family": "F2_identifiability",
+      "threshold": "count >= 2",
+      "failure_semantics": "count = 1: NOT_ESTABLISHED (parameters locally identified at this resolution); search failure: INVALID",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED"
+    },
+    "H5": {
+      "question": "Do near-optimal parameter sets produce materially different execution outcomes?",
+      "estimator": "for each classical agent and member pair: difference of mean completion-adjusted cost over the 200 evaluation market seeds",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "market seeds within each world (independent across worlds)",
+      "uncertainty": "independent percentile bootstrap of each world's market seeds, 5000 resamples",
+      "family": "F3_equifinality",
+      "threshold": "some contrast has a Bonferroni interval excluding zero and |difference| >= 1.0 bps (about a quarter of the development tick in bps)",
+      "failure_semantics": "no such contrast: NOT_ESTABLISHED; fewer than 2 members: NOT_AVAILABLE",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / NOT_AVAILABLE"
+    },
+    "H6": {
+      "question": "Are execution rankings non-invariant across plausible simulator configurations?",
+      "estimator": "per agent pair and ensemble member: paired (same market seeds) mean cost difference",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "market seeds, paired within world",
+      "uncertainty": "paired percentile bootstrap, 5000 resamples; learned agents averaged over training seeds per market seed",
+      "family": "F4_rank_stability",
+      "threshold": "a certified reversal: some pair has Bonferroni intervals excluding zero in opposite directions in two members",
+      "failure_semantics": "no certified reversal: NOT_ESTABLISHED (invariance is not thereby established); fewer than 2 members: NOT_AVAILABLE",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / NOT_AVAILABLE; sign stability, rank correlation, reversal and indeterminate fractions are reported"
+    },
+    "H7": {
+      "question": "Do specific realism-error families explain substantial variation in execution-conclusion instability across simulator worlds?",
+      "estimator": "Spearman correlation across worlds (ensemble and structural interventions) between family error on the selection day and the conclusion-disagreement fraction relative to the selected world",
+      "datasets": [
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "simulator worlds",
+      "uncertainty": "world-level bootstrap, 5000 resamples",
+      "family": "F5_sensitivity",
+      "threshold": "some family has rho >= 0.5 with its Holm-adjusted one-sided interval excluding zero",
+      "failure_semantics": "otherwise NOT_ESTABLISHED; fewer than 8 worlds: INCONCLUSIVE",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / INCONCLUSIVE; within-simulator association only"
+    },
+    "H8": {
+      "question": "Are real and synthetic trajectories distinguishable under leakage-resistant two-sample testing?",
+      "estimator": "test-set ROC-AUC of the primary logistic discriminator (fresh ETH windows versus selected v3 windows)",
+      "datasets": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "sample_unit": "60 s windows (block-resampled in blocks of 10 windows; simulated windows by seed)",
+      "uncertainty": "block bootstrap, 2000 resamples",
+      "family": "F6_domain_gap",
+      "threshold": "one-sided 95% lower bound of AUC > 0.5",
+      "failure_semantics": "otherwise NOT_ESTABLISHED (not evidence of realism)",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / NOT_AVAILABLE"
+    },
+    "H9": {
+      "question": "Does regime-conditioned calibration improve within-regime realism?",
+      "estimator": "per volatility regime: objective(regime model) - objective(global v3) on that regime's 5-minute blocks",
+      "datasets": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "sample_unit": "5-minute blocks; simulated seeds",
+      "uncertainty": "paired block bootstrap with seed bootstrap, 2000 resamples",
+      "family": "F7_regime",
+      "threshold": "Bonferroni upper bound < 0 in both regimes",
+      "failure_semantics": "a regime with lower bound > 0: FAILED; otherwise NOT_ESTABLISHED",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / FAILED"
+    },
+    "H10": {
+      "question": "Does regime-conditioned calibration transfer outside its fitting regime?",
+      "estimator": "objective(regime model on the other regime's blocks) - objective(global v3 on the same blocks)",
+      "datasets": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "sample_unit": "as H9",
+      "uncertainty": "as H9",
+      "family": "F7_regime",
+      "threshold": "noninferiority: Bonferroni upper bound < delta in both directions, delta = 0.10 x global model's selection objective (sealed)",
+      "failure_semantics": "a direction with lower bound > delta: FAILED; otherwise NOT_ESTABLISHED",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / FAILED"
+    },
+    "H11": {
+      "question": "Do ensemble-trained policies have more stable simulator-to-history conclusions than single-simulator-trained policies?",
+      "estimator": "per algorithm and fill mode: |historical - simulated| (policy - TWAP) mean cost difference for the ensemble variant minus the same for the single variant",
+      "datasets": [
+        "deribit-eth-perp-2020-10-01"
+      ],
+      "sample_unit": "historical episodes (paired); simulated market seeds",
+      "uncertainty": "episode bootstrap of history with independent seed bootstrap of predictions, 5000 resamples",
+      "family": "F8_transfer_learning",
+      "threshold": "per algorithm: Bonferroni upper bound < 0 under both fill modes",
+      "failure_semantics": "lower bound > 0 under both modes: FAILED; one mode only: ASSUMPTION_DEPENDENT; otherwise NOT_ESTABLISHED",
+      "status_rule": "per algorithm ESTABLISHED / NOT_ESTABLISHED / FAILED / ASSUMPTION_DEPENDENT"
+    },
+    "H12": {
+      "question": "Are historical bounded-transfer conclusions stable under conservative and optimistic fill semantics?",
+      "estimator": "per agent pair: paired mean episode cost difference under each fill mode",
+      "datasets": [
+        "deribit-eth-perp-2020-10-01"
+      ],
+      "sample_unit": "historical episodes",
+      "uncertainty": "episode percentile bootstrap, 5000 resamples",
+      "family": "F9_fill_semantics",
+      "threshold": "no pair has determinate opposite directions across modes and every determinate pair is determinate in both modes",
+      "failure_semantics": "any opposite-direction pair: FAILED; some pair determinate in one mode only: NOT_ESTABLISHED (those pairs ASSUMPTION_DEPENDENT)",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / FAILED"
+    }
+  },
+  "statistics": {
+    "module": "lob.v06.inference",
+    "families": {
+      "F1_calibration": {
+        "kind": "confirmatory",
+        "members": [
+          "H1",
+          "H2",
+          "H3"
+        ],
+        "size": 3,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.016666666666666666
+      },
+      "F2_identifiability": {
+        "kind": "descriptive",
+        "members": [
+          "H4"
+        ],
+        "size": 1,
+        "correction": "none",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.05
+      },
+      "F3_equifinality": {
+        "kind": "confirmatory",
+        "members": [
+          "H5"
+        ],
+        "size": "sealed: 4 classical agents x C(K, 2) member pairs, K = ensemble size",
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": "sealed"
+      },
+      "F4_rank_stability": {
+        "kind": "confirmatory",
+        "members": [
+          "H6"
+        ],
+        "size": "sealed: 15 agent pairs x K members",
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": "sealed"
+      },
+      "F5_sensitivity": {
+        "kind": "confirmatory",
+        "members": [
+          "H7"
+        ],
+        "size": 9,
+        "correction": "holm",
+        "alpha": 0.05,
+        "adjusted_alpha": "holm step-down from 0.05/9"
+      },
+      "F6_domain_gap": {
+        "kind": "confirmatory",
+        "members": [
+          "H8"
+        ],
+        "size": 1,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.05
+      },
+      "F6b_domain_gap_secondary": {
+        "kind": "exploratory",
+        "members": [],
+        "size": 4,
+        "correction": "holm",
+        "alpha": 0.05,
+        "adjusted_alpha": "holm step-down from 0.0125",
+        "tests": [
+          "tree on fresh ETH",
+          "forest on fresh ETH",
+          "logistic on fresh BTC",
+          "logistic on retrospective June"
+        ]
+      },
+      "F7_regime": {
+        "kind": "confirmatory",
+        "members": [
+          "H9",
+          "H10"
+        ],
+        "size": 4,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.0125
+      },
+      "F8_transfer_learning": {
+        "kind": "confirmatory",
+        "members": [
+          "H11"
+        ],
+        "size": 4,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.0125
+      },
+      "F9_fill_semantics": {
+        "kind": "confirmatory",
+        "members": [
+          "H12"
+        ],
+        "size": 30,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.0016666666666666668
+      },
+      "F10_scorecard_equivalence": {
+        "kind": "descriptive",
+        "members": [],
+        "size": 9,
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": 0.005555555555555556,
+        "scope": "per dataset and model: one one-sided test per family against its sealed margin"
+      },
+      "F11_transfer_sources": {
+        "kind": "descriptive",
+        "members": [],
+        "size": "sealed: 15 pairs x 4 sources",
+        "correction": "bonferroni",
+        "alpha": 0.05,
+        "adjusted_alpha": "sealed"
+      }
+    },
+    "bootstrap": {
+      "moving_block": "historical 600 s blocks (5-minute blocks for regime analyses) resampled with replacement",
+      "stationary": "Politis-Romano stationary bootstrap available for sensitivity (mean block 600 s); not the primary method",
+      "seed": "simulated seeds resampled independently",
+      "paired": "the same historical resample is applied to both models of a contrast",
+      "iid_rule": "no IID bootstrap over dependent time-series samples; market seeds and episodes are independent units"
+    },
+    "equivalence": "one-sided test of family error < sealed real-vs-real margin (the lower TOST bound is trivially satisfied because errors are nonnegative): EQUIVALENT_WITHIN_MARGIN if the one-sided upper bound < margin, FAILED_MARGIN if the lower bound > margin, NOT_EVALUABLE if missing, else NOT_ESTABLISHED",
+    "power": "before holdout access: development/selection-based expected interval widths and minimum detectable effects for F1, F3, F4 and F8, sealed with the designs; an inconclusive result is never read as equivalence",
+    "invalid_cells": "missing or INVALID planned cells withhold their comparison, count as not passing and never shrink a family"
+  },
+  "seeds": {
+    "calibration": {
+      "search_seed": 60100,
+      "fit_seeds": [
+        61101,
+        61102,
+        61103
+      ],
+      "rescore_seeds": [
+        61201,
+        61202,
+        61203,
+        61204,
+        61205
+      ],
+      "selection_seeds": [
+        62101,
+        62102,
+        62103,
+        62104,
+        62105
+      ],
+      "holdout_seeds": [
+        63101,
+        63102,
+        63103,
+        63104,
+        63105,
+        63106,
+        63107,
+        63108,
+        63109,
+        63110
+      ],
+      "regime_search_seeds": {
+        "high": 60200,
+        "low": 60300
+      }
+    },
+    "identifiability": {
+      "sensitivity_seeds": [
+        61101,
+        61102,
+        61103
+      ],
+      "profile_seed": 60400,
+      "morris_seed": 60500
+    },
+    "bootstrap": {
+      "realism": 65901,
+      "equivalence": 65902,
+      "execution": 67901,
+      "sensitivity": 67902,
+      "transfer": 69901,
+      "regime": 64901,
+      "domain_gap": 66901
+    },
+    "domain_gap": {
+      "simulation_seeds": [
+        66101,
+        66102,
+        66103,
+        66104,
+        66105,
+        66106,
+        66107,
+        66108,
+        66109,
+        66110,
+        66111,
+        66112,
+        66113,
+        66114,
+        66115,
+        66116
+      ],
+      "classifier_seed": 66902,
+      "permutation_seed": 66903
+    },
+    "regime_transitions": {
+      "simulation_seeds": [
+        64101,
+        64102,
+        64103,
+        64104,
+        64105,
+        64106,
+        64107,
+        64108
+      ]
+    },
+    "execution": {
+      "evaluation_market_seed_start": 670000,
+      "evaluation_market_seeds": 200,
+      "identification_seeds": [
+        56101,
+        56102,
+        56103,
+        56104
+      ],
+      "training_seeds": [
+        68001,
+        68002,
+        68003,
+        68004
+      ],
+      "normalization_seeds": [
+        1900300,
+        1900301,
+        1900302,
+        1900303,
+        1900304,
+        1900305,
+        1900306,
+        1900307
+      ],
+      "domain_randomization_seed_offset": 9000000
+    },
+    "rule": "every stochastic workflow takes its seed from this table or from a sealed design; no global random state"
+  },
+  "compute_budget": {
+    "calibration_candidates": 2304,
+    "rescore_candidates": 64,
+    "selection_candidates": 32,
+    "regime_candidates_per_regime": 1152,
+    "profile_evaluations": 1680,
+    "sensitivity_evaluations": 32,
+    "morris_trajectories": 12,
+    "policy_models": 16,
+    "timesteps_per_model": 16384,
+    "execution_episodes_per_world_agent": 200,
+    "transfer_episodes_per_dataset": 144,
+    "note": "Budgets are fixed before evaluation. Reduced runs are labelled pilot and never presented as registered evidence."
+  },
+  "invalidation": {
+    "accepted_reasons": [
+      "holdout download failure after one retry (NOT_AVAILABLE)",
+      "source integrity failure: gzip/CRC, incomplete L2 replay, changed source bytes (INVALID)",
+      "binding or seal mismatch (INVALID)",
+      "more than 5% INVALID episodes in a world/agent cell (cell INVALID)",
+      "implementation bug discovered after a registered run (attempt retained as INVALID or FAILED; rerun after inspected outcomes is EXPLORATORY)"
+    ],
+    "retention": "every attempt directory is kept and recorded by an 'attempt' ledger event; nothing is overwritten or deleted",
+    "implementation_revisions": "a fix after registration is sealed as '<analysis>-implementation-revision-N' with old and new source hashes before the rerun"
+  },
+  "referenced_configs": [
+    "configs/v06/datasets.json"
+  ],
+  "exclusions": [
+    "No live profitability, alpha, production trading, HFT, colocation, causal real-market, exact-FIFO, exact historical passive fill, hidden liquidity or universal cross-market claim follows from any v0.6 result.",
+    "Matching observed statistics does not prove that simulator mechanisms are correct.",
+    "Synthetic perturbation results describe the simulator only."
+  ],
+  "amendments": [
+    {
+      "number": 1,
+      "at": "2026-10-01",
+      "reason": "Development inspection of lob.sim_v2 showed limit_qty_mean and market_qty_mean have no effect when empirical size tables are active (the v0.5 rule); they are removed from the search and the impact interventions scale the size table instead. No holdout has been accessed."
+    },
+    {
+      "number": 2,
+      "at": "2026-10-01",
+      "reason": "Development timing showed random candidates with ~1,400 engine events per simulated second (about 100x the historical activity) costing minutes per path; the absolute 3,000,000 cap is replaced by a rate cap of 500 events per simulated second. Deterministic; no holdout accessed."
+    }
+  ]
+}

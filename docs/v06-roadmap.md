@@ -55,8 +55,12 @@ and multiplicity family is frozen in [`configs/v06/protocol.json`](../configs/v0
 | M16 | Performance and UX |
 | M17 | Paper-style report and final claim audit |
 
-Status is recorded in [v06-final-report.md](v06-final-report.md) once evidence exists. This
-roadmap makes no claims about outcomes.
+Outcomes for every milestone are in [v06-final-report.md](v06-final-report.md), and the
+narrative is in [v06-paper.md](v06-paper.md). Several topics are combined into fewer
+documents:
+- identifiability, uncertainty and ensemble: [v06-calibration.md](v06-calibration.md);
+- execution stability, misspecification and model risk: [v06-model-risk.md](v06-model-risk.md);
+- domain gap, support and regime transitions: [v06-domain-gap.md](v06-domain-gap.md).
 
 ## Rules carried over from v0.5
 

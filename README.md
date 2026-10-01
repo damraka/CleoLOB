@@ -50,6 +50,23 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
+### v0.6 research branch (unreleased, `0.6.0.dev0`)
+
+v0.6 asks why simulator conclusions are unstable. It uses preregistered hypotheses, sealed
+designs, and fresh Deribit holdouts from September and October 2020. Results so far, all
+from `research/v0.6-market-realism`, not yet a release:
+
+| Question | v0.6 result |
+|---|---|
+| Relative calibration improvement | v3 beats the v0.5 class on retrospective June (−1.76), fresh ETH (−1.02) and fresh cross-instrument BTC (−1.17); all established. |
+| Absolute realism | Not achieved. No family is within its real-vs-real margin on fresh data. Real vs simulated minute-windows are separated with AUC ≈ 1, and ~100% of historical windows are outside the simulators' support. |
+| Identifiability | Not identified. Two materially different parameter vectors (self-excitation, inside-spread placement, regime share) fit equally well. |
+| Execution stability across plausible worlds | No certified ranking reversal, at a resolution of about 1.5–2.4 bps. Regime and structural model risk (1–4.8 bps) is as large as the policy differences. |
+| Regime-conditioned calibration | Failed within and outside regime. |
+| Historical transfer (fresh ETH 2020-10-01) | Every pairwise conclusion is indeterminate under both bounded fill modes. Domain-randomized training did not transfer more consistently. |
+
+See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
+
 The [v0.5 research report](docs/v05-paper.md) documents the real-market validation study
 released as `v0.5.0`. The
 [v0.5 final report](docs/v05-final-report.md) documents the latest release.
@@ -304,6 +321,9 @@ multi-regime external validity, a registered policy study and historical transfe
 including every negative and invalid one, are in the [v0.5 report](docs/v05-paper.md) and the
 [final report](docs/v05-final-report.md). See the [v0.5 roadmap](docs/v05-roadmap.md).
 
+v0.6, **market realism, calibration uncertainty and model risk**, is in progress on the research
+branch `research/v0.6-market-realism` (not released). See the [v0.6 roadmap](docs/v06-roadmap.md).
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -329,6 +349,11 @@ including every negative and invalid one, are in the [v0.5 report](docs/v05-pape
   [execution](docs/v05-execution.md), [external validity](docs/v05-external-validity.md),
   [RL](docs/v05-rl.md), [transfer](docs/v05-transfer.md), [statistics](docs/v05-statistics.md),
   [performance](docs/v05-performance.md), [reproduction](docs/v05-reproduction.md)
+- [v0.6 roadmap](docs/v06-roadmap.md), [research report](docs/v06-paper.md) and [final report](docs/v06-final-report.md) (unreleased research branch)
+- v0.6 details: [protocol](docs/v06-research-protocol.md), [data](docs/v06-data.md), [realism](docs/v06-realism.md),
+  [calibration and identifiability](docs/v06-calibration.md), [model risk and execution stability](docs/v06-model-risk.md),
+  [domain gap](docs/v06-domain-gap.md), [transfer](docs/v06-transfer.md), [statistics](docs/v06-statistics.md),
+  [performance](docs/v06-performance.md), [reproduction](docs/v06-reproduction.md)
 
 ## Citation
 
