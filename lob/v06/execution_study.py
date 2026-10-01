@@ -121,6 +121,9 @@ def freeze(*, selection_run: str, regime: dict | None, root: Path = PROJECT_ROOT
         "observation": "v0.4 observation contract; normalization fitted per variant on training-world exploration",
         "endpoints": {"cost": COST, "completion": COMPLETION},
         "selection_sha256": pr.document_sha256({"selected": selection["selected"], "ensemble": selection["ensemble"]}),
+        "inert_interventions": [w.name for w in worlds if w.kind == "intervention" and w.sha256 == worlds[0].sha256
+                                or w.kind == "intervention" and (w.config, w.extensions) == (worlds[0].config,
+                                                                                              worlds[0].extensions)],
         "regime_models_sha256": pr.document_sha256(regime) if regime else None,
         "implementation_sha256": {name: pr.text_sha256(root / name) for name in EXECUTION_FILES},
         "semantics": {"completion": "within-horizon and settlement completion reported separately (v0.5 M5)",
@@ -180,8 +183,7 @@ def train(out: str | Path, *, root: Path = PROJECT_ROOT, pilot: dict | None = No
     for variant in VARIANTS:
         fitted = fit_observation_normalization(variant, [World.from_dict(w) for w in plan["training_worlds"][variant]],
                                                plan["mandate"], plan["normalization_seeds"])
-        write_json(out, f"normalization-{variant}.json", {"normalization": fitted,
-                                                            "plan_sha256": pr.document_sha256(plan)})
+        write_json(out, f"normalization-{variant}.json", {**fitted, "plan_sha256": pr.document_sha256(plan)})
     tasks = [(str(out), plan, a, v, s) for a in ALGORITHMS for v in VARIANTS for s in plan["training_seeds"]]
     with ProcessPoolExecutor(max_workers=_workers()) as executor:
         models = list(executor.map(train_one, tasks))
