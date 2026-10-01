@@ -149,6 +149,15 @@ def test_holdout_requires_sealed_design_before_first_access(root: Path) -> None:
     assert ETH_SEP not in report["fresh"]
 
 
+def test_design_without_posthoc_flag_is_registered(root: Path) -> None:
+    # Regression: a design sealed without the optional 'posthoc' key must permit 'evaluate'.
+    _append(root, "seal_design", {"analysis": "h2", "design_sha256": DIGEST, "reads": [ETH_SEP]})
+    _append(root, "access", {"dataset_id": ETH_SEP, "use": "download", "analysis": "h2"})
+    _append(root, "access", {"dataset_id": ETH_SEP, "use": "evaluate", "analysis": "h2"})
+    with pytest.raises(pr.ProtocolError, match="posthoc"):
+        _append(root, "access", {"dataset_id": ETH_SEP, "use": "evaluate_posthoc", "analysis": "h2"})
+
+
 def test_consumed_holdout_cannot_be_reused_by_a_new_registered_design(root: Path) -> None:
     _seal(root, "h2", [ETH_SEP])
     _append(root, "access", {"dataset_id": ETH_SEP, "use": "evaluate", "analysis": "h2"})

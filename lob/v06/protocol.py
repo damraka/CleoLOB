@@ -327,7 +327,7 @@ class LedgerState:
             design = self.designs.get(analysis)
             if design is None or dataset not in design.get("reads", []):
                 self._fail(f"{dataset}: holdout access by {analysis!r} without a sealed design that reads it")
-            if design.get("posthoc") != (use == "evaluate_posthoc") and use != "download":
+            if bool(design.get("posthoc", False)) != (use == "evaluate_posthoc") and use != "download":
                 self._fail(f"{dataset}: posthoc designs must use evaluate_posthoc and only they may")
         for name, digest in payload.get("source_sha256", {}).items():
             if not _DIGEST.fullmatch(str(digest)):
