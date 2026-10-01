@@ -1,0 +1,130 @@
+{
+  "schema": "cleolob-v06-holdout-design-1",
+  "bank_result_sha256": "4855b82c37b07a9c8faf9f76250fbc29d9e6a7df58988a38826214a936f52180",
+  "bank_files_sha256": {
+    "paths.json": "8bff4707975a6fd7d2075d9f7462c971cb80803350366afda2abc383d698908a",
+    "sketches-control.npz": "fc874dc9d398a79064ec385a6c928ce8dd282b0ad7bdae8937a6ebc2b1d5b639",
+    "sketches-regime_high.npz": "2235214ccdfb7ff22a5178b3c8480335b27c8c0bf9b38d01b880a116c659bb87",
+    "sketches-regime_low.npz": "3ef3a3e8f0aa2f94ff302a6d7d093222246510d2b387eea38ac6a3dd87705177",
+    "sketches-selected.npz": "a80b1217b3897f1e6844c32ef5f727ee674a4e5466fb4ba5bc84e6aa3c88abc2",
+    "windows.npz": "3be35dfd61e996f76e65c523511835795de63b8808aaf6d4ccb1cbda4f55156a"
+  },
+  "selection_seal": "c07-round3-009",
+  "regime_run": "results\\v06\\m12\\regime",
+  "margins": {
+    "book_state": 0.6398976476059953,
+    "dependence": 0.08268003036234822,
+    "event_activity": 0.42930851848288915,
+    "event_process": 0.19787171238571985,
+    "resilience": 0.07542113632232522,
+    "returns": 0.3204546831422247,
+    "sizes": 0.08487413580666724,
+    "tail": 0.9458223181741218,
+    "temporal": 0.07626295162052976
+  },
+  "scales": {
+    "book_state": 0.1982129090782667,
+    "dependence": 0.10596628225833117,
+    "event_activity": 0.32097060882926653,
+    "event_process": 0.2644836444783289,
+    "resilience": 0.11758825680165466,
+    "returns": 0.2736157398223197,
+    "sizes": 0.05411885866811994,
+    "tail": 1.085482768272564,
+    "temporal": 0.08047964591317623
+  },
+  "observable_design_sha256": "eafa903a6677f9a587e7946e86ef0750aa936af2a7353e8a575278b336e131b1",
+  "H1_H3": {
+    "alpha": 0.016666666666666666,
+    "samples": 2000,
+    "seed": 65901,
+    "contrast": [
+      "selected",
+      "control"
+    ],
+    "rule": "improvement_status(upper < 0 ESTABLISHED)"
+  },
+  "scorecard": {
+    "alpha": 0.005555555555555556,
+    "models": [
+      "selected",
+      "control"
+    ]
+  },
+  "H8": {
+    "classifier": "logistic",
+    "alpha": 0.05,
+    "samples": 2000,
+    "seed": 66902,
+    "window_s": 60,
+    "block_windows": 10
+  },
+  "H9_H10": {
+    "alpha": 0.0125,
+    "samples": 2000,
+    "seed": 64901,
+    "dimension": "volatility",
+    "noninferiority_delta_rule": "0.10 x global selection objective",
+    "noninferiority_delta": 0.24434166378748645
+  },
+  "support": {
+    "k": 5,
+    "quantile": 0.99,
+    "no_claim_fraction": 0.5
+  },
+  "datasets": {
+    "H1": "deribit-eth-perp-2020-06-01",
+    "H2": "deribit-eth-perp-2020-09-01",
+    "H3": "deribit-btc-perp-2020-09-01",
+    "H8": "deribit-eth-perp-2020-09-01",
+    "H9_H10": "deribit-eth-perp-2020-09-01"
+  },
+  "descriptive_retrospective": [
+    "deribit-eth-perp-2020-07-01",
+    "deribit-btc-perp-2020-07-01",
+    "deribit-eth-perp-2020-08-01"
+  ],
+  "power": {
+    "realism_selection_day": {
+      "difference": -1.4868409903157453,
+      "ci_low": -1.584539864046684,
+      "ci_high": -1.3878076101158208,
+      "half_width": 0.09836612696543157,
+      "note": "selection data; expected resolution of H1-H3 contrasts on a full day"
+    },
+    "execution_selected_world": {
+      "ac": {
+        "sd_cost_bps": 7.106988390386176,
+        "mde_bps_alpha_0.05_power_0.8": 1.4079085475330055
+      },
+      "dqn:ensemble": {
+        "sd_cost_bps": 6.945202413693741,
+        "mde_bps_alpha_0.05_power_0.8": 1.3758584234939146
+      },
+      "dqn:single": {
+        "sd_cost_bps": 8.293016923451797,
+        "mde_bps_alpha_0.05_power_0.8": 1.6428631608794875
+      },
+      "pov": {
+        "sd_cost_bps": 5.298589409082819,
+        "mde_bps_alpha_0.05_power_0.8": 1.0496611094801864
+      },
+      "ppo:ensemble": {
+        "sd_cost_bps": 7.623556243121136,
+        "mde_bps_alpha_0.05_power_0.8": 1.5102416674562256
+      },
+      "ppo:single": {
+        "sd_cost_bps": 7.064985839726916,
+        "mde_bps_alpha_0.05_power_0.8": 1.3995877586357905
+      },
+      "twap": {
+        "sd_cost_bps": 8.184066506926065,
+        "mde_bps_alpha_0.05_power_0.8": 1.62127986648557
+      },
+      "vwap": {
+        "sd_cost_bps": 8.61973489255447,
+        "mde_bps_alpha_0.05_power_0.8": 1.707586640933925
+      }
+    }
+  }
+}
