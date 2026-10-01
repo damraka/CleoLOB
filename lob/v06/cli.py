@@ -53,6 +53,15 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
     child.add_argument("--bank", type=Path, default=Path("results/v06/m13/bank"))
     child.add_argument("--dataset")
     child.add_argument("--out", type=Path)
+    child = commands.add_parser("transfer-study-v06", help="M14: sealed historical execution transfer v2 (H11, H12)")
+    child.add_argument("phase", choices=("seal", "evaluate"))
+    child.add_argument("--policies", type=Path, default=Path("results/v06/m10/policies"))
+    child.add_argument("--evaluation", type=Path, default=Path("results/v06/m10/evaluation"))
+    child.add_argument("--dataset")
+    child.add_argument("--out", type=Path)
+    child = commands.add_parser("benchmark-v06", help="M16: local research-workload benchmarks (not HFT)")
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--repeats", type=int, default=5)
     child = commands.add_parser("claim-audit-v06", help="check claims against sealed results and documentation")
     child.add_argument("--claims", type=Path, default=Path("examples/studies/v06/evidence/claims.json"))
     child.add_argument("--docs", type=Path, nargs="*", default=[Path("docs/v06-final-report.md")])
@@ -181,6 +190,28 @@ def _holdout(args) -> int:
     return 0
 
 
+def _transfer(args) -> int:
+    from . import transfer_study as ts
+    if args.phase == "seal":
+        document = ts.seal(policy_run=args.policies.as_posix(), evaluation_run=args.evaluation.as_posix())
+        _print({"sealed": True, "datasets": document["datasets"], "sources": list(document["sources"])})
+        return 0
+    if not args.dataset or args.out is None:
+        raise ValueError("transfer-study-v06 evaluate requires --dataset and --out")
+    result = ts.evaluate(args.dataset, args.out)
+    _print({"H12": result["H12_fill_semantics"]["status"], "H11": {k: v["status"] for k, v in result["H11"].items()},
+            "rows": result["rows"], "invalid_rows": result["invalid_rows"],
+            "sources": {k: v["counts"] for k, v in result["sources"]["sources"].items()}})
+    return 0
+
+
+def _benchmark(args) -> int:
+    from .benchmarks import run
+    result = run(args.out, repeats=args.repeats)
+    _print({w["workload"]: f"{w['throughput']:.3g} {w['unit']}" for w in result["workloads"]})
+    return 0
+
+
 def _claims(args) -> int:
     from .claims import audit
     result = audit(args.claims, args.docs)
@@ -190,6 +221,7 @@ def _claims(args) -> int:
 
 HANDLERS: dict[str, Callable] = {"identifiability-study": _identifiability, "regime-calibration": _regime,
                                  "execution-study": _execution, "holdout-study": _holdout, "claim-audit-v06": _claims,
+                                 "transfer-study-v06": _transfer, "benchmark-v06": _benchmark,
                                  "calibration-v3": _calibration, "protocol-v06": _protocol, "verify-v06": _verify, "realism-study": _realism}
 
 
