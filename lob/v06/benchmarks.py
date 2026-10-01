@@ -37,6 +37,7 @@ def _summary(name: str, unit: str, work: float, times: list[float]) -> dict:
 
 
 def run(out: str | Path, *, repeats: int = 5, scale: float = 1.0) -> dict:
+    from ..sim_v2 import SimulatorSpec
     from .calibration import base_config, spec_from_unit
     from .domain_gap import FEATURES, Logistic
     from .observables import build_design, measure, pool, sketch, stack, weighted
@@ -44,8 +45,14 @@ def run(out: str | Path, *, repeats: int = 5, scale: float = 1.0) -> dict:
     from .tape import tape_from_simulator
     from .worlds import World, episode_params
     tables = {"market_size_quantiles": [1.0] * 10 + [2.0] * 11, "limit_size_quantiles": [1.0] * 10 + [4.0] * 11}
-    spec = spec_from_unit(np.full(14, 0.35), base_config(3.79), tables)
-    seconds = 600.0 * max(1, round(6 * scale))
+    selection = Path("results/v06/m6/select/result.json")
+    if selection.is_file():   # the selected v3 world (simulated only; no restricted data is read)
+        import json
+        chosen = json.loads(selection.read_text(encoding="utf-8"))["selected"]
+        spec = SimulatorSpec(chosen["config"], chosen["extensions"])
+    else:
+        spec = spec_from_unit(np.full(14, 0.35), base_config(3.79), tables)
+    seconds = 600.0 * max(1, round(12 * scale))
     workloads = []
     simulate_times = _time(lambda: tape_from_simulator(spec, 1, seconds=seconds), max(1, repeats // 2))
     workloads.append(_summary("simulate_10_level_tape", "simulated seconds/s", seconds, simulate_times))
