@@ -15,3 +15,6 @@ dist/
 
 # v0.5 local raw data (restricted provider terms; never committed)
 data/v05/
+
+# v0.6 local raw data and tape caches (restricted provider terms; never committed)
+data/v06/
