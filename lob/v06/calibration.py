@@ -143,6 +143,8 @@ def _init(context: dict) -> None:
 
 def simulate_sketches(spec: SimulatorSpec, seeds: list[int], seconds: float, design: dict) -> list[dict]:
     """One pooled sketch per seed (600 s blocks summed within the seed)."""
+    if seconds < 600.0:
+        raise ValueError("simulated seconds must cover at least one 600 s measurement block")
     result = []
     capped = SimulatorSpec({**spec.config, "max_events": int(EVENTS_PER_SECOND_CAP * (seconds + 60))}, spec.extensions)
     for seed in seeds:

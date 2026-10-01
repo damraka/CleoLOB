@@ -16,6 +16,7 @@ here reads a holdout. Diagnostics:
 from __future__ import annotations
 
 import math
+import warnings
 
 import numpy as np
 
@@ -156,5 +157,19 @@ def morris_effects(records: dict[str, dict], layout: list[list[tuple[int, int]]]
     out = {}
     for name, values in effects.items():
         stacked = np.vstack(values)
-        out[name] = {"mu_star": np.nanmean(np.abs(stacked), 0).tolist(), "sigma": np.nanstd(stacked, 0).tolist()}
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            out[name] = {"mu_star": clean(np.nanmean(np.abs(stacked), 0).tolist()),
+                         "sigma": clean(np.nanstd(stacked, 0).tolist())}
     return {"families": list(FAMILIES), "effects": out, "status": "EXPLORATORY"}
+
+
+def clean(value):
+    """Recursively replace non-finite floats by None (strict JSON; NaN means NOT_EVALUABLE here)."""
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, dict):
+        return {k: clean(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [clean(v) for v in value]
+    return value
