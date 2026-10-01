@@ -23,8 +23,9 @@ PUBLIC_RUN_FILES = ("config.json", "result.json", "binding.json", "provenance.js
 REGISTRATION = ("configs/v06/protocol.json", "configs/v06/datasets.json", "configs/v06/consumption-ledger.jsonl",
                 "configs/v06/environment-freeze.json", "configs/v06/holdout-design.json",
                 "configs/v06/transfer-design.json")
-FORBIDDEN = re.compile(r"([A-Za-z]:\\\\|[A-Za-z]:/Users|/home/|/Users/|api[_-]?key|secret|password|token\b|Bearer )",
-                       re.I)
+# Absolute Windows paths (single or JSON-escaped backslash, or slash), POSIX home paths, credential-like words.
+FORBIDDEN = re.compile(r"([A-Za-z]:(\\{1,2}|/)(Users|home|Documents)|/home/|/Users/|api[_-]?key|secret|password|"
+                       r"token\b|Bearer )", re.I)
 
 
 def check_text(name: str, text: str) -> None:
