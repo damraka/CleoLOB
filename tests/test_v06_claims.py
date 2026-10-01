@@ -9,7 +9,10 @@ import pytest
 from lob.v06 import claims as cl
 from lob.v06 import evidence
 from lob.v06 import protocol as pr
-from tests.test_v06_protocol import DEV, root  # noqa: F401  (fixture)
+from tests import test_v06_protocol
+from tests.test_v06_protocol import DEV
+
+root = test_v06_protocol.root   # shared fixture
 
 
 def _run(root: Path, status: str = "ESTABLISHED") -> Path:
@@ -30,7 +33,7 @@ def _claims(root: Path, run: Path) -> Path:
     return path
 
 
-def test_claim_numbers_come_from_the_run(root: Path) -> None:  # noqa: F811
+def test_claim_numbers_come_from_the_run(root: Path) -> None:
     run = _run(root)
     path = _claims(root, run)
     claim = json.loads(path.read_text(encoding="utf-8"))["claims"][0]
@@ -46,7 +49,7 @@ def test_claim_numbers_come_from_the_run(root: Path) -> None:  # noqa: F811
         cl.write_claims(root / "c.json", [claim, claim], "x")
 
 
-def test_audit_detects_doc_mismatch_and_tampering(root: Path) -> None:  # noqa: F811
+def test_audit_detects_doc_mismatch_and_tampering(root: Path) -> None:
     run = _run(root)
     path = _claims(root, run)
     doc = root / "report.md"
