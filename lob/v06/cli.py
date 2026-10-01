@@ -20,6 +20,10 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
     child = commands.add_parser("protocol-v06", help="verify the frozen v0.6 protocol, ledger and holdout status")
     child.add_argument("operation", choices=("verify", "status"))
     child.add_argument("--root", type=Path, default=Path("."))
+    child = commands.add_parser("realism-study", help="M1-M4: freeze the observable design, scales and margins")
+    child.add_argument("phase", choices=("design",))
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--no-seal", action="store_true", help="labelled pilot: do not seal in the ledger")
     child = commands.add_parser("verify-v06", help="verify sealed v0.6 run directories (bytes + binding; not replication)")
     child.add_argument("path", type=Path)
 
@@ -45,7 +49,16 @@ def _verify(args) -> int:
     return 0 if result["valid"] else 1
 
 
-HANDLERS: dict[str, Callable] = {"protocol-v06": _protocol, "verify-v06": _verify}
+def _realism(args) -> int:
+    from .realism_study import design
+    result = design(args.out, seal=not args.no_seal)
+    _print({"scale_native_per_lot": result["scale_native_per_lot"], "tick_bps": result["tick_bps"],
+            "objective_scales": result["objective_scales"], "equivalence_margins": result["equivalence_margins"],
+            "sealed": not args.no_seal})
+    return 0
+
+
+HANDLERS: dict[str, Callable] = {"protocol-v06": _protocol, "verify-v06": _verify, "realism-study": _realism}
 
 
 def dispatch(args) -> int | None:
