@@ -22,6 +22,7 @@ from .evidence import finalize, new_run, write_json
 from .execution import CLASSICAL, COMPLETION, COST, LEARNED, cells
 from .execution_study import _workers, read_freeze
 from .history import TICKS
+from .identifiability import clean
 from .policies import load_policy
 from .realism_study import read_design
 from .calibration_study import DESIGN_RUN
@@ -172,7 +173,7 @@ def evaluate(dataset_id: str, out: str | Path, *, root: Path = PROJECT_ROOT) -> 
                                  "FIFO, profitability or live claim.")}
     write_json(out, "summary.json", {k: result[k] for k in ("dataset", "rows", "invalid_rows")})
     finalize(out, analysis=f"m14-transfer-{dataset_id}", dataset_ids=[dataset_id],
-             config={"design_sha256": pr.document_sha256(document)}, result=result, root=root,
+             config={"design_sha256": pr.document_sha256(document)}, result=clean(result), root=root,
              seeds={"bootstrap": document["seed"]})
     return result
 

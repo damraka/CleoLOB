@@ -25,6 +25,7 @@ from .calibration_study import DESIGN_RUN, read_selection
 from .domain_gap import Standardizer, gap_status, support, two_sample_test, window_features
 from .evidence import finalize, new_run, write_json
 from .history import block_raws, load
+from .identifiability import clean
 from .observables import measure, pool, sketch
 from .realism import bootstrap_realism, improvement_status
 from .realism_study import load_sketches, read_design, save_sketches
@@ -96,7 +97,7 @@ def bank(out: str | Path, *, selection_run: str, regime_run: str | None, root: P
                                                 for i, w in enumerate(items)})
     paths = {name: [r["blocks"] for r in results if r["kind"] == "path" and r["name"] == name]
              for name in ("selected", "control")}
-    write_json(out, "paths.json", paths)
+    write_json(out, "paths.json", clean(paths))
     files = {p.name: pr.file_sha256(p) for p in sorted(out.iterdir()) if p.is_file()}
     result = {"label": label, "models": {k: {"config": v["config"], "extensions": v["extensions"]}
                                          for k, v in models.items()},
@@ -104,7 +105,7 @@ def bank(out: str | Path, *, selection_run: str, regime_run: str | None, root: P
               "transition_profiles": {name: transition_profile(p) for name, p in paths.items()},
               "tasks": len(tasks)}
     finalize(out, analysis=f"m13-simulation-bank-{label}", dataset_ids=[], config={"seeds": seeds},
-             result=result, root=root, seeds={"holdout": seeds["calibration"]["holdout_seeds"],
+             result=clean(result), root=root, seeds={"holdout": seeds["calibration"]["holdout_seeds"],
                                               "domain_gap": seeds["domain_gap"]["simulation_seeds"],
                                               "transitions": seeds["regime_transitions"]["simulation_seeds"]})
     return result
@@ -228,7 +229,7 @@ def evaluate(dataset_id: str, out: str | Path, *, bank_run: str, root: Path = PR
         result["regime"] = regime_contrasts(tape, labelled, banked, frozen, document)
     write_json(out, "window_features.json", {"rows": len(real_windows)})
     finalize(out, analysis=f"m13-holdout-{dataset_id}", dataset_ids=[dataset_id],
-             config={"design_sha256": pr.document_sha256(document)}, result=result, root=root,
+             config={"design_sha256": pr.document_sha256(document)}, result=clean(result), root=root,
              seeds={"bootstrap": document["H1_H3"]["seed"], "domain_gap": document["H8"]["seed"]})
     return result
 
