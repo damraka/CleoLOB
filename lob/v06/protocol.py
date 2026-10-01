@@ -384,6 +384,18 @@ def append_event(path: str | Path, event: str, payload: dict, *, protocol: dict 
     return entry
 
 
+def amend_protocol(root: str | Path, document: dict, *, number: int, reason: str, affects: list[str]) -> dict:
+    """Append the amendment (validated against the current protocol) and then write the new protocol."""
+    root = Path(root)
+    current = load_protocol(root / PROTOCOL_PATH)
+    validate_protocol(document)
+    entry = append_event(root / LEDGER_PATH, "amend", {"protocol_sha256": protocol_sha256(document), "reason": reason,
+                                                       "affects": affects, "number": number}, protocol=current)
+    (root / PROTOCOL_PATH).write_text(json.dumps(document, indent=2, ensure_ascii=False) + "\n", encoding="utf-8",
+                                      newline="\n")
+    return entry
+
+
 def ledger_anchor(path: str | Path) -> dict:
     entries = read_ledger(path)
     replay_ledger(entries)
@@ -527,13 +539,21 @@ def verify_binding(binding: dict, *, protocol: dict, ledger_path: str | Path, co
     try:
         if binding.get("schema") != BINDING_SCHEMA:
             raise ProtocolError("unsupported binding schema")
-        if binding["protocol_sha256"] != protocol_sha256(protocol):
-            issues.append("protocol changed since binding")
         entries = read_ledger(ledger_path)
         replay_ledger(entries, protocol)
         anchor = binding["ledger_anchor"]
         if anchor["index"] >= len(entries) or entries[anchor["index"]]["sha256"] != anchor["sha256"]:
             issues.append("ledger anchor missing or changed (truncation or rewrite)")
+        else:
+            # The bound protocol must be the ledger's protocol at the anchor; later amendments are
+            # recorded in the ledger and reported, not treated as tampering.
+            at_anchor = replay_ledger(entries[: anchor["index"] + 1])
+            if binding["protocol_sha256"] != at_anchor.protocol_sha256:
+                issues.append("bound protocol hash is not the ledger's protocol at the anchor")
+            if binding["protocol_sha256"] != protocol_sha256(protocol):
+                amended = [e["payload"].get("number") for e in entries[anchor["index"] + 1:] if e["event"] == "amend"]
+                if not amended:
+                    issues.append("protocol changed since binding without a ledger amendment")
         for dataset_id, bound in binding["datasets"].items():
             declaration = dataset_declaration(protocol, dataset_id)
             anchored: dict[str, str] = {}

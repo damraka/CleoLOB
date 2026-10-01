@@ -240,6 +240,18 @@ def test_binding_roundtrip_and_tamper_detection(root: Path) -> None:
     assert evidence.verify_tree(root / "results/v06", root=root)["invalid"] == ["run"]
 
 
+def test_binding_survives_ledgered_amendment_but_not_silent_edit(root: Path) -> None:
+    out = evidence.new_run(root / "results/v06/run")
+    evidence.finalize(out, analysis="unit", dataset_ids=[DEV], config={}, result={}, root=root, check_source=False)
+    document = json.loads((root / pr.PROTOCOL_PATH).read_text(encoding="utf-8"))
+    document["exclusions"].append("silently edited")
+    (root / pr.PROTOCOL_PATH).write_text(json.dumps(document), encoding="utf-8")
+    assert not evidence.verify_run(out, root=root)["valid"]
+    pr.append_event(_ledger(root), "amend", {"protocol_sha256": pr.protocol_sha256(document), "reason": "r",
+                                             "affects": [], "number": 1})
+    assert evidence.verify_run(out, root=root)["valid"]
+
+
 def test_binding_detects_ledger_truncation(root: Path) -> None:
     _append(root, "access", {"dataset_id": DEV, "use": "develop", "analysis": "a"})
     out = evidence.new_run(root / "results/v06/run")
