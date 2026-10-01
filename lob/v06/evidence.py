@@ -19,6 +19,7 @@ from ..experiments.registry import PROJECT_ROOT, source_manifest
 from . import protocol as pr
 
 RESULTS_ROOT = "results/v06"
+_STARTED: dict[Path, dict] = {}
 MEANING = "byte integrity plus protocol/ledger/dataset/config/result binding; not independent scientific replication"
 
 
@@ -31,6 +32,7 @@ def new_run(out: str | Path) -> Path:
     """Create a run directory; refuses to reuse one (attempts are never overwritten)."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=False)
+    _STARTED[out.resolve()] = source_manifest()
     return out
 
 
@@ -47,8 +49,11 @@ def finalize(out: Path, *, analysis: str, dataset_ids: Iterable[str], config: An
     """Bind and seal; refuses if the implementation changed while the run executed."""
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     provenance = portable_provenance()
-    if check_source and provenance["source_files"] != source_manifest():
-        raise ValueError("implementation changed during the run; attempt retained unsealed")
+    started = _STARTED.pop(Path(out).resolve(), None)
+    if check_source and started is not None and provenance["source_files"] != started:
+        changed = sorted(k for k in set(started) | set(provenance["source_files"])
+                         if started.get(k) != provenance["source_files"].get(k))
+        raise ValueError(f"implementation changed during the run ({changed}); attempt retained unsealed")
     config = json.loads(canonical_json(config))
     result = json.loads(canonical_json(result))
     write_json(out, "config.json", config)

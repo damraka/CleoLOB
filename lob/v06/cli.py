@@ -24,6 +24,11 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
     child.add_argument("phase", choices=("design",))
     child.add_argument("--out", type=Path, required=True)
     child.add_argument("--no-seal", action="store_true", help="labelled pilot: do not seal in the ledger")
+    child = commands.add_parser("calibration-v3", help="M6: calibration v3 development search or sealed selection")
+    child.add_argument("phase", choices=("develop", "select"))
+    child.add_argument("--out", type=Path, required=True)
+    child.add_argument("--from", dest="source", type=Path, help="development run (select phase)")
+    child.add_argument("--pilot", action="store_true", help="labelled pilot: reduced budget, never sealed")
     child = commands.add_parser("verify-v06", help="verify sealed v0.6 run directories (bytes + binding; not replication)")
     child.add_argument("path", type=Path)
 
@@ -58,7 +63,29 @@ def _realism(args) -> int:
     return 0
 
 
-HANDLERS: dict[str, Callable] = {"protocol-v06": _protocol, "verify-v06": _verify, "realism-study": _realism}
+PILOT_BUDGET = {"starts": 2, "global_draws": 8, "rounds": [0.25], "per_round": 8, "seconds": 600.0, "rescore": 6,
+                "advance": 4, "rescore_seconds": 600.0, "selection_seconds": 600.0}
+
+
+def _calibration(args) -> int:
+    from .calibration_study import develop, select
+    if args.phase == "develop":
+        result = develop(args.out, budget=PILOT_BUDGET if args.pilot else None,
+                         label="pilot" if args.pilot else "registered")
+        _print({k: result[k] for k in ("label", "candidates", "failed_candidates", "start_best")}
+               | {"best_search_objective": (result["best_search"] or {}).get("objective")})
+        return 0
+    if args.source is None:
+        raise ValueError("calibration-v3 select requires --from <development run>")
+    result = select(args.source, args.out, seal=not args.pilot)
+    _print({"selected": result["selected"]["key"], "selection_objective": result["selected"]["selection_objective"],
+            "control_selection_objective": result["control"]["selection_objective"],
+            "near_optimal": len(result["near_optimal"]), "distinct": len(result["distinct_near_optimal"]),
+            "ensemble": result["ensemble_members"], "sealed": not args.pilot})
+    return 0
+
+
+HANDLERS: dict[str, Callable] = {"calibration-v3": _calibration, "protocol-v06": _protocol, "verify-v06": _verify, "realism-study": _realism}
 
 
 def dispatch(args) -> int | None:

@@ -252,6 +252,21 @@ def test_binding_survives_ledgered_amendment_but_not_silent_edit(root: Path) -> 
     assert evidence.verify_run(out, root=root)["valid"]
 
 
+def test_finalize_refuses_source_change_during_run(root: Path, monkeypatch) -> None:
+    out = evidence.new_run(root / "results/v06/run")
+    original = evidence.portable_provenance
+
+    def changed():
+        provenance = original()
+        provenance["source_files"] = {**provenance["source_files"], "lob/v06/new.py": "0" * 64}
+        return provenance
+
+    monkeypatch.setattr(evidence, "portable_provenance", changed)
+    with pytest.raises(ValueError, match="implementation changed during the run"):
+        evidence.finalize(out, analysis="unit", dataset_ids=[DEV], config={}, result={}, root=root)
+    assert not (out / "binding.json").exists()
+
+
 def test_binding_detects_ledger_truncation(root: Path) -> None:
     _append(root, "access", {"dataset_id": DEV, "use": "develop", "analysis": "a"})
     out = evidence.new_run(root / "results/v06/run")

@@ -259,7 +259,7 @@
     "pareto": "the Pareto set over the nine family errors among the 64 re-scored candidates is reported descriptively",
     "control": "v0.5 selected calibration-v2 model, unchanged",
     "failure": "a candidate that raises, hits max_events or yields a non-finite objective gets objective +inf, is retained and counted",
-    "event_cap": "max_events 3,000,000 per simulated path; a capped candidate is a retained failure with objective +inf"
+    "event_cap": "deterministic implausibility guard: a simulated path ends with a RuntimeError after 500 engine events per simulated second (warmup included); the candidate is a retained failure with objective +inf. 500/s is 5.6x the v0.5 selected model (89/s) and about 70x the development net book-change rate."
   },
   "identifiability": {
     "module": "lob.v06.identifiability",
@@ -885,6 +885,11 @@
       "number": 1,
       "at": "2026-10-01",
       "reason": "Development inspection of lob.sim_v2 showed limit_qty_mean and market_qty_mean have no effect when empirical size tables are active (the v0.5 rule); they are removed from the search and the impact interventions scale the size table instead. No holdout has been accessed."
+    },
+    {
+      "number": 2,
+      "at": "2026-10-01",
+      "reason": "Development timing showed random candidates with ~1,400 engine events per simulated second (about 100x the historical activity) costing minutes per path; the absolute 3,000,000 cap is replaced by a rate cap of 500 events per simulated second. Deterministic; no holdout accessed."
     }
   ]
 }
