@@ -166,10 +166,41 @@ def design_document(*, bank_run: Path, selection_run: str, regime_run: str | Non
                                       "deribit-eth-perp-2020-08-01"]}
 
 
-def seal(*, bank_run: str, selection_run: str, regime_run: str | None, root: Path = PROJECT_ROOT) -> dict:
+def power_report(*, bank_run: Path, evaluation_run: Path | None, document: dict, root: Path) -> dict:
+    """Resolution expected before any holdout access: selection-day contrast width and execution MDEs."""
+    from .inference import minimum_detectable_effect
+    frozen = read_design(root / DESIGN_RUN, root=root)
+    banked = load_bank(bank_run)
+    selection_blocks = load_sketches(root / DESIGN_RUN / "selection-sketches.npz")
+    contrast = bootstrap_realism(selection_blocks, {k: banked["sketches"][k] for k in ("selected", "control")},
+                                 frozen["design"], frozen["objective_scales"], samples=500,
+                                 seed=document["H1_H3"]["seed"], alpha=document["H1_H3"]["alpha"],
+                                 contrasts=(("selected", "control"),))["contrasts"]["selected-control"]
+    out = {"realism_selection_day": {"difference": contrast["difference"], "ci_low": contrast["ci_low"],
+                                     "ci_high": contrast["ci_high"],
+                                     "half_width": (contrast["ci_high"] - contrast["ci_low"]) / 2,
+                                     "note": "selection data; expected resolution of H1-H3 contrasts on a full day"}}
+    if evaluation_run is not None:
+        result = json.loads((evaluation_run / "result.json").read_text(encoding="utf-8"))
+        mde = {}
+        for key, summary in result["summaries"].items():
+            world, agent = key.split("|")
+            if world == "selected" and summary.get("sd_cost_bps"):
+                mde[agent] = {"sd_cost_bps": summary["sd_cost_bps"],
+                              "mde_bps_alpha_0.05_power_0.8": minimum_detectable_effect(
+                                  summary["sd_cost_bps"], summary["markets"], alpha=0.05)}
+        out["execution_selected_world"] = mde
+    return out
+
+
+def seal(*, bank_run: str, selection_run: str, regime_run: str | None, root: Path = PROJECT_ROOT,
+         evaluation_run: str | None = "results/v06/m10/evaluation") -> dict:
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     document = design_document(bank_run=root / bank_run, selection_run=selection_run, regime_run=regime_run,
                                root=root)
+    document["power"] = power_report(bank_run=root / bank_run,
+                                     evaluation_run=root / evaluation_run if evaluation_run else None,
+                                     document=document, root=root)
     path = root / "configs/v06/holdout-design.json"
     if path.exists():
         raise FileExistsError("holdout design already written; it is immutable")
