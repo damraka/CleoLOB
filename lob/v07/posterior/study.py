@@ -67,27 +67,45 @@ def recovery(out: str | Path, *, root: Path = PROJECT_ROOT, budget: dict | None 
     truths = [unit_from_spec(SimulatorSpec(inputs["selection"]["selected"]["config"],
                                            inputs["selection"]["selected"]["extensions"]))]
     rng = np.random.default_rng(seeds["recovery"][0])
-    truths += [rng.random(len(NAMES)) for _ in range(budget["truths"] - 1)]
-    results = []
-    for k, truth in enumerate(truths[: budget["truths"]]):
+    results, rejected_truths = [], []
+    k = 0
+    while len(results) < budget["truths"]:
+        if k == 0:
+            truth = truths[0]
+        else:
+            truth = rng.random(len(NAMES))
+        target_seeds = list(range(seeds["recovery"][min(k, 2)] * 100 + 10 * k,
+                                  seeds["recovery"][min(k, 2)] * 100 + 10 * k + budget["target_seeds"]))
         spec = spec_from_unit(truth, inputs["base"], inputs["tables"])
-        target_seeds = list(range(seeds["recovery"][k] * 100, seeds["recovery"][k] * 100 + budget["target_seeds"]))
-        target = pool(simulate_sketches(spec, target_seeds, budget["target_seconds"], frozen["design"]))
+        try:
+            target = pool(simulate_sketches(spec, target_seeds, budget["target_seconds"], frozen["design"]))
+        except (RuntimeError, ValueError) as exc:
+            # A prior draw that violates the implausibility guard cannot generate a synthetic target: redraw.
+            rejected_truths.append({"unit": np.asarray(truth).round(6).tolist(), "reason": f"{type(exc).__name__}: {exc}"})
+            log({"rejected_truth": len(rejected_truths), "reason": str(exc)})
+            k += 1
+            if len(rejected_truths) > 20:
+                raise
+            continue
+        k += 1
         context = {"design": frozen["design"], "scales": frozen["objective_scales"], "targets": {"synthetic": target},
                    "keep_sketches": False}
         evaluator = smc_abc.Evaluator(base=inputs["base"], tables=inputs["tables"], context=context,
                                       target="synthetic", seed_base=seeds["smc_abc_simulation_seed_base"] + 5_000_000
-                                      + k * 100_000, workers=workers)
-        log({"truth": k, "unit": np.asarray(truth).round(4).tolist()})
+                                      + len(results) * 100_000, workers=workers)
+        index = len(results)
+        log({"truth": index, "unit": np.asarray(truth).round(4).tolist()})
         posterior = smc_abc.run(evaluator, particles=budget["particles"], generations=budget["generations"],
-                                seed=seeds["recovery"][k], log=log)
+                                seed=seeds["recovery"][index], log=log)
         finite = np.isfinite(posterior["distances"])
         cov = smc_abc.coverage(posterior["particles"][finite], np.asarray(truth))
         results.append({"truth": np.asarray(truth).tolist(), "coverage": cov, "tolerance": posterior["tolerance"],
                         "history": posterior["history"], "marginals": smc_abc.marginals(posterior["particles"]),
                         "evaluations": posterior["evaluations"]})
     passed = [r["coverage"]["covered_fraction"] >= 0.8 for r in results]
-    result = {"label": label, "budget": budget, "truths": results, "passed": passed,
+    result = {"label": label, "budget": budget, "truths": results, "passed": passed, "rejected_truths": rejected_truths,
+              "truth_rule": "the v0.6 selected vector plus seeded prior draws; a draw whose synthetic target violates "
+                            "the 500 events/s implausibility guard is rejected and redrawn",
               "status": "PASS" if all(passed) else "ASSUMPTION_DEPENDENT",
               "rule": "each truth: the 90% marginal intervals cover the true value for >= 80% of the 14 parameters; "
                       "any failure labels the G0 posterior ASSUMPTION_DEPENDENT",
