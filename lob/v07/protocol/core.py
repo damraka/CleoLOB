@@ -402,11 +402,50 @@ def replay_ledger(entries: Iterable[dict], protocol: dict | None = None) -> Ledg
     return state
 
 
+class _LedgerLock:
+    """Exclusive lock file next to the ledger so concurrent processes can never interleave appends."""
+
+    def __init__(self, path: Path, timeout: float = 120.0) -> None:
+        self.lock = path.with_name(path.name + ".lock")
+        self.timeout = timeout
+
+    def __enter__(self):
+        import os
+        import time
+        deadline = time.monotonic() + self.timeout
+        while True:
+            try:
+                self.fd = os.open(self.lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                return self
+            except (FileExistsError, PermissionError):   # Windows: a lock pending deletion raises PermissionError
+                if time.monotonic() > deadline:
+                    raise ProtocolError(f"ledger lock {self.lock.name} held for more than {self.timeout} s") from None
+                time.sleep(0.05)
+
+    def __exit__(self, *exc) -> None:
+        import os
+        os.close(self.fd)
+        for _ in range(100):
+            try:
+                self.lock.unlink(missing_ok=True)
+                return
+            except PermissionError:
+                import time
+                time.sleep(0.01)
+
+
 def append_event(path: str | Path, event: str, *, reason: str, payload: dict | None = None, dataset: str | None = None,
                  role: str | None = None, design: str | None = None, protocol: dict | None = None,
                  root: Path | None = None, at: str | None = None) -> dict:
-    """Validate history plus the new entry (with git state), then append."""
+    """Validate history plus the new entry (with git state), then append, under an exclusive lock."""
     path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with _LedgerLock(path):
+        return _append_locked(path, event, reason=reason, payload=payload, dataset=dataset, role=role, design=design,
+                              protocol=protocol, root=root, at=at)
+
+
+def _append_locked(path: Path, event: str, *, reason, payload, dataset, role, design, protocol, root, at) -> dict:
     state = replay_ledger(read_ledger(path), protocol)
     entry = {"schema": LEDGER_SCHEMA, "index": state.count, "at": at or _utc_now(), "event": event,
              "dataset": dataset, "role": role, "design": design, "reason": reason,

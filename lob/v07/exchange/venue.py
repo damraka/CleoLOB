@@ -41,6 +41,14 @@ class ExchangeRules:
     matching: str = "price-time priority (declared)"
     source: str = "declaration"
     verified: bool = False                    # True only for simulator venues
+    priority: str = "price_time"              # price_time | pro_rata
+    cancel_replace_priority: str = "reduce_keeps_priority_increase_or_reprice_resets"
+    market_sweeping: bool = True
+    partial_fills: bool = True
+    locked_crossed_handling: str = "incoming order matches; resting books never locked or crossed"
+    session: str = "continuous 24/7"
+    auction: str = "NOT_AVAILABLE: no auction phase modelled"
+    acknowledgement_timing: str = "NOT_AVAILABLE: venue acknowledgement timing is not observed"
 
     def __post_init__(self) -> None:
         if self.tick <= 0 or self.lot <= 0 or self.min_qty <= 0:
@@ -79,6 +87,24 @@ class ExchangeRules:
         return {"side": side, "qty": qty, "price": price, "order_type": order_type, "tif": tif,
                 "post_only": post_only}
 
+    def semantics(self) -> dict:
+        """Mechanic -> status: SIMULATED (exact engine behaviour), DECLARED (from public documentation,
+        unverified) or NOT_AVAILABLE (not represented)."""
+        declared = "SIMULATED" if self.verified else "DECLARED"
+        table = {"price_time_priority": declared if self.priority == "price_time" else "NOT_AVAILABLE",
+                 "pro_rata": "NOT_AVAILABLE" if self.priority == "price_time" else declared,
+                 "cancel_replace_priority": declared, "tick_size": declared, "lot_size": declared,
+                 "maker_taker_fees": "DECLARED (mandate convention)", "rebates": "NOT_AVAILABLE" if self.maker_fee_bps >= 0
+                 else declared, "post_only": declared if self.post_only else "NOT_AVAILABLE",
+                 "ioc": declared if "IOC" in self.time_in_force else "NOT_AVAILABLE",
+                 "fok": declared if "FOK" in self.time_in_force else "NOT_AVAILABLE",
+                 "self_trade_prevention": "NOT_AVAILABLE" if self.self_trade_prevention == "none" else declared,
+                 "minimum_quantity": declared, "market_sweeping": declared if self.market_sweeping else "NOT_AVAILABLE",
+                 "partial_fills": declared if self.partial_fills else "NOT_AVAILABLE",
+                 "locked_crossed_handling": declared, "session_rules": declared, "auction": "NOT_AVAILABLE",
+                 "acknowledgement_timing": "SIMULATED (latency model)" if self.verified else "NOT_AVAILABLE"}
+        return table
+
     def fee(self, notional: float, *, maker: bool) -> float:
         return notional * (self.maker_fee_bps if maker else self.taker_fee_bps) / 1e4
 
@@ -99,6 +125,11 @@ VENUE_RULES = {
                                       time_in_force=("GTC", "IOC", "FOK", "GTD"), source="lob.engine (exact)",
                                       verified=True),
 }
+
+
+def semantics_matrix() -> dict:
+    """Venue -> mechanic -> SIMULATED / DECLARED / NOT_AVAILABLE (the workstream-3 report table)."""
+    return {f"{v}/{i}": r.semantics() for (v, i), r in VENUE_RULES.items()}
 
 
 def rules(venue: str, instrument: str) -> ExchangeRules:

@@ -107,3 +107,61 @@ def test_checkpoint_resume_reproduces_hash_chain(l2) -> None:
     tampered = json.dumps(stored)
     with pytest.raises(ValueError):
         BookReplay.resume(tampered, adapter.records())
+
+
+# ----------------------------------------------------------------------------- matching fixtures (workstream 3)
+
+from lob.engine import Order, OrderBook, OrderType, TimeInForce  # noqa: E402
+from lob.v07.exchange.venue import semantics_matrix  # noqa: E402
+
+
+def _limit(oid, side, qty, price, tif=TimeInForce.GTC, post_only=False, owner="X"):
+    return Order(oid, side, qty, OrderType.LIMIT, owner, 0.0, price=price, time_in_force=tif, post_only=post_only)
+
+
+def test_price_time_priority_partial_fills_and_sweep() -> None:
+    book = OrderBook(check_invariants=True)
+    book.process(_limit(1, Side.SELL, 5, 101), 0.0)
+    book.process(_limit(2, Side.SELL, 5, 101), 0.0)
+    book.process(_limit(3, Side.SELL, 5, 102), 0.0)
+    trades = book.process(Order(4, Side.BUY, 12, OrderType.MARKET, "T", 0.0), 0.1)
+    assert [(t.maker_order_id, t.price, t.qty) for t in trades] == [(1, 101, 5), (2, 101, 5), (3, 102, 2)]
+    assert book.best_ask() == 102 and book.ask_vol[102] == 3
+
+
+def test_ioc_fok_and_post_only_semantics() -> None:
+    book = OrderBook(check_invariants=True)
+    book.process(_limit(1, Side.SELL, 5, 101), 0.0)
+    fok = _limit(2, Side.BUY, 10, 101, TimeInForce.FOK)
+    assert book.process(fok, 0.1) == [] and fok.status.name == "CANCELLED"
+    ioc = _limit(3, Side.BUY, 10, 101, TimeInForce.IOC)
+    assert sum(t.qty for t in book.process(ioc, 0.2)) == 5 and ioc.status.name == "CANCELLED" and not book.asks
+    book.process(_limit(4, Side.SELL, 5, 103), 0.3)
+    post = _limit(5, Side.BUY, 1, 103, post_only=True)
+    book.process(post, 0.4)
+    assert post.status.name == "REJECTED" and post.reject_reason == "post_only_would_cross"
+
+
+def test_resting_book_never_locked_or_crossed() -> None:
+    book = OrderBook(check_invariants=True)
+    book.process(_limit(1, Side.SELL, 5, 101), 0.0)
+    book.process(_limit(2, Side.BUY, 3, 101), 0.1)        # marketable limit matches, never rests locked
+    assert book.best_bid() is None and book.ask_vol[101] == 2
+
+
+def test_cancel_replace_priority() -> None:
+    book = OrderBook(check_invariants=True)
+    book.process(_limit(1, Side.BUY, 5, 100), 0.0)
+    book.process(_limit(2, Side.BUY, 5, 100), 0.0)
+    book.modify(1, 3, None, 0.1)                          # reduce keeps priority
+    assert book.queue_position(1) == (0, 0)
+    book.modify(1, 8, None, 0.2)                          # increase resets priority
+    assert book.queue_position(1) == (1, 5)
+
+
+def test_semantics_matrix_marks_unavailable() -> None:
+    matrix = semantics_matrix()
+    assert matrix["bitmex/XBTUSD"]["auction"] == "NOT_AVAILABLE"
+    assert matrix["deribit/BTC-PERPETUAL"]["price_time_priority"] == "DECLARED"
+    assert matrix["cleolob/SIM"]["price_time_priority"] == "SIMULATED"
+    assert matrix["deribit/ETH-PERPETUAL"]["self_trade_prevention"] == "NOT_AVAILABLE"

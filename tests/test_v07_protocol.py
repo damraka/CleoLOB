@@ -309,3 +309,13 @@ def test_interval_status() -> None:
     assert tx.interval_status(-2.0, -0.1, margin=0.5) == "NOT_ESTABLISHED"
     assert tx.interval_status(0.6, 2.0, direction=1, margin=0.5) == "ESTABLISHED"
     assert tx.interval_status(None, 1.0) == "INVALID"
+
+
+def test_ledger_lock_serializes_concurrent_appends(root: Path) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(8) as executor:
+        list(executor.map(lambda i: _append(root, "attempt", design=f"d{i}", payload={
+            "outcome": "COMPLETED", "directory": f"results/v07/x{i}", "note": "concurrency"}), range(16)))
+    report = pr.verify_protocol_files(root)
+    assert report["valid"] and len(report["attempts"]) == 16
+    assert not (root / (pr.LEDGER_PATH + ".lock")).exists()
