@@ -111,6 +111,15 @@ See [v06-reproduction.md](v06-reproduction.md).
 8. **Low-volatility regime model** was chosen on only 23 selection blocks.
 9. **v0.5-era check.** v0.5 `finalize` compared the source manifest with itself. v0.6 run
    directories capture it at creation instead, so a source edit during a run refuses sealing.
+10. **Pre-existing v0.5 condition, not changed by v0.6.** `lob.policy_study_v05.read_freeze()`
+    fails already at the `v0.5.0` tag, for these reasons:
+    - The v0.5 environment freeze records `lob/historical_sim.py` at `dca9622e…`.
+    - The v0.5 ledger then recorded two M8 revisions (entries 62 and 70) ending at
+      `98cbff45…`, which is the tagged file.
+    - The file is byte-identical between `v0.5.0` and this branch.
+
+    `cleo policy-study-v05 verify` is unaffected and still valid. Re-running v0.5 M7
+    training or evaluation would refuse. v0.5 history was not edited.
 
 ## Evidence and verification
 
@@ -131,6 +140,22 @@ See [v06-reproduction.md](v06-reproduction.md).
 - **v0.5 history is unchanged:**
   - the v0.5 protocol verifies, and its 80-entry ledger head is pinned by the v0.6 protocol;
   - no v0.5 file, result or tag was modified.
+
+## Release-gate audit (local, Windows 11, CPython 3.14.6)
+
+| Item | Result |
+|---|---|
+| Full test suite | **1,090 passed**: 974 baseline + 116 v0.6. The 2 gymnasium warnings are third-party and pre-existing. |
+| Ruff, compileall (`lob`, `tools`, `examples`, `tests`), pip check | all pass |
+| Build | `cleolob-0.6.0.dev0` wheel (107 `lob` modules, 31 in `lob.v06`) and sdist (182 entries). Neither contains `data/`, `results/`, `.csv.gz`, `.pkl` or `.npz` files. |
+| Isolated wheel install (new venv outside the checkout) | imports from `site-packages/lob`; pip check clean; all 13 v0.6 commands answer `--help`; `cleo smoke` and `verify-artifact` pass; misuse exits with a clear `INVALID` |
+| `cleo protocol-v06 verify` | valid; 80 ledger entries; no fresh dataset remains |
+| `cleo verify-v06 results/v06` | 24 sealed runs, all valid |
+| Public bundle | `verify-artifact` valid. 76 files were independently re-hashed with Python `hashlib`: 0 mismatches. |
+| `cleo claim-audit-v06` | valid: 14 claims, 0 issues. The flagged "risky" lines are negated list items under "not claimed" and were reviewed. |
+| v0.5 history | `cleo protocol verify` valid (80 entries); v0.5 bundle valid; all v0.5 sealed runs valid; `policy-study-v05 verify` valid. No v0.3–v0.5 config, evidence or frozen module differs from `v0.5.0` (but see item 10 above). |
+| Commits | 28 on the branch since `50ed08b`, all by the configured author. No AI attribution trailers. `git diff --check` is clean. |
+| Tags and release | none created; no push |
 
 ## Known limitations
 

@@ -298,4 +298,3 @@ def regime_contrasts(tape, labelled: list[dict], banked: dict, frozen: dict, doc
     out["H10"] = ("ESTABLISHED" if all(s == "ESTABLISHED" for s in statuses10) else
                   "FAILED" if "FAILED" in statuses10 else "NOT_ESTABLISHED")
     return out
-

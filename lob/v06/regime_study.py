@@ -98,4 +98,3 @@ def read_regime(run: str | Path, *, root: Path = PROJECT_ROOT) -> dict:
     if state.designs.get(ANALYSIS, {}).get("design_sha256") != pr.document_sha256(result["models"]):
         raise ValueError("regime models are not sealed in the ledger")
     return result
-
