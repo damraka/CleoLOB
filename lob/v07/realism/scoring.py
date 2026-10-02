@@ -54,7 +54,8 @@ def evaluate(task: tuple) -> dict:
     started = time.perf_counter()
     try:
         per_seed = simulate_sketches(spec, seeds, seconds, design)
-        out = {"key": key, "sketches": per_seed, "error": None, "elapsed_s": time.perf_counter() - started}
+        out = {"key": key, "sketches": per_seed if _CONTEXT.get("keep_sketches", True) else [], "error": None,
+               "elapsed_s": time.perf_counter() - started}
         if target is not None:
             result = compare(target, pool(per_seed), design, scales)
             out.update(objective=_finite(result["objective"]), families=[_finite(v) for v in family_vector(result)],
