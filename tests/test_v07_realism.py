@@ -56,3 +56,20 @@ def test_descriptive_metrics() -> None:
     cal = rm.calibration_curve(np.full(10, 0.9), np.full(10, 0.1))
     assert cal["brier"] == pytest.approx(0.01)
     assert rm.pr_curve(np.full(5, 0.9), np.full(5, 0.1))["precision"][-1] == 1.0
+
+
+def test_scale_auc_and_aggregation_consistency(tmp_path) -> None:
+    from lob.v07.data.tape import build_tape
+    from tests.v07_fixtures import write_tardis
+    files = write_tardis(tmp_path, seconds=900.0)
+    tape, _ = build_tape(files["l2"], files["trades"], tick=0.05)
+    scales = rm.multiscale_features(tape)
+    assert set(scales) == {"10", "60", "300"}
+    # Aggregation consistency: trade counts in 10 s windows sum to the 60 s window counts (log1p feature).
+    from lob.v06.domain_gap import FEATURES
+    i = FEATURES.index("log1p_trades")
+    ten, sixty = np.expm1(scales["10"][:, i]), np.expm1(scales["60"][:, i])
+    assert abs(ten[:6].sum() - sixty[0]) < 1e-6
+    rng = np.random.default_rng(0)
+    assert rm.scale_auc(_windows(rng, 100), [_windows(rng, 30, 3.0) for _ in range(4)], seed=1)["auc"] > 0.9
+    assert rm.scale_auc(_windows(rng, 10), [], seed=1)["status"] == "NOT_AVAILABLE"

@@ -64,7 +64,8 @@ def _bank_task(task: tuple) -> dict:
     if kind == "sketch":
         return {"kind": kind, "name": name, "unit": unit, "sketch": pool([sketch(measure(b), design)
                                                                           for b in tape.blocks(600.0)])}
-    return {"kind": kind, "name": name, "unit": unit, "windows": window_features(tape)}
+    return {"kind": kind, "name": name, "unit": unit, "windows": window_features(tape),
+            "multiscale": {str(int(s)): window_features(tape, s) for s in metrics.TIMESCALES if s != 60.0}}
 
 
 def bank(out: str | Path, *, generator_run: str, posterior_run: str, ea_run: str, root: Path = PROJECT_ROOT,
@@ -95,9 +96,13 @@ def bank(out: str | Path, *, generator_run: str, posterior_run: str, ea_run: str
                     and r["name"] == n] for n in specs}
     windows = {n: [r["windows"] for r in sorted(results, key=lambda r: r["unit"]) if r["kind"] == "windows"
                    and r["name"] == n] for n in specs}
+    multiscale = {n: {s: [r["multiscale"][s] for r in sorted(results, key=lambda r: r["unit"])
+                          if r["kind"] == "windows" and r["name"] == n] for s in ("10", "300")} for n in specs}
     with (out / "sketches.pkl").open("xb") as handle:
         pickle.dump(sketches, handle)
     np.savez_compressed(out / "windows.npz", **{f"{n}__{i}": w for n, ws in windows.items() for i, w in enumerate(ws)})
+    np.savez_compressed(out / "windows-multiscale.npz", **{f"{n}__{s}__{i}": w for n, by in multiscale.items()
+                                                          for s, ws in by.items() for i, w in enumerate(ws)})
     files = {p.name: pr.file_sha256(p) for p in sorted(out.iterdir()) if p.is_file()}
     result = {"label": label, "models": {n: [s.describe() if hasattr(s, "describe") else
                                             {"config": s.config, "extensions": s.extensions} for s in fam]
@@ -121,7 +126,13 @@ def load_bank(run: Path) -> dict:
     with np.load(run / "windows.npz") as stored:
         for key in sorted(stored.files, key=lambda k: (k.split("__")[0], int(k.split("__")[1]))):
             windows.setdefault(key.split("__")[0], []).append(stored[key])
-    return {"result": result, "sketches": sketches, "windows": windows}
+    multiscale: dict = {}
+    if (run / "windows-multiscale.npz").is_file():
+        with np.load(run / "windows-multiscale.npz") as stored:
+            for key in sorted(stored.files, key=lambda k: (k.split("__")[0], k.split("__")[1], int(k.split("__")[2]))):
+                name, scale, _ = key.split("__")
+                multiscale.setdefault(name, {}).setdefault(scale, []).append(stored[key])
+    return {"result": result, "sketches": sketches, "windows": windows, "multiscale": multiscale}
 
 
 def design_document(*, bank_run: str, selection_run: str, generator_run: str, root: Path) -> dict:
@@ -265,7 +276,14 @@ def evaluate(dataset: str, out: str | Path, *, root: Path = PROJECT_ROOT, downlo
         sims_all = np.vstack(banked["windows"][name])
         describe[name] = {"mmd": metrics.mmd_rbf(real_windows, sims_all, seed=seeds["domain_gap"]),
                           "precision_recall": metrics.precision_recall(real_windows, sims_all, seed=seeds["domain_gap"])}
-    result.update(domain_gap=gap, support=cover, descriptive=describe, hypotheses=hyp)
+    timescales = {}
+    real_scales = metrics.multiscale_features(tape)
+    for name in ("G0_point", *[n for n in RICHER if n in banked["multiscale"]]):
+        timescales[name] = {}
+        for scale, real in real_scales.items():
+            sims = banked["windows"][name] if scale == "60" else banked["multiscale"].get(name, {}).get(scale, [])
+            timescales[name][scale] = metrics.scale_auc(real, sims, seed=seeds["domain_gap"])
+    result.update(domain_gap=gap, support=cover, descriptive=describe, hypotheses=hyp, timescales=timescales)
     if result.get("status") == "INVALID":
         for h in hyp.values():
             h["status"] = "INVALID"

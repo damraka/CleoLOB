@@ -239,5 +239,16 @@ def multiscale_features(tape, scales: tuple[float, ...] = TIMESCALES) -> dict:
     return {str(int(s)): window_features(tape, s) for s in scales}
 
 
+def scale_auc(real: np.ndarray, sims: list[np.ndarray], *, seed: int) -> dict:
+    """Descriptive held-out logistic AUC at one timescale (chronological real split, seed-half simulated split)."""
+    if len(real) < 60 or len(sims) < 2:
+        return {"status": "NOT_AVAILABLE", "reason": "too few windows or simulated units"}
+    rng = np.random.default_rng(seed)
+    train_r, test_r = chronological_split(len(real))
+    s = _classifier_scores(real, sims, train_r, test_r, rng)
+    value = auc(np.r_[s["real"], s["sim"]], np.r_[np.ones(len(s["real"])), np.zeros(len(s["sim"]))])
+    return {"status": "AVAILABLE", "auc": value, "real_windows": int(len(real)), "simulated_windows": int(len(s["sim"]))}
+
+
 def finite_or_none(value) -> float | None:
     return float(value) if value is not None and math.isfinite(value) else None
