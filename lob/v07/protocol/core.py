@@ -78,12 +78,17 @@ def _utc_now() -> str:
 
 
 def git_state(root: Path) -> dict:
-    """HEAD commit and dirty flag at the time of an entry (None outside a git checkout)."""
+    """HEAD commit and dirty flag at the time of an entry (None outside a git checkout).
+
+    The ledger file itself is excluded from the dirty check: appending to it is the entry being recorded. Entries
+    1-40 of the repository ledger predate this exclusion and are dirty only because the new ledger was untracked.
+    """
     try:
         commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True,
                                          stderr=subprocess.DEVNULL, timeout=5).strip()
-        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True,
-                                             stderr=subprocess.DEVNULL, timeout=10).strip())
+        status = subprocess.check_output(["git", "status", "--porcelain", "--", ".", f":(exclude){LEDGER_PATH}"],
+                                         cwd=root, text=True, stderr=subprocess.DEVNULL, timeout=10)
+        dirty = bool(status.strip())
     except (OSError, subprocess.SubprocessError):
         return {"git_commit": None, "git_dirty": None}
     return {"git_commit": commit, "git_dirty": dirty}

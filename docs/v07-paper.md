@@ -25,6 +25,11 @@ The protocol is frozen in the append-only ledger `configs/v07/consumption-ledger
 That ledger pins the v0.5 and v0.6 protocols and ledger heads, and imports every dataset
 and calendar period they consumed. Run `cleo protocol-v07 verify` to check the current state.
 
+**Freeze record.**
+- Protocol `63fb6e56…`, frozen at ledger entry 40 on commit `0ef1939`.
+- Entries 1–40 record `git_dirty: true`. The only change was the new, still-untracked
+  ledger file. Later entries exclude the ledger file from the dirty check.
+
 **Fresh holdouts at the freeze.** None had been accessed by any CleoLOB version.
 
 | Role | Dataset |
