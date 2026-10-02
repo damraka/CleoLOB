@@ -1,0 +1,227 @@
+{
+  "schema": "cleolob-v07-claims-1",
+  "claims": {
+    "C-H1": {
+      "hypothesis": "H1",
+      "question": "Does posterior calibration (posterior predictive mixture over the v0.6 14-parameter family) reduce the v0.6 calibration objective relative to the v0.6 point-calibrated baseline on fresh temporal data?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H2": {
+      "hypothesis": "H2",
+      "question": "Does a richer generator reduce classifier distinguishability of real and simulated 60 s windows relative to the G0 point baseline on fresh temporal data?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H3": {
+      "hypothesis": "H3",
+      "question": "Does a richer generator increase historical support coverage on fresh temporal data?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H4": {
+      "hypothesis": "H4",
+      "question": "Does the selected generator G* improve on the G0 baseline cross-instrument?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H5": {
+      "hypothesis": "H5",
+      "question": "Does the selected generator G* improve on the G0 baseline cross-venue?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H6": {
+      "hypothesis": "H6",
+      "question": "Is the G0-post posterior multimodal (materially distinct high-posterior regions)?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H7": {
+      "hypothesis": "H7",
+      "question": "Is model uncertainty material to execution cost?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H8": {
+      "hypothesis": "H8",
+      "question": "Is at least one pairwise policy comparison robust across model uncertainty?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H9": {
+      "hypothesis": "H9",
+      "question": "Does at least one ranking that looks stable in a single world become MODEL_DEPENDENT or INCONCLUSIVE under model uncertainty?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H10": {
+      "hypothesis": "H10",
+      "question": "Does execution-aware calibration improve execution-sensitive realism?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H11": {
+      "hypothesis": "H11",
+      "question": "Is the H10 improvement not metric overfitting (generic realism not materially worse)?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H12": {
+      "hypothesis": "H12",
+      "question": "Does posterior (domain-randomized) training improve historical transfer of learned policies relative to single-world training?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    },
+    "C-H13": {
+      "hypothesis": "H13",
+      "question": "Do the robust simulator conclusions (H8) survive historical replay under both fill bounds?",
+      "allowed_wording": {
+        "ESTABLISHED": "registered criterion met on the registered data, with the stated scope",
+        "NOT_ESTABLISHED": "not established; not evidence of absence or equivalence",
+        "FAILED": "contradicted on the registered data",
+        "NOT_AVAILABLE": "not evaluable: the required data or capability does not exist"
+      },
+      "forbidden": [
+        "live profitability",
+        "alpha",
+        "production readiness",
+        "causal mechanism",
+        "equivalence without a registered margin"
+      ]
+    }
+  },
+  "rule": "Public claims are generated from registered results only; the claim audit fails on any claim without a registered result or with wording stronger than its status allows."
+}

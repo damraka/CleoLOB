@@ -126,6 +126,8 @@ def parser() -> argparse.ArgumentParser:
     _v05_commands(commands)
     from .v06.cli import add_commands as _v06_commands
     _v06_commands(commands)
+    from .v07.cli import add_commands as _v07_commands
+    _v07_commands(commands)
     return result
 
 
@@ -238,6 +240,11 @@ def _run_v05(args) -> int | None:
 
 def _run_v06(args) -> int | None:
     from .v06.cli import dispatch
+    return dispatch(args)
+
+
+def _run_v07(args) -> int | None:
+    from .v07.cli import dispatch
     return dispatch(args)
 
 
@@ -395,6 +402,8 @@ def main(argv: list[str] | None = None) -> int:
         elif (code := _run_v05(args)) is not None:
             return code
         elif (code := _run_v06(args)) is not None:
+            return code
+        elif (code := _run_v07(args)) is not None:
             return code
         elif args.command == "protocol":
             from .preregistration import verify_protocol_files

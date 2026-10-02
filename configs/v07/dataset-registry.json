@@ -1,0 +1,223 @@
+{
+  "schema": "cleolob-v07-datasets-1",
+  "source": {
+    "provider": "Tardis.dev free first-day-of-month samples",
+    "url_pattern": "https://datasets.tardis.dev/v1/{exchange}/{data_type}/{yyyy}/{mm}/{dd}/{symbol}.csv.gz",
+    "head_requests": "rejected by the provider; availability and size are known only at first access",
+    "max_compressed_bytes_per_file": 2147483648,
+    "max_expanded_bytes_per_file": 34359738368,
+    "retries": 1,
+    "size_rule": "limits fixed before access; a larger file is NOT_AVAILABLE, never truncated"
+  },
+  "datasets": [
+    {
+      "id": "deribit-eth-perp-2020-04-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "development"
+    },
+    {
+      "id": "deribit-eth-perp-2020-05-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "selection"
+    },
+    {
+      "id": "deribit-eth-perp-2020-06-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "validation"
+    },
+    {
+      "id": "deribit-eth-perp-2020-07-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "deribit-eth-perp-2020-08-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "deribit-eth-perp-2020-09-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "deribit-eth-perp-2020-10-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "deribit-btc-perp-2020-07-01",
+      "exchange": "deribit",
+      "symbol": "BTC-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "deribit-btc-perp-2020-09-01",
+      "exchange": "deribit",
+      "symbol": "BTC-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective"
+    },
+    {
+      "id": "bitstamp-btcusd-mbo-dev",
+      "exchange": "bitstamp",
+      "symbol": "btcusd",
+      "data_types": [
+        "live_orders",
+        "live_trades",
+        "order_book_top100",
+        "rest_order_book_group2"
+      ],
+      "capability_level": "order_level_mbo",
+      "role": "mbo_retrospective"
+    },
+    {
+      "id": "bitstamp-btcusd-mbo-validation",
+      "exchange": "bitstamp",
+      "symbol": "btcusd",
+      "data_types": [
+        "live_orders",
+        "live_trades",
+        "order_book_top100",
+        "rest_order_book_group2"
+      ],
+      "capability_level": "order_level_mbo",
+      "role": "mbo_retrospective"
+    },
+    {
+      "id": "deribit-eth-perp-2020-11-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_temporal"
+    },
+    {
+      "id": "deribit-eth-perp-2020-12-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_temporal"
+    },
+    {
+      "id": "deribit-btc-perp-2020-11-01",
+      "exchange": "deribit",
+      "symbol": "BTC-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_instrument"
+    },
+    {
+      "id": "bitmex-xbtusd-2020-11-01",
+      "exchange": "bitmex",
+      "symbol": "XBTUSD",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_venue"
+    },
+    {
+      "id": "deribit-eth-perp-2021-01-01",
+      "exchange": "deribit",
+      "symbol": "ETH-PERPETUAL",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "final_transfer"
+    }
+  ],
+  "capabilities": {
+    "aggregate_l2": {
+      "available": [
+        "displayed price levels and sizes",
+        "aggressor-side trades",
+        "timestamps"
+      ],
+      "not_available": [
+        "order identity",
+        "exact FIFO",
+        "exact queue position",
+        "hidden liquidity",
+        "exact passive counterfactual fills",
+        "exchange matching truth"
+      ]
+    },
+    "order_level_mbo": {
+      "available": [
+        "order identity",
+        "order add/cancel/modify",
+        "trades with order references"
+      ],
+      "not_available": [
+        "hidden liquidity",
+        "matching-engine internal timestamps"
+      ],
+      "note": "self-recorded public feed, not a vendor-certified archive"
+    }
+  }
+}
