@@ -18,3 +18,6 @@ data/v05/
 
 # v0.6 local raw data and tape caches (restricted provider terms; never committed)
 data/v06/
+
+# v0.7 local raw data and tape caches (restricted provider terms; never committed)
+data/v07/
