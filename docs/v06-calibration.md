@@ -49,8 +49,25 @@ as far from history as the next real month is.
 
 ## Identifiability (M7; H4 **ESTABLISHED**)
 
-The two materially distinct near-optimal vectors fit the selection day almost equally well:
-2.44 and 2.59. They encode different mechanisms:
+The two materially distinct vectors score 2.44 and 2.59 on the selection day. Both fall within
+the preregistered near-optimal tolerance (threshold 2.69 = best + 10%). They are not
+statistically equal fits: with common selection seeds, the second is worse by 0.15 (paired SD
+0.075 over 5 seeds, about 4.6 SE). The 10% tolerance, not seed noise (2 SE = 0.06), sets the
+region.
+
+The count of two is bounded by the frozen pipeline:
+- 2,304 search candidates;
+- the top 64 re-scored;
+- the top 32 scored on the selection day;
+- 4 near-optimal;
+- 2 materially distinct (L∞ ≥ 0.25).
+
+Three of the four near-optimal candidates come from the same search start and lie within
+L∞ 0.12–0.19 of each other. The ensemble limit of 8 was not binding. The next candidate
+(2.701) misses the threshold by 0.013. Two members is therefore not evidence that only two
+plausible configurations exist.
+
+The two vectors encode different mechanisms:
 
 | Parameter | Selected | Member 2 |
 |---|---|---|
@@ -80,15 +97,26 @@ Diagnostics run on development data with the fit seeds (`results/v06/m7/identifi
   - `limit_rate` dominates event activity and sizes.
   - `market_rate` dominates the dependence and event-process families.
 
-  Caveat: a 9-family × 14-parameter matrix has rank at most 9. The near-zero eigenvalues of
-  the sensitivity Gram matrix are therefore partly structural, and they are not reported as
-  market findings. The `cancel_depth_exponent` column is missing because its downward step hit
-  the event cap.
+  Caveat: the family-level matrix is 9 × 14 and has rank at most 9. Without the missing
+  `cancel_depth_exponent` column (its downward step hit the event cap), it is 9 × 13. Its
+  singular values are 13.1, 4.8, 3.1, 1.8, 1.4, 0.86, 0.63, 0.08 and 0.05, so the effective
+  rank is about 5–7 at 10%, 5% and 1% of the largest value. The near-zero directions are
+  partly structural and are not reported as market findings. They mix:
+  - regime switching, regime multiplier and depth target;
+  - imbalance response, Hawkes branching and regime share;
+  - Hawkes decay and regime parameters.
+
+  Several selected coordinates sit at or near bounds, so those steps are one-sided:
+  - `offset_p` 0.00, `resilience` 0.006 and `inside_spread_prob` 0.009;
+  - `imbalance_beta` 0.97, `regime_multiplier` 0.97 and Hawkes branching 0.04.
+
+  `offset_p`'s large influence partly reflects its boundary step.
 - **Morris elementary effects** (12 trajectories) are reported as `EXPLORATORY`.
 
 **Interpretation.** At the resolution of the sealed objective and seeds, the observable
-statistics do not pin down the excitation and regime mechanisms. This is a statement about
-the calibration problem, not about real market mechanisms.
+statistics do not pin down the excitation and regime mechanisms. Calibration is not uniquely
+identified. No claim of full parameter identification is made. This is a statement about the
+calibration problem, not about real market mechanisms.
 
 ## Ensemble (M8)
 

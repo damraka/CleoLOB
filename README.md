@@ -60,10 +60,10 @@ from `research/v0.6-market-realism`, not yet a release:
 |---|---|
 | Relative calibration improvement | v3 beats the v0.5 class on retrospective June (−1.76), fresh ETH (−1.02) and fresh cross-instrument BTC (−1.17); all established. |
 | Absolute realism | Not achieved. No family is within its real-vs-real margin on fresh data. Real vs simulated minute-windows are separated with AUC ≈ 1, and ~100% of historical windows are outside the simulators' support. |
-| Identifiability | Not identified. Two materially different parameter vectors (self-excitation, inside-spread placement, regime share) fit equally well. |
-| Execution stability across plausible worlds | No certified ranking reversal, at a resolution of about 1.5–2.4 bps. Regime and structural model risk (1–4.8 bps) is as large as the policy differences. |
+| Identifiability | Not uniquely identified. Two materially different parameter vectors (self-excitation, inside-spread placement, regime share) both fall within the preregistered near-optimal tolerance. They are not statistically equal fits, and the pool was a finite 32-candidate selection set. |
+| Execution stability across plausible worlds | Not established either way. There is no certified ranking reversal, and the minimum detectable effects are about 1.6–2.9 bps (H5) and 1.5–2.6 bps (H6), above the 1 bps margin. Regime and structural sensitivity (about 1–4.8 bps) was of the same order as policy differences in these few worlds; those estimates are unstable. |
 | Regime-conditioned calibration | Failed within and outside regime. |
-| Historical transfer (fresh ETH 2020-10-01) | Every pairwise conclusion is indeterminate under both bounded fill modes. Domain-randomized training did not transfer more consistently. |
+| Historical transfer (fresh ETH 2020-10-01) | No determinate pairwise difference under either bounded fill mode at the registered α (not equivalence). No evidence was established that domain-randomized training transfers more consistently. |
 
 See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
 

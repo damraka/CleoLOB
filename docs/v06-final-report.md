@@ -20,29 +20,33 @@ Statuses are copied by the audit from the sealed result files.
 | H1 | ESTABLISHED | retrospective | objective(v3) − objective(v0.5) = −1.76 [−1.87, −1.63] on ETH Jun | `m13/deribit-eth-perp-2020-06-01` |
 | H2 | ESTABLISHED | confirmatory (fresh) | −1.02 [−1.18, −0.88] on ETH Sep | `m13/deribit-eth-perp-2020-09-01-registered` |
 | H3 | ESTABLISHED | confirmatory (fresh, cross-instrument) | −1.17 [−1.27, −1.10] on BTC Sep | `m13/deribit-btc-perp-2020-09-01` |
-| H4 | ESTABLISHED | descriptive | 2 materially distinct near-optimal vectors (L∞ 0.66) | `m7/identifiability` |
-| H5 | NOT_ESTABLISHED | confirmatory (simulation) | max \|member difference\| 1.00 bps; intervals contain 0; below design resolution | `m10/evaluation` |
-| H6 | NOT_ESTABLISHED | confirmatory (simulation) | no certified reversal; Kendall τ between members 0.07 | `m10/evaluation` |
+| H4 | ESTABLISHED | descriptive | 2 materially distinct vectors within the 10% near-optimal tolerance (L∞ 0.66), from a 32-candidate selection pool | `m7/identifiability` |
+| H5 | NOT_ESTABLISHED | confirmatory (simulation) | max \|member difference\| 1.00 bps; intervals contain 0; MDE 1.6–2.9 bps exceeds the 1 bps margin | `m10/evaluation` |
+| H6 | NOT_ESTABLISHED | confirmatory (simulation) | no certified reversal; 2 of 30 cells determinate; MDE 1.5–2.6 bps; τ 0.07 not interpretable below resolution | `m10/evaluation` |
 | H7 | NOT_ESTABLISHED | confirmatory (simulation) | max ρ 0.44 (temporal), Holm p ≥ 0.61 | `m10/evaluation` |
 | H8 | ESTABLISHED | confirmatory (fresh) | logistic AUC 1.000 (lower bound 1.000) on ETH Sep | `m13/deribit-eth-perp-2020-09-01-registered` |
 | H9 | FAILED | confirmatory (fresh) | high regime −0.32 [−0.44, −0.18]; low regime +0.96 [+0.78, +1.14] | same |
 | H10 | FAILED | confirmatory (fresh) | off-regime +1.51 [+1.32, +1.71] and +0.23 [+0.14, +0.34] vs δ 0.244 | same |
 | H11-ppo | NOT_ESTABLISHED | confirmatory (fresh) | −0.58 [−1.78, 1.16] conservative; −0.71 [−1.85, 1.11] optimistic | `m14/deribit-eth-perp-2020-10-01` |
 | H11-dqn | NOT_ESTABLISHED | confirmatory (fresh) | +0.41 [−1.36, 2.11] conservative; +0.38 [−1.37, 1.99] optimistic | same |
-| H12 | ESTABLISHED | confirmatory (fresh) | vacuous: all 15 pairs indeterminate in both fill modes | same |
+| H12 | ESTABLISHED | confirmatory (fresh) | vacuous under the registered rule: all 15 pairs indeterminate in both fill modes; no stability or equivalence conclusion | same |
 | S-support-eth-sep | ESTABLISHED | descriptive | 100% of fresh ETH windows out of simulator support (NO_CLAIM) | `m13/deribit-eth-perp-2020-09-01-registered` |
 
 ## Results by status
 
 **ESTABLISHED:**
 - H1 (retrospective), H2, H3: relative improvement over the v0.5 control.
-- H4: calibration is not uniquely identified.
+- H4: calibration is not uniquely identified. Two materially distinct vectors fall within the
+  preregistered 10% tolerance. They are not statistically equal fits, and the count of two is
+  bounded by the frozen tolerance, distinctness rule and search budget.
 - H8: real vs synthetic windows are distinguishable.
-- H12: vacuous. Stability of indeterminacy, not of any conclusion.
+- H12: registered status kept, but vacuous. Every pair was indeterminate in both fill modes,
+  so it supports no substantive stability or equivalence conclusion.
 - Out-of-support labels on every evaluated dataset.
 
 **NOT_ESTABLISHED:**
-- H5 and H6: underpowered relative to the 1 bps margin. This is not evidence of agreement.
+- H5 and H6: underpowered relative to the 1 bps margin (MDE about 1.6–2.9 bps and 1.5–2.6 bps).
+  This implies neither equivalence of worlds nor stable rankings.
 - H7.
 - H11 for PPO and for DQN.
 
@@ -67,7 +71,9 @@ See [v06-reproduction.md](v06-reproduction.md).
 **NOT_AVAILABLE:**
 - Order-level observables (order size, modify intensity, queue position, hidden liquidity).
 - Vendor historical MBO.
-- ROC curves: only AUCs and intervals are stored.
+- ROC curves: per-sample discriminator scores were not stored; only AUCs and intervals exist.
+  Producing ROC curves would mean reading consumed holdouts again (posthoc, EXPLORATORY), so
+  none were produced.
 - Historical fill-bound component of the model-risk table in simulation: it is reported from
   the transfer runs instead.
 
@@ -161,12 +167,25 @@ See [v06-reproduction.md](v06-reproduction.md).
 
 - **Data.** Aggregate L2 and trade prints from one venue (Deribit) and one era (2020). There is
   no order-level data.
-- **Ensemble size.** The ensemble has only two members. It is a coarse view of calibration
-  uncertainty.
-- **Resolution.** Execution contrasts resolve about 1.5–2.4 bps between worlds. Smaller
-  differences are not detectable with 200 market seeds.
-- **Identifiability diagnostics** work at the family level, which caps the rank at 9 for 14
-  parameters, and many profile draws hit the event cap.
+- **Ensemble size.** The ensemble has only two members. The pipeline was:
+  - 2,304 search candidates;
+  - the top 64 re-scored;
+  - the top 32 scored on the selection day;
+  - 4 within the frozen near-optimal tolerance;
+  - 2 materially distinct.
+
+  The limit of 8 was not binding. Two members reflect the frozen tolerance, distinctness rule
+  and finite budget, not evidence that only two plausible configurations exist. It is a coarse
+  view of calibration uncertainty.
+- **Resolution.** At the tests' own α and 80% power, the minimum detectable effect is about
+  1.6–2.9 bps for H5 (independent worlds) and 1.5–2.6 bps for H6 (paired within world), with
+  200 market seeds. Smaller differences are not detectable.
+- **Identifiability diagnostics** work at the family level. The 9 × 14 sensitivity matrix is
+  rank-capped at 9, and its effective rank is about 5–7 under the audit tolerances. Many
+  profile draws hit the event cap. The parameters are not identified; only non-uniqueness is
+  established.
+- **Model-risk components** are standard deviations over very small world counts (2, 3 and
+  14). They are unstable.
 - **Historical replay** has no market impact of the hypothetical parent. Fills are bounded,
   never exact.
 - **The simulators are far from history:**

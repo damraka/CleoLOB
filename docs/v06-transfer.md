@@ -39,9 +39,10 @@ registered PPO/DQN models. Policies and mandate are frozen exactly as in simulat
 | DQN ensemble | 1.60 | 1.48 | 100% |
 
 - The classical schedules never rest passive orders, so fill semantics do not affect them.
-- **H12 (fill semantics): ESTABLISHED, vacuously.** All 15 pairwise conclusions are
-  *indeterminate* under **both** modes (Bonferroni, 0.05/30). No conclusion depends on the
-  fill assumption, because no historical conclusion is determinate at all.
+- **H12 (fill semantics): ESTABLISHED (registered status), vacuous under the registered
+  rule.** All 15 pairwise conclusions are *indeterminate* under **both** modes (Bonferroni,
+  0.05/30). No conclusion depends on the fill assumption, because no historical conclusion is
+  determinate at all. It supports no substantive stability or equivalence conclusion.
 - **H11 (ensemble vs single-world training): NOT_ESTABLISHED** for both algorithms:
   - PPO: gap(ensemble) − gap(single) = −0.58 [−1.78, 1.16] conservative and −0.71
     [−1.85, 1.11] optimistic;
@@ -57,16 +58,22 @@ registered PPO/DQN models. Policies and mandate are frozen exactly as in simulat
 
 ## Retrospective ETH 2020-08-01 (consumed; descriptive)
 
-Costs ranged from 3.9 to 4.5 bps, and all agents completed within the horizon. H12-type
-stability holds the same way (all pairs indeterminate in both modes). The H11-type gaps are
+Costs ranged from 3.9 to 4.5 bps, and all agents completed within the horizon. The H12-type
+rule is vacuous in the same way: all pairs are indeterminate in both modes. The H11-type gaps are
 indeterminate: PPO −0.74 [−2.18, 1.25] and DQN +0.27 [−1.63, 2.10] (conservative). Source
 predictions are all indeterminate.
 
 ## Interpretation
 
-Under a 14-lot, 120 s mandate on Deribit ETH in 2020, bounded historical execution costs of
-the classical and learned agents are statistically indistinguishable. Simulator-trained
-conclusions therefore have nothing determinate to transfer to. Domain-randomized training
-over the 2-member ensemble did not make transfer more consistent.
+Under a 14-lot, 120 s mandate on Deribit ETH in 2020, bounded historical execution showed no
+determinate pairwise difference between the classical and learned agents at the registered α
+(0.05/30).
+- **This is not equivalence:** no equivalence margin was preregistered for this analysis.
+- **Interval widths vary:** some pairs are tightly bounded (TWAP vs VWAP within ±0.2 bps),
+  others wide (TWAP vs POV about ±1.1 bps).
+
+Simulator-trained conclusions therefore have nothing determinate to transfer to. No evidence
+was established that domain-randomized training over the 2-member ensemble made transfer more
+consistent (H11 NOT_ESTABLISHED).
 
 None of this is an exact historical fill, a profitability result or a live-trading result.

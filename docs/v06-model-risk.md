@@ -58,14 +58,16 @@ Per-episode standard deviations are 5–9 bps.
 | Hypothesis | Status | Evidence |
 |---|---|---|
 | H5 equifinality | **NOT_ESTABLISHED** | max \|member difference\| over classical agents = 1.00 bps (POV); every Bonferroni interval (family 4) contains 0 |
-| H6 rank non-invariance | **NOT_ESTABLISHED** | no certified reversal (family 30); the two members' *point* rankings are nearly unrelated (Kendall τ = 0.07) |
-| H7 execution-sensitive realism | **NOT_ESTABLISHED** | 15 worlds; largest ρ = 0.44 (temporal family), interval spans 0; Holm-adjusted p ≥ 0.61 |
+| H6 rank non-invariance | **NOT_ESTABLISHED** | no certified reversal (family 30); only 2 of 30 cells determinate; point-ranking Kendall τ = 0.07 is not interpretable because most ranking differences are below resolution |
+| H7 execution-sensitive realism | **NOT_ESTABLISHED** | 15 worlds; no family reached the preregistered ρ ≥ 0.5 threshold (largest 0.44, temporal; interval spans 0; Holm-adjusted p ≥ 0.61) |
 
-**Resolution caveat for H5 and H6.** The power report sealed before any holdout put the
-single-mean minimum detectable effect at 1.0–1.7 bps (α 0.05, power 0.8, 200 seeds). A
-two-world difference has about 1.4× that. The preregistered 1 bps materiality margin was
-therefore **below the design's resolution**. NOT_ESTABLISHED here means the study could not
-resolve the differences. It does not mean the worlds agree.
+**Resolution caveat for H5 and H6.** The sealed power report gave single-mean MDEs of
+1.0–1.7 bps at α 0.05. At the tests' own α and 80% power, the minimum detectable effects are:
+- H5 (independent worlds, α 0.0125): about **1.6–2.9 bps**;
+- H6 (paired within world, α 0.05/30): about **1.5–2.6 bps**.
+
+Both exceed the preregistered 1 bps margin. NOT_ESTABLISHED here means the study could not
+resolve the differences. It implies neither equivalence of worlds nor stable rankings.
 
 H7 is coarse: across worlds, the disagreement fraction takes only the values 0, 1/15 and
 2/15, because most conclusions are indeterminate in every world.
@@ -86,12 +88,18 @@ are never combined.
 | PPO ensemble | 0.54 | 0.30 | 1.42 | 3.43 | 0.51 |
 | DQN ensemble | 0.49 | 0.81 | 1.18 | 4.14 | 0.16 |
 
-- **Classical schedules:** structural misspecification dominates.
-- **Learned policies:** the regime models dominate (2.0–4.8 bps), well above the market-seed
-  standard error (about 0.5 bps) and the training-seed spread (0.2–0.6 bps).
+- **Classical schedules:** the structural-intervention spread is the largest component.
+- **Learned policies:** the regime-model spread is the largest (2.0–4.8 bps), above the
+  market-seed standard error (about 0.5 bps) and the training-seed spread (0.2–0.6 bps).
 
-So the apparent cost differences between learned and classical agents (0.5–1.7 bps in the
-selected world) are of the same order as the model-risk components.
+These are descriptive. Each standard deviation rests on very few worlds, so it is unstable:
+- 2 worlds for the calibration ensemble;
+- 3 for the regime models, two of which FAILED H9/H10, so they are sensitivity worlds rather
+  than validated plausible worlds;
+- 14 for the interventions, one of them inert.
+
+In these limited worlds, regime and structural sensitivity was of the same order as the
+observed learned-vs-classical cost differences (0.5–1.7 bps in the selected world).
 
 Historical fill-bound effects are in [v06-transfer.md](v06-transfer.md). On ETH 2020-10-01,
 the conservative and optimistic paths differ by at most 0.12 bps per agent. The difference is

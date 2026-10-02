@@ -18,17 +18,21 @@ three never-inspected holdout days.
     days;
   - simple discriminators separated real from simulated minute-windows with AUC ≈ 1;
   - essentially no historical window lay inside the simulators' support.
-- Calibration was not identified: two materially different parameter vectors fit equally
-  well, and they differ in self-excitation, inside-spread placement and regime structure.
+- Calibration was not uniquely identified. Two materially different parameter vectors both
+  fall within the preregistered near-optimal tolerance (10% of the best selection objective).
+  They differ in self-excitation, inside-spread placement and regime structure. The two fits
+  are not statistically equal: at seed resolution the second is worse. Both are only
+  "near-optimal" in the frozen sense.
 
 **What did not hold:**
 - Regime-conditioned calibration failed both within and outside its regime.
-- In simulation, execution comparisons across plausible worlds, structural interventions and
-  regime models were dominated by model risk rather than by policy differences. No ranking
-  reversal could be certified at the design's resolution.
+- In simulation, regime and structural sensitivity was of the same order as the observed
+  policy differences across these few worlds. Those standard deviations come from very small
+  world counts (2–14 worlds) and are unstable. No ranking reversal could be certified, at a
+  resolution of about 1.5–2.9 bps.
 - On a fresh historical transfer day, every pairwise conclusion between classical and learned
-  agents was indeterminate under both bounded fill semantics. Domain-randomized training did
-  not improve transfer.
+  agents was indeterminate under both bounded fill semantics. No evidence was established
+  that domain-randomized training improved transfer.
 
 The evidence supports a negative conclusion. At this data level and scale, calibrated
 simulators improve measurably while staying distinguishable from markets, and their execution
@@ -109,8 +113,24 @@ July days, and v3 does not.
   minutes with test AUC 1.00 (H8 ESTABLISHED).
 - 100% of fresh windows lie outside the simulators' support.
 
-**4.3 Calibration is not identified (H4: ESTABLISHED).** The two near-optimal vectors are
-materially distinct (L∞ = 0.66 in the unit box) and score 2.44 vs 2.59 on the selection day:
+**4.3 Calibration is not uniquely identified (H4: ESTABLISHED).** The two near-optimal vectors
+are materially distinct (L∞ = 0.66 in the unit box). They score 2.44 and 2.59 on the selection
+day. Both fall within the preregistered tolerance (threshold 2.69 = best + 10%), but they are
+not statistically equal: with common seeds, the second is worse by 0.15 (about 4.6 per-seed
+SE).
+
+**Scope of the count.** The count of two reflects the frozen tolerance, the distinctness rule
+and a finite budget:
+- 2,304 search candidates;
+- the top 64 re-scored;
+- the top 32 scored on the selection day;
+- 4 inside the near-optimal tolerance;
+- 2 materially distinct (L∞ ≥ 0.25).
+
+The ensemble limit of 8 was not binding. Two members is not evidence that only two plausible
+configurations exist.
+
+The two vectors differ as follows:
 
 | Mechanism | Vector 1 | Vector 2 |
 |---|---|---|
@@ -121,46 +141,68 @@ materially distinct (L∞ = 0.66 in the unit box) and score 2.44 vs 2.59 on the 
 Profiles separate strongly constrained rates (cancellation, market order, limit order and
 placement depth) from weakly constrained resilience, depth target and excitation decay.
 
-**4.4 Model risk dominates execution comparisons (H5–H7: NOT_ESTABLISHED).** These results
-are simulation only.
-- The two plausible worlds' point rankings are nearly unrelated (Kendall τ = 0.07), but no
-  reversal is certified.
-- The largest between-member difference for a classical agent is 1.0 bps, below the design's
-  resolution of about 1.5–2.4 bps for differences.
-- For learned policies, the spread across regime models (2.0–4.8 bps) and structural
-  interventions (about 1–1.4 bps) exceeds both the market-seed standard error (about 0.5 bps)
-  and the training-seed spread (0.2–0.6 bps). It is as large as the apparent learned-vs-
-  classical cost differences.
-- No realism family's error predicts conclusion changes across worlds; the largest is
-  temporal, ρ = 0.44.
+The family-level sensitivity matrix is 9 × 14, so its rank is at most 9. Its effective rank is
+about 5–7 under audit tolerances of 1–10% of the largest singular value. Several parameter
+combinations are therefore not resolved by the nine family errors at all. The analysis
+establishes non-uniqueness; it does not identify the parameters.
+
+**4.4 Execution comparisons across worlds are unresolved (H5–H7: NOT_ESTABLISHED).** These
+results are simulation only.
+- **H6.** No reversal is certified; only 2 of 30 world × pair cells are determinate. The point
+  rankings of the two worlds have Kendall τ = 0.07, but most of the ranking differences behind
+  that number are below resolution, so τ is not evidence of either instability or stability.
+- **H5.** The largest between-member difference for a classical agent is 1.0 bps. The minimum
+  detectable effects at the tests' own α (80% power) are about 1.6–2.9 bps for H5 and
+  1.5–2.6 bps for H6. Both exceed the preregistered 1 bps margin. NOT_ESTABLISHED therefore
+  implies neither equivalence of worlds nor stable rankings.
+- **Model risk.** For learned policies, the spread across regime models (2.0–4.8 bps) and
+  structural interventions (about 1–1.4 bps) is of the same order as the observed
+  learned-vs-classical cost differences, and larger than the market-seed standard error
+  (about 0.5 bps) and the training-seed spread (0.2–0.6 bps).
+
+  These standard deviations are unstable: they rest on 3, 2 and 14 worlds. The regime models
+  also FAILED H9/H10, so they are sensitivity worlds, not validated plausible worlds.
+- **H7.** No realism family reached the preregistered ρ ≥ 0.5 threshold. The largest was
+  temporal, ρ = 0.44, and the disagreement outcome took only three distinct values.
 
 **4.5 Regime conditioning fails (H9, H10: FAILED).** The high-volatility model improves
 realism within its regime (−0.32). The low-volatility model, selected on only 23 blocks,
 worsens it (+0.96). Both models degrade outside their regimes, by up to +1.51 against a
 noninferiority margin of 0.24.
 
-**4.6 Transfer has nothing determinate to transfer (H11 NOT_ESTABLISHED; H12 vacuously
-ESTABLISHED).**
+**4.6 Transfer has nothing determinate to transfer (H11 NOT_ESTABLISHED; H12 ESTABLISHED,
+vacuously).**
 - On fresh ETH 2020-10-01, bounded historical costs lie between 1.48 and 2.40 bps, with 100%
   completion.
-- All 15 pairwise contrasts are indeterminate under both fill modes.
+- All 15 pairwise contrasts are indeterminate under both fill modes. There is no determinate
+  pairwise difference at the registered α (0.05/30). This is not equivalence, because no
+  equivalence margin was preregistered for transfer. Some pairs are tightly bounded (TWAP vs
+  VWAP within ±0.2 bps); others are wide (TWAP vs POV about ±1.1 bps).
+- H12 keeps its registered ESTABLISHED status. Under the registered rule that status is
+  vacuous: every pair was indeterminate in both fill modes. It supports no substantive
+  stability or equivalence conclusion.
 - Only the single-world simulator made a determinate prediction (POV costlier than DQN), and
   pooling worlds removed even that.
 - Domain-randomized training changed the simulator-to-history gap by −0.6 (PPO) and +0.4
-  (DQN) bps, with intervals spanning zero.
+  (DQN) bps, with intervals spanning zero. No evidence was established that it improved
+  transfer (H11 NOT_ESTABLISHED).
 
 ## 5. Discussion
 
 - **Realism improved but did not converge.** Calibration v3 moved the simulator closer to
-  history on every family where the v0.5 model was worst, and it did so out of sample and
-  across instruments. But the measured distance to history is still about 2–3× the distance
-  between two real days, and the discriminator result is unambiguous.
-- **The fit does not determine the mechanism.** That two different excitation and regime
-  structures fit equally well is the most direct evidence for the paper's premise. Observable
-  fit does not determine mechanism.
-- **Execution conclusions sit inside model risk.** For execution, the uncertainty from
-  plausible-world choice and regime modelling is of the same size as the policy differences
-  being measured. History, under bounded fills, does not resolve the policies either.
+  history on every family where the v0.5 model was worst. It did so on one retrospective
+  day, on one fresh same-venue, same-instrument temporal holdout (ETH 2020-09-01) and on one
+  fresh same-venue cross-instrument holdout (BTC 2020-09-01). But the measured distance to
+  history is still about 2–3× the distance between two real days, and the discriminator
+  result is unambiguous.
+- **The fit does not determine the mechanism.** Two different excitation and regime
+  structures both fall within the preregistered near-optimal tolerance. That is the most
+  direct evidence for the paper's premise: observable fit, at this resolution, does not
+  determine mechanism.
+- **Execution conclusions sit inside model risk.** In these limited worlds, regime and
+  structural sensitivity was of the same order as the observed policy differences. Those
+  estimates rest on very small world counts. History, under bounded fills, gives no
+  determinate pairwise difference either.
 - **The conclusion.** Under these conditions a calibrated simulator does **not** support
   reliable execution-policy conclusions. It supports relative statements about simulators,
   not about markets.
@@ -171,10 +213,16 @@ ESTABLISHED).**
   - one venue, one era and two instruments;
   - aggregate L2 only;
   - first-of-month days only.
-- **Ensemble size.** The ensemble has two members. Calibration uncertainty is probably
-  under-represented, which biases H5 and H6 towards NOT_ESTABLISHED.
-- **Power.** Execution contrasts are underpowered relative to the 1 bps margin. NOT_ESTABLISHED
-  is not evidence of agreement.
+- **Ensemble size.** The ensemble has two members. That reflects the frozen 10% tolerance,
+  the distinctness rule and a finite budget (2,304 → 64 → 32 → 4 near-optimal → 2 distinct;
+  the limit of 8 was not binding). Calibration uncertainty is probably under-represented,
+  which biases H5 and H6 towards NOT_ESTABLISHED.
+- **Power.** Execution contrasts are underpowered relative to the 1 bps margin: the minimum
+  detectable effect is about 1.6–2.9 bps for H5 and 1.5–2.6 bps for H6. NOT_ESTABLISHED is not
+  evidence of agreement.
+- **Missing discriminator outputs.** Per-sample discriminator scores were not stored, so no ROC
+  curves exist. Producing them would require reading consumed holdouts again, which is a
+  posthoc, EXPLORATORY analysis.
 - **Objective dependence.** The objective and margins are particular choices; family-level
   results are reported to limit this. The real-versus-real margin uses one pair of days.
 - **Replay assumptions.** Historical replay assumes no market impact of the hypothetical
