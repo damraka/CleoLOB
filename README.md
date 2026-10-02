@@ -50,26 +50,30 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
-### v0.6 research branch (unreleased, `0.6.0.dev0`)
+### v0.6.0: market realism, calibration uncertainty and model risk (current release)
 
 v0.6 asks why simulator conclusions are unstable. It uses preregistered hypotheses, sealed
-designs, and fresh Deribit holdouts from September and October 2020. Results so far, all
-from `research/v0.6-market-realism`, not yet a release:
+designs, and fresh Deribit holdouts from September and October 2020. The registered studies
+were run on the research branch at development version `0.6.0.dev0` and are released
+unchanged in `v0.6.0`:
 
 | Question | v0.6 result |
 |---|---|
-| Relative calibration improvement | v3 beats the v0.5 class on retrospective June (−1.76), fresh ETH (−1.02) and fresh cross-instrument BTC (−1.17); all established. |
-| Absolute realism | Not achieved. No family is within its real-vs-real margin on fresh data. Real vs simulated minute-windows are separated with AUC ≈ 1, and ~100% of historical windows are outside the simulators' support. |
-| Identifiability | Not uniquely identified. Two materially different parameter vectors (self-excitation, inside-spread placement, regime share) both fall within the preregistered near-optimal tolerance. They are not statistically equal fits, and the pool was a finite 32-candidate selection set. |
-| Execution stability across plausible worlds | Not established either way. There is no certified ranking reversal, and the minimum detectable effects are about 1.6–2.9 bps (H5) and 1.5–2.6 bps (H6), above the 1 bps margin. Regime and structural sensitivity (about 1–4.8 bps) was of the same order as policy differences in these few worlds; those estimates are unstable. |
-| Regime-conditioned calibration | Failed within and outside regime. |
-| Historical transfer (fresh ETH 2020-10-01) | No determinate pairwise difference under either bounded fill mode at the registered α (not equivalence). No evidence was established that domain-randomized training transfers more consistently. |
+| Relative calibration improvement (H1–H3) | ESTABLISHED. v3 beats the v0.5 class on retrospective June (−1.76), fresh ETH (−1.02) and fresh cross-instrument BTC (−1.17). These are relative statements only. |
+| Absolute realism and domain gap (H8) | Not achieved. No family is within its real-vs-real margin on fresh data. Real vs simulated minute-windows are separated with AUC ≈ 1 (H8 ESTABLISHED), and ~100% of historical windows are outside the simulators' support. |
+| Identifiability (H4, descriptive) | Not uniquely identified. Two materially different parameter vectors (self-excitation, inside-spread placement, regime share) both fall within the preregistered near-optimal tolerance. They are not statistically equal fits, and the pool was a finite 32-candidate selection set. |
+| Plausible-simulator ensemble | Two members. This is a consequence of the frozen design: 2,304 candidates → 64 re-scored → 32 scored on the selection day → 4 within the 10% tolerance → 2 materially distinct; the 8-member limit was not binding. It is not evidence that only two plausible configurations exist. |
+| Execution stability across plausible worlds (H5, H6) | NOT_ESTABLISHED for both. There is no certified ranking reversal, and the minimum detectable effects are about 1.6–2.9 bps (H5) and 1.5–2.6 bps (H6), above the 1 bps margin. This implies neither equivalence nor stable rankings. Regime and structural sensitivity (about 1–4.8 bps) was of the same order as policy differences in these few worlds; those estimates are unstable. |
+| Execution-sensitive realism (H7) | NOT_ESTABLISHED. No realism family reached the preregistered ρ ≥ 0.5 threshold. |
+| Regime-conditioned calibration (H9, H10) | FAILED, both within and outside regime. |
+| Historical transfer, fresh ETH 2020-10-01 (H11, H12) | H11 is NOT_ESTABLISHED for PPO and DQN: no evidence was established that domain-randomized training transfers more consistently. There is no determinate pairwise difference under either bounded fill mode at the registered α, which is not equivalence. H12 is formally ESTABLISHED under the registered rule but scientifically vacuous, because all 15 pairs are indeterminate in both fill modes. Historical fills from aggregate L2 are bounds, never exact passive fills. |
 
 See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
 
-The [v0.5 research report](docs/v05-paper.md) documents the real-market validation study
-released as `v0.5.0`. The
-[v0.5 final report](docs/v05-final-report.md) documents the latest release.
+The [v0.6 final report](docs/v06-final-report.md) documents the latest release, `v0.6.0`.
+The [v0.5 research report](docs/v05-paper.md) and
+[v0.5 final report](docs/v05-final-report.md) document the real-market validation study
+released as `v0.5.0`.
 
 ## Core capabilities
 
@@ -284,6 +288,8 @@ Committed evidence can be verified with:
 cleo verify-artifact examples/studies/v03
 cleo verify-artifact examples/studies/v04/evidence
 cleo verify-artifact examples/studies/v05/evidence
+cleo verify-artifact examples/studies/v06/evidence
+cleo protocol-v06 verify
 ```
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
@@ -310,6 +316,9 @@ CleoLOB does not currently establish:
 - live alpha or profitability
 - production HFT or exchange-colocated performance
 - universal cross-instrument or cross-venue transfer
+- unique identification of calibrated simulator parameters (v0.6 H4)
+- absolute realism of calibrated simulators: real and simulated windows remain distinguishable
+  (v0.6 H8)
 
 These are explicit research boundaries rather than hidden assumptions.
 
@@ -321,8 +330,11 @@ multi-regime external validity, a registered policy study and historical transfe
 including every negative and invalid one, are in the [v0.5 report](docs/v05-paper.md) and the
 [final report](docs/v05-final-report.md). See the [v0.5 roadmap](docs/v05-roadmap.md).
 
-v0.6, **market realism, calibration uncertainty and model risk**, is in progress on the research
-branch `research/v0.6-market-realism` (not released). See the [v0.6 roadmap](docs/v06-roadmap.md).
+v0.6, **market realism, calibration uncertainty and model risk**, was released as `v0.6.0`.
+It covers calibration v3, identifiability, a plausible-simulator ensemble, structural model
+risk, a domain-gap study, regime conditioning and historical transfer v2. Every negative,
+vacuous and invalid outcome is retained in the [v0.6 report](docs/v06-paper.md) and the
+[final report](docs/v06-final-report.md). See the [v0.6 roadmap](docs/v06-roadmap.md).
 
 ## Documentation
 
@@ -349,7 +361,7 @@ branch `research/v0.6-market-realism` (not released). See the [v0.6 roadmap](doc
   [execution](docs/v05-execution.md), [external validity](docs/v05-external-validity.md),
   [RL](docs/v05-rl.md), [transfer](docs/v05-transfer.md), [statistics](docs/v05-statistics.md),
   [performance](docs/v05-performance.md), [reproduction](docs/v05-reproduction.md)
-- [v0.6 roadmap](docs/v06-roadmap.md), [research report](docs/v06-paper.md) and [final report](docs/v06-final-report.md) (unreleased research branch)
+- [v0.6 roadmap](docs/v06-roadmap.md), [research report](docs/v06-paper.md) and [final report](docs/v06-final-report.md)
 - v0.6 details: [protocol](docs/v06-research-protocol.md), [data](docs/v06-data.md), [realism](docs/v06-realism.md),
   [calibration and identifiability](docs/v06-calibration.md), [model risk and execution stability](docs/v06-model-risk.md),
   [domain gap](docs/v06-domain-gap.md), [transfer](docs/v06-transfer.md), [statistics](docs/v06-statistics.md),
