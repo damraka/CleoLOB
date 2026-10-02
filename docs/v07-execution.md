@@ -62,3 +62,71 @@ history:
 
 **Scope.** These are simulator semantics. Nothing here measures or claims real venue
 latency, colocation or HFT behaviour.
+
+## Queue-position uncertainty (workstreams 5, 79)
+
+`lob.v07.queue.models` covers hypothetical passive orders on aggregate L2. The order joins
+the back of its level, and the level's later history is a sequence of three event types:
+- prints at the price
+- prints through the price
+- displayed-size observations
+
+A size decrease not explained by prints is a cancellation of unknown position. The five
+models differ only in where those cancellations sit and what fills the order:
+
+| Model | Cancellations | Fills from |
+|---|---|---|
+| `conservative` | irrelevant | prints strictly through the price only |
+| `fifo_lower` | behind the order | prints at/through, after the queue ahead |
+| `probabilistic` | share `F(a)` ahead (`a` = fraction of the level ahead) | prints at/through, after the queue ahead |
+| `fifo_upper` | ahead of the order | prints at/through, after the queue ahead |
+| `optimistic` | — (front of queue) | every print at or through the price |
+
+**Ordering.** Filled quantity is ordered `conservative ≤ fifo_lower ≤ probabilistic ≤
+fifo_upper ≤ optimistic` for any monotone `F`. A property test checks this on 200 random
+level histories with random Beta-shaped `F`. Seeded draws (`fill_distribution`) give a fill
+distribution inside the FIFO bounds.
+
+**Assumptions.** Every model assumes no impact of the hypothetical order, no hidden liquidity
+and price-time priority. Aggregate L2 establishes none of these, so the results are
+`ASSUMPTION_DEPENDENT` bounds, never exact fills.
+
+**Learned cancellation positions (genuine order-level data only).**
+- `lob.v07.queue.learned` measures, on the Bitstamp captures (consumed in v0.5), where each
+  cancelled order sat in its level: `u` = volume ahead / level volume.
+- This requires tracked price-time priority: additions join the back, and size increases or
+  reprices re-queue. The feed does not establish this, so the result is
+  **ASSUMPTION_DEPENDENT**.
+- Levels holding a single order are excluded, because their `u` is always 0.
+- Run `results/v07/m3/queue`, retrospective and descriptive:
+
+| Capture | Cancellations | Mean `u` [95% CI] | In front quintile | In back quintile | KS from uniform |
+|---|---|---|---|---|---|
+| development (900 s) | 13,039 | 0.073 [0.070, 0.077] | 87.3% | 2.1% | 0.87 |
+| validation (1,800 s) | 16,284 | 0.081 [0.078, 0.084] | 85.5% | 2.1% | 0.85 |
+
+The two captures agree closely (two-sample KS 0.021). Under the tracking assumption,
+cancellations come overwhelmingly from the front of the queue, far from the pro-rata
+(uniform) rule.
+
+**Interpretation.** Front cancellations reduce the queue ahead of a newly joined order. The
+learned `F` therefore moves `probabilistic` toward `fifo_upper`. This is one venue (spot
+Bitstamp), two short consumed captures and one priority assumption. It is not evidence about
+Deribit or BitMEX queues.
+
+**Queue-model sensitivity (development day).**
+- Setup: 400 hypothetical 14-lot passive buys at the best bid, 60 s lifetime, seed 70601.
+- Mean fill fraction:
+
+| Model | Mean fill fraction |
+|---|---|
+| conservative | 0.134 |
+| fifo_lower | 0.152 |
+| probabilistic, pro-rata | 0.173 |
+| probabilistic, learned | 0.184 |
+| fifo_upper | 0.184 |
+| optimistic | 0.206 |
+
+- The conservative-to-optimistic width is 0.072, about half the conservative value. Queue
+  assumptions alone move passive fills by this much on this data. Historical transfer (M16)
+  therefore reports both fill bounds and the queue sensitivity.
