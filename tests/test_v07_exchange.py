@@ -165,3 +165,55 @@ def test_semantics_matrix_marks_unavailable() -> None:
     assert matrix["deribit/BTC-PERPETUAL"]["price_time_priority"] == "DECLARED"
     assert matrix["cleolob/SIM"]["price_time_priority"] == "SIMULATED"
     assert matrix["deribit/ETH-PERPETUAL"]["self_trade_prevention"] == "NOT_AVAILABLE"
+
+
+# ----------------------------------------------------------------------------- latency components and async harness
+
+
+def _harness(profile, seed=21):
+    sim = ExchangeSimulator(SimConfig(seed=seed))
+    sim.step(1.0)
+    return latency.AsyncHarness(sim, profile)
+
+
+def _buy(observed):
+    return [(Side.BUY, 10, None)]
+
+
+def test_zero_latency_profile_is_equivalent_to_immediate_execution() -> None:
+    h = _harness(latency.LatencyProfile())
+    oid = h.act(_buy)[0]
+    h.advance(0.001)
+    assert h.sim.orders[oid].is_terminal and h.known_fills
+    assert h.log[0]["observed_at"] == h.log[0]["sent_at"]
+
+
+def test_delayed_action_fixture_is_deterministic_and_market_moves_in_between() -> None:
+    fixed = latency.LatencyModel("fixed", 0.2, 0.0)
+    profile = latency.LatencyProfile(observation=fixed, decision=fixed, submission=fixed, acknowledgement=fixed,
+                                     cancel=latency.LatencyModel("fixed", 0.5, 0.0))
+    runs = []
+    for _ in range(2):
+        h = _harness(profile)
+        h.advance(1.0)                                            # build feed history before observing
+        oid = h.act(_buy)[0]
+        assert h.log[0]["sent_at"] - h.log[0]["observed_at"] == pytest.approx(0.4, abs=0.02)
+        h.advance(0.1)
+        assert h.sim.orders[oid].status.name == "IN_FLIGHT"      # submission latency not yet elapsed
+        h.advance(0.5)
+        runs.append((h.sim.orders[oid].status.name, len(h.known_fills), round(h.sim.book.mid(), 6)))
+    assert runs[0] == runs[1]
+
+
+def test_cancel_latency_is_separate_from_submission() -> None:
+    profile = latency.LatencyProfile(submission=latency.LatencyModel("fixed", 0.01, 0.0),
+                                     cancel=latency.LatencyModel("fixed", 1.0, 0.0))
+    h = _harness(profile)
+    bid = h.sim.book.best_bid()
+    oid = h.sim.submit(Side.BUY, 5, "ASYNC", bid - 5)
+    h.advance(0.05)
+    assert h.sim.cancel(oid)
+    h.advance(0.5)
+    assert h.sim.orders[oid].status.name == "CANCEL_PENDING"
+    h.advance(0.6)
+    assert h.sim.orders[oid].status.name == "CANCELLED"
