@@ -61,11 +61,26 @@ cleo report-v06 --out examples/studies/v06                                  # fi
 **Pilots.** Pilot runs (`results/v06/pilot/*`) use reduced budgets. They are labelled, never
 sealed in the ledger and never used as evidence.
 
+## Provenance line endings
+
+Run `provenance.json` files hash source bytes as they were in the Windows working copy. In
+14 of the 17 registered runs, 1–3 `lob/v06` files were hashed as CRLF bytes, and 15 runs
+record `git_dirty: true` because the append-only ledger was uncommitted mid-run.
+
+- **Same code.** Converting the committed LF files to CRLF reproduces every recorded hash
+  exactly, so each run's code matches its recorded commit.
+- **Seals and bindings unaffected.** They use normalized or document hashes and remain valid.
+- **Fresh checkouts.** A byte-level source check on a fresh LF checkout may report these files
+  as different unless line endings are normalized.
+
+This is provenance-format debt, not a difference in any result. See
+[v06-final-report.md](v06-final-report.md).
+
 ## Retained attempts
 
 | Directory | Outcome | Why |
 |---|---|---|
 | `results/v06/m13/bank` | INVALID | NaN transition probabilities refused at sealing; simulation-only, before any holdout access |
 | `results/v06/m13/deribit-eth-perp-2020-09-01` | INVALID | ledger rule bug (posthoc flag) refused the evaluate access after the recorded download; no holdout byte was read and no outcome produced; fix sealed as `m13-holdout-implementation-revision-1` before the registered rerun |
-| `results/v06/m16/benchmarks` | INVALID | synthetic benchmark world lacked depleting events |
+| none (intended `results/v06/m16/benchmarks`) | INVALID | synthetic benchmark world lacked depleting events. It failed before a run directory was created, so the attempt is retained only as ledger entry 79 and in this chronology. |
 | `results/v06/pilot/m1-design-1`, `pilot/m6-*-1` | pilot | first pilots, including a NaN serialization failure |

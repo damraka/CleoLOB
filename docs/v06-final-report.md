@@ -64,7 +64,8 @@ Statuses are copied by the audit from the sealed result files.
 **INVALID (retained, never overwritten):**
 - simulation bank attempt 1;
 - fresh ETH evaluation attempt 1: ledger rule bug before any byte was read;
-- benchmark attempt 1.
+- benchmark attempt 1. It failed before a run directory was created, so it is retained in the
+  consumption ledger (entry 79) and the research chronology, not as a directory.
 
 See [v06-reproduction.md](v06-reproduction.md).
 
@@ -146,6 +147,29 @@ See [v06-reproduction.md](v06-reproduction.md).
 - **v0.5 history is unchanged:**
   - the v0.5 protocol verifies, and its 80-entry ledger head is pinned by the v0.6 protocol;
   - no v0.5 file, result or tag was modified.
+- **Provenance-format debt (line endings).** This is not a difference in any scientific
+  result.
+  - **Dirty flag.** 15 of the 17 registered runs record `git_dirty: true`; `m13/bank-2` and
+    `m16/benchmarks-2` record `false`. Runs append to the ledger while they execute, so the
+    ledger was uncommitted, and some working-copy files had different line endings.
+  - **Affected runs.** 14 of the 17 registered runs record source hashes over CRLF
+    working-copy bytes for 1–3 `lob/v06` files:
+    - `m10/evaluation`, `m10/policies`, `m12/regime`, `m7/identifiability`;
+    - `m13/bank-2`, `m16/benchmarks-2`;
+    - all six `m13` holdout runs;
+    - both `m14` transfer runs.
+
+    `m1/design`, `m6/develop` and `m6/select` are unaffected. The other 7 of the 24 sealed
+    runs are labelled pilots and are not evidence.
+  - **Same code.** Converting the committed LF files to CRLF reproduces those recorded hashes
+    exactly, so the code content each run used matches the committed source at its recorded
+    commit.
+  - **Seals unaffected.** The protocol, ledger, observable-design seal, environment-freeze
+    seal and evidence bindings use line-ending-normalized or document hashes, and they all
+    remain valid. The sealed provenance files were not rewritten.
+  - **Future checks.** A byte-level source check (for example `check_source=True`) on a fresh
+    LF checkout may report a mismatch for these files unless line endings are normalized
+    first.
 
 ## Release-gate audit (local, Windows 11, CPython 3.14.6)
 
@@ -156,7 +180,7 @@ See [v06-reproduction.md](v06-reproduction.md).
 | Build | `cleolob-0.6.0.dev0` wheel (107 `lob` modules, 31 in `lob.v06`) and sdist (182 entries). Neither contains `data/`, `results/`, `.csv.gz`, `.pkl` or `.npz` files. |
 | Isolated wheel install (new venv outside the checkout) | imports from `site-packages/lob`; pip check clean; all 13 v0.6 commands answer `--help`; `cleo smoke` and `verify-artifact` pass; misuse exits with a clear `INVALID` |
 | `cleo protocol-v06 verify` | valid; 80 ledger entries; no fresh dataset remains |
-| `cleo verify-v06 results/v06` | 24 sealed runs, all valid |
+| `cleo verify-v06 results/v06` | 24 sealed runs (17 registered + 7 labelled pilots), all valid |
 | Public bundle | `verify-artifact` valid. 76 files were independently re-hashed with Python `hashlib`: 0 mismatches. |
 | `cleo claim-audit-v06` | valid: 14 claims, 0 issues. The flagged "risky" lines are negated list items under "not claimed" and were reviewed. |
 | v0.5 history | `cleo protocol verify` valid (80 entries); v0.5 bundle valid; all v0.5 sealed runs valid; `policy-study-v05 verify` valid. No v0.3–v0.5 config, evidence or frozen module differs from `v0.5.0` (but see item 10 above). |

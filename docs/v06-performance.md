@@ -19,8 +19,10 @@ run `results/v06/m16/benchmarks-2`).
 | execution episode (TWAP, mandate of record) | 4.06 episodes / s | 0.74 for 3 |
 | logistic discriminator fit (20 features) | 2.06 × 10⁶ windows / s | 0.001 for 2,000 |
 
-The first benchmark attempt (`results/v06/m16/benchmarks`) is retained and recorded in the
-ledger as INVALID. Its synthetic world produced too few depleting events to freeze bins.
+The first benchmark attempt failed before a run directory was created: its synthetic world
+produced too few depleting events to freeze bins. It is recorded as INVALID in the v0.6
+consumption ledger (entry 79) and in the research chronology. The ledger note names the
+intended path `results/v06/m16/benchmarks`, but no such directory exists.
 
 ## Wall-clock cost of the registered study
 
