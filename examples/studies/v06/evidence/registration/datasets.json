@@ -1,0 +1,40 @@
+{
+  "schema": "cleolob-v06-dataset-facts-1",
+  "note": "Static source facts and governance. Access times, source hashes, freshness and consumption come from configs/v06/consumption-ledger.jsonl, never from this file.",
+  "instruments": {
+    "deribit:ETH-PERPETUAL": {"instrument_type": "inverse_perpetual", "contract": "1 USD face per contract; amounts in USD", "tick_size": "0.05 USD (2020)", "lot_size": "1 USD", "quote_currency": "USD", "base_asset": "ETH"},
+    "deribit:BTC-PERPETUAL": {"instrument_type": "inverse_perpetual", "contract": "10 USD face per contract; amounts in USD", "tick_size": "0.5 USD (2020)", "lot_size": "10 USD", "quote_currency": "USD", "base_asset": "BTC"}
+  },
+  "providers": {
+    "Tardis.dev": {
+      "source_identifier": "https://datasets.tardis.dev/v1/{exchange}/{data_type}/{YYYY}/{MM}/01/{symbol}.csv.gz (public first-of-month samples, no credentials)",
+      "timezone": "UTC",
+      "date_range": "one UTC calendar day 00:00-24:00",
+      "data_level": "aggregate_l2 incremental book updates plus trade prints",
+      "capability": ["top_of_book", "spread", "aggregate_depth", "book_imbalance", "aggregate_volume_changes", "trade_prints"],
+      "not_capable": ["order_identity", "exact_fifo_position", "quantity_ahead", "hidden_order_quantity", "observed_order_fill", "modify_events"],
+      "sequence_semantics": "capture order with provider local timestamps; no exchange sequence numbers in the CSV; gaps are undetectable beyond timestamp gaps",
+      "redistribution": "NOT_REDISTRIBUTABLE: Tardis.dev terms (checked 2026-09-26 for v0.5) allow internal research use; raw files and detailed derived data stay in ignored local directories (data/, results/); public evidence carries summaries and hashes only",
+      "acquisition": "lob.v06.data.acquire: a ledger 'access' entry with use 'download' precedes every holdout download; files land in the ignored data/v06/tardis directory (consumed v0.5 files are read from data/public or data/v05/tardis); size limit 512 MiB per file; gzip/CRC and provider MD5 checks"
+    }
+  },
+  "chronology_audit": {
+    "audited_at_utc": "2026-10-01T16:30:00+00:00",
+    "sources_inspected": ["configs/v04-consumed-data.json", "configs/v05/protocol.json", "configs/v05/consumption-ledger.jsonl (80 entries)", "repository files and git history (git log --all -S) at 50ed08b", "local data directories"],
+    "classification": {
+      "deribit:ETH-PERPETUAL:2020-04-01": "DEVELOPMENT (consumed by v0.3/v0.4/v0.5)",
+      "deribit:ETH-PERPETUAL:2020-05-01": "DEVELOPMENT/SELECTION (consumed by v0.4/v0.5)",
+      "deribit:ETH-PERPETUAL:2020-06-01": "CONSUMED -> RETROSPECTIVE",
+      "deribit:ETH-PERPETUAL:2020-07-01": "CONSUMED -> RETROSPECTIVE",
+      "deribit:BTC-PERPETUAL:2020-07-01": "CONSUMED -> RETROSPECTIVE",
+      "deribit:ETH-PERPETUAL:2020-08-01": "CONSUMED -> RETROSPECTIVE",
+      "deribit:ETH-PERPETUAL:2020-09-01": "FRESH_CANDIDATE -> fresh_external",
+      "deribit:BTC-PERPETUAL:2020-09-01": "FRESH_CANDIDATE -> cross_instrument_external",
+      "deribit:ETH-PERPETUAL:2020-10-01": "FRESH_CANDIDATE -> transfer_holdout",
+      "deribit:{ETH,BTC}-PERPETUAL:2026-{07,08,09}-01": "CONSUMED (v0.3/v0.4); not used",
+      "bitstamp btcusd live captures": "CONSUMED (v0.5 M1/M2); not used",
+      "vendor historical MBO (LOBSTER, Databento, exchange L3)": "NOT_AVAILABLE"
+    },
+    "availability_check": "Tardis rejects HEAD requests (HTTP 404 even for known files), so fresh-file availability could not be checked without a GET; availability is therefore unverified until the ledger-recorded first access, and a failure yields NOT_AVAILABLE"
+  }
+}

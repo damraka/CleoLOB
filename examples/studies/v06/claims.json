@@ -1,0 +1,386 @@
+{
+  "schema": "cleolob-v06-claims-1",
+  "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+  "claims": [
+    {
+      "claim_id": "H1",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-06-01",
+      "hypothesis_id": "H1",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-06-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-06-01": "retrospective"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "10517d0fb6822c7fab5367950492a326eaa7926c2c91bf80fb5618c7316f7c14",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-06-01",
+      "result_path": "improvement",
+      "metric": "objective(v3) - objective(v0.5 control)",
+      "threshold": "Bonferroni upper bound < 0",
+      "estimate": -1.7649750263631478,
+      "ci_low": -1.868948616904889,
+      "ci_high": -1.6270873021361605,
+      "alpha": 0.016666666666666666,
+      "family": "F1_calibration",
+      "family_size": 3,
+      "status": "ESTABLISHED",
+      "evidence_level": "retrospective",
+      "interpretation": "Relative improvement on consumed June data; absolute realism still fails 7/9 margins.",
+      "status_path": "improvement/status"
+    },
+    {
+      "claim_id": "H2",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-09-01",
+      "hypothesis_id": "H2",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-09-01": "fresh_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "e3dd0bf9767b860d4aa09261a4aa33058c5710a8cb10cb1b1fa94268a6da38a0",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-09-01-registered",
+      "result_path": "improvement",
+      "metric": "objective(v3) - objective(v0.5 control)",
+      "threshold": "Bonferroni upper bound < 0",
+      "estimate": -1.0204670832714786,
+      "ci_low": -1.1819079321104913,
+      "ci_high": -0.8772392874637491,
+      "alpha": 0.016666666666666666,
+      "family": "F1_calibration",
+      "family_size": 3,
+      "status": "ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Fresh same-instrument improvement; no family equivalent within its real-vs-real margin.",
+      "status_path": "improvement/status"
+    },
+    {
+      "claim_id": "H3",
+      "study_id": "m13-holdout-deribit-btc-perp-2020-09-01",
+      "hypothesis_id": "H3",
+      "dataset_ids": [
+        "deribit-btc-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-btc-perp-2020-09-01": "cross_instrument_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "8fcdb7d9fa3cbef370193591abfccccdca1c9497943450036234c6475207b96b",
+      "evidence": "results/v06/m13/deribit-btc-perp-2020-09-01",
+      "result_path": "improvement",
+      "metric": "objective(v3) - objective(v0.5 control)",
+      "threshold": "Bonferroni upper bound < 0",
+      "estimate": -1.1657411580076609,
+      "ci_low": -1.2700003940640239,
+      "ci_high": -1.0989479834434541,
+      "alpha": 0.016666666666666666,
+      "family": "F1_calibration",
+      "family_size": 3,
+      "status": "ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Cross-instrument improvement with ETH scale and tick geometry; absolute fit still fails.",
+      "status_path": "improvement/status"
+    },
+    {
+      "claim_id": "H4",
+      "study_id": "m7-identifiability-registered",
+      "hypothesis_id": "H4",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-04-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-04-01": "development"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "3c595a9bca7a2946ff0381fe65dfc08c021f8ce629f1f116aef0fb1a94a9119a",
+      "result_sha256": "b1c35397ce7b6527dba3e0613cb5d5ce5fffb750c35382a5301b2dc65bef9791",
+      "evidence": "results/v06/m7/identifiability",
+      "result_path": "H4_identifiability",
+      "metric": "materially distinct near-optimal vectors",
+      "threshold": ">= 2 (L-infinity >= 0.25)",
+      "estimate": 2,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.05,
+      "family": "F2_identifiability",
+      "family_size": 1,
+      "status": "ESTABLISHED",
+      "evidence_level": "descriptive",
+      "interpretation": "Calibration is not uniquely identified at the sealed objective and seed resolution.",
+      "status_path": "H4_identifiability/status"
+    },
+    {
+      "claim_id": "H5",
+      "study_id": "execution-evaluation-registered",
+      "hypothesis_id": "H5",
+      "dataset_ids": [],
+      "dataset_roles": {},
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "35c91619b60def6f8ee1659c838ff05f8a4850bf204a711b192e14cec4f9b3f5",
+      "result_sha256": "9c0da0229eb9ecfb71309fb3891c7c76c6e86edb33cc5edf12b0c3c7413159bc",
+      "evidence": "results/v06/m10/evaluation",
+      "result_path": "H5_equifinality",
+      "metric": "max |member cost difference| (classical agents)",
+      "threshold": "Bonferroni interval excludes 0 and |difference| >= 1 bps",
+      "estimate": 0.9973084615392138,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": null,
+      "family": "F3_equifinality",
+      "family_size": null,
+      "status": "NOT_ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Not established; the design's execution MDE (1.0-1.7 bps per mean) exceeds the 1 bps margin, so this is low resolution, not invariance.",
+      "status_path": "H5_equifinality/status"
+    },
+    {
+      "claim_id": "H6",
+      "study_id": "execution-evaluation-registered",
+      "hypothesis_id": "H6",
+      "dataset_ids": [],
+      "dataset_roles": {},
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "35c91619b60def6f8ee1659c838ff05f8a4850bf204a711b192e14cec4f9b3f5",
+      "result_sha256": "9c0da0229eb9ecfb71309fb3891c7c76c6e86edb33cc5edf12b0c3c7413159bc",
+      "evidence": "results/v06/m10/evaluation",
+      "result_path": "H6_rank_stability",
+      "metric": "certified reversals across the 2 ensemble members",
+      "threshold": "opposite certified directions in two members",
+      "estimate": 0.06666666666666667,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": null,
+      "family": "F4_rank_stability",
+      "family_size": null,
+      "status": "NOT_ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "No certified reversal; point rankings of the two plausible worlds are nearly unrelated (Kendall tau 0.07).",
+      "status_path": "H6_rank_stability/status"
+    },
+    {
+      "claim_id": "H7",
+      "study_id": "execution-evaluation-registered",
+      "hypothesis_id": "H7",
+      "dataset_ids": [],
+      "dataset_roles": {},
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "35c91619b60def6f8ee1659c838ff05f8a4850bf204a711b192e14cec4f9b3f5",
+      "result_sha256": "9c0da0229eb9ecfb71309fb3891c7c76c6e86edb33cc5edf12b0c3c7413159bc",
+      "evidence": "results/v06/m10/evaluation",
+      "result_path": "H7_execution_sensitive_realism",
+      "metric": "max Spearman rho (family error vs disagreement)",
+      "threshold": "rho >= 0.5 with Holm-adjusted significance",
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": null,
+      "family": "F5_sensitivity",
+      "family_size": 9,
+      "status": "NOT_ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "No realism family explains conclusion instability across 15 synthetic worlds.",
+      "status_path": "H7_execution_sensitive_realism/status"
+    },
+    {
+      "claim_id": "H8",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-09-01",
+      "hypothesis_id": "H8",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-09-01": "fresh_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "e3dd0bf9767b860d4aa09261a4aa33058c5710a8cb10cb1b1fa94268a6da38a0",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-09-01-registered",
+      "result_path": "domain_gap/classifiers/logistic",
+      "metric": "test ROC-AUC (logistic)",
+      "threshold": "one-sided lower bound > 0.5",
+      "estimate": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "alpha": 0.05,
+      "family": "F6_domain_gap",
+      "family_size": 1,
+      "status": "ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Real and synthetic 60 s windows are perfectly separable; a weak discriminator would not have shown realism.",
+      "status_path": "domain_gap/status"
+    },
+    {
+      "claim_id": "H9",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-09-01",
+      "hypothesis_id": "H9",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-09-01": "fresh_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "e3dd0bf9767b860d4aa09261a4aa33058c5710a8cb10cb1b1fa94268a6da38a0",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-09-01-registered",
+      "result_path": "regime",
+      "metric": "regime model vs global, within regime",
+      "threshold": "Bonferroni upper bound < 0 in both regimes",
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.0125,
+      "family": "F7_regime",
+      "family_size": 4,
+      "status": "FAILED",
+      "evidence_level": "confirmatory",
+      "interpretation": "High-volatility model better within regime; low-volatility model (23 selection blocks) worse: FAILED by rule.",
+      "status_path": "regime/H9"
+    },
+    {
+      "claim_id": "H10",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-09-01",
+      "hypothesis_id": "H10",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-09-01": "fresh_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "e3dd0bf9767b860d4aa09261a4aa33058c5710a8cb10cb1b1fa94268a6da38a0",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-09-01-registered",
+      "result_path": "regime",
+      "metric": "off-regime noninferiority",
+      "threshold": "upper bound < delta = 0.244 in both directions",
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.0125,
+      "family": "F7_regime",
+      "family_size": 4,
+      "status": "FAILED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Regime models do not transfer outside their regime.",
+      "status_path": "regime/H10"
+    },
+    {
+      "claim_id": "H11-ppo",
+      "study_id": "m14-transfer-deribit-eth-perp-2020-10-01",
+      "hypothesis_id": "H11",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-10-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-10-01": "transfer_holdout"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "7d341a887d45e1e8f2a2c43089ee195cfb0c40276c8d29ff07f500ae187c2556",
+      "result_sha256": "aaa2b924be0622319e11783e71294197da60387ffd56eb2830b9ac60137ec2b9",
+      "evidence": "results/v06/m14/deribit-eth-perp-2020-10-01",
+      "result_path": "H11/ppo",
+      "metric": "gap(ensemble) - gap(single), PPO",
+      "threshold": "upper bound < 0 in both fill modes",
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.0125,
+      "family": "F8_transfer_learning",
+      "family_size": 4,
+      "status": "NOT_ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Domain-randomized PPO does not transfer more consistently than single-world PPO.",
+      "status_path": "H11/ppo/status"
+    },
+    {
+      "claim_id": "H11-dqn",
+      "study_id": "m14-transfer-deribit-eth-perp-2020-10-01",
+      "hypothesis_id": "H11",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-10-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-10-01": "transfer_holdout"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "7d341a887d45e1e8f2a2c43089ee195cfb0c40276c8d29ff07f500ae187c2556",
+      "result_sha256": "aaa2b924be0622319e11783e71294197da60387ffd56eb2830b9ac60137ec2b9",
+      "evidence": "results/v06/m14/deribit-eth-perp-2020-10-01",
+      "result_path": "H11/dqn",
+      "metric": "gap(ensemble) - gap(single), DQN",
+      "threshold": "upper bound < 0 in both fill modes",
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.0125,
+      "family": "F8_transfer_learning",
+      "family_size": 4,
+      "status": "NOT_ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Domain-randomized DQN does not transfer more consistently than single-world DQN.",
+      "status_path": "H11/dqn/status"
+    },
+    {
+      "claim_id": "H12",
+      "study_id": "m14-transfer-deribit-eth-perp-2020-10-01",
+      "hypothesis_id": "H12",
+      "dataset_ids": [
+        "deribit-eth-perp-2020-10-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-10-01": "transfer_holdout"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "7d341a887d45e1e8f2a2c43089ee195cfb0c40276c8d29ff07f500ae187c2556",
+      "result_sha256": "aaa2b924be0622319e11783e71294197da60387ffd56eb2830b9ac60137ec2b9",
+      "evidence": "results/v06/m14/deribit-eth-perp-2020-10-01",
+      "result_path": "H12_fill_semantics",
+      "metric": "pairs with consistent conclusions across fill modes",
+      "threshold": "no opposite or one-mode-only determinate pair",
+      "estimate": 15,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": 0.0016666666666666668,
+      "family": "F9_fill_semantics",
+      "family_size": 30,
+      "status": "ESTABLISHED",
+      "evidence_level": "confirmatory",
+      "interpretation": "Established vacuously: all 15 pairs are indeterminate under both fill modes.",
+      "status_path": "H12_fill_semantics/status"
+    },
+    {
+      "claim_id": "S-support-eth-sep",
+      "study_id": "m13-holdout-deribit-eth-perp-2020-09-01",
+      "hypothesis_id": null,
+      "dataset_ids": [
+        "deribit-eth-perp-2020-09-01"
+      ],
+      "dataset_roles": {
+        "deribit-eth-perp-2020-09-01": "fresh_external"
+      },
+      "protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+      "config_sha256": "d12ea9a1f89f0eec9b291c7f143c532f9c007b549e895b630ef0faa5e5e38bcf",
+      "result_sha256": "e3dd0bf9767b860d4aa09261a4aa33058c5710a8cb10cb1b1fa94268a6da38a0",
+      "evidence": "results/v06/m13/deribit-eth-perp-2020-09-01-registered",
+      "result_path": "support",
+      "metric": "out-of-support fraction of fresh ETH windows",
+      "threshold": "> 0.5 means NO_CLAIM",
+      "estimate": 1.0,
+      "ci_low": null,
+      "ci_high": null,
+      "alpha": null,
+      "family": null,
+      "family_size": null,
+      "status": "ESTABLISHED",
+      "evidence_level": "descriptive",
+      "interpretation": "Historical windows lie outside the calibrated simulators' support; absolute realism claims are withheld.",
+      "status_path": null
+    }
+  ]
+}

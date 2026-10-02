@@ -124,6 +124,8 @@ def parser() -> argparse.ArgumentParser:
     child.add_argument("operation", choices=("verify", "status"))
     child.add_argument("--root", type=Path, default=Path("."))
     _v05_commands(commands)
+    from .v06.cli import add_commands as _v06_commands
+    _v06_commands(commands)
     return result
 
 
@@ -232,6 +234,11 @@ def _run_v05(args) -> int | None:
     else:
         return None
     return 0
+
+
+def _run_v06(args) -> int | None:
+    from .v06.cli import dispatch
+    return dispatch(args)
 
 
 OPTIONAL_EXTRAS = {"rl": ("stable_baselines3", "torch", "tensorboard"), "plots": ("plotly",),
@@ -386,6 +393,8 @@ def main(argv: list[str] | None = None) -> int:
             _print(result)
             return 0 if result["valid_reproduction"] else 1
         elif (code := _run_v05(args)) is not None:
+            return code
+        elif (code := _run_v06(args)) is not None:
             return code
         elif args.command == "protocol":
             from .preregistration import verify_protocol_files

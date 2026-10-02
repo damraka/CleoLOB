@@ -1,0 +1,118 @@
+row,column,value
+real vs real margin,book state,0.6398976476059953
+real vs real margin,event activity,0.42930851848288915
+real vs real margin,sizes,0.08487413580666724
+real vs real margin,returns,0.3204546831422247
+real vs real margin,tail,0.9458223181741218
+real vs real margin,temporal,0.07626295162052976
+real vs real margin,event process,0.19787171238571985
+real vs real margin,dependence,0.08268003036234822
+real vs real margin,resilience,0.07542113632232522
+ETH Jun (retro) v3,book state,0.9903115367858941
+ETH Jun (retro) v3,event activity,0.8716070229323105
+ETH Jun (retro) v3,sizes,0.250943059113184
+ETH Jun (retro) v3,returns,0.16516621675223883
+ETH Jun (retro) v3,tail,1.0758114027759276
+ETH Jun (retro) v3,temporal,0.1830798064805431
+ETH Jun (retro) v3,event process,0.2998826379987446
+ETH Jun (retro) v3,dependence,0.2702087332345089
+ETH Jun (retro) v3,resilience,0.20068851838684784
+ETH Jun (retro) v0.5,book state,3.037247861474062
+ETH Jun (retro) v0.5,event activity,0.49658046541400996
+ETH Jun (retro) v0.5,sizes,0.26880801355657646
+ETH Jun (retro) v0.5,returns,0.5881902090368987
+ETH Jun (retro) v0.5,tail,1.7576127784359599
+ETH Jun (retro) v0.5,temporal,0.307122987636321
+ETH Jun (retro) v0.5,event process,0.40834273159042506
+ETH Jun (retro) v0.5,dependence,0.2197531470325932
+ETH Jun (retro) v0.5,resilience,0.5236719153357955
+ETH Jul (retro) v3,book state,1.116043920552901
+ETH Jul (retro) v3,event activity,0.6365033089777096
+ETH Jul (retro) v3,sizes,0.33065608540588154
+ETH Jul (retro) v3,returns,0.3341321800292986
+ETH Jul (retro) v3,tail,1.7363994962351015
+ETH Jul (retro) v3,temporal,0.13718765826909793
+ETH Jul (retro) v3,event process,0.3568256015065041
+ETH Jul (retro) v3,dependence,0.2267280013610022
+ETH Jul (retro) v3,resilience,0.14390560571126154
+ETH Jul (retro) v0.5,book state,3.144400568045824
+ETH Jul (retro) v0.5,event activity,0.34835993178540664
+ETH Jul (retro) v0.5,sizes,0.30446326232137944
+ETH Jul (retro) v0.5,returns,0.942212760960367
+ETH Jul (retro) v0.5,tail,2.7157864280788506
+ETH Jul (retro) v0.5,temporal,0.2832294969216857
+ETH Jul (retro) v0.5,event process,0.5813065183669555
+ETH Jul (retro) v0.5,dependence,0.28305651451598507
+ETH Jul (retro) v0.5,resilience,0.6049213872385409
+BTC Jul (retro) v3,book state,1.820256652349973
+BTC Jul (retro) v3,event activity,0.5357399375213074
+BTC Jul (retro) v3,sizes,0.23159378997373525
+BTC Jul (retro) v3,returns,0.5325607589040237
+BTC Jul (retro) v3,tail,2.238702713197225
+BTC Jul (retro) v3,temporal,0.1794503780239415
+BTC Jul (retro) v3,event process,0.38045626982632375
+BTC Jul (retro) v3,dependence,0.32141736250694125
+BTC Jul (retro) v3,resilience,0.6831759185986765
+BTC Jul (retro) v0.5,book state,2.757658156844711
+BTC Jul (retro) v0.5,event activity,0.2962018929297382
+BTC Jul (retro) v0.5,sizes,0.21866715662603284
+BTC Jul (retro) v0.5,returns,1.1415366517440078
+BTC Jul (retro) v0.5,tail,2.9294456244251714
+BTC Jul (retro) v0.5,temporal,0.2902756062540317
+BTC Jul (retro) v0.5,event process,0.6359680986996511
+BTC Jul (retro) v0.5,dependence,0.20111204148565545
+BTC Jul (retro) v0.5,resilience,0.3458649406221078
+ETH Aug (retro) v3,book state,1.4413149717168054
+ETH Aug (retro) v3,event activity,0.7330377205671933
+ETH Aug (retro) v3,sizes,0.29086817537763865
+ETH Aug (retro) v3,returns,0.269283993847875
+ETH Aug (retro) v3,tail,1.2573372989546168
+ETH Aug (retro) v3,temporal,0.16310429586980826
+ETH Aug (retro) v3,event process,0.4148062939789134
+ETH Aug (retro) v3,dependence,0.27215744787071716
+ETH Aug (retro) v3,resilience,0.2886402227634451
+ETH Aug (retro) v0.5,book state,2.8550407559026874
+ETH Aug (retro) v0.5,event activity,0.6514554201864395
+ETH Aug (retro) v0.5,sizes,0.2505238350100014
+ETH Aug (retro) v0.5,returns,0.4777134758023619
+ETH Aug (retro) v0.5,tail,1.449608695458704
+ETH Aug (retro) v0.5,temporal,0.27782684457311374
+ETH Aug (retro) v0.5,event process,0.4625409897904277
+ETH Aug (retro) v0.5,dependence,0.18694981372597586
+ETH Aug (retro) v0.5,resilience,0.5069835895150433
+ETH Sep (fresh) v3,book state,1.3686973954415316
+ETH Sep (fresh) v3,event activity,0.9934858032402722
+ETH Sep (fresh) v3,sizes,0.2600172159223848
+ETH Sep (fresh) v3,returns,0.33893854701717613
+ETH Sep (fresh) v3,tail,1.4520841383435954
+ETH Sep (fresh) v3,temporal,0.1404113980299475
+ETH Sep (fresh) v3,event process,0.4947321813968695
+ETH Sep (fresh) v3,dependence,0.2853240758341812
+ETH Sep (fresh) v3,resilience,0.29577294408978977
+ETH Sep (fresh) v0.5,book state,2.8700963034826708
+ETH Sep (fresh) v0.5,event activity,1.0887087961658057
+ETH Sep (fresh) v0.5,sizes,0.22516401531714048
+ETH Sep (fresh) v0.5,returns,0.4404383674685051
+ETH Sep (fresh) v0.5,tail,1.6323774835929414
+ETH Sep (fresh) v0.5,temporal,0.23085575863091953
+ETH Sep (fresh) v0.5,event process,0.48809342394080824
+ETH Sep (fresh) v0.5,dependence,0.18717979556721234
+ETH Sep (fresh) v0.5,resilience,0.442438637870016
+BTC Sep (fresh) v3,book state,1.194616377190052
+BTC Sep (fresh) v3,event activity,0.7078810438866953
+BTC Sep (fresh) v3,sizes,0.20387061889587468
+BTC Sep (fresh) v3,returns,0.30411447705628636
+BTC Sep (fresh) v3,tail,2.370098981420615
+BTC Sep (fresh) v3,temporal,0.11520105264044478
+BTC Sep (fresh) v3,event process,0.4105290236687888
+BTC Sep (fresh) v3,dependence,0.3941491096388996
+BTC Sep (fresh) v3,resilience,0.5808426429453755
+BTC Sep (fresh) v0.5,book state,3.029338425288905
+BTC Sep (fresh) v0.5,event activity,0.6836930334454857
+BTC Sep (fresh) v0.5,sizes,0.2168339292074303
+BTC Sep (fresh) v0.5,returns,0.8904512933122171
+BTC Sep (fresh) v0.5,tail,2.908962232213528
+BTC Sep (fresh) v0.5,temporal,0.22675061160477178
+BTC Sep (fresh) v0.5,event process,0.5464139494751328
+BTC Sep (fresh) v0.5,dependence,0.31161744264373586
+BTC Sep (fresh) v0.5,resilience,0.26462929387285417

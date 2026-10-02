@@ -1,0 +1,163 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='540' height='546' viewBox='0 0 540 546'><rect width='100%' height='100%' fill='#fcfcfb'/>
+<text x='16.0' y='24.0' font-family='system-ui, sans-serif' font-size='15' fill='#0b0b0b' text-anchor='start'>Profile diagnostics: best objective with one parameter fixed</text>
+<text x='16.0' y='44.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='start'>24 re-optimization draws per grid point; n/a = all draws event-capped.</text>
+<text x='232.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 232.0 152)'>0.1</text>
+<text x='296.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 296.0 152)'>0.3</text>
+<text x='360.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 360.0 152)'>0.5</text>
+<text x='424.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 424.0 152)'>0.7</text>
+<text x='488.0' y='152.0' font-family='system-ui, sans-serif' font-size='10' fill='#52514e' text-anchor='start' transform='rotate(-45 488.0 152)'>0.9</text>
+<text x='192.0' y='176.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>cancel_depth_exponent</text>
+<rect x='201' y='161' width='62' height='22' rx='3' fill='#ffffff' stroke='#e4e3df'><title>cancel_depth_exponent / 0.1: n/a</title></rect>
+<text x='232.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>n/a</text>
+<rect x='265' y='161' width='62' height='22' rx='3' fill='#5c9cea' stroke='#e4e3df'><title>cancel_depth_exponent / 0.3: 3.34</title></rect>
+<text x='296.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>3.34</text>
+<rect x='329' y='161' width='62' height='22' rx='3' fill='#c1daf9' stroke='#e4e3df'><title>cancel_depth_exponent / 0.5: 2.34</title></rect>
+<text x='360.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.34</text>
+<rect x='393' y='161' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>cancel_depth_exponent / 0.7: 2.43</title></rect>
+<text x='424.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.43</text>
+<rect x='457' y='161' width='62' height='22' rx='3' fill='#cde2fb' stroke='#e4e3df'><title>cancel_depth_exponent / 0.9: 2.21</title></rect>
+<text x='488.0' y='176.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.21</text>
+<text x='192.0' y='200.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>cancel_rate</text>
+<rect x='201' y='185' width='62' height='22' rx='3' fill='#9dc5f4' stroke='#e4e3df'><title>cancel_rate / 0.1: 2.70</title></rect>
+<text x='232.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.70</text>
+<rect x='265' y='185' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>cancel_rate / 0.3: 2.43</title></rect>
+<text x='296.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.43</text>
+<rect x='329' y='185' width='62' height='22' rx='3' fill='#bad6f8' stroke='#e4e3df'><title>cancel_rate / 0.5: 2.41</title></rect>
+<text x='360.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.41</text>
+<rect x='393' y='185' width='62' height='22' rx='3' fill='#70a9ed' stroke='#e4e3df'><title>cancel_rate / 0.7: 3.15</title></rect>
+<text x='424.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>3.15</text>
+<rect x='457' y='185' width='62' height='22' rx='3' fill='#0d366b' stroke='#e4e3df'><title>cancel_rate / 0.9: 5.11</title></rect>
+<text x='488.0' y='200.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>5.11</text>
+<text x='192.0' y='224.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>hawkes_branching</text>
+<rect x='201' y='209' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>hawkes_branching / 0.1: 2.46</title></rect>
+<text x='232.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.46</text>
+<rect x='265' y='209' width='62' height='22' rx='3' fill='#a9ccf6' stroke='#e4e3df'><title>hawkes_branching / 0.3: 2.58</title></rect>
+<text x='296.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.58</text>
+<rect x='329' y='209' width='62' height='22' rx='3' fill='#94bff2' stroke='#e4e3df'><title>hawkes_branching / 0.5: 2.79</title></rect>
+<text x='360.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.79</text>
+<rect x='393' y='209' width='62' height='22' rx='3' fill='#c1dbf9' stroke='#e4e3df'><title>hawkes_branching / 0.7: 2.34</title></rect>
+<text x='424.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.34</text>
+<rect x='457' y='209' width='62' height='22' rx='3' fill='#9ac2f3' stroke='#e4e3df'><title>hawkes_branching / 0.9: 2.74</title></rect>
+<text x='488.0' y='224.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.74</text>
+<text x='192.0' y='248.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>hawkes_decay</text>
+<rect x='201' y='233' width='62' height='22' rx='3' fill='#b4d3f7' stroke='#e4e3df'><title>hawkes_decay / 0.1: 2.47</title></rect>
+<text x='232.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.47</text>
+<rect x='265' y='233' width='62' height='22' rx='3' fill='#b4d3f7' stroke='#e4e3df'><title>hawkes_decay / 0.3: 2.47</title></rect>
+<text x='296.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.47</text>
+<rect x='329' y='233' width='62' height='22' rx='3' fill='#bcd7f8' stroke='#e4e3df'><title>hawkes_decay / 0.5: 2.39</title></rect>
+<text x='360.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.39</text>
+<rect x='393' y='233' width='62' height='22' rx='3' fill='#b2d1f7' stroke='#e4e3df'><title>hawkes_decay / 0.7: 2.50</title></rect>
+<text x='424.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.50</text>
+<rect x='457' y='233' width='62' height='22' rx='3' fill='#a1c7f5' stroke='#e4e3df'><title>hawkes_decay / 0.9: 2.66</title></rect>
+<text x='488.0' y='248.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.66</text>
+<text x='192.0' y='272.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>imbalance_beta</text>
+<rect x='201' y='257' width='62' height='22' rx='3' fill='#a4c8f5' stroke='#e4e3df'><title>imbalance_beta / 0.1: 2.64</title></rect>
+<text x='232.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.64</text>
+<rect x='265' y='257' width='62' height='22' rx='3' fill='#bcd7f8' stroke='#e4e3df'><title>imbalance_beta / 0.3: 2.39</title></rect>
+<text x='296.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.39</text>
+<rect x='329' y='257' width='62' height='22' rx='3' fill='#b7d4f8' stroke='#e4e3df'><title>imbalance_beta / 0.5: 2.44</title></rect>
+<text x='360.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.44</text>
+<rect x='393' y='257' width='62' height='22' rx='3' fill='#c1daf9' stroke='#e4e3df'><title>imbalance_beta / 0.7: 2.34</title></rect>
+<text x='424.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.34</text>
+<rect x='457' y='257' width='62' height='22' rx='3' fill='#c4dcfa' stroke='#e4e3df'><title>imbalance_beta / 0.9: 2.31</title></rect>
+<text x='488.0' y='272.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.31</text>
+<text x='192.0' y='296.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>inside_spread_prob</text>
+<rect x='201' y='281' width='62' height='22' rx='3' fill='#cde2fb' stroke='#e4e3df'><title>inside_spread_prob / 0.1: 2.21</title></rect>
+<text x='232.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.21</text>
+<rect x='265' y='281' width='62' height='22' rx='3' fill='#b7d5f8' stroke='#e4e3df'><title>inside_spread_prob / 0.3: 2.44</title></rect>
+<text x='296.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.44</text>
+<rect x='329' y='281' width='62' height='22' rx='3' fill='#b0d0f7' stroke='#e4e3df'><title>inside_spread_prob / 0.5: 2.51</title></rect>
+<text x='360.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.51</text>
+<rect x='393' y='281' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>inside_spread_prob / 0.7: 2.46</title></rect>
+<text x='424.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.46</text>
+<rect x='457' y='281' width='62' height='22' rx='3' fill='#b6d4f8' stroke='#e4e3df'><title>inside_spread_prob / 0.9: 2.45</title></rect>
+<text x='488.0' y='296.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.45</text>
+<text x='192.0' y='320.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>limit_rate</text>
+<rect x='201' y='305' width='62' height='22' rx='3' fill='#458fe7' stroke='#e4e3df'><title>limit_rate / 0.1: 3.55</title></rect>
+<text x='232.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>3.55</text>
+<rect x='265' y='305' width='62' height='22' rx='3' fill='#8fbcf2' stroke='#e4e3df'><title>limit_rate / 0.3: 2.84</title></rect>
+<text x='296.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.84</text>
+<rect x='329' y='305' width='62' height='22' rx='3' fill='#cae0fb' stroke='#e4e3df'><title>limit_rate / 0.5: 2.24</title></rect>
+<text x='360.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.24</text>
+<rect x='393' y='305' width='62' height='22' rx='3' fill='#a9ccf6' stroke='#e4e3df'><title>limit_rate / 0.7: 2.59</title></rect>
+<text x='424.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.59</text>
+<rect x='457' y='305' width='62' height='22' rx='3' fill='#ffffff' stroke='#e4e3df'><title>limit_rate / 0.9: n/a</title></rect>
+<text x='488.0' y='320.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>n/a</text>
+<text x='192.0' y='344.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>market_rate</text>
+<rect x='201' y='329' width='62' height='22' rx='3' fill='#98c1f3' stroke='#e4e3df'><title>market_rate / 0.1: 2.75</title></rect>
+<text x='232.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.75</text>
+<rect x='265' y='329' width='62' height='22' rx='3' fill='#a6caf5' stroke='#e4e3df'><title>market_rate / 0.3: 2.62</title></rect>
+<text x='296.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.62</text>
+<rect x='329' y='329' width='62' height='22' rx='3' fill='#b1d1f7' stroke='#e4e3df'><title>market_rate / 0.5: 2.50</title></rect>
+<text x='360.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.50</text>
+<rect x='393' y='329' width='62' height='22' rx='3' fill='#c2dbf9' stroke='#e4e3df'><title>market_rate / 0.7: 2.33</title></rect>
+<text x='424.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.33</text>
+<rect x='457' y='329' width='62' height='22' rx='3' fill='#144585' stroke='#e4e3df'><title>market_rate / 0.9: 4.81</title></rect>
+<text x='488.0' y='344.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>4.81</text>
+<text x='192.0' y='368.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>offset_p</text>
+<rect x='201' y='353' width='62' height='22' rx='3' fill='#bcd8f8' stroke='#e4e3df'><title>offset_p / 0.1: 2.39</title></rect>
+<text x='232.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.39</text>
+<rect x='265' y='353' width='62' height='22' rx='3' fill='#86b7f0' stroke='#e4e3df'><title>offset_p / 0.3: 2.93</title></rect>
+<text x='296.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.93</text>
+<rect x='329' y='353' width='62' height='22' rx='3' fill='#63a1eb' stroke='#e4e3df'><title>offset_p / 0.5: 3.27</title></rect>
+<text x='360.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>3.27</text>
+<rect x='393' y='353' width='62' height='22' rx='3' fill='#62a0ea' stroke='#e4e3df'><title>offset_p / 0.7: 3.28</title></rect>
+<text x='424.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>3.28</text>
+<rect x='457' y='353' width='62' height='22' rx='3' fill='#327dd8' stroke='#e4e3df'><title>offset_p / 0.9: 3.82</title></rect>
+<text x='488.0' y='368.0' font-family='system-ui, sans-serif' font-size='10' fill='#ffffff' text-anchor='middle'>3.82</text>
+<text x='192.0' y='392.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>regime_high_share</text>
+<rect x='201' y='377' width='62' height='22' rx='3' fill='#c6defa' stroke='#e4e3df'><title>regime_high_share / 0.1: 2.28</title></rect>
+<text x='232.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.28</text>
+<rect x='265' y='377' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>regime_high_share / 0.3: 2.36</title></rect>
+<text x='296.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.36</text>
+<rect x='329' y='377' width='62' height='22' rx='3' fill='#a1c7f4' stroke='#e4e3df'><title>regime_high_share / 0.5: 2.66</title></rect>
+<text x='360.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.66</text>
+<rect x='393' y='377' width='62' height='22' rx='3' fill='#a0c6f4' stroke='#e4e3df'><title>regime_high_share / 0.7: 2.68</title></rect>
+<text x='424.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.68</text>
+<rect x='457' y='377' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>regime_high_share / 0.9: 2.40</title></rect>
+<text x='488.0' y='392.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.40</text>
+<text x='192.0' y='416.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>regime_multiplier</text>
+<rect x='201' y='401' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>regime_multiplier / 0.1: 2.46</title></rect>
+<text x='232.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.46</text>
+<rect x='265' y='401' width='62' height='22' rx='3' fill='#99c2f3' stroke='#e4e3df'><title>regime_multiplier / 0.3: 2.74</title></rect>
+<text x='296.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.74</text>
+<rect x='329' y='401' width='62' height='22' rx='3' fill='#a5caf5' stroke='#e4e3df'><title>regime_multiplier / 0.5: 2.62</title></rect>
+<text x='360.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.62</text>
+<rect x='393' y='401' width='62' height='22' rx='3' fill='#b0d0f7' stroke='#e4e3df'><title>regime_multiplier / 0.7: 2.51</title></rect>
+<text x='424.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.51</text>
+<rect x='457' y='401' width='62' height='22' rx='3' fill='#b5d3f7' stroke='#e4e3df'><title>regime_multiplier / 0.9: 2.46</title></rect>
+<text x='488.0' y='416.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.46</text>
+<text x='192.0' y='440.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>regime_switch_rate</text>
+<rect x='201' y='425' width='62' height='22' rx='3' fill='#cae0fa' stroke='#e4e3df'><title>regime_switch_rate / 0.1: 2.25</title></rect>
+<text x='232.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.25</text>
+<rect x='265' y='425' width='62' height='22' rx='3' fill='#9fc6f4' stroke='#e4e3df'><title>regime_switch_rate / 0.3: 2.69</title></rect>
+<text x='296.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.69</text>
+<rect x='329' y='425' width='62' height='22' rx='3' fill='#b0d0f7' stroke='#e4e3df'><title>regime_switch_rate / 0.5: 2.51</title></rect>
+<text x='360.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.51</text>
+<rect x='393' y='425' width='62' height='22' rx='3' fill='#b0d0f7' stroke='#e4e3df'><title>regime_switch_rate / 0.7: 2.51</title></rect>
+<text x='424.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.51</text>
+<rect x='457' y='425' width='62' height='22' rx='3' fill='#bbd7f8' stroke='#e4e3df'><title>regime_switch_rate / 0.9: 2.39</title></rect>
+<text x='488.0' y='440.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.39</text>
+<text x='192.0' y='464.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>resilience</text>
+<rect x='201' y='449' width='62' height='22' rx='3' fill='#bed9f9' stroke='#e4e3df'><title>resilience / 0.1: 2.37</title></rect>
+<text x='232.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.37</text>
+<rect x='265' y='449' width='62' height='22' rx='3' fill='#b1d0f7' stroke='#e4e3df'><title>resilience / 0.3: 2.51</title></rect>
+<text x='296.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.51</text>
+<rect x='329' y='449' width='62' height='22' rx='3' fill='#c3dcf9' stroke='#e4e3df'><title>resilience / 0.5: 2.32</title></rect>
+<text x='360.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.32</text>
+<rect x='393' y='449' width='62' height='22' rx='3' fill='#adcff6' stroke='#e4e3df'><title>resilience / 0.7: 2.54</title></rect>
+<text x='424.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.54</text>
+<rect x='457' y='449' width='62' height='22' rx='3' fill='#b3d2f7' stroke='#e4e3df'><title>resilience / 0.9: 2.48</title></rect>
+<text x='488.0' y='464.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.48</text>
+<text x='192.0' y='488.0' font-family='system-ui, sans-serif' font-size='11' fill='#52514e' text-anchor='end'>target_level_vol</text>
+<rect x='201' y='473' width='62' height='22' rx='3' fill='#b8d5f8' stroke='#e4e3df'><title>target_level_vol / 0.1: 2.43</title></rect>
+<text x='232.0' y='488.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.43</text>
+<rect x='265' y='473' width='62' height='22' rx='3' fill='#c4dcfa' stroke='#e4e3df'><title>target_level_vol / 0.3: 2.31</title></rect>
+<text x='296.0' y='488.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.31</text>
+<rect x='329' y='473' width='62' height='22' rx='3' fill='#abcdf6' stroke='#e4e3df'><title>target_level_vol / 0.5: 2.56</title></rect>
+<text x='360.0' y='488.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.56</text>
+<rect x='393' y='473' width='62' height='22' rx='3' fill='#bfd9f9' stroke='#e4e3df'><title>target_level_vol / 0.7: 2.36</title></rect>
+<text x='424.0' y='488.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.36</text>
+<rect x='457' y='473' width='62' height='22' rx='3' fill='#b9d6f8' stroke='#e4e3df'><title>target_level_vol / 0.9: 2.42</title></rect>
+<text x='488.0' y='488.0' font-family='system-ui, sans-serif' font-size='10' fill='#0b0b0b' text-anchor='middle'>2.42</text>
+</svg>

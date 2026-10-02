@@ -1,0 +1,15 @@
+label,group,x,y
+intervention:cancel_x0.5,intervention,0.10329255989601642,0.06666666666666667
+intervention:cancel_x2,intervention,0.09964256151149399,0.06666666666666667
+intervention:depth_x0.5,intervention,0.09549692503891763,0.06666666666666667
+intervention:depth_x2,intervention,0.08932074801628331,0.06666666666666667
+intervention:impact_x0.5,intervention,0.08743823605688977,0.06666666666666667
+intervention:impact_x2,intervention,0.0893766811501522,0.06666666666666667
+intervention:limit_flow_x0.5,intervention,0.08275669225191996,0.06666666666666667
+intervention:limit_flow_x2,intervention,0.11211712756279224,0.06666666666666667
+intervention:persistence_removed,intervention,0.10713087952076213,0.13333333333333333
+intervention:resilience_weak,intervention,0.08927319794799625,0.13333333333333333
+intervention:spread_distortion,intervention,0.08562515717831666,0.0
+intervention:trade_intensity_x0.5,intervention,0.0957188065787277,0.06666666666666667
+intervention:trade_intensity_x2,intervention,0.07970465554647618,0.06666666666666667
+member:c01-round3-049,ensemble,0.11510106964299677,0.13333333333333333

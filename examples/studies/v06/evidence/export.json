@@ -1,0 +1,557 @@
+{
+  "schema": "cleolob-v06-public-evidence-1",
+  "included": [
+    "claims.json",
+    "registration/consumption-ledger.jsonl",
+    "registration/datasets.json",
+    "registration/environment-freeze.json",
+    "registration/holdout-design.json",
+    "registration/protocol.json",
+    "registration/transfer-design.json",
+    "runs/m1/design/binding.json",
+    "runs/m1/design/config.json",
+    "runs/m1/design/provenance.json",
+    "runs/m1/design/result.json",
+    "runs/m10/evaluation/binding.json",
+    "runs/m10/evaluation/config.json",
+    "runs/m10/evaluation/provenance.json",
+    "runs/m10/evaluation/result.json",
+    "runs/m10/policies/binding.json",
+    "runs/m10/policies/config.json",
+    "runs/m10/policies/provenance.json",
+    "runs/m10/policies/result.json",
+    "runs/m12/regime/binding.json",
+    "runs/m12/regime/config.json",
+    "runs/m12/regime/provenance.json",
+    "runs/m12/regime/result.json",
+    "runs/m13/bank-2/binding.json",
+    "runs/m13/bank-2/config.json",
+    "runs/m13/bank-2/provenance.json",
+    "runs/m13/bank-2/result.json",
+    "runs/m13/deribit-btc-perp-2020-07-01/binding.json",
+    "runs/m13/deribit-btc-perp-2020-07-01/config.json",
+    "runs/m13/deribit-btc-perp-2020-07-01/provenance.json",
+    "runs/m13/deribit-btc-perp-2020-07-01/result.json",
+    "runs/m13/deribit-btc-perp-2020-09-01/binding.json",
+    "runs/m13/deribit-btc-perp-2020-09-01/config.json",
+    "runs/m13/deribit-btc-perp-2020-09-01/provenance.json",
+    "runs/m13/deribit-btc-perp-2020-09-01/result.json",
+    "runs/m13/deribit-eth-perp-2020-06-01/binding.json",
+    "runs/m13/deribit-eth-perp-2020-06-01/config.json",
+    "runs/m13/deribit-eth-perp-2020-06-01/provenance.json",
+    "runs/m13/deribit-eth-perp-2020-06-01/result.json",
+    "runs/m13/deribit-eth-perp-2020-07-01/binding.json",
+    "runs/m13/deribit-eth-perp-2020-07-01/config.json",
+    "runs/m13/deribit-eth-perp-2020-07-01/provenance.json",
+    "runs/m13/deribit-eth-perp-2020-07-01/result.json",
+    "runs/m13/deribit-eth-perp-2020-08-01/binding.json",
+    "runs/m13/deribit-eth-perp-2020-08-01/config.json",
+    "runs/m13/deribit-eth-perp-2020-08-01/provenance.json",
+    "runs/m13/deribit-eth-perp-2020-08-01/result.json",
+    "runs/m13/deribit-eth-perp-2020-09-01-registered/binding.json",
+    "runs/m13/deribit-eth-perp-2020-09-01-registered/config.json",
+    "runs/m13/deribit-eth-perp-2020-09-01-registered/provenance.json",
+    "runs/m13/deribit-eth-perp-2020-09-01-registered/result.json",
+    "runs/m14/deribit-eth-perp-2020-08-01/binding.json",
+    "runs/m14/deribit-eth-perp-2020-08-01/config.json",
+    "runs/m14/deribit-eth-perp-2020-08-01/provenance.json",
+    "runs/m14/deribit-eth-perp-2020-08-01/result.json",
+    "runs/m14/deribit-eth-perp-2020-10-01/binding.json",
+    "runs/m14/deribit-eth-perp-2020-10-01/config.json",
+    "runs/m14/deribit-eth-perp-2020-10-01/provenance.json",
+    "runs/m14/deribit-eth-perp-2020-10-01/result.json",
+    "runs/m16/benchmarks-2/binding.json",
+    "runs/m16/benchmarks-2/config.json",
+    "runs/m16/benchmarks-2/provenance.json",
+    "runs/m16/benchmarks-2/result.json",
+    "runs/m6/develop/binding.json",
+    "runs/m6/develop/config.json",
+    "runs/m6/develop/provenance.json",
+    "runs/m6/develop/result.json",
+    "runs/m6/select/binding.json",
+    "runs/m6/select/config.json",
+    "runs/m6/select/provenance.json",
+    "runs/m6/select/result.json",
+    "runs/m7/identifiability/binding.json",
+    "runs/m7/identifiability/config.json",
+    "runs/m7/identifiability/provenance.json",
+    "runs/m7/identifiability/result.json"
+  ],
+  "excluded": [
+    {
+      "path": "results/v06/m1/design/design.json",
+      "sha256": "684f99b9148a163bc54c942a77c655b4bac80ac5538e025406aafd0e3c5b2211",
+      "bytes": 1011275,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m1/design/development-sketches.npz",
+      "sha256": "7b08c9e22e82deed5d705e252c149d8cf53488bd798f7c67fb6fb65109237fa8",
+      "bytes": 435444,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m1/design/registry.json",
+      "sha256": "a38869b20ddea31d2ca3f43b0c85ea01046ec6b1349d0efe8dab0392216a15f2",
+      "bytes": 51609,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m1/design/selection-sketches.npz",
+      "sha256": "64a1d563104ba8a32e46e259e41a575040b21560a06317f838216c85bb7d9fb1",
+      "bytes": 491804,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/evaluation/episodes.jsonl",
+      "sha256": "a067148d840a53d8cd190f6b89be95c19e4d9db3af29bb95e9e14f1edcef263d",
+      "bytes": 28551514,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/evaluation/evaluation_lock.json",
+      "sha256": "0a7ff9b72ac93a19d297e0a6673f4b788872e1095b9e7588457b6a56ec7b8a9a",
+      "bytes": 2257,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68001.attempt.json",
+      "sha256": "9ffb7e1c583ba3e3117d56f9e2ba55db806172a31f3ee5bd11e5bdd8acbffdbc",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68001.json",
+      "sha256": "c20f6a9dcbda1dc91ee160fec8ac84c23d697b403635ef4e820eb19e0da17797",
+      "bytes": 323,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68001.zip",
+      "sha256": "16b6ad1a41ad3a51eee60f43b348feb620d29fb21ebb00ef2ba36ef4594b0bfb",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68002.attempt.json",
+      "sha256": "2f05f11155af3cb4efa42b3932a20a4a17a52f0f33f352919a3f60488141ab4e",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68002.json",
+      "sha256": "06d5b1e725e2e764c43288f796ed0aa5c30698930bd0edf0c54798626b53379a",
+      "bytes": 324,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68002.zip",
+      "sha256": "43dba6387c03fd5712451b2e6dad6af48f668a1921d18e165225d32f2a82e4e2",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68003.attempt.json",
+      "sha256": "d0b15a1e02485308896349fd96ec6ea7c87ccabed5f28f9a459584da13e68d0a",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68003.json",
+      "sha256": "09888ccb6d1f1550015772cd58a6a6dbee34354fc98741e5e5d1a807ce8c06d4",
+      "bytes": 324,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68003.zip",
+      "sha256": "a79c8635d3704ebfeb66f0242505ff9c415ec435578cba779f7e067bda288a93",
+      "bytes": 132941,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68004.attempt.json",
+      "sha256": "c905b619d367acbebae88a54bbd776e2fd4f4f55ccec2cf8e58c15f99b97695f",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68004.json",
+      "sha256": "9253a8c3afe12b0977a5bbae190a3643dbc8a638130556443c4bee43e27bbfe3",
+      "bytes": 325,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-ensemble-68004.zip",
+      "sha256": "646a845173f3ec8fb8242e64db6cdb0b7c4846cd2ee8001bce8c245f62e6272f",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68001.attempt.json",
+      "sha256": "467ef1f95ba53fd17fdd167c54991fe596605e71e265adfca70efdec95ba0a24",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68001.json",
+      "sha256": "3fbf2025cfaae325b5b339742960babe1d5884afd2ba7a423f3005be70718d33",
+      "bytes": 316,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68001.zip",
+      "sha256": "466744e904c92e55cf5c09dfbaa5487d2b93e3c3896e43b36aa814391d0c6616",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68002.attempt.json",
+      "sha256": "30ab9ff1f571879ff93b56968230ba5d1f976e6b8fd0252b237c819f938f7cb5",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68002.json",
+      "sha256": "217af4f5d532af583bdc8d65683951a397595bcd498782bd201b377849812a95",
+      "bytes": 316,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68002.zip",
+      "sha256": "3cd7f172e5bb608600a49d1d3a0142f4b7ed7a05a8d2d2d3e8933951c765be46",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68003.attempt.json",
+      "sha256": "61f1499d9a5b9c9210074c7c3eb537b0722027cb180665b653cbb7f7aa8d55c8",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68003.json",
+      "sha256": "ee57bbf1bed2771e53fb1fa78b1375eaf389af281ec9e2d05725e2876fdee27b",
+      "bytes": 315,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68003.zip",
+      "sha256": "f1d4d064386e41933dbc5c44684b111a6fdbc208110d146a8ec90cb528645165",
+      "bytes": 132941,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68004.attempt.json",
+      "sha256": "4baacb614cd075236e11b399ad0d19662f7eb8427e6f653f52da4d2b2c155451",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68004.json",
+      "sha256": "d4560ba300700d44617a61b33c8867cd34cc5dc3dd5b3408238e30d4852b69ba",
+      "bytes": 316,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/dqn-single-68004.zip",
+      "sha256": "f97980400096d7e67bf27db7a1fe06c6429542ebe78ba6ef337bbf8cb932d5c0",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68001.attempt.json",
+      "sha256": "a9f097c82dd51af9e67c02d3cc1c72f617d61819ed1f3039f2786526beee834c",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68001.json",
+      "sha256": "ddeaae57610836ec9a4d94dc55b016663667db1a24fca153e34d1ee059bad537",
+      "bytes": 323,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68001.zip",
+      "sha256": "c7596717ad81e71cbc16854c47fe7db719dbb0edd7546888add497811ef848ba",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68002.attempt.json",
+      "sha256": "2dc7b70ce3491f212a28ad8d94bf361389ef84e5dc5598eb8a31ac9e3ea0b154",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68002.json",
+      "sha256": "93de8c681411d13cbe550720435600c666642a16047ee6f5727fbfbcae3fb8cd",
+      "bytes": 324,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68002.zip",
+      "sha256": "2360699e24280dc651348ec926587d5ad4a820857dbf9ad222c2b0702022091b",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68003.attempt.json",
+      "sha256": "6b68caa38e13c832f70ee5f08e6f69ad22b10bf8d6eb5c682160927b11f711cd",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68003.json",
+      "sha256": "fd947a3b268e15a87ef0905f90cc0558d6e9c75b008c89ebe606b4347db228b0",
+      "bytes": 322,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68003.zip",
+      "sha256": "f7e2ebdd3a8021e2ef48c9897f579bd5e64c454a15e827afe428a7493b9a2e2e",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68004.attempt.json",
+      "sha256": "d116cff465d5d2ff0ec6d6eab6dfb18cff6b196de1827ac8725a7ce8c67651b5",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68004.json",
+      "sha256": "f22e1866bf71e2d5bf0f8e26467672f40a215b0bbfb9b65b7d26040440d9e56c",
+      "bytes": 321,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-ensemble-68004.zip",
+      "sha256": "6f78d6f3090580e7aec18debdd2459c66bade2cd2fa32343ced050f4f57bf1ac",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68001.attempt.json",
+      "sha256": "a5cb23c772169d453a3ce37b144bbdc77639ff6b824b3bd5da7a7a66b4941534",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68001.json",
+      "sha256": "8d784a176fe43c988569490c9a12a239ec31a3d34cc4f47854d8e836aa4e5e38",
+      "bytes": 315,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68001.zip",
+      "sha256": "0303b14586ab2951499901a7b741699fbf96150ed75b5173778d6c09aa506600",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68002.attempt.json",
+      "sha256": "37fd0ed3aaa0af29d1ec6eac4ac185d7fff80b66d0a246b2461105249c3cee60",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68002.json",
+      "sha256": "40a89c3be6f1357493f94c86f87567df875bdd4939bee955f456b161453f68fb",
+      "bytes": 317,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68002.zip",
+      "sha256": "a8e7bd8ed6b7a627520d51c1b6a3648a1650ad1e3aee7580e134edc9216aa9d7",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68003.attempt.json",
+      "sha256": "fe91e20ef7a5dc29264b64ab3421ac040b5196fa583ecc6f22f5fd625d850762",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68003.json",
+      "sha256": "936560f8d53ff0a18ccf3f3335242223e7b0b8ccf52da1bc73390f5398dc8b35",
+      "bytes": 316,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68003.zip",
+      "sha256": "6a2ad52ff3b8f7247d40865f182c62c19e18d16a4aca1f18cd2903eb4658cd55",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68004.attempt.json",
+      "sha256": "2528f482b4e536dc16bb6d0899e4ab5d30dac950a7f4da8d770b97e9a08df410",
+      "bytes": 63,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68004.json",
+      "sha256": "9cfbfc5689ed468ee1ed172e7b0672ae206abad40471ec27534f5d02cf281f59",
+      "bytes": 315,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/models/ppo-single-68004.zip",
+      "sha256": "e6e25b582e80176ec6b3afde971e8724750436a7cc4a6e94b584d980e9de8ace",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/normalization-ensemble.json",
+      "sha256": "0cf4810fe29e532ba2a862a53f5637b2f748b19a94dc970d623d81eb4b45d315",
+      "bytes": 2004,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/normalization-single.json",
+      "sha256": "aa06a671ae98714b02eff2a4de4b29255e067f10e1e4ffacfa7223693c697244",
+      "bytes": 1981,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/registration.json",
+      "sha256": "d53ed1d7891f8fb543761f006e5d18519a46c13e304838b219be8a18cdf45fd3",
+      "bytes": 6153,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m10/policies/training_summary.json",
+      "sha256": "b9cc1f56bd1271f273dc99cf0368b5608c779585b24d2a105298c755b995cc64",
+      "bytes": 5162,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m12/regime/candidates-high.json",
+      "sha256": "d0c92ab0f0a65d484acb01c9f1112730b9fdac2ad8c26b6541895d246d336fb3",
+      "bytes": 2411036,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m12/regime/candidates-low.json",
+      "sha256": "df250a24d9fad4af7551b0c7a5928f378abca1c86f868ae9333aa0459e95ef00",
+      "bytes": 2411144,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/paths.json",
+      "sha256": "8bff4707975a6fd7d2075d9f7462c971cb80803350366afda2abc383d698908a",
+      "bytes": 354249,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/sketches-control.npz",
+      "sha256": "fc874dc9d398a79064ec385a6c928ce8dd282b0ad7bdae8937a6ebc2b1d5b639",
+      "bytes": 61369,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/sketches-regime_high.npz",
+      "sha256": "2235214ccdfb7ff22a5178b3c8480335b27c8c0bf9b38d01b880a116c659bb87",
+      "bytes": 65458,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/sketches-regime_low.npz",
+      "sha256": "3ef3a3e8f0aa2f94ff302a6d7d093222246510d2b387eea38ac6a3dd87705177",
+      "bytes": 55234,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/sketches-selected.npz",
+      "sha256": "a80b1217b3897f1e6844c32ef5f727ee674a4e5466fb4ba5bc84e6aa3c88abc2",
+      "bytes": 66806,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/bank-2/windows.npz",
+      "sha256": "3be35dfd61e996f76e65c523511835795de63b8808aaf6d4ccb1cbda4f55156a",
+      "bytes": 430836,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-btc-perp-2020-07-01/window_features.json",
+      "sha256": "c87bfc353226655379a8b573768959af27a6d889951f5016a82b10a6a20fb1f8",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-btc-perp-2020-09-01/window_features.json",
+      "sha256": "c87bfc353226655379a8b573768959af27a6d889951f5016a82b10a6a20fb1f8",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-eth-perp-2020-06-01/window_features.json",
+      "sha256": "82c0fd90b2a974fcabc381a6c55d9053a6b5b6faf6e2e39b3f4bc7189af79827",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-eth-perp-2020-07-01/window_features.json",
+      "sha256": "c87bfc353226655379a8b573768959af27a6d889951f5016a82b10a6a20fb1f8",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-eth-perp-2020-08-01/window_features.json",
+      "sha256": "c87bfc353226655379a8b573768959af27a6d889951f5016a82b10a6a20fb1f8",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m13/deribit-eth-perp-2020-09-01-registered/window_features.json",
+      "sha256": "c87bfc353226655379a8b573768959af27a6d889951f5016a82b10a6a20fb1f8",
+      "bytes": 14,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m14/deribit-eth-perp-2020-08-01/episodes.jsonl",
+      "sha256": "2ceea4847d2b6532ad63359cceb9185234129b49dae591bc9b69abce2aafe644",
+      "bytes": 1925278,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m14/deribit-eth-perp-2020-08-01/summary.json",
+      "sha256": "08e9a020dc868d9ae063a53c975bebeb6fdad6b7549b4eb4a0b9868b01051abe",
+      "bytes": 71,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m14/deribit-eth-perp-2020-10-01/episodes.jsonl",
+      "sha256": "a358df2bbd1d3f8be935cf2ef3dcf0b7e7761992c087dd73985e2ccefbed2b5d",
+      "bytes": 1925858,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m14/deribit-eth-perp-2020-10-01/summary.json",
+      "sha256": "973795343d992411d045987dc4dc5ca7cdcd2d4474d9afcf71ca8bfc192f237f",
+      "bytes": 71,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m6/develop/candidates.json",
+      "sha256": "2aba9577002c650a3ddb613e758f041cca37338ae0ff10e848dd661eee044de9",
+      "bytes": 4825369,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m6/develop/rescored.json",
+      "sha256": "4997e1100442d7abfa269ace2a1a169b3ed2e409219db2d9e4618b51ecacece4",
+      "bytes": 25476,
+      "reason": "derived from restricted provider data or large simulator output"
+    },
+    {
+      "path": "results/v06/m7/identifiability/evaluations.json",
+      "sha256": "99779841437072a6ccc184cb255eb533142a2c9e99521686c1a8d88b8e209b46",
+      "bytes": 594004,
+      "reason": "derived from restricted provider data or large simulator output"
+    }
+  ],
+  "meaning": "Byte integrity of this bundle plus the run bindings it contains; not independent scientific replication. Restricted raw data and detailed derived files are excluded."
+}

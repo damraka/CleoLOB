@@ -1,0 +1,1 @@
+{"budget":{"advance":32,"distinct":0.25,"ensemble_limit":8,"global_draws":96,"near_optimal_relative":0.1,"per_round":64,"rescore":64,"rescore_seconds":3600.0,"rounds":[0.25,0.12,0.06],"seconds":1800.0,"selection_seconds":3600.0,"starts":8},"design_run":"results/v06/m1/design","design_sha256":"eafa903a6677f9a587e7946e86ef0750aa936af2a7353e8a575278b336e131b1"}

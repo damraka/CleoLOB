@@ -11,3 +11,6 @@ configs/core-study*.json -text
 configs/v05/** text eol=lf
 configs/v04-consumed-data.json text eol=lf
 configs/v04-policy-study.json text eol=lf
+
+# v0.6 protocol inputs and ledger: keep LF so appended ledger lines never mix line endings.
+configs/v06/** text eol=lf
