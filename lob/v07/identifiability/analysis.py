@@ -33,6 +33,8 @@ def standardize(j: np.ndarray, noise: np.ndarray | None = None) -> np.ndarray:
 
 
 def sloppiness(j: np.ndarray) -> dict:
+    if not np.all(np.isfinite(j)):
+        raise ValueError("Jacobian contains non-finite entries; drop unevaluable observables first")
     f = j.T @ j
     values, vectors = np.linalg.eigh(f)
     order = np.argsort(values)[::-1]

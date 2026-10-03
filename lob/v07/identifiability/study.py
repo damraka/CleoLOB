@@ -68,7 +68,12 @@ def run(out: str | Path, *, posterior_run: str, root: Path = PROJECT_ROOT, worke
     usable = np.all(np.isfinite(jac), axis=1) & np.isfinite(center_row)
     names = [c.name for c, ok in zip(COMPONENTS, usable) if ok]
     families = [c.family for c, ok in zip(COMPONENTS, usable) if ok]
-    # Rows are scaled by the seed noise of a 3-seed evaluation (single-seed SD / sqrt(3)).
+    # Rows are scaled by the seed noise of a 3-seed evaluation (single-seed SD / sqrt(3)). Components that are not
+    # evaluable in at least two single-seed runs have no noise estimate and are dropped (listed in the result).
+    finite_noise = np.sum(np.isfinite(noise_rows), axis=0) >= 2
+    usable = usable & finite_noise
+    names = [c.name for c, ok in zip(COMPONENTS, usable) if ok]
+    families = [c.family for c, ok in zip(COMPONENTS, usable) if ok]
     noise = np.nanstd(noise_rows[:, usable], axis=0, ddof=1) / np.sqrt(len(SEEDS))
     j = analysis.standardize(jac[usable], np.maximum(noise, 1e-6))
     posterior = analysis.posterior_summary(pooled, distances, list(NAMES))

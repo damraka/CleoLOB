@@ -43,3 +43,11 @@ def test_observable_design_known_influence() -> None:
     assert ("a", "a2", 1.0) in [(p, q, round(c, 6)) for p, q, c in out["redundant_pairs"]]
     assert out["complementary_observables"]["b"]["parameter"] == "y"
     assert out["complementary_observables"]["mix"]["parameter"] == "z"
+
+
+def test_non_finite_jacobian_is_refused_not_crashing() -> None:
+    import pytest
+    j = np.eye(3)
+    j[0, 0] = np.nan
+    with pytest.raises(ValueError):
+        ia.sloppiness(j)
