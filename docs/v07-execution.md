@@ -63,7 +63,7 @@ history:
 **Scope.** These are simulator semantics. Nothing here measures or claims real venue
 latency, colocation or HFT behaviour.
 
-## Queue-position uncertainty (workstreams 5, 79)
+## Queue-position uncertainty (workstream 5)
 
 `lob.v07.queue.models` covers hypothetical passive orders on aggregate L2. The order joins
 the back of its level, and the level's later history is a sequence of three event types:

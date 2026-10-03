@@ -30,7 +30,7 @@ underlying and capability level. The spec hash is stored with every tape's metad
 | BitMEX XBTUSD | 0.5 | USD contracts | aggregate L2 + trade prints |
 | Bitstamp btcusd (v0.5 captures) | 0.01 | BTC | order identity; FIFO **not** established by the feed |
 
-## Adapters and adapter kit (workstreams 81–83)
+## Adapters and adapter kit (workstreams 2, 85)
 
 **Adapter kit.** `Adapter` is the base class. `conformance(adapter)` checks the
 obligations every new adapter must meet:
@@ -52,7 +52,7 @@ obligations every new adapter must meet:
   - Both consumed captures pass conformance. The first conformance run found exactly this
     duplication problem, and it was fixed before any use.
 
-## Quality validation (workstream 2)
+## Quality validation (workstream 1)
 
 `lob.v07.data.quality.assess` runs while a tape is built. Failures make dependent results
 `INVALID` and are never repaired.
@@ -103,7 +103,7 @@ with outcome `NOT_AVAILABLE`, and no other date, instrument or venue is substitu
 **Size limits.** These come from `configs/v07/dataset-registry.json`. A file above the limit
 is `NOT_AVAILABLE`, never truncated.
 
-## Capability-aware validation (workstream 85)
+## Capability-aware validation (workstreams 81, 82)
 
 `lob.v07.data.capability.check(protocol, dataset, analysis)` returns `AVAILABLE` or
 `NOT_AVAILABLE` with the missing capabilities.
