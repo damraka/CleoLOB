@@ -43,3 +43,12 @@ def test_half_life_stable_versus_drifting() -> None:
     assert out["half_life_ci"][0] <= tau <= out["half_life_ci"][1]
     assert da.half_life(months, [2.0, 1.5, 1.4, 1.3, 1.2, 1.1])["status"] == "INCONCLUSIVE"
     assert da.half_life([0, 1], [1.0, 2.0])["status"] == "NOT_AVAILABLE"
+
+
+def test_discrete_baseline_is_a_valid_two_state_model() -> None:
+    from lob.v07.drift.study import discrete_baseline
+    rng = np.random.default_rng(1)
+    x = np.column_stack([np.r_[rng.normal(-1, 0.2, 50), rng.normal(1, 0.2, 50)], rng.normal(0, 1, (100, 2))])
+    model = discrete_baseline(x)
+    assert np.allclose(model.trans.sum(1), 1) and model.means[1, 0] > model.means[0, 0]
+    assert np.isfinite(model.score(x)) and model.bic(x) > 0
