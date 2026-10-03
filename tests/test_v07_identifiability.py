@@ -56,6 +56,7 @@ def test_non_finite_jacobian_is_refused_not_crashing() -> None:
 def test_zero_noise_observable_cannot_dominate() -> None:
     noise = np.array([0.0, 1e-12, 1.0, 2.0, 1.5])
     floored = ia.noise_floor(noise)
-    assert floored.min() >= 0.1 * 1.5 - 1e-12
+    floor = 0.1 * np.median([1e-12, 1.0, 2.0, 1.5])
+    assert floored.min() >= floor - 1e-15 and floored[2] == 1.0
     j = ia.standardize(np.ones((5, 2)), floored)
-    assert np.linalg.norm(j, axis=1).max() / np.median(np.linalg.norm(j, axis=1)) <= 10.0 + 1e-9
+    assert np.linalg.norm(j, axis=1).max() <= np.sqrt(2) / floor + 1e-9
