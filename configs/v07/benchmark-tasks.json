@@ -1,0 +1,28 @@
+{
+  "schema": "cleolob-v07-benchmark-tasks-1",
+  "tasks": {
+    "reconstruction": "reconstruction",
+    "queue": "queue",
+    "calibration": "calibration",
+    "identifiability": "identifiability",
+    "certification": "certification",
+    "execution": "execution",
+    "transfer": "transfer",
+    "performance": "performance"
+  },
+  "public_subset": [
+    "queue",
+    "calibration",
+    "identifiability",
+    "certification",
+    "execution",
+    "transfer",
+    "reconstruction"
+  ],
+  "volatile_fields": {
+    "reconstruction": [
+      "wall_s"
+    ]
+  },
+  "rule": "task definitions are frozen; timing fields are excluded from the public digest"
+}
