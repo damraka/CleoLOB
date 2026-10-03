@@ -32,6 +32,18 @@ def standardize(j: np.ndarray, noise: np.ndarray | None = None) -> np.ndarray:
     return j / np.maximum(scale, 1e-12)[:, None]
 
 
+def noise_floor(noise: np.ndarray, fraction: float = 0.1) -> np.ndarray:
+    """Floor each observable's seed noise at ``fraction`` of the median noise.
+
+    An observable with (near) zero seed noise would otherwise get an arbitrarily large standardized row and
+    dominate every eigen-analysis (v0.7 identifiability-2 was INVALID for exactly this reason).
+    """
+    noise = np.asarray(noise, float)
+    positive = noise[np.isfinite(noise) & (noise > 0)]
+    floor = fraction * float(np.median(positive)) if len(positive) else 1.0
+    return np.maximum(np.where(np.isfinite(noise), noise, floor), floor)
+
+
 def sloppiness(j: np.ndarray) -> dict:
     if not np.all(np.isfinite(j)):
         raise ValueError("Jacobian contains non-finite entries; drop unevaluable observables first")

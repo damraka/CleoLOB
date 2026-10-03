@@ -75,7 +75,7 @@ def run(out: str | Path, *, posterior_run: str, root: Path = PROJECT_ROOT, worke
     names = [c.name for c, ok in zip(COMPONENTS, usable) if ok]
     families = [c.family for c, ok in zip(COMPONENTS, usable) if ok]
     noise = np.nanstd(noise_rows[:, usable], axis=0, ddof=1) / np.sqrt(len(SEEDS))
-    j = analysis.standardize(jac[usable], np.maximum(noise, 1e-6))
+    j = analysis.standardize(jac[usable], analysis.noise_floor(noise))
     posterior = analysis.posterior_summary(pooled, distances, list(NAMES))
     result = {"center_unit": center.tolist(), "steps": steps, "observables_used": len(names),
               "observables_dropped": [c.name for c, ok in zip(COMPONENTS, usable) if not ok],
