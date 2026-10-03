@@ -73,3 +73,19 @@ def test_scale_auc_and_aggregation_consistency(tmp_path) -> None:
     rng = np.random.default_rng(0)
     assert rm.scale_auc(_windows(rng, 100), [_windows(rng, 30, 3.0) for _ in range(4)], seed=1)["auc"] > 0.9
     assert rm.scale_auc(_windows(rng, 10), [], seed=1)["status"] == "NOT_AVAILABLE"
+
+
+def test_planted_gap_attribution_and_auc_reproduction() -> None:
+    from lob.v06.domain_gap import FEATURES
+    rng = np.random.default_rng(4)
+    real = rng.normal(0, 1, (400, len(FEATURES)))
+    sims = [rng.normal(0, 1, (60, len(FEATURES))) for _ in range(8)]
+    planted = [FEATURES.index(c) for c in rm.FEATURE_FAMILIES["event_rate"]]
+    for s in sims:
+        s[:, planted] += 1.5
+    out = rm.attribution(real, sims, seed=1, samples=50)
+    assert out["ranking_by_only_auc"][0] == "event_rate"
+    assert out["families"]["event_rate"]["drop"] > max(v["drop"] for k, v in out["families"].items() if k != "event_rate")
+    stored = rm.discriminator_outputs(real, sims, seed=1)
+    assert rm.reproduce_auc(stored["rows"]) == pytest.approx(stored["auc"])
+    assert {r["split"] for r in stored["rows"]} == {"test"}

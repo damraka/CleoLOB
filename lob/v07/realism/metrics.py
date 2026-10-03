@@ -252,3 +252,76 @@ def scale_auc(real: np.ndarray, sims: list[np.ndarray], *, seed: int) -> dict:
 
 def finite_or_none(value) -> float | None:
     return float(value) if value is not None and math.isfinite(value) else None
+
+
+# ----------------------------------------------------------------------------- domain-gap attribution (16, 17)
+
+from ...v06.domain_gap import FEATURES  # noqa: E402
+
+FEATURE_FAMILIES = {
+    "spread": ("spread_mean", "spread_sd", "abs_microprice_dev", "mean_level_gap"),
+    "depth": ("log_depth_l1", "log_depth5", "log_depth10", "concentration_mean"),
+    "imbalance": ("abs_imbalance_mean", "imbalance_sd"),
+    "returns_volatility": ("return_sd", "nonzero_return_fraction", "abs_return_window"),
+    "event_rate": ("log1p_trades", "log1p_book_changes", "log1p_additions", "log1p_cancellations"),
+    "sizes": ("mean_log_trade_size", "max_log_trade_size", "mean_log_add_size"),
+}
+
+
+def _auc_subset(real, sims, columns, train_r, test_r, seed):
+    rng = np.random.default_rng(seed)
+    s = _classifier_scores(real[:, columns], [x[:, columns] for x in sims], train_r, test_r, rng)
+    return auc(np.r_[s["real"], s["sim"]], np.r_[np.ones(len(s["real"])), np.zeros(len(s["sim"]))]), s
+
+
+def discriminator_outputs(real: np.ndarray, sims: list[np.ndarray], *, seed: int) -> dict:
+    """Per-window scores, labels, split and fold ids of the primary classifier (stored for ROC/PR/calibration)."""
+    train_r, test_r = chronological_split(len(real))
+    value, s = _auc_subset(real, sims, list(range(len(FEATURES))), train_r, test_r, seed)
+    half = max(1, len(sims) // 2)
+    sim_seed_ids = np.concatenate([np.full(len(x), i) for i, x in enumerate(sims[half:])])
+    rows = ([{"label": 1, "split": "test", "fold": 0, "unit": int(i), "score": float(v)}
+             for i, v in zip(test_r, s["real"])] +
+            [{"label": 0, "split": "test", "fold": 0, "unit": int(u), "score": float(v)}
+             for u, v in zip(sim_seed_ids, s["sim"])])
+    return {"auc": value, "rows": rows}
+
+
+def reproduce_auc(rows: list[dict]) -> float:
+    scores = np.asarray([r["score"] for r in rows])
+    labels = np.asarray([r["label"] for r in rows])
+    return auc(scores, labels)
+
+
+def attribution(real: np.ndarray, sims: list[np.ndarray], *, seed: int, samples: int = 200) -> dict:
+    """Feature-family ablations: AUC with each family excluded and with only that family; subgroup AUCs."""
+    if len(real) < 60 or len(sims) < 2:
+        return {"status": "NOT_AVAILABLE"}
+    train_r, test_r = chronological_split(len(real))
+    full, base = _auc_subset(real, sims, list(range(len(FEATURES))), train_r, test_r, seed)
+    out = {"auc_all": full, "families": {}}
+    blocks = np.arange(len(test_r)) // BLOCK
+    rng = np.random.default_rng(seed + 1)
+    for name, cols in FEATURE_FAMILIES.items():
+        idx = [FEATURES.index(c) for c in cols]
+        rest = [i for i in range(len(FEATURES)) if i not in idx]
+        excluded, s_ex = _auc_subset(real, sims, rest, train_r, test_r, seed)
+        only, _ = _auc_subset(real, sims, idx, train_r, test_r, seed)
+        drops = []
+        for _ in range(samples):
+            r = _resample(blocks, rng)
+            si = rng.integers(0, len(base["sim"]), len(base["sim"]))
+            y = np.r_[np.ones(len(r)), np.zeros(len(si))]
+            drops.append(auc(np.r_[base["real"][r], base["sim"][si]], y)
+                         - auc(np.r_[s_ex["real"][r], s_ex["sim"][si]], y))
+        out["families"][name] = {"auc_excluded": excluded, "auc_only": only, "drop": full - excluded,
+                                 "drop_ci": [float(np.quantile(drops, 0.025)), float(np.quantile(drops, 0.975))]}
+    out["ranking_by_only_auc"] = sorted(out["families"], key=lambda k: -out["families"][k]["auc_only"])
+    spread = real[test_r, FEATURES.index("spread_mean")]
+    cuts = np.quantile(spread, [1 / 3, 2 / 3])
+    groups = np.searchsorted(cuts, spread)
+    out["subgroups_by_spread_tercile"] = {
+        str(g): auc(np.r_[base["real"][groups == g], base["sim"]],
+                    np.r_[np.ones(int((groups == g).sum())), np.zeros(len(base["sim"]))]) for g in range(3)}
+    out["interpretation"] = "associational attribution of detectability; not a causal account"
+    return out

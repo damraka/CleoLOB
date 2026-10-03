@@ -27,7 +27,7 @@ from ...v06.history import block_raws
 from ..calibration.execution_aware import spec as ea_spec
 from ..data import access, capability
 from ..data.tape import READER_LIMITS
-from ..evidence.runs import finalize, new_run, verify_run
+from ..evidence.runs import finalize, new_run, verify_run, write_json
 from ..generators.study import load_specs, v06_inputs
 from ..posterior.study import posterior_specs
 from ..protocol import core as pr
@@ -283,7 +283,29 @@ def evaluate(dataset: str, out: str | Path, *, root: Path = PROJECT_ROOT, downlo
         for scale, real in real_scales.items():
             sims = banked["windows"][name] if scale == "60" else banked["multiscale"].get(name, {}).get(scale, [])
             timescales[name][scale] = metrics.scale_auc(real, sims, seed=seeds["domain_gap"])
-    result.update(domain_gap=gap, support=cover, descriptive=describe, hypotheses=hyp, timescales=timescales)
+    # Stored discriminator outputs, domain-gap attribution (16, 17), realism scorecard (14), metric agreement (15).
+    attributions = {}
+    for name in ("G0_point", *[n for n in RICHER if n in banked["windows"]]):
+        stored = metrics.discriminator_outputs(real_windows, banked["windows"][name], seed=seeds["domain_gap"])
+        write_json(out, f"discriminator-{name}.json", stored)
+        attributions[name] = {**metrics.attribution(real_windows, banked["windows"][name], seed=seeds["domain_gap"]),
+                              "stored_auc": stored["auc"], "stored_rows": len(stored["rows"])}
+    from ...v06.realism import bootstrap_realism
+    scorecard_models = {k: v for k, v in realism_models.items()}
+    scorecard = bootstrap_realism(hist, scorecard_models, frozen["design"], frozen["objective_scales"], samples=500,
+                                  seed=seeds["realism"] + 2, alpha=0.05, margins=frozen["equivalence_margins"],
+                                  equivalence_alpha=0.05)
+    agreement = {}
+    for name in scorecard_models:
+        entry = {"objective": scorecard["models"][name]["objective"]}
+        if name in describe:
+            entry.update(mmd2=describe[name]["mmd"]["mmd2"], precision=describe[name]["precision_recall"]["precision"],
+                         recall=describe[name]["precision_recall"]["recall"])
+        if name in attributions:
+            entry["auc"] = attributions[name]["auc_all"]
+        agreement[name] = entry
+    result.update(domain_gap=gap, support=cover, descriptive=describe, hypotheses=hyp, timescales=timescales,
+                  attribution=attributions, scorecard=scorecard["models"], metric_agreement=agreement)
     if result.get("status") == "INVALID":
         for h in hyp.values():
             h["status"] = "INVALID"
