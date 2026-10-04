@@ -30,7 +30,7 @@ ones; MDEs are from the sealed prospective power document `configs/v07/power-des
 | H9 single-world ranking overturned | **INCONCLUSIVE** | descriptive | no pair determinate even in the G0 world | — | — | `m15/execution-2` |
 | H10 execution-aware ES realism | **NOT_ESTABLISHED** | confirmatory (fresh temporal) | ES difference Nov +0.189 [−0.002, 0.311]; Dec +0.088 [−0.068, 0.236] | upper bound < 0 on both days (0.025) | 0.462 | `m17` ETH runs |
 | H11 generic noninferiority | **FAILED** | confirmatory (fresh temporal) | one-sided upper 0.486 (Nov), 0.453 (Dec) vs δ 0.246 | upper < δ on both days (0.025) | 0.196 | `m17` ETH runs |
-| H12 posterior training transfers better | H12_STATUS | confirmatory (final transfer, bounded) | H12_ESTIMATE | Bonferroni upper bound < 0 per member (0.0125) | 2.585 bps | `m16/transfer-3` |
+| H12 posterior training transfers better | **NOT_ESTABLISHED** | confirmatory (final transfer, bounded) | gap difference (posterior − single) PPO cons. +0.03 [−2.49, 1.60], PPO opt. −0.10 [−2.76, 1.58], DQN cons. −0.01 [−2.51, 1.47], DQN opt. +0.03 [−2.67, 1.54] bps; 144 episodes, 4 training seeds | Bonferroni upper bound < 0 per member (0.0125) | 2.585 bps | `m16/transfer-3` |
 | H13 robust conclusions survive both fill bounds | **INCONCLUSIVE** | conditional descriptive | no H8-robust pair exists, so nothing is evaluable (registered rule: NOT_EVALUABLE reported as INCONCLUSIVE) | same sign and determinate under both bounds | — | `m16/transfer-3` |
 
 **Inherited limitation.** Synthetic posterior recovery is **ASSUMPTION_DEPENDENT**: marginal 90%
@@ -40,7 +40,60 @@ execution-aware model is a posterior particle) and H12 (posterior-trained polici
 
 ## Results by status
 
-RESULTS_BY_STATUS
+**ESTABLISHED:**
+- H6 (descriptive): the ABC posterior is multimodal in 3 of 3 runs, but diffuse.
+- H7 for POV only: model uncertainty is material to its execution cost.
+
+**FAILED:** H1, H4, H5 and H11.
+- Posterior calibration was worse than the point model on fresh data (H1).
+- The selected generator transferred worse than G0 cross-instrument (H4) and cross-venue (H5).
+- Execution-aware calibration lost generic realism beyond the noninferiority margin (H11).
+
+**NOT_ESTABLISHED:**
+- H2 (vacuous: every AUC is at the ceiling) and H3.
+- H7 for the other 7 policies.
+- H8 (no robust pair, although 27 of 28 pooled intervals lie inside ±1 bps), H10 and H12.
+- All 28 pairs in the M22 decision benchmark.
+
+**INCONCLUSIVE:** H9 and H13 (registered NOT_EVALUABLE: no H8-robust pair).
+
+**ASSUMPTION_DEPENDENT:**
+- Posterior recovery and everything built on the posterior.
+- Learned queue-cancellation positions (assumed price-time priority on Bitstamp).
+- Every queue-model bound on aggregate L2.
+
+**MODEL_DEPENDENT:** No policy pair received this status. The 21 world rankings all differ, but
+no pair was determinate in opposite directions across worlds (H8 edges). The most adverse
+plausible world moves every pair by 0.75–8.5 bps.
+
+**EXPLORATORY:**
+- M7 surrogates and active calibration (active search was worse than random: mean gain −0.21).
+- Calibration half-life.
+- Transfer matrix and hierarchical calibration.
+- Impact zoo and meta-orders.
+- Ecology, strategic interaction, market maker, cross-impact and portfolio execution.
+- Scaling laws.
+- Realism-to-decision map.
+- CUSUM diagnostics.
+- Two labelled pilot runs (`results/v07/pilot/*`).
+
+**SYNTHETIC_STRESS:** `m15/stress`. Rankings change across stresses; this is not empirical
+validation.
+
+**NOT_AVAILABLE:**
+- Diffusion generator and GPU path (no CUDA device).
+- Compiled backends.
+- Order-level observables on Deribit and BitMEX: exact FIFO, order identity, queue position,
+  hidden liquidity and exact passive fills.
+- Event-by-event realism score (aggregate L2 does not identify events).
+- Related-instrument transfer cells.
+- Venue level of the hierarchy; venue × venue fitting (BitMEX exists only as a fresh holdout).
+- Posterior drift (per-day SMC-ABC exceeds the budget).
+- Offline RL (no logged historical actions).
+- Recurrent, distributional and constrained learned policies.
+- Cross-platform determinism run (no Linux run locally).
+- Learned queue survival on Deribit and BitMEX.
+
 
 ## Datasets, roles and freshness
 
@@ -73,13 +126,15 @@ Every attempt is in the ledger. Unsealed attempt directories are retained unchan
 | 114 | `m15/execution` | ABORTED | host low memory during episode simulation | `m15/execution-2` (4 workers) |
 | 186 | `m16/transfer` | ABORTED | low memory after the parsed stage; no replay row, no statistic | compact episode packing (regression test) |
 | 189 | `m16/transfer-2` | ABORTED | stopped by the operator before parsing, to switch to one worker | `m16/transfer-3` (1 worker) |
+| 195 | `m22/final` | INVALID | the queue width (a fill fraction) was stored under a `_bps` key; values unchanged (regression test) | `m22/final-2` |
 
 **Other disclosures.**
 1. **No protocol amendment** was made. Every fix above is an engineering or resource change that
    preserves registered semantics, with a regression test where code changed.
-2. **Dirty flag at entry 185.** The parsed-stage entry of the first final-transfer attempt
-   records `git_dirty: true`; the only uncommitted change in the main checkout was a README
-   draft (no code).
+2. **Dirty flags in the ledger.** Entry 185 (parsed stage of the first final-transfer attempt)
+   and entries 193–194 (evaluated and inspected stages of `m16/transfer-3`) record
+   `git_dirty: true`. The only uncommitted changes in the main checkout were a README draft and
+   the final-report draft (documentation, no code).
 3. **G1 elasticity constraint (0.9)** and the G1/G4 state clipping were development-stage fixes
    made before any selection scoring (`docs/v07-generators.md`).
 4. **One recovery truth redrawn.** A prior draw whose synthetic target violated the event guard
@@ -89,10 +144,131 @@ Every attempt is in the ledger. Unsealed attempt directories are retained unchan
 6. **CUSUM** false alarms in the drift study led to binary segmentation being the primary
    change-point method before results were reported; CUSUM is retained as a robust-baseline
    diagnostic (EXPLORATORY).
+7. **Ledger commit field.** Long studies ran from a separate worktree checkout of a committed
+   revision while documentation was edited in the main checkout. Each ledger entry records the
+   main checkout's commit at append time. Each run's `provenance.json` records the commit and
+   the line-ending-normalized hashes of the code that actually executed. A source change during
+   a run refuses sealing.
 
 ## Final decision-focused analysis (M22, `results/v07/m22/final`)
 
-M22_SECTION
+Synthesis of the sealed runs only (no data access). The first run is INVALID (unit mislabel)
+and retained.
+
+**Decision benchmark.** One row per policy pair. Each row reports:
+- mean difference and interval
+- 1 bps margin and alpha 0.05/28
+- MDE 0.924 bps
+- sign fractions over the 21 worlds
+- indeterminate fraction
+- worst plausible draw
+- regime (G2 world) sensitivity
+- queue sensitivity (fill-fraction width 0.072)
+- both historical bounds from `m16/transfer-3` (alpha 0.05/56)
+
+**All 28 pairs are NOT_ESTABLISHED.** The framework abstains ("we cannot support a
+conclusion") on every ranking.
+- No pair is determinate in the pooled analysis or in history under either fill bound.
+- Eight pairs are determinate in 1 or 2 of the 21 single worlds, always in one direction. Six
+  involve POV: POV is costlier than imbalance-aware, liquidity-sensitive, urgency and
+  spread-aware, and TWAP and VWAP are cheaper than POV.
+- No pair is determinate in opposite directions across worlds, so none is MODEL_DEPENDENT.
+
+**Robust selection over the 21 world means** (bps; lower is better):
+
+| Policy | Expectation | Worst case | CVaR (worst 25% of worlds) | Distributionally robust |
+|---|---|---|---|---|
+| imbalance-aware | **3.11** | 4.53 | 3.94 | **3.39** |
+| liquidity-sensitive | 3.17 | 4.32 | **3.78** | 3.40 |
+| urgency | 3.21 | **4.12** | 3.80 | **3.39** |
+| spread-aware | 3.16 | 4.89 | 3.95 | 3.51 |
+| TWAP | 3.17 | 4.54 | 3.99 | 3.44 |
+| AC | 3.22 | 4.93 | 4.13 | 3.56 |
+| VWAP | 3.26 | 4.92 | 4.07 | 3.59 |
+| POV | 3.49 | 6.35 | 4.67 | 4.06 |
+
+The criteria select three different policies, so the choice depends on the risk criterion. The
+differences are within the seed noise of H8.
+
+**Risk metrics (pooled over 21 worlds × 256 seeds, bps).**
+- CVaR95 ranges from 14.2 (liquidity-sensitive) to 23.4 (VWAP).
+- MPC (exploratory) has CVaR95 7.5.
+- Completion risk is 0 for every policy.
+
+**Realism to decision.** Median Spearman correlation between a world's realism error and its
+deviation from the pooled decision is −0.35: UNRESOLVED and associational.
+
+**Ablations** (fresh mean objective over the four realism holdouts unless stated; positive =
+the component made things worse):
+
+| Component | Difference |
+|---|---|
+| posterior calibration vs point | +0.25 |
+| neural generator (G4) vs G0 | +0.26 |
+| continuous conditioning (G3) vs discrete regimes (G2) | +0.06 |
+| discrete regimes (G2) vs no conditioning (G0) | +0.28 |
+| execution-aware vs generic calibration (ES objective, fresh ETH) | +0.14 |
+| posterior-world vs single-world training (PPO, conservative gap) | +0.03 bps |
+
+These are descriptive point differences; the confirmatory tests are H1–H5, H10–H12.
+
+**Complexity penalty and overfitting curve** (objective; lower is better):
+
+| Model | Parameters | Development | Selection | Validation (month 2) | Fresh (mean of 4) | Deterioration |
+|---|---|---|---|---|---|---|
+| G0 point (v0.6) | 14 | 2.19 | 2.46 | 2.42 | **3.84** | +1.64 |
+| G0 posterior | 14 | 2.80 | 3.33 | 2.91 | 4.09 | +1.28 |
+| G2 regime switching | 30 | 2.64 | 2.95 | 2.85 | 4.12 | +1.48 |
+| G1 state Hawkes | 96 | 4.07 | 4.10 | 4.00 | 5.63 | +1.56 |
+| G4 GRU | about 4,000 | 1.74 | 2.08 | 2.32 | 4.10 | +2.36 |
+| G3 conditional AR | nonparametric (stored rows) | 1.89 | 2.01 | 2.40 | 4.18 | +2.29 |
+
+No family's fresh score beats every simpler family's, so no added capacity is justified
+(NOT_ESTABLISHED for all). The most flexible families deteriorate most. Scaling is EXPLORATORY:
+Spearman(parameters, fresh objective) = +0.71 over 6 models.
+
+**Compute versus value.** Every richer model has a negative fresh realism gain relative to G0,
+so the added compute bought no fresh-data improvement. Extra compute is not imputed where it
+was not measured (G0 point and G2 fit times; NOT_AVAILABLE).
+
+**Failure-mode catalogue.** All 13 registered failure modes were observed, each with its
+evidence runs:
+- support
+- tail
+- dependence
+- temporal
+- regime
+- queue
+- impact
+- calibration
+- identifiability
+- transfer
+- execution instability
+- model class
+- data capability
+
+**Compute table** (wall clock from the run logs; CPU upper bound = wall × workers):
+
+| Study | Wall (s) | Workers |
+|---|---|---|
+| M5 generator fit | 158 | 14 |
+| M6 recovery-2 | 1,913 | 14 |
+| M6 posterior-2 | 35,874 | 8 |
+| M6 select / M7 execution-aware | 199 / 89 | 8 |
+| M7 surrogate | 1,260 | 4 |
+| M8 identifiability-3 | 168 | 4 |
+| M10 bank | 1,035 | 8 |
+| M11 drift / M12 matrix | 907 / 1,710 | 1 / 2 |
+| M13 impact / ecology | 173 / 32 | 4 / 1 |
+| M14 policy training | 1,173 | 4 |
+| M15 execution-2 / stress | 3,538 / 1,123 | 4 |
+| M16 predictions | 294 | 14 |
+| M16 transfer-3 | 3,669 | 1 |
+| M17 holdouts (ETH Nov, ETH Dec, BTC, BitMEX) | 3,205 / 3,273 / 1,367 / 750 | 1 |
+
+The total is about 61,910 (17.2 h) s of wall clock, of which the posterior is 58%. `m22/final-2`
+stores this table without the M14 and M16 rows, which are taken from the same logs.
+
 
 ## Evidence and verification
 
