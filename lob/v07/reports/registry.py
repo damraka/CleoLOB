@@ -29,12 +29,20 @@ POSTERIOR_LIMITATION = ("depends on the G0 SMC-ABC posterior, whose synthetic re
 
 ETH = ("deribit-eth-perp-2020-11-01", "deribit-eth-perp-2020-12-01")
 RICHER = ("G1_state_hawkes", "G2_regime_switching", "G3_conditional_ar", "G4_neural_temporal")
-RUNS = {"holdout": "results/v07/m17", "posterior": "results/v07/m6/posterior-2", "execution": "results/v07/m15/execution",
+RUNS = {"holdout": "results/v07/m17", "posterior": "results/v07/m6/posterior", "execution": "results/v07/m15/execution",
         "transfer": "results/v07/m16/transfer"}
 
 
+def resolve(root: Path, run: str) -> str:
+    """The latest sealed variant of a run directory (``run``, ``run-2``, ``run-3``, ...); aborted or unsealed
+    attempts are skipped (they stay in the ledger and on disk)."""
+    candidates = [run] + [f"{run}-{k}" for k in range(2, 10)]
+    sealed = [c for c in candidates if (root / c / "binding.json").is_file()]
+    return sealed[-1] if sealed else run
+
+
 def _load(root: Path, run: str) -> dict | None:
-    path = root / run / "result.json"
+    path = root / resolve(root, run) / "result.json"
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
 
 
@@ -103,7 +111,7 @@ def hypothesis_table(root: Path = PROJECT_ROOT) -> list[dict]:
         rows.append(_row(h, hyp[h]["question"], list(ETH), {"H1": "G0_post vs G0_point"}.get(h, "EA vs G0_point"),
                          _conjunction([m["status"] for m in members]), alpha=fams[hyp[h]["family"]]["adjusted_alpha"],
                          family=hyp[h]["family"], margin=hyp[h]["margin"], mde=mde(h), members=members,
-                         run=[f"{RUNS['holdout']}/{d}" for d in ETH], limitations=POSTERIOR_LIMITATION))
+                         run=[resolve(root, f"{RUNS['holdout']}/{d}") for d in ETH], limitations=POSTERIOR_LIMITATION))
     for h, kind, field in (("H2", "domain_gap", "status_H2"), ("H3", "support", "status_H3")):
         members = []
         for d in ETH:
@@ -115,18 +123,18 @@ def hypothesis_table(root: Path = PROJECT_ROOT) -> list[dict]:
         rows.append(_row(h, hyp[h]["question"], list(ETH), "G1-G4 vs G0_point", _any([m["status"] for m in members]),
                          alpha=fams[hyp[h]["family"]]["adjusted_alpha"], family=hyp[h]["family"],
                          margin=hyp[h]["margin"], mde=mde(h), members=members,
-                         run=[f"{RUNS['holdout']}/{d}" for d in ETH]))
+                         run=[resolve(root, f"{RUNS['holdout']}/{d}") for d in ETH]))
     for h, d in (("H4", "deribit-btc-perp-2020-11-01"), ("H5", "bitmex-xbtusd-2020-11-01")):
         e = ((days[d] or {}).get("hypotheses") or {}).get(h)
         rows.append(_row(h, hyp[h]["question"], d, (e or {}).get("G_star", "G*"), (e or {}).get("status", "NOT_AVAILABLE")
                          if days[d] else "NOT_AVAILABLE", estimate=(e or {}).get("estimate"), ci=(e or {}).get("ci"),
                          alpha=fams["F4_cross_market"]["adjusted_alpha"], family="F4_cross_market", mde=mde(h),
-                         run=f"{RUNS['holdout']}/{d}", limitations=POSTERIOR_LIMITATION if (e or {}).get("G_star") ==
+                         run=resolve(root, f"{RUNS['holdout']}/{d}"), limitations=POSTERIOR_LIMITATION if (e or {}).get("G_star") ==
                          "G0_post" else ""))
     post = _load(root, RUNS["posterior"])
     rows.append(_row("H6", hyp["H6"]["question"], "development", "G0_post",
                      (post or {}).get("H6", {}).get("status", "NOT_AVAILABLE"), family="D1_posterior_shape",
-                     run=RUNS["posterior"], limitations=POSTERIOR_LIMITATION + "; descriptive",
+                     run=resolve(root, RUNS["posterior"]), limitations=POSTERIOR_LIMITATION + "; descriptive",
                      members=[{"multimodal_runs": (post or {}).get("H6", {}).get("multimodal_runs")}]))
     ex = _load(root, RUNS["execution"])
     for h, key in (("H7", "H7"), ("H8", "H8"), ("H9", "H9")):
@@ -137,14 +145,14 @@ def hypothesis_table(root: Path = PROJECT_ROOT) -> list[dict]:
         rows.append(_row(h, hyp[h]["question"], "simulation (development-calibrated worlds)", "plausible world set",
                          e.get("status", "NOT_AVAILABLE"), family=hyp[h]["family"],
                          alpha=fams.get(hyp[h]["family"], {}).get("adjusted_alpha"), margin=hyp[h]["margin"],
-                         mde=mde(h), run=RUNS["execution"], limitations=POSTERIOR_LIMITATION,
+                         mde=mde(h), run=resolve(root, RUNS["execution"]), limitations=POSTERIOR_LIMITATION,
                          members=[{"member": k, **v} for k, v in members]))
     tr = _load(root, RUNS["transfer"])
     for h in ("H12", "H13"):
         e = (tr or {}).get(h, {})
         rows.append(_row(h, hyp[h]["question"], "deribit-eth-perp-2021-01-01", "learned/classical policies",
                          e.get("status", "NOT_AVAILABLE"), family=hyp[h]["family"],
-                         alpha=fams.get(hyp[h]["family"], {}).get("adjusted_alpha"), mde=mde(h), run=RUNS["transfer"],
+                         alpha=fams.get(hyp[h]["family"], {}).get("adjusted_alpha"), mde=mde(h), run=resolve(root, RUNS["transfer"]),
                          limitations="bounded historical replay (no impact, no exact fills); " + POSTERIOR_LIMITATION,
                          members=[{"member": k, **v} for k, v in (e.get("members") or e.get("pairs") or {}).items()]))
     order = {f"H{i}": i for i in range(1, 14)}

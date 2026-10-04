@@ -65,3 +65,11 @@ def test_claim_graph_and_audit(root, tmp_path_factory) -> None:
     assert not report["valid"] and len(report["issues"]) == 2
     terms = rg.term_audit([bad], root)
     assert any(t["term"] == "improves" for t in terms)
+
+
+def test_resolve_picks_latest_sealed_variant(root) -> None:
+    (root / "results/v07/m17/deribit-eth-perp-2020-12-01-2").mkdir(parents=True)        # unsealed attempt
+    assert rg.resolve(root, "results/v07/m17/deribit-eth-perp-2020-12-01") == "results/v07/m17/deribit-eth-perp-2020-12-01"
+    out = runs.new_run(root / "results/v07/m17/deribit-eth-perp-2020-11-01-2")
+    runs.finalize(out, analysis="x", dataset_ids=[], config={}, result={}, root=root)
+    assert rg.resolve(root, "results/v07/m17/deribit-eth-perp-2020-11-01").endswith("-2")
