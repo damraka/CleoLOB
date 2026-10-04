@@ -1,0 +1,297 @@
+"""Requirement coverage 1-100 (final audit table) and its machine check.
+
+Each row: ID, requirement, implementation (modules), tests (test files), scientific experiment (run or
+"none" with reason), artifact, documentation, status, limitations, evidence. ``audit`` fails when an ID is
+missing or duplicated, a listed test or module file does not exist, a NOT_AVAILABLE row lacks a reason,
+a listed run is not sealed and valid, or a failed attempt recorded in the ledger is missing from disk.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+R = "results/v07/"
+T = "tests/"
+L = "lob/v07/"
+
+
+def row(i, name, impl, tests, experiment, artifact, doc, status, limits, evidence=None):
+    return {"id": i, "requirement": name, "implemented": impl, "tests": tests, "experiment": experiment,
+            "artifact": artifact, "documentation": doc, "status": status, "limitations": limits,
+            "evidence": evidence or artifact}
+
+
+ROWS = [
+    row(1, "Data layer v3", [L + "data/schema.py", L + "data/validation.py", L + "data/quality.py"],
+        [T + "test_v07_data.py", T + "test_v07_validation.py"], "quality report per dataset at parse (ledger stage)",
+        "quality block in every holdout/drift run", "docs/v07-data.md", "IMPLEMENTED",
+        "sequence numbers absent in Tardis L2 (missing_sequence not evaluable there)"),
+    row(2, "Multi-venue and multi-instrument support", [L + "adapters/tardis.py", L + "adapters/bitstamp.py"],
+        [T + "test_v07_data.py"], "Deribit ETH/BTC, BitMEX XBTUSD, Bitstamp btcusd adapters exercised",
+        "dataset-registry-v07 capability matrix", "docs/v07-data.md", "IMPLEMENTED",
+        "BitMEX used only on its fresh holdout day"),
+    row(3, "Exchange microstructure specification layer", [L + "exchange/venue.py"], [T + "test_v07_exchange.py"],
+        "matching fixtures against the frozen engine", "semantics_matrix()", "docs/v07-execution.md", "IMPLEMENTED",
+        "real-venue rules are DECLARED (unverified); auction and acknowledgement timing NOT_AVAILABLE"),
+    row(4, "Historical replay v3", [L + "replay/deterministic.py", L + "replay/reference.py"],
+        [T + "test_v07_exchange.py", T + "test_v07_replay.py"], "v0.7 tape bit-identical to v0.6 on the development day",
+        "ledger entries 41-43; replay-v07 CLI", "docs/v07-execution.md", "IMPLEMENTED",
+        "reference snapshots available for the development day only"),
+    row(5, "Queue and passive-fill uncertainty", [L + "queue/models.py", L + "queue/learned.py", L + "queue/study.py"],
+        [T + "test_v07_queue.py"], R + "m3/queue", R + "m3/queue", "docs/v07-execution.md", "ASSUMPTION_DEPENDENT",
+        "learned positions require assumed price-time priority (Bitstamp feed does not establish FIFO)", R + "m3/queue"),
+    row(6, "Endogenous order-flow simulation", [L + "generators/engine.py"], [T + "test_v07_generators.py", T + "test_v07_impact.py"],
+        "zero-impact, monotone-impact and recovery fixtures", R + "m13/impact", "docs/v07-generators.md", "IMPLEMENTED",
+        "response is an associational hypothesis about aggregate flow"),
+    row(7, "Generative simulator families", [L + "generators/counts.py", L + "generators/regime.py", L + "generators/study.py"],
+        [T + "test_v07_generators.py"], R + "m5/fit", R + "m5/fit", "docs/v07-generators.md", "IMPLEMENTED",
+        "diffusion generator NOT_AVAILABLE (no GPU, insufficient data); G1 needs a stationarity constraint", R + "m5/fit"),
+    row(8, "Parameter + model-class ensemble", [L + "uncertainty/worlds.py", L + "robustness/study.py"],
+        [T + "test_v07_worlds.py"], R + "m15/execution", R + "m15/execution", "docs/v07-model-risk.md", "IMPLEMENTED",
+        "queue model fixed to engine FIFO in simulated worlds"),
+    row(9, "Bayesian / simulation-based calibration", [L + "posterior/smc_abc.py", L + "posterior/study.py"],
+        [T + "test_v07_posterior.py"], R + "m6/posterior-2", R + "m6/posterior-2", "docs/v07-calibration.md",
+        "ASSUMPTION_DEPENDENT", "synthetic recovery below 80% in 2 of 3 cases; diffuse ABC posterior", R + "m6/recovery-2"),
+    row(10, "Calibration surrogate / emulator", [L + "calibration/surrogate.py", L + "calibration/surrogate_study.py"],
+        [T + "test_v07_surrogate.py"], R + "m7/surrogate", R + "m7/surrogate", "docs/v07-calibration.md", "IMPLEMENTED",
+        "forest uncertainty is heuristic; neural surrogate NOT_AVAILABLE (not justified)"),
+    row(11, "Active calibration", [L + "calibration/surrogate.py"], [T + "test_v07_surrogate.py"], R + "m7/surrogate",
+        R + "m7/surrogate", "docs/v07-calibration.md", "EXPLORATORY", "3 replicates; synthetic recovery target"),
+    row(12, "Identifiability v2", [L + "identifiability/analysis.py", L + "identifiability/study.py"],
+        [T + "test_v07_identifiability.py"], R + "m8/identifiability", R + "m8/identifiability",
+        "docs/v07-identifiability.md", "IMPLEMENTED", "local Jacobian at one point; global sensitivity via posterior profiles"),
+    row(13, "Observable-design research", [L + "identifiability/analysis.py"], [T + "test_v07_identifiability.py"],
+        R + "m8/identifiability", R + "m8/identifiability", "docs/v07-identifiability.md", "IMPLEMENTED",
+        "influence measured on component errors, not raw statistics"),
+    row(14, "Realism battery v2", [L + "realism/holdout.py", L + "realism/contrast.py"], [T + "test_v07_realism.py"],
+        R + "m17", R + "m17", "docs/v07-realism.md", "IMPLEMENTED", "battery is the frozen v0.6 85-component set plus v0.7 metrics"),
+    row(15, "Modern two-sample statistics", [L + "realism/metrics.py"], [T + "test_v07_realism.py"], R + "m17", R + "m17",
+        "docs/v07-realism.md", "IMPLEMENTED", "no single metric decides realism"),
+    row(16, "Store discriminator outputs", [L + "realism/metrics.py"], [T + "test_v07_realism.py"], R + "m17",
+        R + "m17/<dataset>/discriminator-*.json", "docs/v07-realism.md", "IMPLEMENTED",
+        "stored scores derive from restricted data and stay local (hash-listed in the bundle)"),
+    row(17, "Domain-gap attribution", [L + "realism/metrics.py"], [T + "test_v07_realism.py"], R + "m17", R + "m17",
+        "docs/v07-realism.md", "IMPLEMENTED", "associational attribution, not causal"),
+    row(18, "Execution-sensitive realism", [L + "realism/contrast.py", L + "calibration/execution_aware.py"],
+        [T + "test_v07_realism.py"], R + "m7/execution-aware; H10", R + "m17", "docs/v07-realism.md", "IMPLEMENTED",
+        "8 registered ES components; fill-time distribution not separately measured"),
+    row(19, "Realism-to-decision map", [L + "reports/decision.py"], [T + "test_v07_decision.py"],
+        R + "m15/execution; m22/final", R + "m22/final", "docs/v07-model-risk.md", "EXPLORATORY", "few worlds; associational only"),
+    row(20, "Continuous regime conditioning", [L + "generators/counts.py"], [T + "test_v07_generators.py"], R + "m17; m11",
+        R + "m17", "docs/v07-realism.md", "IMPLEMENTED", "compared through G1/G3/G4 vs G2 vs G0 on fresh days"),
+    row(21, "Latent regime models", [L + "regimes/hmm.py", L + "generators/regime.py"], [T + "test_v07_regimes_drift.py"],
+        R + "m11/drift", R + "m11/drift", "docs/v07-transfer.md", "IMPLEMENTED", "HSMM NOT_AVAILABLE (not implemented)"),
+    row(22, "Nonstationarity and concept drift", [L + "drift/analysis.py", L + "drift/study.py"],
+        [T + "test_v07_regimes_drift.py"], R + "m11/drift", R + "m11/drift", "docs/v07-transfer.md", "IMPLEMENTED",
+        "posterior drift NOT_AVAILABLE (budget); parameter drift via M12 refits"),
+    row(23, "Calibration half-life", [L + "drift/analysis.py"], [T + "test_v07_regimes_drift.py"], R + "m11/drift",
+        R + "m11/drift", "docs/v07-transfer.md", "EXPLORATORY", "six dated days; not preregistered"),
+    row(24, "Temporal hierarchy", [L + "realism/metrics.py"], [T + "test_v07_realism.py"], R + "m17", R + "m17",
+        "docs/v07-realism.md", "IMPLEMENTED", "event level and 100 ms are the native grid; 1 s inside v0.6 components"),
+    row(25, "Cross-instrument transfer matrix", [L + "transfer/matrix.py"], [T + "test_v07_hierarchy.py"],
+        R + "m12/matrix", R + "m12/matrix", "docs/v07-transfer.md", "EXPLORATORY",
+        "related-instrument cell NOT_AVAILABLE (no such consumed data)"),
+    row(26, "Cross-venue transfer matrix", [L + "realism/holdout.py"], [T + "test_v07_registry.py"], R + "m17 (BitMEX vs Deribit BTC, same day)",
+        R + "m17", "docs/v07-transfer.md", "IMPLEMENTED", "venue x venue fitting NOT_AVAILABLE: BitMEX exists only as a fresh holdout"),
+    row(27, "Hierarchical calibration", [L + "transfer/matrix.py"], [T + "test_v07_hierarchy.py"], R + "m12/matrix",
+        R + "m12/matrix", "docs/v07-transfer.md", "EXPLORATORY", "venue level NOT_AVAILABLE (single fit-eligible venue)"),
+    row(28, "Meta-order / impact subsystem", [L + "impact/metaorder.py", L + "impact/study.py"], [T + "test_v07_impact.py"],
+        R + "m13/impact", R + "m13/impact", "docs/v07-execution.md", "EXPLORATORY", "simulator impact only"),
+    row(29, "Impact model zoo", [L + "impact/metaorder.py"], [T + "test_v07_impact.py"], R + "m13/impact", R + "m13/impact",
+        "docs/v07-execution.md", "EXPLORATORY", "no empirical law treated as universal"),
+    row(30, "Transaction-cost analysis v2", [L + "impact/metaorder.py"], [T + "test_v07_impact.py"], R + "m13/impact",
+        R + "m13/impact", "docs/v07-execution.md", "IMPLEMENTED", "rebates zero under the mandate fee convention"),
+    row(31, "Expanded classical policy suite", [L + "policies/classical.py", L + "execution/episode.py"],
+        [T + "test_v07_execution.py"], R + "m15/execution", R + "m15/execution", "docs/v07-execution.md", "IMPLEMENTED",
+        "MPC is exploratory"),
+    row(32, "RL execution v3", [L + "policies/learned.py"], [T + "test_v07_transfer.py"], R + "m14/policies; m16/transfer",
+        R + "m14/policies", "docs/v07-transfer.md", "IMPLEMENTED",
+        "recurrent, distributional and constrained variants NOT_AVAILABLE: not implemented in v0.7 (PPO/DQN only)"),
+    row(33, "Offline RL only if defensible", [L + "policies/learned.py"], [T + "test_v07_transfer.py"], "none",
+        "OFFLINE_RL constant", "docs/v07-transfer.md", "NOT_AVAILABLE",
+        "no logged historical actions exist; none are fabricated", "lob/v07/policies/learned.py"),
+    row(34, "Robust RL / robust control", [L + "uncertainty/risk.py", L + "policies/learned.py"], [T + "test_v07_risk.py"],
+        R + "m15/execution; m14", R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED",
+        "selection criteria compared on classical policies; learned robust training = posterior domain randomization"),
+    row(35, "Policy uncertainty", [L + "robustness/analysis.py"], [T + "test_v07_robustness.py"], R + "m15/execution",
+        R + "m15/execution", "docs/v07-model-risk.md", "IMPLEMENTED", "regime and queue components only where varied"),
+    row(36, "Decision certification", [L + "robustness/certification.py"], [T + "test_v07_certification.py"],
+        R + "m15; m16", R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED", "all logical combinations tested"),
+    row(37, "Model-dependent conclusions", [L + "robustness/analysis.py"], [T + "test_v07_robustness.py"],
+        R + "m15/execution", R + "m15/execution", "docs/v07-model-risk.md", "IMPLEMENTED", "responsible worlds named per edge"),
+    row(38, "Abstention", [L + "robustness/certification.py"], [T + "test_v07_certification.py"], R + "m15; m16",
+        R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED", "—"),
+    row(39, "Ranking topology", [L + "robustness/analysis.py", L + "robustness/certification.py"],
+        [T + "test_v07_certification.py", T + "test_v07_robustness.py"], R + "m15/execution", R + "m15/execution",
+        "docs/v07-model-risk.md", "IMPLEMENTED", "—"),
+    row(40, "Stress testing v2", [L + "robustness/stress.py", L + "impact/study.py"], [T + "test_v07_risk.py"],
+        R + "m15/stress", R + "m15/stress", "docs/v07-model-risk.md", "IMPLEMENTED", "SYNTHETIC_STRESS; not empirical validation"),
+    row(41, "Scenario provenance", [L + "uncertainty/worlds.py"], [T + "test_v07_worlds.py"], R + "m15/execution",
+        R + "m15/execution", "docs/v07-model-risk.md", "IMPLEMENTED", "—"),
+    row(42, "Adversarial model-risk search", [L + "robustness/analysis.py"], [T + "test_v07_risk.py"], R + "m15/execution",
+        R + "m15/execution", "docs/v07-model-risk.md", "IMPLEMENTED", "search over 64 draws from the 90% region"),
+    row(43, "Worst-plausible-world analysis", [L + "uncertainty/risk.py"], [T + "test_v07_risk.py"], R + "m15/execution",
+        R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED", "—"),
+    row(44, "Risk-sensitive execution metrics", [L + "uncertainty/risk.py"], [T + "test_v07_risk.py"], R + "m15/execution",
+        R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED", "—"),
+    row(45, "Full uncertainty decomposition", [L + "robustness/analysis.py"], [T + "test_v07_robustness.py"],
+        R + "m15; m16", R + "m22/final", "docs/v07-model-risk.md", "IMPLEMENTED", "small world counts; caveats stated"),
+    row(46, "Multi-agent market ecology", [L + "execution/ecology.py", L + "execution/ecology_study.py"],
+        [T + "test_v07_ecology.py"], R + "m13/ecology", R + "m13/ecology", "docs/v07-execution.md", "EXPLORATORY",
+        "stylized agents"),
+    row(47, "Strategic interaction", [L + "execution/ecology.py"], [T + "test_v07_ecology.py"], R + "m13/ecology",
+        R + "m13/ecology", "docs/v07-execution.md", "EXPLORATORY", "one reactive mechanism"),
+    row(48, "Market-maker research module", [L + "execution/ecology.py"], [T + "test_v07_ecology.py"], R + "m13/ecology",
+        R + "m13/ecology", "docs/v07-execution.md", "EXPLORATORY",
+        "stylized inventory-sensitive maker in simulation; no empirical calibration or validation"),
+    row(49, "Cross-impact groundwork", [L + "execution/portfolio.py"], [T + "test_v07_ecology.py"], "synthetic coupling tests",
+        "tests", "docs/v07-execution.md", "EXPLORATORY", "no validated cross-impact: no multi-instrument consumed data"),
+    row(50, "Portfolio execution", [L + "execution/portfolio.py"], [T + "test_v07_ecology.py"], "synthetic portfolio tests",
+        "tests", "docs/v07-execution.md", "EXPLORATORY", "two-instrument synthetic demonstration"),
+    row(51, "Latency modelling", [L + "exchange/latency.py"], [T + "test_v07_exchange.py"], "latency fixtures", "tests",
+        "docs/v07-execution.md", "IMPLEMENTED", "simulated latency assumptions, never measured venue latency"),
+    row(52, "Asynchronous agent interface", [L + "exchange/latency.py"], [T + "test_v07_exchange.py"], "delayed-event fixtures",
+        "tests", "docs/v07-execution.md", "IMPLEMENTED", "—"),
+    row(53, "Reference + accelerated engine", [L + "realism/metrics.py", L + "generators/counts.py"],
+        [T + "test_v07_performance.py"], "differential tests", "tests", "docs/v07-performance.md", "IMPLEMENTED",
+        "compiled backends (Numba/C++/Rust) NOT_AVAILABLE (not installed); accelerated paths are numpy"),
+    row(54, "Vectorized / parallel simulation", [L + "benchmark/parallel.py"], [T + "test_v07_performance.py"],
+        "single vs parallel equivalence", "tests", "docs/v07-performance.md", "IMPLEMENTED", "—"),
+    row(55, "Optional GPU path", [L + "benchmark/compute.py"], [T + "test_v07_performance.py"], "CPU-only install",
+        "isolated install", "docs/v07-performance.md", "NOT_AVAILABLE", "no CUDA device; GPU stack optional and absent",
+        "lob/v07/benchmark/compute.py"),
+    row(56, "Compute accounting", [L + "benchmark/compute.py"], [T + "test_v07_performance.py"], "compute table",
+        R + "m22/final", "docs/v07-performance.md", "IMPLEMENTED", "worker CPU reported as an upper bound"),
+    row(57, "Experiment-budget preregistration", ["configs/v07/compute-budget.json"], [T + "test_v07_protocol.py"],
+        "frozen at M0", "configs/v07/compute-budget.json", "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(58, "Nested holdout economy", [L + "protocol/core.py"], [T + "test_v07_protocol.py"], "ledger",
+        "configs/v07/consumption-ledger.jsonl", "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(59, "Blocked / purged time-series validation", [L + "realism/folds.py"], [T + "test_v07_governance.py"],
+        "chronological purged splits in domain gap", "tests", "docs/v07-realism.md", "IMPLEMENTED", "—"),
+    row(60, "Sequential-testing policy", ["configs/v07/protocol.json"], [T + "test_v07_reporting.py"], "early stopping prohibited",
+        "configs/v07/protocol.json", "docs/v07-paper.md", "IMPLEMENTED", "no interim analyses"),
+    row(61, "Multiplicity registry", [L + "protocol/taxonomy.py"], [T + "test_v07_protocol.py"], "families",
+        "configs/v07/statistical-families.json", "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(62, "Equivalence requires registered margins", [L + "protocol/taxonomy.py"], [T + "test_v07_protocol.py"], "—",
+        "taxonomy", "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(63, "Effect-size-first reporting", [L + "reports/registry.py", L + "reports/build.py"], [T + "test_v07_registry.py"],
+        "hypothesis table", "docs/v07-final-report.md", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(64, "Power design tooling", [L + "protocol/power.py"], [T + "test_v07_power.py"], "sealed before studies",
+        "configs/v07/power-design.json", "docs/v07-paper.md", "IMPLEMENTED", "pilot variances from v0.6"),
+    row(65, "Uncertainty-aware figures", [L + "reports/figures.py"], [T + "test_v07_reporting.py"], "report figures",
+        R + "report/figures", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(66, "Claim graph v2", [L + "reports/registry.py"], [T + "test_v07_registry.py"], "claim graph",
+        R + "report/claim-graph.json", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(67, "Machine-readable result taxonomy", [L + "protocol/taxonomy.py"], [T + "test_v07_protocol.py"], "—",
+        "configs/v07/result-taxonomy.json", "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(68, "Result registry", [L + "reports/registry.py"], [T + "test_v07_registry.py"], "registry",
+        R + "report/registry.json", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(69, "Automatic negative-result retention", [L + "reports/registry.py"], [T + "test_v07_registry.py"],
+        "negative results table", R + "report/negative-results.json", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(70, "Reproducibility capsules", [L + "reports/export.py"], [T + "test_v07_benchmark.py"], "public bundle",
+        "examples/studies/v07/evidence", "docs/v07-reproduction.md", "IMPLEMENTED", "restricted data excluded"),
+    row(71, "Reproduction tiers", [L + "reports/export.py"], [T + "test_v07_benchmark.py"], "tiers 1-4",
+        "examples/studies/v07/evidence/export.json", "docs/v07-reproduction.md", "IMPLEMENTED",
+        "tier 4 requires restricted data"),
+    row(72, "Environment capture", [L + "evidence/runs.py", L + "benchmark/compute.py"], [T + "test_v07_evidence.py"],
+        "provenance of every run", "provenance.json", "docs/v07-reproduction.md", "IMPLEMENTED", "—"),
+    row(73, "Cross-platform determinism", [".github/workflows"], [T + "test_v07_properties.py"],
+        "Windows locally; Linux CI on push", "CI", "docs/v07-performance.md", "NOT_AVAILABLE",
+        "Linux run not executed locally (branch not pushed); invariant tests exist and run on any platform",
+        ".github/workflows"),
+    row(74, "Property-based testing", [T + "test_v07_properties.py"], [T + "test_v07_properties.py"], "—", "tests",
+        "docs/v07-performance.md", "IMPLEMENTED", "—"),
+    row(75, "Event-sequence fuzzing", [T + "test_v07_properties.py"], [T + "test_v07_properties.py"], "—", "tests",
+        "docs/v07-performance.md", "IMPLEMENTED", "—"),
+    row(76, "Metamorphic testing", [T + "test_v07_properties.py"], [T + "test_v07_properties.py"], "—", "tests",
+        "docs/v07-performance.md", "IMPLEMENTED", "assumptions documented per relation"),
+    row(77, "Differential testing", [T + "test_v07_performance.py"], [T + "test_v07_performance.py", T + "test_v07_data.py"],
+        "—", "tests", "docs/v07-performance.md", "IMPLEMENTED", "—"),
+    row(78, "Accounting v3", [L + "execution/accounting.py"], [T + "test_v07_governance.py"], "—", "tests",
+        "docs/v07-execution.md", "IMPLEMENTED", "—"),
+    row(79, "Horizon semantics", [L + "execution/accounting.py"], [T + "test_v07_governance.py"], "—", "tests",
+        "docs/v07-execution.md", "IMPLEMENTED", "—"),
+    row(80, "Research-schema versioning", [L + "protocol/schemas.py"], [T + "test_v07_governance.py"], "—", "tests",
+        "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(81, "Configuration validation v2", [L + "protocol/schemas.py"], [T + "test_v07_governance.py"], "—", "tests",
+        "docs/v07-data.md", "IMPLEMENTED", "—"),
+    row(82, "Capability-aware CLI", [L + "cli.py"], [T + "test_v07_cli.py"], "—", "cleo dataset-registry-v07",
+        "docs/v07-data.md", "IMPLEMENTED", "—"),
+    row(83, "Dataset registry v2", [L + "cli.py", "configs/v07/dataset-registry.json"], [T + "test_v07_cli.py"], "—",
+        "cleo dataset-registry-v07", "docs/v07-data.md", "IMPLEMENTED", "—"),
+    row(84, "Study templates", [L + "reports/templates.py", "configs/v07/templates/study-template.json"],
+        [T + "test_v07_reporting.py"], "—", "configs/v07/templates/study-template.json", "docs/v07-reproduction.md",
+        "IMPLEMENTED", "—"),
+    row(85, "Adapter development kit", [L + "adapters/base.py", L + "adapters/fixtures.py"], [T + "test_v07_data.py"],
+        "—", "conformance()", "docs/v07-data.md", "IMPLEMENTED", "—"),
+    row(86, "Benchmark datasets / tasks", [L + "benchmark/tasks.py", "configs/v07/benchmark-tasks.json"],
+        [T + "test_v07_benchmark.py"], "—", "configs/v07/benchmark-tasks.json", "docs/v07-performance.md", "IMPLEMENTED",
+        "synthetic fixtures only"),
+    row(87, "Scientific leaderboard", [L + "reports/leaderboard.py"], [T + "test_v07_reporting.py"], "final report table",
+        "docs/v07-final-report.md", "docs/v07-final-report.md", "IMPLEMENTED", "no composite score"),
+    row(88, "Report generator v2", [L + "reports/build.py"], [T + "test_v07_registry.py"], "report-v07",
+        R + "report", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(89, "Figure reproducibility", [L + "reports/figures.py"], [T + "test_v07_reporting.py"], "figure manifest",
+        R + "report/figures/figures-manifest.json", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(90, "Interactive research explorer", [L + "reports/build.py"], [T + "test_v07_registry.py"], "static explorer",
+        R + "report/explorer.html", "docs/v07-reproduction.md", "IMPLEMENTED", "static read-only page (no server)"),
+    row(91, "Paper artifact from M0", ["docs/v07-paper.md"], [T + "test_v07_registry.py"], "—", "docs/v07-paper.md",
+        "docs/v07-paper.md", "IMPLEMENTED", "—"),
+    row(92, "Stronger external validity design", ["configs/v07/protocol.json"], [T + "test_v07_protocol.py"],
+        R + "m17; m16", R + "m17", "docs/v07-paper.md", "IMPLEMENTED", "two fresh temporal days, one cross-instrument, one cross-venue"),
+    row(93, "Public replication subset", [L + "benchmark/tasks.py"], [T + "test_v07_benchmark.py"], "benchmark-v07 public",
+        "examples/studies/v07/public-subset-expected.json", "docs/v07-reproduction.md", "IMPLEMENTED", "synthetic"),
+    row(94, "Ablation program", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"],
+        R + "m22/final", R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED",
+        "descriptive point differences between sealed results; the confirmatory tests are H1, H2-H5, H10-H12"),
+    row(95, "Complexity penalty", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"], R + "m5; m17; m22/final",
+        R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(96, "Calibration versus overfitting", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"], R + "m5; m11; m17; m22/final",
+        R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(97, "Simulator scaling laws", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"], R + "m5; m17; m22/final",
+        R + "m22/final", "docs/v07-final-report.md", "EXPLORATORY", "five families; not preregistered"),
+    row(98, "Compute versus scientific value", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"], R + "m22/final",
+        R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(99, "Failure-mode catalogue", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"], R + "m22/final",
+        R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+    row(100, "Final decision-focused benchmark", [L + "reports/decision.py", L + "reports/final.py"], [T + "test_v07_decision.py"],
+        R + "m15; m16; m22/final", R + "m22/final", "docs/v07-final-report.md", "IMPLEMENTED", "—"),
+]
+
+
+def render(rows: list[dict] | None = None) -> str:
+    rows = rows or ROWS
+    out = ["| ID | Requirement | Implemented | Tests | Scientific experiment | Artifact | Documentation | Status | "
+           "Limitations | Evidence |", "|---|---|---|---|---|---|---|---|---|---|"]
+    for r in rows:
+        cells = [str(r["id"]), r["requirement"], "<br>".join(f"`{x}`" for x in r["implemented"]),
+                 "<br>".join(f"`{x}`" for x in r["tests"]), r["experiment"], f"`{r['artifact']}`", r["documentation"],
+                 f"**{r['status']}**", r["limitations"], f"`{r['evidence']}`"]
+        out.append("| " + " | ".join(c.replace("|", "/") for c in cells) + " |")
+    return "\n".join(out)
+
+
+def audit(root: Path, rows: list[dict] | None = None) -> dict:
+    from .registry import resolve
+    rows = rows or ROWS
+    issues = []
+    ids = [r["id"] for r in rows]
+    if sorted(ids) != list(range(1, 101)):
+        issues.append(f"IDs must be exactly 1-100 (got {len(ids)}; missing {sorted(set(range(1, 101)) - set(ids))})")
+    for r in rows:
+        for path in r["implemented"] + r["tests"]:
+            if not (root / path).exists():
+                issues.append(f"{r['id']}: missing file {path}")
+        if not r["tests"]:
+            issues.append(f"{r['id']}: implemented capability lacks tests")
+        if r["status"] == "NOT_AVAILABLE" and len(r["limitations"]) < 10:
+            issues.append(f"{r['id']}: NOT_AVAILABLE without a reason")
+        for part in str(r["experiment"]).split(";"):
+            part = part.strip().split(" ")[0]
+            if part.startswith(R) and part.count("/") >= 3 and not (root / resolve(root, part) / "binding.json").is_file():
+                issues.append(f"{r['id']}: experiment run {part} is not sealed")
+    from ..protocol import core as pr
+    state = pr.replay_ledger(pr.read_ledger(root / pr.LEDGER_PATH), pr.load_protocol(root / pr.PROTOCOL_PATH))
+    for a in state.attempts:
+        if a.get("directory") and not (root / a["directory"]).exists():
+            issues.append(f"failed/aborted attempt directory deleted: {a['directory']}")
+    return {"valid": not issues, "issues": issues, "rows": len(rows)}

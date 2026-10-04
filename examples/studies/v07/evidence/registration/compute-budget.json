@@ -1,0 +1,62 @@
+{
+  "schema": "cleolob-v07-compute-1",
+  "machine": {
+    "logical_cpus": 16,
+    "gpu": null,
+    "torch": "CPU only"
+  },
+  "budgets": {
+    "smc_abc": {
+      "particles": 256,
+      "generations": 6,
+      "runs": 3,
+      "seeds_per_evaluation": 2,
+      "seconds_per_evaluation": 1800
+    },
+    "recovery": {
+      "truths": 3,
+      "particles": 128,
+      "generations": 4
+    },
+    "generator_fits": {
+      "G1_max_cpu_hours": 4,
+      "G2_max_cpu_hours": 4,
+      "G3_max_cpu_hours": 1,
+      "G4_max_cpu_hours": 6
+    },
+    "selection": {
+      "seeds": 5,
+      "seconds": 3600
+    },
+    "holdout_scoring": {
+      "seeds_point": 32,
+      "posterior_draws": 16,
+      "seeds_per_draw": 2,
+      "seconds": 3600
+    },
+    "domain_gap": {
+      "simulated_seeds_per_family": 16,
+      "window_s": 60
+    },
+    "execution": {
+      "worlds_max": 21,
+      "market_seeds_per_world": 256,
+      "primary_agents": 8
+    },
+    "learned": {
+      "algorithms": 2,
+      "variants": 2,
+      "training_seeds": 4,
+      "timesteps": 16384
+    },
+    "transfer": {
+      "episodes": 144,
+      "fill_modes": 2
+    }
+  },
+  "rules": [
+    "Budgets are fixed before evaluation; reduced runs are labelled PILOT and are never registered evidence.",
+    "Exceeding a budget cap stops the study with status INVALID or NOT_AVAILABLE; budgets are never extended after an outcome is inspected.",
+    "Wall-clock and CPU time are recorded per run (workstream 56)."
+  ]
+}

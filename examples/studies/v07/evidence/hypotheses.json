@@ -1,0 +1,957 @@
+[
+  {
+    "hypothesis": "H1",
+    "question": "Does posterior calibration (posterior predictive mixture over the v0.6 14-parameter family) reduce the v0.6 calibration objective relative to the v0.6 point-calibrated baseline on fresh temporal data?",
+    "dataset": [
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "model": "G0_post vs G0_point",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.025,
+    "family": "F1_posterior",
+    "power_or_mde": 0.21581167728245026,
+    "status": "FAILED",
+    "run": [
+      "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+    ],
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "dataset": "deribit-eth-perp-2020-11-01",
+        "alpha": 0.025,
+        "ci": [
+          0.2110356836521296,
+          0.6269228945767698
+        ],
+        "estimate": 0.3867576792156173,
+        "status": "FAILED"
+      },
+      {
+        "dataset": "deribit-eth-perp-2020-12-01",
+        "alpha": 0.025,
+        "ci": [
+          0.30260866851945534,
+          0.9321489877008601
+        ],
+        "estimate": 0.5677856054993713,
+        "status": "FAILED"
+      }
+    ]
+  },
+  {
+    "hypothesis": "H2",
+    "question": "Does a richer generator reduce classifier distinguishability of real and simulated 60 s windows relative to the G0 point baseline on fresh temporal data?",
+    "dataset": [
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "model": "G1-G4 vs G0_point",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.00625,
+    "family": "F2_distinguishability",
+    "power_or_mde": 0.0715198004021218,
+    "status": "NOT_ESTABLISHED",
+    "run": [
+      "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+    ],
+    "limitations": "",
+    "members": [
+      {
+        "member": "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "estimate": -2.5430359937406166e-05,
+        "interval": [
+          -9.365524745697865e-05,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "estimate": 0.002130281690140845,
+        "interval": [
+          0.0,
+          0.006671086414319292
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0020999608763693223,
+        "interval": [
+          -2.3474178403759538e-05,
+          0.006580111746870139
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0005193661971830688,
+        "interval": [
+          0.0,
+          0.0019971788194444212
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G4_neural_temporal@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0020481220657276866,
+        "interval": [
+          0.0,
+          0.006381113067292643
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      }
+    ]
+  },
+  {
+    "hypothesis": "H3",
+    "question": "Does a richer generator increase historical support coverage on fresh temporal data?",
+    "dataset": [
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "model": "G1-G4 vs G0_point",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": 0.05,
+    "alpha": 0.00625,
+    "family": "F3_support",
+    "power_or_mde": 0.0715198004021218,
+    "status": "NOT_ESTABLISHED",
+    "run": [
+      "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+    ],
+    "limitations": "",
+    "members": [
+      {
+        "member": "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "estimate": 0.002779708130646282,
+        "interval": [
+          0.0,
+          0.04671564333835216
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.002777777777777778
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "estimate": 0.015288394718554551,
+        "interval": [
+          0.002777777777777778,
+          0.04777840514246001
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": []
+      },
+      {
+        "member": "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      },
+      {
+        "member": "G4_neural_temporal@deribit-eth-perp-2020-12-01",
+        "estimate": 0.0,
+        "interval": [
+          0.0,
+          0.0
+        ],
+        "status": "NOT_ESTABLISHED",
+        "qualifiers": [
+          "VACUOUS"
+        ]
+      }
+    ]
+  },
+  {
+    "hypothesis": "H4",
+    "question": "Does the selected generator G* improve on the G0 baseline cross-instrument?",
+    "dataset": "deribit-btc-perp-2020-11-01",
+    "model": "G3_conditional_ar",
+    "n": null,
+    "estimate": 0.7171934312712311,
+    "interval": [
+      0.6432485075300879,
+      0.7675725877237063
+    ],
+    "margin": null,
+    "alpha": 0.025,
+    "family": "F4_cross_market",
+    "power_or_mde": 0.21581167728245026,
+    "status": "FAILED",
+    "run": "results/v07/m17/deribit-btc-perp-2020-11-01",
+    "limitations": "",
+    "members": []
+  },
+  {
+    "hypothesis": "H5",
+    "question": "Does the selected generator G* improve on the G0 baseline cross-venue?",
+    "dataset": "bitmex-xbtusd-2020-11-01",
+    "model": "G3_conditional_ar",
+    "n": null,
+    "estimate": 0.6161519981356971,
+    "interval": [
+      0.527464129309486,
+      0.6629090219629845
+    ],
+    "margin": null,
+    "alpha": 0.025,
+    "family": "F4_cross_market",
+    "power_or_mde": 0.21581167728245026,
+    "status": "FAILED",
+    "run": "results/v07/m17/bitmex-xbtusd-2020-11-01",
+    "limitations": "",
+    "members": []
+  },
+  {
+    "hypothesis": "H6",
+    "question": "Is the G0-post posterior multimodal (materially distinct high-posterior regions)?",
+    "dataset": "development",
+    "model": "G0_post",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": null,
+    "family": "D1_posterior_shape",
+    "power_or_mde": null,
+    "status": "ESTABLISHED",
+    "run": "results/v07/m6/posterior-2",
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage); descriptive",
+    "members": [
+      {
+        "multimodal_runs": [
+          true,
+          true,
+          true
+        ]
+      }
+    ]
+  },
+  {
+    "hypothesis": "H7",
+    "question": "Is model uncertainty material to execution cost?",
+    "dataset": "simulation (development-calibrated worlds)",
+    "model": "plausible world set",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": 0.5,
+    "alpha": 0.00625,
+    "family": "F7_model_uncertainty",
+    "power_or_mde": null,
+    "status": "ESTABLISHED",
+    "run": "results/v07/m15/execution-2",
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "member": "ac",
+        "between_world_sd_bps": 0.7757128465544056,
+        "holm_rejected": false,
+        "holm_threshold": 0.0071428571428571435,
+        "material": true,
+        "p_value": 0.016,
+        "ratio": 1.4963904681888156,
+        "ratio_quantiles": {
+          "0.025": 1.0614338539072352,
+          "0.5": 1.7823698651752942,
+          "0.975": 2.7497559135193894
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.5183893262119641
+      },
+      {
+        "member": "imbalance_aware",
+        "between_world_sd_bps": 0.7527346412235085,
+        "holm_rejected": false,
+        "holm_threshold": 0.0125,
+        "material": true,
+        "p_value": 0.024,
+        "ratio": 1.4263604175841254,
+        "ratio_quantiles": {
+          "0.025": 1.015834970389669,
+          "0.5": 1.6731924882733629,
+          "0.975": 2.521163992905814
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.5277310222183819
+      },
+      {
+        "member": "liquidity_sensitive",
+        "between_world_sd_bps": 0.46469781334723376,
+        "holm_rejected": false,
+        "holm_threshold": 0.01,
+        "material": false,
+        "p_value": 0.0235,
+        "ratio": 1.4353864284630746,
+        "ratio_quantiles": {
+          "0.025": 1.0087969563061314,
+          "0.5": 1.775794340213327,
+          "0.975": 2.8652042926360806
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.3237440483847992
+      },
+      {
+        "member": "pov",
+        "between_world_sd_bps": 0.9618713171616988,
+        "holm_rejected": true,
+        "holm_threshold": 0.00625,
+        "material": true,
+        "p_value": 0.0,
+        "ratio": 2.8450072102441304,
+        "ratio_quantiles": {
+          "0.025": 1.4873878681370887,
+          "0.5": 2.9387326384858854,
+          "0.975": 4.087123746820687
+        },
+        "status": "ESTABLISHED",
+        "within_world_se_bps": 0.3380909945318418
+      },
+      {
+        "member": "spread_aware",
+        "between_world_sd_bps": 0.647303616156463,
+        "holm_rejected": false,
+        "holm_threshold": 0.05,
+        "material": true,
+        "p_value": 0.0655,
+        "ratio": 1.1893893908676674,
+        "ratio_quantiles": {
+          "0.025": 0.8622386895591351,
+          "0.5": 1.5471003535754857,
+          "0.975": 2.5045983430055596
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.5442318732002904
+      },
+      {
+        "member": "twap",
+        "between_world_sd_bps": 0.7385282682280039,
+        "holm_rejected": false,
+        "holm_threshold": 0.008333333333333333,
+        "material": true,
+        "p_value": 0.023,
+        "ratio": 1.3675181795874658,
+        "ratio_quantiles": {
+          "0.025": 1.0075755026135789,
+          "0.5": 1.6186153908891248,
+          "0.975": 2.4950098149353517
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.5400500550938145
+      },
+      {
+        "member": "urgency",
+        "between_world_sd_bps": 0.434046343422565,
+        "holm_rejected": false,
+        "holm_threshold": 0.016666666666666666,
+        "material": false,
+        "p_value": 0.038,
+        "ratio": 1.215903322722904,
+        "ratio_quantiles": {
+          "0.025": 0.9501952597067397,
+          "0.5": 1.5856077295498487,
+          "0.975": 2.482288244713514
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.3569743871170267
+      },
+      {
+        "member": "vwap",
+        "between_world_sd_bps": 0.6728205614481647,
+        "holm_rejected": false,
+        "holm_threshold": 0.025,
+        "material": true,
+        "p_value": 0.064,
+        "ratio": 1.1731027306669737,
+        "ratio_quantiles": {
+          "0.025": 0.9037375271721115,
+          "0.5": 1.5077295327861604,
+          "0.975": 2.3856483394918273
+        },
+        "status": "NOT_ESTABLISHED",
+        "within_world_se_bps": 0.5735393362059852
+      }
+    ]
+  },
+  {
+    "hypothesis": "H8",
+    "question": "Is at least one pairwise policy comparison robust across model uncertainty?",
+    "dataset": "simulation (development-calibrated worlds)",
+    "model": "plausible world set",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": 1.0,
+    "alpha": 0.0017857142857142859,
+    "family": "F8_robust_pairs",
+    "power_or_mde": 0.9241531839273097,
+    "status": "NOT_ESTABLISHED",
+    "run": "results/v07/m15/execution-2",
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "member": "ac|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.11335469763297963,
+        "ci": [
+          -0.14862975968558811,
+          0.4239186334485523
+        ]
+      },
+      {
+        "member": "ac|liquidity_sensitive",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.05033417376018311,
+        "ci": [
+          -0.419599771161926,
+          0.4198184770698182
+        ]
+      },
+      {
+        "member": "ac|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.06188260666057014,
+        "ci": [
+          -0.26859665815762906,
+          0.33067631857394864
+        ]
+      },
+      {
+        "member": "ac|urgency",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.0163022887154572,
+        "ci": [
+          -0.38699390324312594,
+          0.33195301440572667
+        ]
+      },
+      {
+        "member": "imbalance_aware|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.051472090972409484,
+        "ci": [
+          -0.4977850855766737,
+          0.20074408752980596
+        ]
+      },
+      {
+        "member": "liquidity_sensitive|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.06302052387279648,
+        "ci": [
+          -0.31586795554564023,
+          0.6078232168823997
+        ]
+      },
+      {
+        "member": "liquidity_sensitive|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.01154843290038702,
+        "ci": [
+          -0.3355358512025003,
+          0.47741104252262534
+        ]
+      },
+      {
+        "member": "liquidity_sensitive|urgency",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.034031885044725936,
+        "ci": [
+          -0.1935973576286753,
+          0.1489015295665058
+        ]
+      },
+      {
+        "member": "pov|ac",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.26633966181026153,
+        "ci": [
+          -0.1643468974411933,
+          0.8900694873072627
+        ]
+      },
+      {
+        "member": "pov|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.3796943594432412,
+        "ci": [
+          -0.044210520373067365,
+          0.9794597985330252
+        ]
+      },
+      {
+        "member": "pov|liquidity_sensitive",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.3166738355704447,
+        "ci": [
+          -0.08869705877238565,
+          0.9334361621420963
+        ]
+      },
+      {
+        "member": "pov|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.3282222684708317,
+        "ci": [
+          -0.12502303125282863,
+          0.8847282470663705
+        ]
+      },
+      {
+        "member": "pov|urgency",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.2826419505257188,
+        "ci": [
+          -0.17647742249207266,
+          0.9030818062179424
+        ]
+      },
+      {
+        "member": "twap|ac",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.05682244526068332,
+        "ci": [
+          -0.39287553946716025,
+          0.21619858717394524
+        ]
+      },
+      {
+        "member": "twap|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.056532252372296345,
+        "ci": [
+          -0.29888904924455184,
+          0.39370482727709455
+        ]
+      },
+      {
+        "member": "twap|liquidity_sensitive",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.006488271500500194,
+        "ci": [
+          -0.6904182858939079,
+          0.3747913439153667
+        ]
+      },
+      {
+        "member": "twap|pov",
+        "edge": "INDETERMINATE",
+        "mean": -0.3231621070709449,
+        "ci": [
+          -1.0974572823919324,
+          0.15959733776557178
+        ]
+      },
+      {
+        "member": "twap|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.0050601613998868256,
+        "ci": [
+          -0.47155368086339083,
+          0.3272340653336539
+        ]
+      },
+      {
+        "member": "twap|urgency",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.0405201565452261,
+        "ci": [
+          -0.5293118917570968,
+          0.2913534804742929
+        ]
+      },
+      {
+        "member": "twap|vwap",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.09317653603479141,
+        "ci": [
+          -0.41682975419999024,
+          0.14217302417959615
+        ]
+      },
+      {
+        "member": "urgency|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.09705240891752244,
+        "ci": [
+          -0.19816854328838898,
+          0.616293322765293
+        ]
+      },
+      {
+        "member": "urgency|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.04558031794511293,
+        "ci": [
+          -0.29540699866013514,
+          0.43229582300316816
+        ]
+      },
+      {
+        "member": "vwap|ac",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.03635409077410812,
+        "ci": [
+          -0.25965253341203876,
+          0.3308295992304817
+        ]
+      },
+      {
+        "member": "vwap|imbalance_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.1497087884070877,
+        "ci": [
+          -0.11463982223093973,
+          0.5372391813559356
+        ]
+      },
+      {
+        "member": "vwap|liquidity_sensitive",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.08668826453429126,
+        "ci": [
+          -0.387969632821749,
+          0.4940059291867576
+        ]
+      },
+      {
+        "member": "vwap|pov",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": -0.2299855710361535,
+        "ci": [
+          -0.9168181882747825,
+          0.2877765348251636
+        ]
+      },
+      {
+        "member": "vwap|spread_aware",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.09823669743467825,
+        "ci": [
+          -0.23272460546857623,
+          0.39653266896162415
+        ]
+      },
+      {
+        "member": "vwap|urgency",
+        "edge": "EQUIVALENT_WITHIN_MARGIN",
+        "mean": 0.05265637948956531,
+        "ci": [
+          -0.299169704101737,
+          0.38405451291185433
+        ]
+      }
+    ]
+  },
+  {
+    "hypothesis": "H9",
+    "question": "Does at least one ranking that looks stable in a single world become MODEL_DEPENDENT or INCONCLUSIVE under model uncertainty?",
+    "dataset": "simulation (development-calibrated worlds)",
+    "model": "plausible world set",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.05,
+    "family": "D2_ranking_topology",
+    "power_or_mde": null,
+    "status": "INCONCLUSIVE",
+    "run": "results/v07/m15/execution-2",
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": []
+  },
+  {
+    "hypothesis": "H10",
+    "question": "Does execution-aware calibration improve execution-sensitive realism?",
+    "dataset": [
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "model": "EA vs G0_point",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.025,
+    "family": "F10_execution_realism",
+    "power_or_mde": 0.4624535941766791,
+    "status": "NOT_ESTABLISHED",
+    "run": [
+      "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+    ],
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "dataset": "deribit-eth-perp-2020-11-01",
+        "alpha": 0.025,
+        "ci": [
+          -0.0015022187874329338,
+          0.3112473925159098
+        ],
+        "estimate": 0.189116971887076,
+        "status": "NOT_ESTABLISHED"
+      },
+      {
+        "dataset": "deribit-eth-perp-2020-12-01",
+        "alpha": 0.025,
+        "ci": [
+          -0.06755129871268337,
+          0.23631399210184886
+        ],
+        "estimate": 0.08816393594697436,
+        "status": "NOT_ESTABLISHED"
+      }
+    ]
+  },
+  {
+    "hypothesis": "H11",
+    "question": "Is the H10 improvement not metric overfitting (generic realism not materially worse)?",
+    "dataset": [
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "model": "EA vs G0_point",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": "delta = 0.10 x G0 selection-day objective (computed and sealed before holdout access)",
+    "alpha": 0.025,
+    "family": "F11_noninferiority",
+    "power_or_mde": 0.19611096526790778,
+    "status": "FAILED",
+    "run": [
+      "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+    ],
+    "limitations": "depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "dataset": "deribit-eth-perp-2020-11-01",
+        "alpha": 0.025,
+        "delta": 0.24609825020521164,
+        "estimate": 0.4361606223553105,
+        "one_sided_upper": 0.486231834926531,
+        "status": "FAILED"
+      },
+      {
+        "dataset": "deribit-eth-perp-2020-12-01",
+        "alpha": 0.025,
+        "delta": 0.24609825020521164,
+        "estimate": 0.3952377517010799,
+        "one_sided_upper": 0.4531622403390587,
+        "status": "FAILED"
+      }
+    ]
+  },
+  {
+    "hypothesis": "H12",
+    "question": "Does posterior (domain-randomized) training improve historical transfer of learned policies relative to single-world training?",
+    "dataset": "deribit-eth-perp-2021-01-01",
+    "model": "learned/classical policies",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.0125,
+    "family": "F12_transfer",
+    "power_or_mde": 2.584868737331008,
+    "status": "NOT_ESTABLISHED",
+    "run": "results/v07/m16/transfer-3",
+    "limitations": "bounded historical replay (no impact, no exact fills); depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": [
+      {
+        "member": "dqn@conservative",
+        "alpha": 0.0125,
+        "ci": [
+          -2.5105434061913408,
+          1.4665139925818647
+        ],
+        "difference": -0.006433516878026513,
+        "episodes": 144,
+        "gap_posterior_bps": 0.45710391488584623,
+        "gap_single_bps": 0.46353743176387274,
+        "status": "NOT_ESTABLISHED",
+        "training_seeds": 4
+      },
+      {
+        "member": "dqn@optimistic",
+        "alpha": 0.0125,
+        "ci": [
+          -2.6724481989701587,
+          1.5397506787787143
+        ],
+        "difference": 0.030462368870832535,
+        "episodes": 144,
+        "gap_posterior_bps": 0.538121622571111,
+        "gap_single_bps": 0.5076592537002784,
+        "status": "NOT_ESTABLISHED",
+        "training_seeds": 4
+      },
+      {
+        "member": "ppo@conservative",
+        "alpha": 0.0125,
+        "ci": [
+          -2.4893377628833653,
+          1.6019443437285221
+        ],
+        "difference": 0.027096645669263175,
+        "episodes": 144,
+        "gap_posterior_bps": 0.027776571660690585,
+        "gap_single_bps": 0.0006799259914274103,
+        "status": "NOT_ESTABLISHED",
+        "training_seeds": 4
+      },
+      {
+        "member": "ppo@optimistic",
+        "alpha": 0.0125,
+        "ci": [
+          -2.7560393823425424,
+          1.5844826981447144
+        ],
+        "difference": -0.09658340877885685,
+        "episodes": 144,
+        "gap_posterior_bps": 0.0006598101067356588,
+        "gap_single_bps": 0.09724321888559251,
+        "status": "NOT_ESTABLISHED",
+        "training_seeds": 4
+      }
+    ]
+  },
+  {
+    "hypothesis": "H13",
+    "question": "Do the robust simulator conclusions (H8) survive historical replay under both fill bounds?",
+    "dataset": "deribit-eth-perp-2021-01-01",
+    "model": "learned/classical policies",
+    "n": null,
+    "estimate": null,
+    "interval": null,
+    "margin": null,
+    "alpha": 0.05,
+    "family": "D3_historical_survival",
+    "power_or_mde": null,
+    "status": "INCONCLUSIVE",
+    "run": "results/v07/m16/transfer-3",
+    "limitations": "bounded historical replay (no impact, no exact fills); depends on the G0 SMC-ABC posterior, whose synthetic recovery is ASSUMPTION_DEPENDENT (2 of 3 recovery cases below the registered 80% coverage)",
+    "members": []
+  }
+]

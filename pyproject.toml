@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cleolob"
-version = "0.6.0"
+version = "0.7.0.dev0"
 description = "Reproducible limit-order-book execution research laboratory"
 readme = "README.md"
 license-files = ["LICENSE"]
@@ -18,7 +18,7 @@ dependencies = [
 rl = ["stable-baselines3>=2.3", "tensorboard>=2.16"]
 plots = ["plotly>=5.20"]
 web = ["fastapi>=0.110", "uvicorn>=0.29", "plotly>=5.20", "streamlit>=1.35"]
-dev = ["pytest>=8.0", "ruff>=0.9", "build>=1.2", "wheel>=0.44"]
+dev = ["pytest>=8.0", "ruff>=0.9", "build>=1.2", "wheel>=0.44", "hypothesis>=6.100"]
 
 [project.scripts]
 cleo = "lob.cli:main"

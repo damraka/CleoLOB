@@ -1,0 +1,671 @@
+{
+  "schema": "cleolob-v07-capsule-1",
+  "included": [
+    "README.md",
+    "claim-graph.json",
+    "explorer.html",
+    "figures/figures-manifest.json",
+    "figures/h1.csv",
+    "figures/h1.svg",
+    "figures/h10.csv",
+    "figures/h10.svg",
+    "figures/h12.csv",
+    "figures/h12.svg",
+    "figures/h2.csv",
+    "figures/h2.svg",
+    "figures/h3.csv",
+    "figures/h3.svg",
+    "figures/h4.csv",
+    "figures/h4.svg",
+    "figures/h5.csv",
+    "figures/h5.svg",
+    "figures/h8.csv",
+    "figures/h8.svg",
+    "hypotheses.json",
+    "negative-results.json",
+    "public-subset-expected.json",
+    "registration/benchmark-tasks.json",
+    "registration/claim-registry.json",
+    "registration/compute-budget.json",
+    "registration/consumption-ledger.jsonl",
+    "registration/dataset-registry.json",
+    "registration/holdout-design.json",
+    "registration/hypotheses.json",
+    "registration/power-design.json",
+    "registration/protocol.json",
+    "registration/result-taxonomy.json",
+    "registration/scenario-taxonomy.json",
+    "registration/statistical-families.json",
+    "registration/study-template.json",
+    "registration/transfer-design.json",
+    "registry.json",
+    "runs/m10/bank/binding.json",
+    "runs/m10/bank/config.json",
+    "runs/m10/bank/provenance.json",
+    "runs/m10/bank/result.json",
+    "runs/m11/drift/binding.json",
+    "runs/m11/drift/config.json",
+    "runs/m11/drift/provenance.json",
+    "runs/m11/drift/result.json",
+    "runs/m12/matrix/binding.json",
+    "runs/m12/matrix/config.json",
+    "runs/m12/matrix/provenance.json",
+    "runs/m12/matrix/result.json",
+    "runs/m13/ecology/binding.json",
+    "runs/m13/ecology/config.json",
+    "runs/m13/ecology/provenance.json",
+    "runs/m13/ecology/result.json",
+    "runs/m13/impact/binding.json",
+    "runs/m13/impact/config.json",
+    "runs/m13/impact/provenance.json",
+    "runs/m13/impact/result.json",
+    "runs/m14/policies/binding.json",
+    "runs/m14/policies/config.json",
+    "runs/m14/policies/provenance.json",
+    "runs/m14/policies/result.json",
+    "runs/m15/execution-2/binding.json",
+    "runs/m15/execution-2/config.json",
+    "runs/m15/execution-2/provenance.json",
+    "runs/m15/execution-2/result.json",
+    "runs/m15/stress/binding.json",
+    "runs/m15/stress/config.json",
+    "runs/m15/stress/provenance.json",
+    "runs/m15/stress/result.json",
+    "runs/m16/predictions/binding.json",
+    "runs/m16/predictions/config.json",
+    "runs/m16/predictions/provenance.json",
+    "runs/m16/predictions/result.json",
+    "runs/m16/transfer-3/binding.json",
+    "runs/m16/transfer-3/config.json",
+    "runs/m16/transfer-3/provenance.json",
+    "runs/m16/transfer-3/result.json",
+    "runs/m17/bitmex-xbtusd-2020-11-01/binding.json",
+    "runs/m17/bitmex-xbtusd-2020-11-01/config.json",
+    "runs/m17/bitmex-xbtusd-2020-11-01/provenance.json",
+    "runs/m17/bitmex-xbtusd-2020-11-01/result.json",
+    "runs/m17/deribit-btc-perp-2020-11-01/binding.json",
+    "runs/m17/deribit-btc-perp-2020-11-01/config.json",
+    "runs/m17/deribit-btc-perp-2020-11-01/provenance.json",
+    "runs/m17/deribit-btc-perp-2020-11-01/result.json",
+    "runs/m17/deribit-eth-perp-2020-11-01/binding.json",
+    "runs/m17/deribit-eth-perp-2020-11-01/config.json",
+    "runs/m17/deribit-eth-perp-2020-11-01/provenance.json",
+    "runs/m17/deribit-eth-perp-2020-11-01/result.json",
+    "runs/m17/deribit-eth-perp-2020-12-01-2/binding.json",
+    "runs/m17/deribit-eth-perp-2020-12-01-2/config.json",
+    "runs/m17/deribit-eth-perp-2020-12-01-2/provenance.json",
+    "runs/m17/deribit-eth-perp-2020-12-01-2/result.json",
+    "runs/m22/final-2/binding.json",
+    "runs/m22/final-2/config.json",
+    "runs/m22/final-2/provenance.json",
+    "runs/m22/final-2/result.json",
+    "runs/m22/final/binding.json",
+    "runs/m22/final/config.json",
+    "runs/m22/final/provenance.json",
+    "runs/m22/final/result.json",
+    "runs/m3/queue/binding.json",
+    "runs/m3/queue/config.json",
+    "runs/m3/queue/provenance.json",
+    "runs/m3/queue/result.json",
+    "runs/m5/fit/binding.json",
+    "runs/m5/fit/config.json",
+    "runs/m5/fit/provenance.json",
+    "runs/m5/fit/result.json",
+    "runs/m6/posterior-2/binding.json",
+    "runs/m6/posterior-2/config.json",
+    "runs/m6/posterior-2/provenance.json",
+    "runs/m6/posterior-2/result.json",
+    "runs/m6/recovery-2/binding.json",
+    "runs/m6/recovery-2/config.json",
+    "runs/m6/recovery-2/provenance.json",
+    "runs/m6/recovery-2/result.json",
+    "runs/m6/select/binding.json",
+    "runs/m6/select/config.json",
+    "runs/m6/select/provenance.json",
+    "runs/m6/select/result.json",
+    "runs/m7/execution-aware/binding.json",
+    "runs/m7/execution-aware/config.json",
+    "runs/m7/execution-aware/provenance.json",
+    "runs/m7/execution-aware/result.json",
+    "runs/m7/surrogate/binding.json",
+    "runs/m7/surrogate/config.json",
+    "runs/m7/surrogate/provenance.json",
+    "runs/m7/surrogate/result.json",
+    "runs/m8/identifiability-2/binding.json",
+    "runs/m8/identifiability-2/config.json",
+    "runs/m8/identifiability-2/provenance.json",
+    "runs/m8/identifiability-2/result.json",
+    "runs/m8/identifiability-3/binding.json",
+    "runs/m8/identifiability-3/config.json",
+    "runs/m8/identifiability-3/provenance.json",
+    "runs/m8/identifiability-3/result.json",
+    "tables.md",
+    "v07-final-report.md",
+    "v07-requirement-coverage.md"
+  ],
+  "excluded": [
+    {
+      "path": "results/v07/m10/bank/sketches.pkl",
+      "sha256": "c3b06f68db05f2e57f59150138ad6753be6daa1810f9ecf92ba7225f7f4f7a41",
+      "bytes": 13469800,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m10/bank/windows-multiscale.npz",
+      "sha256": "e18f519f1250926e59c551b499164cd4d731fe0993000c448d1247e838b5c9ec",
+      "bytes": 11738921,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m10/bank/windows.npz",
+      "sha256": "28ca5ecef0c7d516d022854acea25e725c75969911ea63b3d0250408a515e0f4",
+      "bytes": 2413829,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76001.attempt.json",
+      "sha256": "b2111f8cb9865d493981fc0fe18b2701c533b06e0b14ddefb85c73bb0bd5cb52",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76001.json",
+      "sha256": "51bc8f28684361628b3a989fb769af7af69cc09bfa1e568704610ffd76bf5a9e",
+      "bytes": 363,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76001.zip",
+      "sha256": "070cf8cfcb275ca43aaee9813c0070981c9cab0e7517241b637db7fe36837921",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76002.attempt.json",
+      "sha256": "2cf1b745ada1c32e91198efa3d8d2f6393297e9d1524c24310bf4a4eb5792317",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76002.json",
+      "sha256": "3a28d5ec19cc2db91a8687c7b2b3b4669f12f55e3e84d83d49d058c0bb8be94a",
+      "bytes": 363,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76002.zip",
+      "sha256": "82a90989d37f8e9eb66ccc8d9a0696f0cd92147cc506a8bb8f77da867323e746",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76003.attempt.json",
+      "sha256": "96f44ead902a07675029298379ebbb39fd0bd881ae263debba99ea939e288e66",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76003.json",
+      "sha256": "635b000af1fefa80c18db84b5c2f2e16aa52584f8555cd085a8b4da02fe034d1",
+      "bytes": 364,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76003.zip",
+      "sha256": "fa84b45725f576afd049637000f0362c350b60bc48a4855fad924f4d83290257",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76004.attempt.json",
+      "sha256": "7e941e14bf126664d8252607870000ab3246805b43b10451ba22cfb0734937f0",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76004.json",
+      "sha256": "8631c25576fe623d2658dc925441807cca37d78fcc2271f63d82baa5142cb985",
+      "bytes": 365,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-ensemble-76004.zip",
+      "sha256": "1d436fc035e4664ab797dc0de9d3918a338b4d8c06b24152b4ced3b0a50f2875",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76001.attempt.json",
+      "sha256": "50c71f7fd8f093598aaecfb0b0c73c85a0d7683a518317253cbfa6cd66495764",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76001.json",
+      "sha256": "0886bf88109bc2443b5d13715bb9b9b64c3f162be1901c50d4be8310d93f0542",
+      "bytes": 317,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76001.zip",
+      "sha256": "5235d901ba8ea80a5893c85127a1852f7ff2e1e8371d091e2f425c0265f2f37d",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76002.attempt.json",
+      "sha256": "704f6d74d00d5e7418a95e6ce80bc1ba000d53bbe795a7fce0acc10ddf82672d",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76002.json",
+      "sha256": "498c2be914159bae6dad88fd207d1f9e1caa588f8800acd217fc13f60497c9cc",
+      "bytes": 317,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76002.zip",
+      "sha256": "3e273c1754bad15dd0ca0acef856d355c8a2b615c0169733bfe212499cc4ed78",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76003.attempt.json",
+      "sha256": "c8ef91199d794616e8acb9a791f4c820b9909ed8f2046257d4eae7e3b26c12b4",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76003.json",
+      "sha256": "d0a86e56628bed198f84da76f4c3d9fcc98457591df6890fd56145d91e427ab6",
+      "bytes": 315,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76003.zip",
+      "sha256": "3adb8380864195c2adc5a4008170edcaa3bf26fea774db0fbb605430f1b5d072",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76004.attempt.json",
+      "sha256": "8820b2d4e59c2d07ccb4ffb1d2d93a01f26debd157d8b03cd08f574f57b79f7d",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76004.json",
+      "sha256": "632eceb330ac96528a3d83692dcb365f9d2d4e77df23232bfa1cca331ba9d1d3",
+      "bytes": 316,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/dqn-single-76004.zip",
+      "sha256": "d443f4e6222cb34a60f47886232cad9748ea3e74761e6feb5a5db9de43458837",
+      "bytes": 132937,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76001.attempt.json",
+      "sha256": "2e223b28ae0171f163497671060ed5b20d5a906a8a766c807083934cda4d6ee7",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76001.json",
+      "sha256": "e340be800fe41bf174bddbb9229412cd3368a84c56203a0cecb1bb24a2e8f412",
+      "bytes": 363,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76001.zip",
+      "sha256": "cc82b86ceb0f46d29a63ae23431bd6ab1d024230a280b7b5ce45001f231fdfe6",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76002.attempt.json",
+      "sha256": "e1350506f3347ceff7984f05be925a14b1f7cfadefda3de92bfb2d3d71f8ecce",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76002.json",
+      "sha256": "4e955a84019563b3a6fa3da9e9122a0b313add73dc5b0433c56998266075c175",
+      "bytes": 363,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76002.zip",
+      "sha256": "07eb2fe3fa3bffe87794b7907597ceb60fc7202d8dc0c21c2dd37a0340b0ed2d",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76003.attempt.json",
+      "sha256": "49056bfeeec51570ccd784c390ff6f68838a09a7197ece9a860e8ab7a7a6e3a4",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76003.json",
+      "sha256": "942076b3a03acc9e8feb4b006dcf8e5fdc555cb4b172268bddd9a6bd6ff1f913",
+      "bytes": 364,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76003.zip",
+      "sha256": "0b914d16c8277716b11049efa14d1518783b64119147d7cbd428b3424f857ef3",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76004.attempt.json",
+      "sha256": "4e7fff2318c5e65294d51acf94b30e483114c8eed02c932afef9942a4fdc9d7e",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76004.json",
+      "sha256": "2e3924bc2e3cedb9490176f9a371eba550911608b98750f060dd71bb91d04bc2",
+      "bytes": 364,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-ensemble-76004.zip",
+      "sha256": "a553976813e80744e99e5c60520c49e8d046fa53c791f5ea6bef8b3384159bdc",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76001.attempt.json",
+      "sha256": "9c3497af8212fee9d3393f7d1ba73c5ce67fad02058f921a5b127a37c61500a2",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76001.json",
+      "sha256": "820934935037520a79bc0e74f80b57f379f713b3d41ce4d73d24864d1ae45fdb",
+      "bytes": 316,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76001.zip",
+      "sha256": "59320baa3ee36144ae54bcf6d15f403f67fa4fb501a04f456e44eea3237e58b4",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76002.attempt.json",
+      "sha256": "648cd9043f73ee17a25c4082665ac51b726f59bc1476db66570546a7d637a3ae",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76002.json",
+      "sha256": "33571935835a17188ae372658fd0f57bda8d1d2b5728a689a262e152aa25a574",
+      "bytes": 318,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76002.zip",
+      "sha256": "48c54bcee9e58f4a16f9df71bafeb1abf9c88c5c626b41a3a80e8434e747e3b1",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76003.attempt.json",
+      "sha256": "673b9fd4fc06f76987db8b2fcbb3d39816414b3a0a40ccaa7cbec4c3cfbd0c64",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76003.json",
+      "sha256": "e2fcaa83f830c1f6edc659596c14a14d9090db3616f28cbc74c86c9984f56634",
+      "bytes": 315,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76003.zip",
+      "sha256": "212d5ec140f7c14c8dcee70ac6a0532ef5cdec8ec89efe2541e18ac424fc536e",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76004.attempt.json",
+      "sha256": "b6dc73af6dcb3245d2a4af140bd3c127f3016a8134b25d12584cb109c7dc4c79",
+      "bytes": 63,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76004.json",
+      "sha256": "293c175771b5073c9aaa8131a945f94ab7615ce5dfd9df26ff7ef169c2c57b40",
+      "bytes": 317,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/models/ppo-single-76004.zip",
+      "sha256": "6c6e84f1298e7d9b4ccb2d4374d0ffa6417ffcfa396d49d6b2736efc9492293a",
+      "bytes": 187977,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/normalization-ensemble.json",
+      "sha256": "793ebe447e6a7267d113cf361d8b8ce1b6e6d3fc8483ba22c5be6e76d2804445",
+      "bytes": 2122,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/normalization-single.json",
+      "sha256": "918bc8dfc76f4bae4e2a6ba5e463d53ccc53582756eb7ba56985237f2ba68509",
+      "bytes": 1981,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/registration.json",
+      "sha256": "0547726b1c75ae0e1dddef8120bce684a751b766bb2122e4df6024b8b685c74d",
+      "bytes": 29292,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m14/policies/training_summary.json",
+      "sha256": "59c12c79ec762d1e6a5bd2342812a9cad5220f6e60254e22a04aff3aba7e455e",
+      "bytes": 5590,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m15/execution-2/episodes.json",
+      "sha256": "f5d2eb8c88cd7ccd60cdfc5ceb9c670ee1472c22af1fbc99f45e341f6bdc4bb7",
+      "bytes": 67150508,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m15/execution-2/worst-plausible-episodes.json",
+      "sha256": "b6fd0cd7a27424e14b46108e8972957ed23111b0d8b408ebc716defdb16f5936",
+      "bytes": 45636702,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m16/predictions/rows.jsonl",
+      "sha256": "d86207468d1fb3dda61eb8584f4716c7e6f26ceecfb805ef9e4f11a8c20fd563",
+      "bytes": 1449754,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m16/transfer-3/rows.jsonl",
+      "sha256": "d759412c2ee5f9d96a81ebbe309be3b58ec16d5d99731bb4ca673044907e13bb",
+      "bytes": 1275198,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m16/transfer-3/summary.json",
+      "sha256": "2808eadeba78daa6265ce838b5a400c177b95b2bd6e61167c7101ec41be4b866",
+      "bytes": 31,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/bitmex-xbtusd-2020-11-01/discriminator-G0_point.json",
+      "sha256": "02f5edb5ea8b700a132d28d0df186ae61e2060df61a35afaf418b4202a5bf969",
+      "bytes": 161056,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/bitmex-xbtusd-2020-11-01/discriminator-G1_state_hawkes.json",
+      "sha256": "fbaaaf2040a7766ff85e574171096585cb5670ca2076efc8855d6f12d1f46569",
+      "bytes": 160859,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/bitmex-xbtusd-2020-11-01/discriminator-G2_regime_switching.json",
+      "sha256": "04e7b76f4bddde5eed155572d4138b30e478c847133440dcd9afafea56965995",
+      "bytes": 161112,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/bitmex-xbtusd-2020-11-01/discriminator-G3_conditional_ar.json",
+      "sha256": "e36516bdf65146cb6fe38dc03ba62d7e476a9b8b26f65df752ea11e6930c3580",
+      "bytes": 161049,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/bitmex-xbtusd-2020-11-01/discriminator-G4_neural_temporal.json",
+      "sha256": "998a82cf7ca2e6977631c633fe636b04e3465a2a1bfbea6613bcfa2d01d75e5e",
+      "bytes": 161136,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-btc-perp-2020-11-01/discriminator-G0_point.json",
+      "sha256": "e3fa273649d912171310851243909c36f3f4a4395489f7aeda99e943387ff5b6",
+      "bytes": 160919,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-btc-perp-2020-11-01/discriminator-G1_state_hawkes.json",
+      "sha256": "cb7660a044f2ef80520e309960230c2779a26159712e95c1c0b275593deabc9a",
+      "bytes": 160600,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-btc-perp-2020-11-01/discriminator-G2_regime_switching.json",
+      "sha256": "2ea277c02541a89e6db5329bf675a3875cf97c9fba97721aa0fb430e94bcf01d",
+      "bytes": 160884,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-btc-perp-2020-11-01/discriminator-G3_conditional_ar.json",
+      "sha256": "0b8767842c060b054b37374e1aecb1e7519ce0f47e3e057894f39053a465f5d4",
+      "bytes": 160954,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-btc-perp-2020-11-01/discriminator-G4_neural_temporal.json",
+      "sha256": "efc2fcc97c97c083f1031b63e7e5e58024b77df00536ea1cc548a00f1c224de8",
+      "bytes": 160994,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-11-01/discriminator-G0_point.json",
+      "sha256": "e3f142c4491d99e53125c98d857c90cd939389d551e9dd0ad4f36b13d3d5cc69",
+      "bytes": 161102,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-11-01/discriminator-G1_state_hawkes.json",
+      "sha256": "9f0cb340df1770550849b3c3b12ccdaaadd6cd7c51ca16382f5107859c783b85",
+      "bytes": 160779,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-11-01/discriminator-G2_regime_switching.json",
+      "sha256": "9568a8dbf027cce7f0914354768b4fc2520132d792b2e9693893bdf407de55f1",
+      "bytes": 161032,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-11-01/discriminator-G3_conditional_ar.json",
+      "sha256": "2ccc505e1af7c66a54ab379580b9f39b40bb15fb94ed0ed8492af2641450b43a",
+      "bytes": 160988,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-11-01/discriminator-G4_neural_temporal.json",
+      "sha256": "9d321ce5706bf98609cd439ecc554b76838d5d7e5eb69272734a6081c8fc03f3",
+      "bytes": 161042,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-12-01-2/discriminator-G0_point.json",
+      "sha256": "6d2cfae86fe6da88478778b76b24a8b7fa4b7d4a8b377e0c62e8dbff79737952",
+      "bytes": 160917,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-12-01-2/discriminator-G1_state_hawkes.json",
+      "sha256": "5ce478386df504bd1e2f3954b299df12c67fb5bd93add571f2766ff0ddabcde6",
+      "bytes": 160597,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-12-01-2/discriminator-G2_regime_switching.json",
+      "sha256": "c406225fbdfc365a665bafe836c4ba6217304b625039395ad4a01e1c54d76497",
+      "bytes": 160934,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-12-01-2/discriminator-G3_conditional_ar.json",
+      "sha256": "7ec56918790aaa70fc564450810475703d62570d43d319ecdd3ce1005852bb54",
+      "bytes": 160771,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m17/deribit-eth-perp-2020-12-01-2/discriminator-G4_neural_temporal.json",
+      "sha256": "00730b02ba6fd4eb1eb08686317d2cb8f9b1e47dcb874ba4d0ee543abe729d6a",
+      "bytes": 160946,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m5/fit/development-bundles.npz",
+      "sha256": "ebe89d52b5f0d54cdc18886fe01caf69f6a4cba7b17596f7df7c5ef088d5f1a1",
+      "bytes": 18740156,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m5/fit/scores.json",
+      "sha256": "08be9999f298744476eda52ecaca18c79de63c3ac3be8721160d7cede51cff34",
+      "bytes": 4279,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m5/fit/specs.pkl",
+      "sha256": "176a49d03df7f299b435d92c26f85c9720624387b2ec0a13e78a1e41dd3b68c9",
+      "bytes": 43312640,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m6/posterior-2/particles.npz",
+      "sha256": "e6e555c6abc7e887a9827eaadfcb3999b40b50739db0294b740dc560adc18f75",
+      "bytes": 62808,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m6/select/predictive-sketches-meta.json",
+      "sha256": "46ae130d0fc9de75ceb8b7781cd196a2c6d27bebd2686c1d9763abb657c7aac7",
+      "bytes": 34,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    },
+    {
+      "path": "results/v07/m6/select/predictive-sketches.pkl",
+      "sha256": "9f341b53cfffc87a4b8035b87b2414c8f65f394b2edb6d2c9515db7186f66c35",
+      "bytes": 9607721,
+      "reason": "derived from restricted provider data, model checkpoint or large output"
+    }
+  ],
+  "tiers": {
+    "TIER_1": "byte integrity: checksums of every bundle file (cleo verify-artifact / verify-v07)",
+    "TIER_2": "artifact regeneration: tables, figures, registry and claim graph regenerate from the sealed run files (cleo report-v07)",
+    "TIER_3": "public-data reproduction: the public replication subset reruns from code and synthetic fixtures only (cleo benchmark-v07 public) and must match the stored digest",
+    "TIER_4": "full reproduction: requires the Tardis.dev sample files (provider terms; not redistributed) and the self-recorded Bitstamp captures; rerun every registered study from the protocol"
+  },
+  "meaning": "TIER 1 byte integrity plus binding consistency; not independent scientific replication"
+}

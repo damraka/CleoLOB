@@ -1,0 +1,626 @@
+{
+  "schema": "cleolob-v07-result-registry-1",
+  "runs": [
+    {
+      "run": "results/v07/m10/bank",
+      "analysis": "m10-simulation-bank-registered",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 100,
+        "sha256": "76de8c82bad17b70bc4ca5430e0a162538817a34e9b984ca418d96cc90eb4195"
+      },
+      "result_sha256": "d70a02c87d4bc4023344847b72d1d4cbed287ecc1af4962ca5915f18e0ad15ac",
+      "git_commit": "991a5d48caf9fd1a751ea30aa0ddd75626a7e8bc",
+      "git_dirty": false,
+      "source_sha256": "6cf2cb97f78184f310c5681dd337e945134592afe4001b17d919219161d310de",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m11/drift",
+      "analysis": "m11-regime-drift",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-06-01": {
+          "role": "validation",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-07-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-08-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-09-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-10-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 148,
+        "sha256": "a99270eff3ed39c5bd208c44e005a972860ecc08841d3e3824eed0ca7b284199"
+      },
+      "result_sha256": "86c019fb23d0de74a52ebbd2d3fb6385a004ddc584f9e3e0a9ac29bd200edde4",
+      "git_commit": "9f0dacc05c2490e7c9fee1c9cfe4620ee47b8275",
+      "git_dirty": false,
+      "source_sha256": "19814144a75942c2a3f1c03317f07a43aea8175ae00734985f0f520157f800ff",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m12/matrix",
+      "analysis": "m12-transfer-matrix",
+      "datasets": {
+        "deribit-btc-perp-2020-07-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-btc-perp-2020-09-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-06-01": {
+          "role": "validation",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-07-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-08-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-09-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-10-01": {
+          "role": "retrospective",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 181,
+        "sha256": "711c95153dbc0d42ef45fd21e78661ff771638e9711fec6f176db035a9349487"
+      },
+      "result_sha256": "fc90dbde5088bf259f406f8432edd7c811170d507755a62c20dc5f133cd10d15",
+      "git_commit": "9f0dacc05c2490e7c9fee1c9cfe4620ee47b8275",
+      "git_dirty": false,
+      "source_sha256": "19814144a75942c2a3f1c03317f07a43aea8175ae00734985f0f520157f800ff",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m13/ecology",
+      "analysis": "m13-ecology",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 104,
+        "sha256": "1129fb43fc2a52d71bef430e31d3a08997284b989f32d0df4d922e07dc2784b8"
+      },
+      "result_sha256": "05dc35128b4c6ec98990a39075c7e09ee4bbda4e5e4d8aadac2a14be2969b566",
+      "git_commit": "991a5d48caf9fd1a751ea30aa0ddd75626a7e8bc",
+      "git_dirty": false,
+      "source_sha256": "6cf2cb97f78184f310c5681dd337e945134592afe4001b17d919219161d310de",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m13/impact",
+      "analysis": "m13-impact-tca",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 104,
+        "sha256": "1129fb43fc2a52d71bef430e31d3a08997284b989f32d0df4d922e07dc2784b8"
+      },
+      "result_sha256": "458f3572e5844ebea1176a1d7ac23a6ed0ee7f565fc335083da3c06013ba2105",
+      "git_commit": "991a5d48caf9fd1a751ea30aa0ddd75626a7e8bc",
+      "git_dirty": false,
+      "source_sha256": "6cf2cb97f78184f310c5681dd337e945134592afe4001b17d919219161d310de",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m14/policies",
+      "analysis": "m14-policy-training-registered",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 181,
+        "sha256": "711c95153dbc0d42ef45fd21e78661ff771638e9711fec6f176db035a9349487"
+      },
+      "result_sha256": "bfda9d5d7a5308f76281da4a8481758171ad79276a125fa8c0409a462d889318",
+      "git_commit": "0dcf92b17e1e3975935d45bc44165eb1a00170bd",
+      "git_dirty": false,
+      "source_sha256": "19814144a75942c2a3f1c03317f07a43aea8175ae00734985f0f520157f800ff",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m15/execution-2",
+      "analysis": "m15-execution-model-risk-registered",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 174,
+        "sha256": "2c8c5486dc590dc1e0915bb5fd80b22d256d1be22bbd3cc146be30e3c802c9bb"
+      },
+      "result_sha256": "093618f010349fe67e0be655373c726d44231ff306041dc14d20029d834d3a21",
+      "git_commit": "0dcf92b17e1e3975935d45bc44165eb1a00170bd",
+      "git_dirty": false,
+      "source_sha256": "19814144a75942c2a3f1c03317f07a43aea8175ae00734985f0f520157f800ff",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m15/stress",
+      "analysis": "m15-stress",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 104,
+        "sha256": "1129fb43fc2a52d71bef430e31d3a08997284b989f32d0df4d922e07dc2784b8"
+      },
+      "result_sha256": "3f39b647779af4e0f77a951bd29cd1fb2e570cfe5607e8f2d970c26e3be42a23",
+      "git_commit": "991a5d48caf9fd1a751ea30aa0ddd75626a7e8bc",
+      "git_dirty": false,
+      "source_sha256": "6cf2cb97f78184f310c5681dd337e945134592afe4001b17d919219161d310de",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m16/predictions",
+      "analysis": "m16-learned-predictions",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 181,
+        "sha256": "711c95153dbc0d42ef45fd21e78661ff771638e9711fec6f176db035a9349487"
+      },
+      "result_sha256": "8f64023c67dd8d2eddeb8de7703415da7334751720e574b7f4c3159bdb70d864",
+      "git_commit": "0dcf92b17e1e3975935d45bc44165eb1a00170bd",
+      "git_dirty": false,
+      "source_sha256": "19814144a75942c2a3f1c03317f07a43aea8175ae00734985f0f520157f800ff",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m16/transfer-3",
+      "analysis": "m16-transfer",
+      "datasets": {
+        "deribit-eth-perp-2021-01-01": {
+          "role": "final_transfer",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 193,
+        "sha256": "81fd6c93186979f710237f021e830fe26e8b11a9ee1ae8596a9524514a0cb8eb"
+      },
+      "result_sha256": "9f421c51ba45f8792234df174d381ecba3f726632082c2d6b0aae0505938f949",
+      "git_commit": "b79ca9dd1871346ce605006384236d0a9f7a6f30",
+      "git_dirty": false,
+      "source_sha256": "4389640535f168795dd7135c36da0f80cee405e857c48007d2c3235a04fa2da0",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m17/bitmex-xbtusd-2020-11-01",
+      "analysis": "m17-holdout-bitmex-xbtusd-2020-11-01",
+      "datasets": {
+        "bitmex-xbtusd-2020-11-01": {
+          "role": "fresh_cross_venue",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 129,
+        "sha256": "39edff4f200d79cfb94614b397fb03590bcbfca227172470b484c71fd2c5abf2"
+      },
+      "result_sha256": "ebaca935ea7ede3368298d368e61d41b4cd2765cb3fbf3c9c2f21bc1dc912091",
+      "git_commit": "45b83303643de93e6c3525f88d75edf82c4fb1ac",
+      "git_dirty": false,
+      "source_sha256": "074a20a91d20702b170e152cb5471758b0082fd1c0981ddc47f56ec3188ed0c1",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m17/deribit-btc-perp-2020-11-01",
+      "analysis": "m17-holdout-deribit-btc-perp-2020-11-01",
+      "datasets": {
+        "deribit-btc-perp-2020-11-01": {
+          "role": "fresh_cross_instrument",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 124,
+        "sha256": "373517dcce13bbf5bc2a1d636c447c905bf80a3d962474a8d2b586c97b9d58b7"
+      },
+      "result_sha256": "9c4de6d1077f1d02b58b9790c9cc99d09dc559c28c394a926108951bbca50101",
+      "git_commit": "45b83303643de93e6c3525f88d75edf82c4fb1ac",
+      "git_dirty": false,
+      "source_sha256": "074a20a91d20702b170e152cb5471758b0082fd1c0981ddc47f56ec3188ed0c1",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m17/deribit-eth-perp-2020-11-01",
+      "analysis": "m17-holdout-deribit-eth-perp-2020-11-01",
+      "datasets": {
+        "deribit-eth-perp-2020-11-01": {
+          "role": "fresh_temporal",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 106,
+        "sha256": "feb12b5a5ef5b4be08800ed3f02c5a7d86309dd0e468a7ba641e1c6bbfe707d0"
+      },
+      "result_sha256": "2ecbf62deb75a59479d61c368b727503003d6d58556f0ce1a6c7fc9744c1db7b",
+      "git_commit": "45b83303643de93e6c3525f88d75edf82c4fb1ac",
+      "git_dirty": false,
+      "source_sha256": "074a20a91d20702b170e152cb5471758b0082fd1c0981ddc47f56ec3188ed0c1",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m17/deribit-eth-perp-2020-12-01-2",
+      "analysis": "m17-holdout-deribit-eth-perp-2020-12-01",
+      "datasets": {
+        "deribit-eth-perp-2020-12-01": {
+          "role": "fresh_temporal",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 119,
+        "sha256": "3547a6f016ec46f6d2aca2b3d4f2af6155b5807a1a41cb1fd584055ea67c629d"
+      },
+      "result_sha256": "1cf5ba4708d711bf3b9c50e21a4c1b297ef998565c0878e94179ebb5338be9f5",
+      "git_commit": "45b83303643de93e6c3525f88d75edf82c4fb1ac",
+      "git_dirty": false,
+      "source_sha256": "074a20a91d20702b170e152cb5471758b0082fd1c0981ddc47f56ec3188ed0c1",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m22/final",
+      "analysis": "m22-final-analysis",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 194,
+        "sha256": "8c4f6d381ea76a7a80b233607a9391d52a25853ec5b93c4054833090966c1645"
+      },
+      "result_sha256": "6b91723eaf4ac048b5b4f4a72025034b72c135190ff295e0ef6e0c13e09b121e",
+      "git_commit": "de4e09c3d9bed7a18d43167dfe9ec7bc4c67b07f",
+      "git_dirty": false,
+      "source_sha256": "27255969077ad80dd49a0ff7109435d0bb224fa01344fbb97fe4c278175a7600",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m22/final-2",
+      "analysis": "m22-final-analysis",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 195,
+        "sha256": "8a1cb71dc4e7ac6717bfaeb6b3ee0afbbdc1a101fb2bc42c5a9b19df426dea22"
+      },
+      "result_sha256": "2cc39cf6a3004f7cd5a0048d92908f729b71cb90fe7968174547ca0351a9f10f",
+      "git_commit": "17eeba0b22831d42416d0d8482a96793374cb504",
+      "git_dirty": false,
+      "source_sha256": "0ba249f02df71c440e23443a0e87a8462290af92d4c64ad812412225d9541c68",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m3/queue",
+      "analysis": "m3-queue-uncertainty",
+      "datasets": {
+        "bitstamp-btcusd-mbo-dev": {
+          "role": "mbo_retrospective",
+          "freshness": "consumed"
+        },
+        "bitstamp-btcusd-mbo-validation": {
+          "role": "mbo_retrospective",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 57,
+        "sha256": "b552df3559c26c204dbb00a0c0c9403379836d5e7724aacc7859e91cccbf2fdd"
+      },
+      "result_sha256": "8b5986a8f6c314971540cc1e9e5ec29970ac31d92f942dc5c7559fae7c6db7f4",
+      "git_commit": "f268b521a032f4c4bc1ecbf0a0352c4305d69e32",
+      "git_dirty": true,
+      "source_sha256": "9e08d221e05f5534e13215c0ef180a2c0a2640b9c22ef9775dff32802bb16b18",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m5/fit",
+      "analysis": "m5-generator-fit",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 88,
+        "sha256": "95145cfd7d2581dbcafd9d24c3472ee06de96d9655812d229a39f4f600824f2d"
+      },
+      "result_sha256": "362e37edaeb852d18dc1fe875a30a7f990c33e698554a09e7d781ffe9abdea0d",
+      "git_commit": "ebad13dd5d41f68fa593129549999f1cb218a4b5",
+      "git_dirty": true,
+      "source_sha256": "4f4cfdffa39ae5585b21b0cf231566919797f193241ec6f5cc2404bd1cacf7fb",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m6/posterior-2",
+      "analysis": "m6-posterior-registered",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 94,
+        "sha256": "2f3d3212548c8604de132afaa676f87bd163aa39bd2fb8fe79ab5ea683f5c67e"
+      },
+      "result_sha256": "1c57b7e119e60d48a7f2d9425efd52fba841487db056ac211974038ccaf56f33",
+      "git_commit": "5ea309f42187553aefec173644d98a807e224f96",
+      "git_dirty": false,
+      "source_sha256": "e5cbd77f65689f74c9c34403dc328d7e064ca6879a1a4be5ef42714083bd3ad3",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m6/recovery-2",
+      "analysis": "m6-recovery-registered",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 90,
+        "sha256": "e6d215b0b85e0132251a7c8aa7a04c2bb2f434cd3c984db9cf5d5d0d2f5f095a"
+      },
+      "result_sha256": "af68ddf9a80d18dc9b836b47203296accc445e19896679c19e296ec28c4937a2",
+      "git_commit": "78940f2114d32063219fb5321a4659b084ec352f",
+      "git_dirty": false,
+      "source_sha256": "2c51b012d8fd2b1104de99e1ab49f934b673543478f3a77b79e13875a20f158f",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m6/select",
+      "analysis": "m6-generator-selection",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        },
+        "deribit-eth-perp-2020-05-01": {
+          "role": "selection",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 96,
+        "sha256": "daae38e5c63d5159569c0c7da7c81269da7b9331558c7d490fff46f60f8f76f6"
+      },
+      "result_sha256": "f6678e9a5a031bdda5e54849b73cf62b1cfb19e5ea2125709e6d9580bb164a45",
+      "git_commit": "5ea309f42187553aefec173644d98a807e224f96",
+      "git_dirty": false,
+      "source_sha256": "e5cbd77f65689f74c9c34403dc328d7e064ca6879a1a4be5ef42714083bd3ad3",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m7/execution-aware",
+      "analysis": "m7-execution-aware",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 97,
+        "sha256": "dedd043e1bc011e88850d0ed6c83994a8137d3b12b2e6fc2e6e5c6ace43539e5"
+      },
+      "result_sha256": "b2c844a96b80f49d09d918582922dd4d868e0457a85cdf16a8e6b2bdcea1fe38",
+      "git_commit": "5ea309f42187553aefec173644d98a807e224f96",
+      "git_dirty": false,
+      "source_sha256": "e5cbd77f65689f74c9c34403dc328d7e064ca6879a1a4be5ef42714083bd3ad3",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m7/surrogate",
+      "analysis": "m7-surrogate-active",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 104,
+        "sha256": "1129fb43fc2a52d71bef430e31d3a08997284b989f32d0df4d922e07dc2784b8"
+      },
+      "result_sha256": "3863bca3a23357736769d36d38df19bca5985bd6e2e95208d52f28e133358da7",
+      "git_commit": "991a5d48caf9fd1a751ea30aa0ddd75626a7e8bc",
+      "git_dirty": false,
+      "source_sha256": "6cf2cb97f78184f310c5681dd337e945134592afe4001b17d919219161d310de",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m8/identifiability-2",
+      "analysis": "m8-identifiability-v2",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 105,
+        "sha256": "5e3d98c90292c16b2aed9d55445b790900b00d7cbf87d725ce80fc6fd389c235"
+      },
+      "result_sha256": "a799896425268ed9b6e0e50429629f12c29a7e0a294c6b08493925b844800647",
+      "git_commit": "45b83303643de93e6c3525f88d75edf82c4fb1ac",
+      "git_dirty": false,
+      "source_sha256": "074a20a91d20702b170e152cb5471758b0082fd1c0981ddc47f56ec3188ed0c1",
+      "valid": true
+    },
+    {
+      "run": "results/v07/m8/identifiability-3",
+      "analysis": "m8-identifiability-v2",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 111,
+        "sha256": "42e6975dc16a8780090ac0002980ecaf94dae3a768a9337db40c97f640f49b24"
+      },
+      "result_sha256": "1e3b9156f8a82cb562ba4e8eb1ed410fdde83e07c2db0d4a00a05393980fc8b4",
+      "git_commit": "e4c20d03e31cf9696a7f42a65cdf889c43db8171",
+      "git_dirty": false,
+      "source_sha256": "fafcadf15a0c63d92eedc50127e6143ef79f3f0659b9f2df685f6c9072ede5aa",
+      "valid": true
+    },
+    {
+      "run": "results/v07/pilot/m6-posterior",
+      "analysis": "m6-posterior-pilot",
+      "datasets": {
+        "deribit-eth-perp-2020-04-01": {
+          "role": "development",
+          "freshness": "consumed"
+        }
+      },
+      "ledger_anchor": {
+        "index": 89,
+        "sha256": "ac2c5c110fa0fd66bf2407a4494397d2f18932ec6c84f274c30291e1476f1707"
+      },
+      "result_sha256": "0cc8026a5ef10fedca96aedba7105e35553320b363ecf6c7fd99ccd22325e4ff",
+      "git_commit": "ba748885274dcbde2202bf56a68f8079a387fe54",
+      "git_dirty": true,
+      "source_sha256": "5ae23b70e1c7aaee25d76a78bec7ec953be0163b8d603f6a6da0e23afc00b4ec",
+      "valid": true
+    },
+    {
+      "run": "results/v07/pilot/m6-recovery",
+      "analysis": "m6-recovery-pilot",
+      "datasets": {},
+      "ledger_anchor": {
+        "index": 88,
+        "sha256": "95145cfd7d2581dbcafd9d24c3472ee06de96d9655812d229a39f4f600824f2d"
+      },
+      "result_sha256": "473a8beff3a04ddd6276de638a6a2f72d142390ff35510e76d57e97a21d5b115",
+      "git_commit": "ba748885274dcbde2202bf56a68f8079a387fe54",
+      "git_dirty": true,
+      "source_sha256": "5ae23b70e1c7aaee25d76a78bec7ec953be0163b8d603f6a6da0e23afc00b4ec",
+      "valid": true
+    }
+  ],
+  "attempts": [
+    {
+      "design": "m6-recovery-registered",
+      "outcome": "FAILED",
+      "directory": "results/v07/m6/recovery",
+      "note": "third truth (seeded prior draw) violated the 500 events/s guard while simulating its synthetic target; the run aborted unsealed after 2 of 3 truths. Fix: implausible truths are rejected and redrawn (seeded, recorded); rerun in results/v07/m6/recovery-2.",
+      "ledger_index": 90
+    },
+    {
+      "design": "m6-posterior-registered",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m6/posterior",
+      "note": "process stopped by the host (system low on memory) during an SMC-ABC run; no result sealed; selection and execution-aware steps never started. Recovery-2 completed and is sealed (ASSUMPTION_DEPENDENT).",
+      "ledger_index": 92
+    },
+    {
+      "design": "m8-identifiability-v2",
+      "outcome": "FAILED",
+      "directory": "results/v07/m8/identifiability",
+      "note": "components unevaluable in single-seed noise runs produced NaN noise scales; eigendecomposition failed. Fixed (drop rows without a finite noise estimate) with a regression test; rerun in results/v07/m8/identifiability-2.",
+      "ledger_index": 100
+    },
+    {
+      "design": "m8-identifiability-v2",
+      "outcome": "INVALID",
+      "directory": "results/v07/m8/identifiability-2",
+      "note": "sealed run retained; a zero-seed-noise observable (exceed_spread_p99) hit the 1e-6 noise floor and dominated the standardized Jacobian (row norm 2.6e7 vs median 149), making rank and sloppiness meaningless. Fixed: noise floored at 10% of the median noise (regression test); rerun in identifiability-3. Descriptive, development-only analysis; no holdout involved.",
+      "ledger_index": 110
+    },
+    {
+      "design": "m17-holdout-realism",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m17/deribit-eth-perp-2020-12-01",
+      "note": "stopped by the host for low system memory after the downloaded and opened stages; no tape built, no statistic computed, no outcome inspected. Rerun under the same sealed design in results/v07/m17/deribit-eth-perp-2020-12-01-2 with one job at a time.",
+      "ledger_index": 113
+    },
+    {
+      "design": "m15-execution-model-risk-registered",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m15/execution",
+      "note": "stopped by the host for low system memory during episode simulation; nothing sealed. Rerun with identical seeds and settings, 4 workers, in results/v07/m15/execution-2; policy training and predictions had not started.",
+      "ledger_index": 114
+    },
+    {
+      "design": "m17-holdout-realism",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m17/deribit-eth-perp-2020-12-01",
+      "note": "correction to entry 113: the aborted run had also completed the parsed stage (entry 112, tape built) before the host stopped it; no statistic was computed, no evaluated stage was recorded and no outcome was inspected. The rerun uses the same sealed design.",
+      "ledger_index": 118
+    },
+    {
+      "design": "m16-transfer",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m16/transfer",
+      "note": "stopped for low system memory after the downloaded, opened and parsed stages (144 episodes), while replay workers held pickled episode slices (about 3 GB each); no replay row written, no statistic computed, no outcome inspected. Entry 185 recorded git_dirty true: the only uncommitted change in the main checkout was a README draft (no code). Rerun under the same sealed design with a lower-memory episode representation, in results/v07/m16/transfer-2.",
+      "ledger_index": 186
+    },
+    {
+      "design": "m16-transfer",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m16/transfer-2",
+      "note": "rerun with CLEOLOB_WORKERS=4 launched at commit 65b6058; stopped by the operator after the downloaded and opened stages (entries 187-188) when the instruction to use one worker arrived; no episodes parsed, no replay row, no statistic, no outcome inspected. The empty write-once directory is retained. Rerun under the same sealed design with CLEOLOB_WORKERS=1 in results/v07/m16/transfer-3.",
+      "ledger_index": 189
+    },
+    {
+      "design": "m22-final-analysis",
+      "outcome": "INVALID",
+      "directory": "results/v07/m22/final",
+      "note": "the M3 queue sensitivity is a conservative-to-optimistic width of the mean passive fill fraction, but the decision benchmark stored it as queue_sensitivity_bps. Values are unchanged; the field is renamed queue_sensitivity_fill_fraction with a regression test. The sealed run is retained; rerun in results/v07/m22/final-2. Synthesis of sealed runs only; no data access.",
+      "ledger_index": 195
+    }
+  ],
+  "ledger_head": "8a1cb71dc4e7ac6717bfaeb6b3ee0afbbdc1a101fb2bc42c5a9b19df426dea22",
+  "ledger_entries": 196,
+  "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+  "consumed": [
+    "bitmex-xbtusd-2020-11-01",
+    "bitstamp-btcusd-mbo-dev",
+    "bitstamp-btcusd-mbo-validation",
+    "deribit-btc-perp-2020-07-01",
+    "deribit-btc-perp-2020-09-01",
+    "deribit-btc-perp-2020-11-01",
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-08-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01",
+    "deribit-eth-perp-2020-12-01",
+    "deribit-eth-perp-2021-01-01",
+    "deribit:BTC-PERPETUAL:2026-07-01",
+    "deribit:BTC-PERPETUAL:2026-08-01",
+    "deribit:BTC-PERPETUAL:2026-09-01",
+    "deribit:ETH-PERPETUAL:2020-04-01",
+    "deribit:ETH-PERPETUAL:2020-05-01",
+    "deribit:ETH-PERPETUAL:2020-06-01",
+    "deribit:ETH-PERPETUAL:2026-07-01",
+    "deribit:ETH-PERPETUAL:2026-08-01",
+    "deribit:ETH-PERPETUAL:2026-09-01"
+  ],
+  "fresh_remaining": []
+}

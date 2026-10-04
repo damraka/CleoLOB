@@ -1,0 +1,231 @@
+{
+  "schema": "cleolob-v07-families-1",
+  "families": {
+    "F1_posterior": {
+      "kind": "confirmatory",
+      "size": 2,
+      "correction": "bonferroni",
+      "members": [
+        "H1"
+      ],
+      "comparisons": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.025
+    },
+    "F2_distinguishability": {
+      "kind": "confirmatory",
+      "size": 8,
+      "correction": "bonferroni",
+      "members": [
+        "H2"
+      ],
+      "comparisons": [
+        "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-12-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.00625
+    },
+    "F3_support": {
+      "kind": "confirmatory",
+      "size": 8,
+      "correction": "bonferroni",
+      "members": [
+        "H3"
+      ],
+      "comparisons": [
+        "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-12-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.00625
+    },
+    "F4_cross_market": {
+      "kind": "confirmatory",
+      "size": 2,
+      "correction": "bonferroni",
+      "members": [
+        "H4",
+        "H5"
+      ],
+      "comparisons": [
+        "deribit-btc-perp-2020-11-01",
+        "bitmex-xbtusd-2020-11-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.025
+    },
+    "F7_model_uncertainty": {
+      "kind": "confirmatory",
+      "size": 8,
+      "correction": "holm",
+      "members": [
+        "H7"
+      ],
+      "comparisons": [
+        "twap",
+        "vwap",
+        "pov",
+        "ac",
+        "liquidity_sensitive",
+        "urgency",
+        "imbalance_aware",
+        "spread_aware"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.00625,
+      "holm_thresholds": [
+        0.00625,
+        0.0071428571428571435,
+        0.008333333333333333,
+        0.01,
+        0.0125,
+        0.016666666666666666,
+        0.025,
+        0.05
+      ]
+    },
+    "F8_robust_pairs": {
+      "kind": "confirmatory",
+      "size": 28,
+      "correction": "bonferroni",
+      "members": [
+        "H8"
+      ],
+      "comparisons": [
+        "twap|vwap",
+        "twap|pov",
+        "twap|ac",
+        "twap|liquidity_sensitive",
+        "twap|urgency",
+        "twap|imbalance_aware",
+        "twap|spread_aware",
+        "vwap|pov",
+        "vwap|ac",
+        "vwap|liquidity_sensitive",
+        "vwap|urgency",
+        "vwap|imbalance_aware",
+        "vwap|spread_aware",
+        "pov|ac",
+        "pov|liquidity_sensitive",
+        "pov|urgency",
+        "pov|imbalance_aware",
+        "pov|spread_aware",
+        "ac|liquidity_sensitive",
+        "ac|urgency",
+        "ac|imbalance_aware",
+        "ac|spread_aware",
+        "liquidity_sensitive|urgency",
+        "liquidity_sensitive|imbalance_aware",
+        "liquidity_sensitive|spread_aware",
+        "urgency|imbalance_aware",
+        "urgency|spread_aware",
+        "imbalance_aware|spread_aware"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.0017857142857142859
+    },
+    "F10_execution_realism": {
+      "kind": "confirmatory",
+      "size": 2,
+      "correction": "bonferroni",
+      "members": [
+        "H10"
+      ],
+      "comparisons": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.025
+    },
+    "F11_noninferiority": {
+      "kind": "confirmatory",
+      "size": 2,
+      "correction": "bonferroni",
+      "members": [
+        "H11"
+      ],
+      "comparisons": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.025
+    },
+    "F12_transfer": {
+      "kind": "confirmatory",
+      "size": 4,
+      "correction": "bonferroni",
+      "members": [
+        "H12"
+      ],
+      "comparisons": [
+        "ppo@conservative",
+        "ppo@optimistic",
+        "dqn@conservative",
+        "dqn@optimistic"
+      ],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.0125
+    },
+    "D1_posterior_shape": {
+      "kind": "descriptive",
+      "size": 1,
+      "correction": "none",
+      "members": [
+        "H6"
+      ],
+      "comparisons": [],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.05
+    },
+    "D2_ranking_topology": {
+      "kind": "descriptive",
+      "size": 1,
+      "correction": "none",
+      "members": [
+        "H9"
+      ],
+      "comparisons": [],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.05
+    },
+    "D3_historical_survival": {
+      "kind": "descriptive",
+      "size": 1,
+      "correction": "none",
+      "members": [
+        "H13"
+      ],
+      "comparisons": [],
+      "alpha": 0.05,
+      "adjusted_alpha": 0.05
+    },
+    "X_exploratory": {
+      "kind": "exploratory",
+      "size": 1,
+      "correction": "none",
+      "members": [],
+      "comparisons": [],
+      "note": "every unregistered or post-hoc comparison; never confirmatory evidence",
+      "alpha": 0.05,
+      "adjusted_alpha": 0.05
+    }
+  }
+}

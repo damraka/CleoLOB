@@ -1,0 +1,68 @@
+{
+  "schema": "cleolob-v07-result-taxonomy-1",
+  "statuses": {
+    "ESTABLISHED": "the registered criterion is met on the registered data",
+    "NOT_ESTABLISHED": "the criterion is not met and the result is not a determinate failure; never equivalence",
+    "FAILED": "the evidence determinately contradicts the hypothesis direction",
+    "INVALID": "the analysis cannot support any status (integrity, binding, implementation or invalid-episode failure)",
+    "INCONCLUSIVE": "the analysis ran but cannot discriminate (non-convergence, empty conditioning set, abstention)",
+    "NOT_AVAILABLE": "required data or capability does not exist; nothing is substituted",
+    "EXPLORATORY": "post-hoc or unregistered; never confirmatory evidence",
+    "ASSUMPTION_DEPENDENT": "the conclusion holds only under a stated untested assumption (fill bound, queue model, recovery failure)",
+    "MODEL_DEPENDENT": "the conclusion changes sign or determinacy across plausible worlds",
+    "ROBUST_ACROSS_MODEL_UNCERTAINTY": "only from the registered H8 robustness rule"
+  },
+  "equivalence_statuses": [
+    "EQUIVALENT_WITHIN_MARGIN",
+    "NOT_ESTABLISHED",
+    "FAILED_MARGIN",
+    "NOT_EVALUABLE"
+  ],
+  "qualifiers": [
+    "RETROSPECTIVE",
+    "FRESH_TEMPORAL",
+    "FRESH_CROSS_INSTRUMENT",
+    "FRESH_CROSS_VENUE",
+    "FINAL_TRANSFER",
+    "DEVELOPMENT",
+    "SELECTION",
+    "VALIDATION",
+    "CONFIRMATORY",
+    "DESCRIPTIVE",
+    "EXPLORATORY",
+    "POST_HOC",
+    "STRESS",
+    "SYNTHETIC",
+    "VACUOUS",
+    "UNDERPOWERED",
+    "SMALL_WORLD_COUNT"
+  ],
+  "edge_types": [
+    "ROBUSTLY_BETTER",
+    "ROBUSTLY_WORSE",
+    "EQUIVALENT_WITHIN_MARGIN",
+    "INDETERMINATE",
+    "MODEL_DEPENDENT",
+    "REVERSED"
+  ],
+  "failure_modes": [
+    "SUPPORT_FAILURE",
+    "TAIL_FAILURE",
+    "DEPENDENCE_FAILURE",
+    "TEMPORAL_FAILURE",
+    "REGIME_FAILURE",
+    "QUEUE_FAILURE",
+    "IMPACT_FAILURE",
+    "CALIBRATION_FAILURE",
+    "IDENTIFIABILITY_FAILURE",
+    "TRANSFER_FAILURE",
+    "EXECUTION_INSTABILITY",
+    "MODEL_CLASS_FAILURE",
+    "DATA_CAPABILITY_LIMIT"
+  ],
+  "rules": [
+    "Exactly one primary status per result plus optional qualifiers.",
+    "NOT_AVAILABLE and INVALID require a reason.",
+    "Effect size and interval precede the status."
+  ]
+}

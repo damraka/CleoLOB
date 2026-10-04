@@ -1,0 +1,349 @@
+{
+  "schema": "cleolob-v07-claim-graph-1",
+  "claims": [
+    {
+      "claim": "C-H1",
+      "hypothesis": "H1",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "FAILED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-eth-perp-2020-11-01": "80d2ad51ac3519da62a07793024c3c57e29b6ec4380229f3b54e653cbbdaa485",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2": "b623285f75ed2a3374cd1af0ca5486b8ccb1ca8c276ab30f65861ed44265cf3c"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:82",
+        "docs/v07-realism.md:28"
+      ]
+    },
+    {
+      "claim": "C-H2",
+      "hypothesis": "H2",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "NOT_ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-eth-perp-2020-11-01": "80d2ad51ac3519da62a07793024c3c57e29b6ec4380229f3b54e653cbbdaa485",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2": "b623285f75ed2a3374cd1af0ca5486b8ccb1ca8c276ab30f65861ed44265cf3c"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:95",
+        "docs/v07-realism.md:29"
+      ]
+    },
+    {
+      "claim": "C-H3",
+      "hypothesis": "H3",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "NOT_ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-eth-perp-2020-11-01": "80d2ad51ac3519da62a07793024c3c57e29b6ec4380229f3b54e653cbbdaa485",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2": "b623285f75ed2a3374cd1af0ca5486b8ccb1ca8c276ab30f65861ed44265cf3c"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:97",
+        "docs/v07-realism.md:30"
+      ]
+    },
+    {
+      "claim": "C-H4",
+      "hypothesis": "H4",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "deribit-btc-perp-2020-11-01",
+      "runs": [
+        "results/v07/m17/deribit-btc-perp-2020-11-01"
+      ],
+      "statistic": {
+        "estimate": 0.7171934312712311,
+        "interval": [
+          0.6432485075300879,
+          0.7675725877237063
+        ],
+        "status": "FAILED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-btc-perp-2020-11-01": "6380a44deef85d451a440e87b194993e2a41de130eef81a7e81abe6b99ac0716"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:98",
+        "docs/v07-realism.md:31"
+      ]
+    },
+    {
+      "claim": "C-H5",
+      "hypothesis": "H5",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "bitmex-xbtusd-2020-11-01",
+      "runs": [
+        "results/v07/m17/bitmex-xbtusd-2020-11-01"
+      ],
+      "statistic": {
+        "estimate": 0.6161519981356971,
+        "interval": [
+          0.527464129309486,
+          0.6629090219629845
+        ],
+        "status": "FAILED"
+      },
+      "artifacts": {
+        "results/v07/m17/bitmex-xbtusd-2020-11-01": "c43df7aa224e7f774fe10023a336b2cdd9b3efd2a8bd015e956106f70c33fb78"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:99",
+        "docs/v07-realism.md:32"
+      ]
+    },
+    {
+      "claim": "C-H6",
+      "hypothesis": "H6",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "development",
+      "runs": [
+        "results/v07/m6/posterior-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m6/posterior-2": "eb0afbd54eea80201e6f2c8c2dfeb76dadea1fbb9d66e7db6fbf3f4efb2bd5b4"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-calibration.md:55",
+        "docs/v07-paper.md:80"
+      ]
+    },
+    {
+      "claim": "C-H7",
+      "hypothesis": "H7",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "simulation (development-calibrated worlds)",
+      "runs": [
+        "results/v07/m15/execution-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m15/execution-2": "5ef8fa279e2bdf2f8c5cf3a7579a1957059bc839fd08248bfb6fc5709b96c197"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-model-risk.md:52",
+        "docs/v07-paper.md:112"
+      ]
+    },
+    {
+      "claim": "C-H8",
+      "hypothesis": "H8",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "simulation (development-calibrated worlds)",
+      "runs": [
+        "results/v07/m15/execution-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "NOT_ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m15/execution-2": "5ef8fa279e2bdf2f8c5cf3a7579a1957059bc839fd08248bfb6fc5709b96c197"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-model-risk.md:63",
+        "docs/v07-paper.md:114"
+      ]
+    },
+    {
+      "claim": "C-H9",
+      "hypothesis": "H9",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "simulation (development-calibrated worlds)",
+      "runs": [
+        "results/v07/m15/execution-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "INCONCLUSIVE"
+      },
+      "artifacts": {
+        "results/v07/m15/execution-2": "5ef8fa279e2bdf2f8c5cf3a7579a1957059bc839fd08248bfb6fc5709b96c197"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-model-risk.md:82",
+        "docs/v07-paper.md:118"
+      ]
+    },
+    {
+      "claim": "C-H10",
+      "hypothesis": "H10",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "NOT_ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-eth-perp-2020-11-01": "80d2ad51ac3519da62a07793024c3c57e29b6ec4380229f3b54e653cbbdaa485",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2": "b623285f75ed2a3374cd1af0ca5486b8ccb1ca8c276ab30f65861ed44265cf3c"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:105",
+        "docs/v07-realism.md:35"
+      ]
+    },
+    {
+      "claim": "C-H11",
+      "hypothesis": "H11",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "FAILED"
+      },
+      "artifacts": {
+        "results/v07/m17/deribit-eth-perp-2020-11-01": "80d2ad51ac3519da62a07793024c3c57e29b6ec4380229f3b54e653cbbdaa485",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2": "b623285f75ed2a3374cd1af0ca5486b8ccb1ca8c276ab30f65861ed44265cf3c"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:107",
+        "docs/v07-realism.md:38"
+      ]
+    },
+    {
+      "claim": "C-H12",
+      "hypothesis": "H12",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "deribit-eth-perp-2021-01-01",
+      "runs": [
+        "results/v07/m16/transfer-3"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "NOT_ESTABLISHED"
+      },
+      "artifacts": {
+        "results/v07/m16/transfer-3": "e20d4154b9f3adb17d66680cf627feff745de463c0c95df96d9482a36bb7e35f"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:125",
+        "docs/v07-transfer.md:158"
+      ]
+    },
+    {
+      "claim": "C-H13",
+      "hypothesis": "H13",
+      "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+      "datasets": "deribit-eth-perp-2021-01-01",
+      "runs": [
+        "results/v07/m16/transfer-3"
+      ],
+      "statistic": {
+        "estimate": null,
+        "interval": null,
+        "status": "INCONCLUSIVE"
+      },
+      "artifacts": {
+        "results/v07/m16/transfer-3": "e20d4154b9f3adb17d66680cf627feff745de463c0c95df96d9482a36bb7e35f"
+      },
+      "tables": [
+        "docs/v07-final-report.md#hypotheses"
+      ],
+      "sentences": [
+        "docs/v07-paper.md:129",
+        "docs/v07-transfer.md:174"
+      ]
+    }
+  ],
+  "protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c"
+}

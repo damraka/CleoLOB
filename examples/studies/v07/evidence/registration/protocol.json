@@ -1,0 +1,437 @@
+{
+  "schema": "cleolob-v07-protocol-1",
+  "protocol_id": "cleolob-v0.7-generative-market-validation",
+  "frozen_at_utc": "2026-10-02T12:42:41+00:00",
+  "base_commit": "dacde9876d8a48cf71bc4ef2f7c28efa3b4f10c4",
+  "branch": "research/v0.7-generative-market-validation",
+  "roadmap": "docs/v0.7-roadmap.md",
+  "research_question": "When richer generative market models, posterior calibration, parameter uncertainty, model-class uncertainty, regime drift, queue uncertainty, structural misspecification and historical counterfactual uncertainty are all accounted for, which execution conclusions remain scientifically defensible across time, instruments, venues and market conditions?",
+  "statuses": [
+    "ESTABLISHED",
+    "NOT_ESTABLISHED",
+    "FAILED",
+    "INVALID",
+    "INCONCLUSIVE",
+    "NOT_AVAILABLE",
+    "EXPLORATORY",
+    "ASSUMPTION_DEPENDENT",
+    "MODEL_DEPENDENT",
+    "ROBUST_ACROSS_MODEL_UNCERTAINTY"
+  ],
+  "equivalence_statuses": [
+    "EQUIVALENT_WITHIN_MARGIN",
+    "NOT_ESTABLISHED",
+    "FAILED_MARGIN",
+    "NOT_EVALUABLE"
+  ],
+  "history": {
+    "v06_protocol_sha256": "b1a73663e8b1ddd33b135198f30f265cb08136b6d36f6231709ca56e423f6d48",
+    "v06_ledger_entries": 80,
+    "v06_ledger_head_sha256": "fc877d42f24272333e05a0051012ddf5abba68dfdd2a07d3c197e466a0ae29bb",
+    "v06_evidence_checksums_sha256": "6ebae5e12e14a78306305c17b2872cc6ebea3ff1627e9afe8cd7ae98f4c4c0a1",
+    "v05_protocol_sha256": "feeec468fff3fd417ab024711759e19a7d10da56ae064edd8a07e3827bb32de7",
+    "v05_ledger_head_sha256": "3e5d49fe9bc094b89a61e1951e3ea636f63ff52e07170fdd0a258ad110f59f71",
+    "v06_tag_commit": "a2722e8a2e1cd914412aa772b3ceaaa6d0278e65",
+    "rule": "v0.5 and v0.6 protocols, ledgers, sealed results, evidence and tags are read-only; v0.7 imports their consumption and never writes to them"
+  },
+  "datasets": [
+    {
+      "id": "deribit-eth-perp-2020-04-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-04-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "development",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.3-v0.6 development (calibration, observables, bins, scales)"
+    },
+    {
+      "id": "deribit-eth-perp-2020-05-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-05-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "selection",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.4 validation; v0.5 and v0.6 selection"
+    },
+    {
+      "id": "deribit-eth-perp-2020-06-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-06-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "validation",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.4 holdout; v0.5 internal holdout; v0.6 retrospective H1. v0.7 may use it for development decisions (posterior predictive checks, generator debugging), so every v0.7 result on it is labelled RETROSPECTIVE"
+    },
+    {
+      "id": "deribit-eth-perp-2020-07-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 external holdout; v0.6 retrospective"
+    },
+    {
+      "id": "deribit-eth-perp-2020-08-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-08-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 transfer holdout; v0.6 retrospective transfer"
+    },
+    {
+      "id": "deribit-eth-perp-2020-09-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.6 fresh external holdout (consumed)"
+    },
+    {
+      "id": "deribit-eth-perp-2020-10-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-10-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.6 transfer holdout (consumed)"
+    },
+    {
+      "id": "deribit-btc-perp-2020-07-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 cross-instrument holdout"
+    },
+    {
+      "id": "deribit-btc-perp-2020-09-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.6 cross-instrument holdout (consumed)"
+    },
+    {
+      "id": "bitstamp-btcusd-mbo-dev",
+      "provider": "Bitstamp public API (self-recorded capture)",
+      "venue": "bitstamp",
+      "instrument": "btcusd",
+      "date": "self-recorded capture (v0.5)",
+      "data_types": [
+        "live_orders",
+        "live_trades",
+        "order_book_top100",
+        "rest_order_book_group2"
+      ],
+      "capability_level": "order_level_mbo",
+      "role": "mbo_retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 MBO adapter development capture"
+    },
+    {
+      "id": "bitstamp-btcusd-mbo-validation",
+      "provider": "Bitstamp public API (self-recorded capture)",
+      "venue": "bitstamp",
+      "instrument": "btcusd",
+      "date": "self-recorded capture (v0.5)",
+      "data_types": [
+        "live_orders",
+        "live_trades",
+        "order_book_top100",
+        "rest_order_book_group2"
+      ],
+      "capability_level": "order_level_mbo",
+      "role": "mbo_retrospective",
+      "freshness_at_freeze": "consumed",
+      "prior_use": "v0.5 MBO adapter validation capture"
+    },
+    {
+      "id": "deribit-eth-perp-2020-11-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_temporal",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.5 and v0.6 ledgers, every repository file and git history at the base commit",
+      "selection_rule": "first unseen first-of-month ETH period after the last consumed one (2020-10-01); no substitution"
+    },
+    {
+      "id": "deribit-eth-perp-2020-12-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-12-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_temporal",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.5 and v0.6 ledgers, every repository file and git history at the base commit",
+      "selection_rule": "second, separated fresh temporal period; no substitution"
+    },
+    {
+      "id": "deribit-btc-perp-2020-11-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_instrument",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.5 and v0.6 ledgers, every repository file and git history at the base commit",
+      "selection_rule": "same venue and day as the first fresh temporal period, different instrument; no substitution"
+    },
+    {
+      "id": "bitmex-xbtusd-2020-11-01",
+      "provider": "Tardis.dev",
+      "venue": "bitmex",
+      "instrument": "XBTUSD",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_venue",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.5 and v0.6 ledgers, every repository file and git history at the base commit; no BitMEX data of any date was ever used",
+      "selection_rule": "same underlying, contract type (inverse perpetual) and day as deribit-btc-perp-2020-11-01, so the venue effect is separated from the instrument effect; no substitution"
+    },
+    {
+      "id": "deribit-eth-perp-2021-01-01",
+      "provider": "Tardis.dev",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2021-01-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "final_transfer",
+      "freshness_at_freeze": "fresh",
+      "prior_use": "none: absent from the v0.5 and v0.6 ledgers, every repository file and git history at the base commit",
+      "selection_rule": "reserved for historical execution transfer v3 (H12, H13); accessed only after the policy evaluation lock; no substitution"
+    }
+  ],
+  "chronology": "Audit at the base commit: no Deribit period after 2020-10-01 and no BitMEX data appear in any ledger, repository file, git history or local data directory. Fresh status is derived from the v0.7 ledger only.",
+  "holdout_rules": [
+    "Freshness is derived from the append-only ledger; consumed data or calendar periods can never become fresh.",
+    "A holdout is consumed at its first ledger-recorded access stage (downloaded), which is appended before the network request; opened, parsed and evaluated stages and the first outcome inspection are each ledgered.",
+    "Every analysis that reads a holdout is sealed (design hash in the ledger) before that holdout's first access.",
+    "Holdouts never guide model selection, tuning, generator family choice, features, observables, bins, thresholds, margins, policies, seeds or stopping.",
+    "Designs sealed after a holdout's first access are posthoc: EXPLORATORY and 'evaluate_posthoc' only.",
+    "The final transfer holdout is accessed only after the policy evaluation lock (all policies, worlds, mandates and the H8 classification sealed).",
+    "A failed download after one retry, or a file above the registered size limit, makes every dependent hypothesis NOT_AVAILABLE; no other date, instrument or venue is substituted.",
+    "Failed, invalid and aborted attempts stay in the ledger and on disk."
+  ],
+  "model_selection": {
+    "selected_generator_rule": "G* = the family among G0_post (posterior predictive), G1-G4 with the lowest v0.6 objective on the selection day (ETH 2020-05-01, 5 selection seeds x 3600 s); ties go to the simpler family (fewer free parameters). Sealed before any holdout access.",
+    "complexity_accounting": "free parameter counts and an AIC-style penalty are reported (workstream 95); the selection rule does not use the penalty",
+    "data_scope": "fitting on development only; selection on selection only; validation (2020-06-01) for posterior predictive checks and debugging, labelled RETROSPECTIVE"
+  },
+  "generator_families": {
+    "G0_point": "v0.6 selected calibration-v3 point model (lob.sim_v2.ExtendedSimulator, unchanged); the baseline",
+    "G0_post": "SMC-ABC posterior over the same 14-parameter family and transformed box (uniform prior); posterior predictive worlds are draws from the final weighted particle population",
+    "G1_state_hawkes": "event-driven multivariate marked Hawkes process (limit, cancel, market x side x level bucket) with exponential kernels and log-linear state modulation by spread, imbalance and L1 depth; simulated by Ogata thinning against the book so book validity and endogenous response hold",
+    "G2_regime_switching": "two-state hidden Markov switching between two v0.6-family parameter sets; transition rates estimated with the parameters",
+    "G3_conditional_ar": "empirical conditional event generator at 100 ms: event-type and size distributions conditioned on a discretized book-state and previous-event context (counting estimator with Dirichlet smoothing), fitted on development only",
+    "G4_neural_temporal": "small GRU (hidden 32) predicting the next 100 ms event bundle from the previous 50 steps of book state and events; trained on development only on CPU; generation by ancestral sampling applied through the same event-driven engine",
+    "diffusion": "NOT_AVAILABLE: no GPU and no development data volume adequate for a diffusion generator; recorded, not approximated"
+  },
+  "calibration": {
+    "objective": "v0.6 sealed objective, observables, development-frozen bins and development-half scales, unchanged (lob.v06.observables, lob.v06.realism)",
+    "posterior": "SMC-ABC (Del Moral, Doucet and Jasra adaptive tolerance): 256 particles, 6 generations, tolerance the 50th percentile of the previous generation's distances, Gaussian random-walk kernel with twice the weighted particle covariance in the transformed box, distance = v0.6 objective on 2 seeds x 1800 s after 60 s warmup on development; 3 independent runs (seeds below)",
+    "recovery": "synthetic recovery: posterior from data simulated at 3 known parameter vectors must cover the true vector in the 90% marginal region for at least 80% of parameters; failure makes the posterior ASSUMPTION_DEPENDENT",
+    "execution_aware": "posterior mode re-weighted by the ES objective (H10) with the generic objective as a noninferiority constraint (H11); sealed before holdout access",
+    "event_cap": "500 engine events per simulated second (v0.6 implausibility guard)"
+  },
+  "plausibility": {
+    "plausible_world_set": "16 posterior draws from G0_post (systematic resampling, seed below) plus G0_point plus the point fits of every available richer family; at most 21 worlds",
+    "worst_plausible": "adversarial search over the 90% highest-posterior-density region of G0_post (64 candidate draws, objective = the pair's cost difference), never outside it",
+    "structural_stress": "SYNTHETIC_STRESS scenarios are reported separately and never enter the plausible set"
+  },
+  "execution": {
+    "mandate": "v0.6 mandate unchanged: buy round(development median L1 depth) lots, 120 s horizon, 6 s decisions, 60 s warmup, 5 s settlement, maker 0 bps, taker 1 bps, terminal penalty 25 bps, completion urgency 0.8",
+    "agents_primary": [
+      "twap",
+      "vwap",
+      "pov",
+      "ac",
+      "liquidity_sensitive",
+      "urgency",
+      "imbalance_aware",
+      "spread_aware"
+    ],
+    "agents_exploratory": [
+      "mpc",
+      "ppo",
+      "dqn"
+    ],
+    "endpoint": "mandate_completion_adjusted_cost_bps",
+    "market_seeds_per_world": 256,
+    "learned": "PPO and DQN, 4 training seeds each, 16384 timesteps, v0.5 M7 hyperparameters; single-world (G0_point) versus posterior (one plausible world drawn per episode reset)",
+    "early_stopping": "prohibited; fixed budgets only"
+  },
+  "transfer": {
+    "replay": "lob.historical_sim.HistoricalSimulator (unchanged): bounded passive fills, no FIFO, no hypothetical impact; conservative and optimistic fill bounds; queue-ahead sensitivity reported descriptively",
+    "episodes": "144 episodes per dataset at first capture + 300 s + 600 s * k",
+    "dataset": "deribit-eth-perp-2021-01-01"
+  },
+  "statistics": {
+    "module": "lob.v07.protocol.taxonomy, lob.v06.inference",
+    "families": "configs/v07/statistical-families.json",
+    "hypotheses": "configs/v07/hypotheses.json",
+    "rules": [
+      "Effect sizes and intervals are reported before statuses.",
+      "Absence of significance is never equivalence; equivalence needs a registered margin.",
+      "An unregistered confirmatory comparison is invalid; it is reported as EXPLORATORY.",
+      "MDEs are reported for every NOT_ESTABLISHED confirmatory result."
+    ]
+  },
+  "seeds": {
+    "smc_abc_runs": [
+      70101,
+      70102,
+      70103
+    ],
+    "smc_abc_simulation_seed_base": 7100000,
+    "recovery": [
+      70201,
+      70202,
+      70203
+    ],
+    "posterior_draws": 70301,
+    "worst_plausible": 70401,
+    "generator_fit": {
+      "G1": 70501,
+      "G2": 70502,
+      "G3": 70503,
+      "G4": 70504
+    },
+    "selection_seeds": [
+      72101,
+      72102,
+      72103,
+      72104,
+      72105
+    ],
+    "holdout_seeds_base": 7300000,
+    "domain_gap": {
+      "simulation_seed_base": 7400000,
+      "classifier": 74901
+    },
+    "execution": {
+      "market_seed_start": 750000,
+      "training_seeds": [
+        76001,
+        76002,
+        76003,
+        76004
+      ]
+    },
+    "bootstrap": {
+      "realism": 79001,
+      "domain_gap": 79002,
+      "support": 79003,
+      "execution": 79004,
+      "transfer": 79005
+    },
+    "rule": "every stochastic workflow takes its seed from this table or a sealed design; no global random state"
+  },
+  "early_stopping": "Prohibited for every registered study: fixed budgets, no optional stopping, no peeking at holdout outcomes; interim analyses are not planned.",
+  "amendment_policy": "Amendments are appended to the ledger (with the new protocol hash) before the protocol file changes; an amendment may not affect a holdout already accessed; every amendment is reported.",
+  "reporting": {
+    "result_taxonomy": "configs/v07/result-taxonomy.json",
+    "claims": "configs/v07/claim-registry.json",
+    "scenarios": "configs/v07/scenario-taxonomy.json",
+    "required": "every hypothesis reports estimate, interval, adjusted alpha, n, MDE (when not established) and a status; negative, vacuous, invalid and unavailable outcomes are retained"
+  },
+  "compute_budget": "configs/v07/compute-budget.json",
+  "data_capabilities": "Deribit and BitMEX Tardis samples are aggregate L2: exact FIFO, order identity, queue position, hidden liquidity and exact passive fills are NOT_AVAILABLE. Bitstamp captures are genuine order-level but short and consumed.",
+  "referenced_configs": [
+    "configs/v07/dataset-registry.json",
+    "configs/v07/hypotheses.json",
+    "configs/v07/statistical-families.json",
+    "configs/v07/compute-budget.json",
+    "configs/v07/result-taxonomy.json",
+    "configs/v07/claim-registry.json",
+    "configs/v07/scenario-taxonomy.json"
+  ],
+  "exclusions": [
+    "No live profitability, alpha, production trading, HFT, colocated latency, causal real-market mechanism, exact FIFO, exact historical passive fill, hidden liquidity or universal cross-market claim follows from any v0.7 result.",
+    "Matching observed statistics does not prove that generator mechanisms are correct.",
+    "Synthetic stress and structural intervention results describe the simulators only."
+  ]
+}

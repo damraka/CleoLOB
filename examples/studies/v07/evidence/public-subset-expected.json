@@ -1,0 +1,52 @@
+{
+  "digest": "304ecefaf4de21aa10fd083fd0306483af5a9f89615fb6a73dc78ea33339097f",
+  "results": {
+    "calibration": {
+      "coverage": 1.0,
+      "mean_abs_error": 0.2218300772,
+      "tolerance": 0.387825291
+    },
+    "certification": {
+      "truth_table": {
+        "0000": "INVALID",
+        "0001": "INVALID",
+        "0010": "INVALID",
+        "0011": "INVALID",
+        "0100": "INVALID",
+        "0101": "INVALID",
+        "0110": "INVALID",
+        "0111": "INVALID",
+        "1000": "NOT_ESTABLISHED",
+        "1001": "NOT_ESTABLISHED",
+        "1010": "NOT_ESTABLISHED",
+        "1011": "NOT_ESTABLISHED",
+        "1100": "NOT_ESTABLISHED",
+        "1101": "NOT_ESTABLISHED",
+        "1110": "MODEL_DEPENDENT",
+        "1111": "ROBUST_ACROSS_MODEL_UNCERTAINTY"
+      }
+    },
+    "execution": {
+      "conserved": true,
+      "filled": 1851
+    },
+    "identifiability": {
+      "effective_rank": 2
+    },
+    "queue": {
+      "bound_order_holds": 500,
+      "histories": 500
+    },
+    "reconstruction": {
+      "replay_chain": "169c9d333ceeaeacc9780ccbc8f40c597449859e3887b00ed346a9931e97dad0",
+      "samples": 6000,
+      "tapes_equal": true
+    },
+    "transfer": {
+      "between_share": [
+        0.999545,
+        0.013629
+      ]
+    }
+  }
+}

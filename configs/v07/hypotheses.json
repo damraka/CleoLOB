@@ -1,0 +1,298 @@
+{
+  "schema": "cleolob-v07-hypotheses-1",
+  "hypotheses": {
+    "H1": {
+      "kind": "confirmatory",
+      "question": "Does posterior calibration (posterior predictive mixture over the v0.6 14-parameter family) reduce the v0.6 calibration objective relative to the v0.6 point-calibrated baseline on fresh temporal data?",
+      "estimator": "objective(G0-post posterior predictive: 16 posterior draws x 2 seeds x 3600 s, pooled sketches) - objective(G0 v0.6 selected point model: 32 seeds x 3600 s); objective = v0.6 sealed objective (mean family error / development-half scale)",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "sample_unit": "600 s historical blocks; simulated seeds (point) or (draw, seed) units (posterior)",
+      "uncertainty": "paired moving-block bootstrap of 600 s historical blocks (block length 1) with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F1_posterior",
+      "threshold": "Bonferroni two-sided interval upper bound < 0 on each day; the hypothesis is ESTABLISHED only if both days are ESTABLISHED",
+      "margin": null,
+      "failure_semantics": "interval lower bound > 0 on any day: FAILED; otherwise NOT_ESTABLISHED; download failure: NOT_AVAILABLE",
+      "status_rule": "per-day status plus conjunction",
+      "secondary": "90% posterior predictive interval coverage of the 85 component statistics per block (descriptive, with calibration curve)",
+      "members": [],
+      "label": "FRESH"
+    },
+    "H2": {
+      "kind": "confirmatory",
+      "question": "Does a richer generator reduce classifier distinguishability of real and simulated 60 s windows relative to the G0 point baseline on fresh temporal data?",
+      "estimator": "held-out ROC-AUC(family) - ROC-AUC(G0) of the sealed v0.6 primary logistic classifier (feature whitelist unchanged) for each richer family and fresh temporal day",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "sample_unit": "60 s windows; real windows chronological split with 10 min purge; simulated windows grouped by seed",
+      "uncertainty": "10-window block bootstrap of real windows paired across families, seed-group bootstrap of simulated windows, 2000 resamples",
+      "family": "F2_distinguishability",
+      "threshold": "Bonferroni interval upper bound < 0 (alpha 0.05 / 8)",
+      "margin": null,
+      "failure_semantics": "lower bound > 0: FAILED for that member; both AUCs with interval lower bound >= 0.99: NOT_ESTABLISHED with qualifier VACUOUS (ceiling); generator not available: NOT_AVAILABLE",
+      "status_rule": "per member; summary ESTABLISHED if any member ESTABLISHED",
+      "members": [
+        "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-12-01"
+      ],
+      "label": "FRESH"
+    },
+    "H3": {
+      "kind": "confirmatory",
+      "question": "Does a richer generator increase historical support coverage on fresh temporal data?",
+      "estimator": "fraction of real 60 s windows inside support (v0.6 5-NN rule, 99th percentile leave-one-seed-out threshold computed on the family's own simulated windows) for family minus G0",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "sample_unit": "60 s windows",
+      "uncertainty": "10-window block bootstrap of real windows, seed-group bootstrap of simulated windows, 2000 resamples",
+      "family": "F3_support",
+      "threshold": "Bonferroni interval lower bound > 0 and estimate >= 0.05",
+      "margin": 0.05,
+      "failure_semantics": "upper bound < 0: FAILED; otherwise NOT_ESTABLISHED; coverage of both below 1%: qualifier VACUOUS",
+      "status_rule": "per member",
+      "members": [
+        "G1_state_hawkes@deribit-eth-perp-2020-11-01",
+        "G1_state_hawkes@deribit-eth-perp-2020-12-01",
+        "G2_regime_switching@deribit-eth-perp-2020-11-01",
+        "G2_regime_switching@deribit-eth-perp-2020-12-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-11-01",
+        "G3_conditional_ar@deribit-eth-perp-2020-12-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-11-01",
+        "G4_neural_temporal@deribit-eth-perp-2020-12-01"
+      ],
+      "label": "FRESH"
+    },
+    "H4": {
+      "kind": "confirmatory",
+      "question": "Does the selected generator G* improve on the G0 baseline cross-instrument?",
+      "estimator": "objective(G*) - objective(G0) with the ETH development scale and tick geometry applied unchanged",
+      "datasets": [
+        "deribit-btc-perp-2020-11-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "paired moving-block bootstrap of 600 s historical blocks (block length 1) with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F4_cross_market",
+      "threshold": "Bonferroni interval upper bound < 0 (alpha 0.05 / 2)",
+      "margin": null,
+      "failure_semantics": "lower bound > 0: FAILED; otherwise NOT_ESTABLISHED; download failure: NOT_AVAILABLE",
+      "status_rule": "ESTABLISHED / NOT_ESTABLISHED / FAILED",
+      "members": [],
+      "label": "FRESH"
+    },
+    "H5": {
+      "kind": "confirmatory",
+      "question": "Does the selected generator G* improve on the G0 baseline cross-venue?",
+      "estimator": "as H4 on BitMEX XBTUSD; venue effect reported as the BitMEX minus Deribit BTC same-day objective difference (descriptive)",
+      "datasets": [
+        "bitmex-xbtusd-2020-11-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "paired moving-block bootstrap of 600 s historical blocks (block length 1) with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F4_cross_market",
+      "threshold": "as H4",
+      "margin": null,
+      "failure_semantics": "as H4; an adapter that cannot produce the canonical L2 tape without inventing fields makes H5 NOT_AVAILABLE",
+      "status_rule": "as H4",
+      "members": [],
+      "label": "FRESH"
+    },
+    "H6": {
+      "kind": "descriptive",
+      "question": "Is the G0-post posterior multimodal (materially distinct high-posterior regions)?",
+      "estimator": "number of clusters among final-generation particles separated by more than 0.25 of the transformed range in at least one parameter and each holding >= 5% posterior mass",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "weighted SMC-ABC particles",
+      "uncertainty": "cluster count across 3 independent SMC-ABC runs",
+      "family": "D1_posterior_shape",
+      "threshold": "count >= 2 in at least 2 of 3 runs",
+      "margin": null,
+      "failure_semantics": "count = 1 in at least 2 of 3 runs: NOT_ESTABLISHED; non-convergence: INCONCLUSIVE",
+      "status_rule": "descriptive",
+      "members": [],
+      "label": "DEVELOPMENT"
+    },
+    "H7": {
+      "kind": "confirmatory",
+      "question": "Is model uncertainty material to execution cost?",
+      "estimator": "for each primary agent: between-world SD of mean completion-adjusted cost across the plausible world set divided by the pooled within-world seed SE of the world means",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "market seeds within worlds; worlds",
+      "uncertainty": "two-stage bootstrap (worlds, then seeds), 2000 resamples",
+      "family": "F7_model_uncertainty",
+      "threshold": "Holm-adjusted one-sided lower bound of the ratio > 1 and between-world SD >= 0.5 bps",
+      "margin": 0.5,
+      "failure_semantics": "upper bound < 1: FAILED (model uncertainty below seed noise); otherwise NOT_ESTABLISHED",
+      "status_rule": "per agent; summary ESTABLISHED if any agent ESTABLISHED",
+      "members": [
+        "twap",
+        "vwap",
+        "pov",
+        "ac",
+        "liquidity_sensitive",
+        "urgency",
+        "imbalance_aware",
+        "spread_aware"
+      ],
+      "label": "SIMULATION"
+    },
+    "H8": {
+      "kind": "confirmatory",
+      "question": "Is at least one pairwise policy comparison robust across model uncertainty?",
+      "estimator": "pooled mean cost difference across the plausible world set for each of the 28 primary-agent pairs",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "market seeds within worlds",
+      "uncertainty": "two-stage bootstrap, 2000 resamples",
+      "family": "F8_robust_pairs",
+      "threshold": "ROBUST_ACROSS_MODEL_UNCERTAINTY if: pooled interval at alpha 0.05/28 excludes 0; |pooled mean| >= 1 bps; no world has a determinate (alpha 0.05/28 per world) difference of the opposite sign; and the worst plausible world (adversarial search restricted to the 90% posterior region) keeps the sign",
+      "margin": 1.0,
+      "failure_semantics": "all four conditions fail to hold for every pair: NOT_ESTABLISHED; a world with a determinate opposite sign: that pair is MODEL_DEPENDENT",
+      "status_rule": "per pair edge type; summary ESTABLISHED if any pair is ROBUST_ACROSS_MODEL_UNCERTAINTY",
+      "members": [
+        "twap|vwap",
+        "twap|pov",
+        "twap|ac",
+        "twap|liquidity_sensitive",
+        "twap|urgency",
+        "twap|imbalance_aware",
+        "twap|spread_aware",
+        "vwap|pov",
+        "vwap|ac",
+        "vwap|liquidity_sensitive",
+        "vwap|urgency",
+        "vwap|imbalance_aware",
+        "vwap|spread_aware",
+        "pov|ac",
+        "pov|liquidity_sensitive",
+        "pov|urgency",
+        "pov|imbalance_aware",
+        "pov|spread_aware",
+        "ac|liquidity_sensitive",
+        "ac|urgency",
+        "ac|imbalance_aware",
+        "ac|spread_aware",
+        "liquidity_sensitive|urgency",
+        "liquidity_sensitive|imbalance_aware",
+        "liquidity_sensitive|spread_aware",
+        "urgency|imbalance_aware",
+        "urgency|spread_aware",
+        "imbalance_aware|spread_aware"
+      ],
+      "label": "SIMULATION"
+    },
+    "H9": {
+      "kind": "descriptive",
+      "question": "Does at least one ranking that looks stable in a single world become MODEL_DEPENDENT or INCONCLUSIVE under model uncertainty?",
+      "estimator": "count of pairs determinate in the G0 point world (alpha 0.05/28) whose H8 edge type is MODEL_DEPENDENT, INDETERMINATE or REVERSED",
+      "datasets": [
+        "deribit-eth-perp-2020-04-01",
+        "deribit-eth-perp-2020-05-01"
+      ],
+      "sample_unit": "agent pairs",
+      "uncertainty": "inherits H8",
+      "family": "D2_ranking_topology",
+      "threshold": "count >= 1",
+      "margin": null,
+      "failure_semantics": "no single-world-determinate pair: NOT_EVALUABLE reported as INCONCLUSIVE",
+      "status_rule": "descriptive",
+      "members": [],
+      "label": "DEVELOPMENT"
+    },
+    "H10": {
+      "kind": "confirmatory",
+      "question": "Does execution-aware calibration improve execution-sensitive realism?",
+      "estimator": "execution-sensitive objective (mean error of the sealed ES families: spread, L1 depth, depletion and replenishment hazards, aggressive event size, 10 s signed event volume autocorrelation) of the execution-aware posterior mode minus G0",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "paired moving-block bootstrap of 600 s historical blocks (block length 1) with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F10_execution_realism",
+      "threshold": "Bonferroni interval upper bound < 0 on each day",
+      "margin": null,
+      "failure_semantics": "lower bound > 0 on any day: FAILED; otherwise NOT_ESTABLISHED",
+      "status_rule": "per day plus conjunction",
+      "members": [],
+      "label": "FRESH"
+    },
+    "H11": {
+      "kind": "confirmatory",
+      "question": "Is the H10 improvement not metric overfitting (generic realism not materially worse)?",
+      "estimator": "generic v0.6 objective of the execution-aware model minus G0",
+      "datasets": [
+        "deribit-eth-perp-2020-11-01",
+        "deribit-eth-perp-2020-12-01"
+      ],
+      "sample_unit": "as H1",
+      "uncertainty": "paired moving-block bootstrap of 600 s historical blocks (block length 1) with independent seed-level bootstrap of each model's simulations, 2000 resamples",
+      "family": "F11_noninferiority",
+      "threshold": "noninferiority: Bonferroni one-sided upper bound < delta on each day",
+      "margin": "delta = 0.10 x G0 selection-day objective (computed and sealed before holdout access)",
+      "failure_semantics": "lower bound > delta: FAILED (metric overfitting); otherwise NOT_ESTABLISHED",
+      "status_rule": "per day plus conjunction; evaluated only together with H10",
+      "members": [],
+      "label": "FRESH"
+    },
+    "H12": {
+      "kind": "confirmatory",
+      "question": "Does posterior (domain-randomized) training improve historical transfer of learned policies relative to single-world training?",
+      "estimator": "|simulated cost - bounded historical replay cost| of posterior-trained minus single-world-trained policies, averaged over training seeds and replay episodes",
+      "datasets": [
+        "deribit-eth-perp-2021-01-01"
+      ],
+      "sample_unit": "replay episodes (training seeds as a second stage)",
+      "uncertainty": "two-stage bootstrap (training seeds, episodes), 2000 resamples",
+      "family": "F12_transfer",
+      "threshold": "Bonferroni interval upper bound < 0",
+      "margin": null,
+      "failure_semantics": "lower bound > 0: FAILED; otherwise NOT_ESTABLISHED; replay INVALID rate > 5%: INVALID",
+      "status_rule": "per member (PPO, DQN x conservative, optimistic fill bound)",
+      "members": [
+        "ppo@conservative",
+        "ppo@optimistic",
+        "dqn@conservative",
+        "dqn@optimistic"
+      ],
+      "label": "HISTORICAL_BOUNDED"
+    },
+    "H13": {
+      "kind": "descriptive",
+      "question": "Do the robust simulator conclusions (H8) survive historical replay under both fill bounds?",
+      "estimator": "for each H8-robust pair: sign and Bonferroni-determinacy of the replay cost difference under the conservative and optimistic bounds",
+      "datasets": [
+        "deribit-eth-perp-2021-01-01"
+      ],
+      "sample_unit": "replay episodes",
+      "uncertainty": "episode bootstrap, 2000 resamples",
+      "family": "D3_historical_survival",
+      "threshold": "same sign and determinate under both bounds",
+      "margin": null,
+      "failure_semantics": "no H8-robust pair: NOT_EVALUABLE reported as INCONCLUSIVE; opposite determinate sign: FAILED",
+      "status_rule": "conditional descriptive; never upgrades H8",
+      "members": [],
+      "label": "FRESH"
+    }
+  },
+  "generic": "Every hypothesis states its question, estimator, datasets, sample unit, uncertainty method, family, threshold, margin and failure semantics before any holdout access."
+}

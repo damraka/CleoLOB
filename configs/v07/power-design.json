@@ -1,0 +1,70 @@
+{
+  "schema": "cleolob-v07-power-1",
+  "power": 0.8,
+  "families": {
+    "F1_posterior": {
+      "se": 0.07,
+      "alpha": 0.025,
+      "mde_objective": 0.21581167728245026,
+      "source": "v0.6 m13 holdout contrasts (SE 0.04-0.08 objective units); upper value used"
+    },
+    "F4_cross_market": {
+      "se": 0.07,
+      "alpha": 0.025,
+      "mde_objective": 0.21581167728245026,
+      "source": "as F1"
+    },
+    "F10_execution_realism": {
+      "se": 0.15,
+      "alpha": 0.025,
+      "mde_es_objective": 0.4624535941766791,
+      "source": "assumed 2x the generic SE (8 components instead of 9 families)"
+    },
+    "F11_noninferiority": {
+      "se": 0.07,
+      "alpha": 0.025,
+      "one_sided_resolution": 0.19611096526790778,
+      "note": "delta = 0.10 x G0 selection objective (about 0.25) exceeds this resolution"
+    },
+    "F2_distinguishability": {
+      "se": 0.02,
+      "alpha": 0.00625,
+      "mde_auc": 0.0715198004021218,
+      "caveat": "near the AUC ceiling (v0.6 AUC ~1) the attainable effect is bounded; H2 then reports VACUOUS"
+    },
+    "F3_support": {
+      "se": 0.02,
+      "alpha": 0.00625,
+      "mde_coverage": 0.0715198004021218,
+      "margin": 0.05
+    },
+    "F8_robust_pairs": {
+      "within_world_paired_sd_bps": 6.0,
+      "between_world_sd_bps": 1.0,
+      "worlds": 21,
+      "seeds": 256,
+      "se": 0.2330568089339511,
+      "alpha": 0.0017857142857142859,
+      "mde_bps": 0.9241531839273097,
+      "margin_bps": 1.0,
+      "source": "v0.6 m10 market-seed SD 5.3-8.6 bps; between-world SD from v0.6 sensitivity (1-4.8 bps, lower end assumed)",
+      "caveat": "with between-world SD of 4.8 bps the MDE rises to 4.17 bps"
+    },
+    "F7_model_uncertainty": {
+      "world_mean_se_bps": 0.46875,
+      "material_between_world_sd_bps": 0.5,
+      "alpha_first_holm_step": 0.00625,
+      "note": "R > 1 is detectable when the between-world SD exceeds about 0.72 bps (approximate: SE of R ~0.15 with 21 worlds)"
+    },
+    "F12_transfer": {
+      "se": 0.7740688358374296,
+      "alpha": 0.0125,
+      "mde_bps": 2.584868737331008,
+      "episodes": 144,
+      "training_seeds": 4,
+      "source": "v0.6 m14 transfer (ETH 2020-10-01, retrospective in v0.7) H11 intervals"
+    }
+  },
+  "rule": "MDE = (z_{1-alpha/2} + z_{power}) * SE; inputs are sealed v0.6 pilot estimates",
+  "interpretation": "Effects below the MDE are unlikely to be resolved; NOT_ESTABLISHED below the MDE is not evidence of absence."
+}
