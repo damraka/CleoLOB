@@ -73,3 +73,25 @@ def test_resolve_picks_latest_sealed_variant(root) -> None:
     out = runs.new_run(root / "results/v07/m17/deribit-eth-perp-2020-11-01-2")
     runs.finalize(out, analysis="x", dataset_ids=[], config={}, result={}, root=root)
     assert rg.resolve(root, "results/v07/m17/deribit-eth-perp-2020-11-01").endswith("-2")
+
+
+def test_term_audit_classes_and_manual_review(tmp_path) -> None:
+    root = tmp_path
+    doc = root / "docs" / "v07-x.md"
+    doc.parent.mkdir()
+    doc.write_text("# Robust control\n\nThe method improves the score.\n\nThis study does not establish:\n\n"
+                   "- live alpha or profitability\n- something else\n  with production claims\n\n"
+                   "**No** HFT claim is made.\n\nUse `cleo robust-policy-study-v07` and alpha 0.05.\n\n"
+                   "H8 is robust only under the registered rule.\n", encoding="utf-8")
+    found = {(t["line"], t["term"]): t["classification"] for t in rg.term_audit([doc], root, reviews={})}
+    assert found[(1, "robust")] == "SUPPORTED" and found[(13, "robust")] == "SUPPORTED"
+    assert found[(13, "alpha")] == "SUPPORTED" and found[(3, "improves")] == "REVIEW"
+    assert found[(7, "alpha")] == found[(7, "profit")] == found[(9, "production")] == "NEGATED"
+    assert found[(11, "hft")] == "NEGATED" and found[(15, "robust")] == "QUALIFIED"
+    text = "The method improves the score."
+    reviews = {rg.review_key("docs/v07-x.md", "improves", text): {"classification": "OVERCLAIM", "reason": "x"}}
+    review = next(t for t in rg.term_audit([doc], root, reviews=reviews) if t["term"] == "improves")
+    assert review["classification"] == "OVERCLAIM"
+    table = rg.hypothesis_table(ROOT)
+    report = rg.audit(table, {"claims": []}, [], ROOT, overclaims=[review])
+    assert not report["valid"] and "OVERCLAIM" in report["issues"][0]

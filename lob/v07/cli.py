@@ -258,8 +258,9 @@ def _claims(a):
     table = registry.hypothesis_table(a.root)
     graph = registry.claim_graph(table, docs, a.root)
     terms = registry.term_audit(docs, a.root)
-    result = registry.audit(table, graph, docs, a.root)
-    result["terms_needing_review"] = [t for t in terms if t["classification"] == "REVIEW"]
+    result = registry.audit(table, graph, docs, a.root, overclaims=terms)
+    result["terms"] = {c: sum(t["classification"] == c for t in terms) for c in (*registry.CLASSES, "REVIEW")}
+    result["terms_needing_review"] = [t for t in terms if t["classification"] in {"REVIEW", "OVERCLAIM"}]
     _print(result)
     return 0 if result["valid"] else 1
 

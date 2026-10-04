@@ -14,6 +14,7 @@ qualification.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -164,9 +165,13 @@ def hypothesis_table(root: Path = PROJECT_ROOT) -> list[dict]:
 MARKER = re.compile(r"\[C-(H\d{1,2})\]")
 RISKY = ("realistic", "validated", "robust", "generalizes", "identified", "equivalent", "stable", "superior",
          "improves", "predictive", "transfer", "causal", "accurate", "production", "hft", "profit", "alpha", "optimal")
-QUALIFIERS = ("not ", "no ", "never", "cannot", "only", "within", "under", "assum", "simulat", "registered", "bounded",
-              "not_established", "not established", "inconclusive", "failed", "model_dependent", "exploratory",
-              "relative", "descriptive", "if ", "whether", "does not", "do not", "without", "limit", "caveat", "?")
+NEGATIONS = ("not ", "no ", "never", "none", "nothing", "neither", "nor ", "cannot", "without", "withheld",
+             "failed", "not_established", "not established", "not_available", "inconclusive", "vacuous", "worse")
+QUALIFIERS = ("only", "within", "under", "assum", "simulat", "registered", "bounded", "model_dependent", "exploratory",
+              "relative", "descriptive", "if ", "whether", "limit", "caveat", "?", "h1", "h2", "h3", "h4", "h5", "h6",
+              "h7", "h8", "h9", "h10", "h11", "h12", "h13")
+REVIEW_PATH = "configs/v07/claim-review.json"
+CLASSES = ("SUPPORTED", "QUALIFIED", "NEGATED", "OVERCLAIM")
 
 
 def claim_graph(table: list[dict], docs: list[Path], root: Path = PROJECT_ROOT) -> dict:
@@ -189,17 +194,107 @@ def claim_graph(table: list[dict], docs: list[Path], root: Path = PROJECT_ROOT) 
     return {"schema": SCHEMA_GRAPH, "claims": nodes, "protocol_sha256": protocol}
 
 
-def term_audit(docs: list[Path], root: Path = PROJECT_ROOT) -> list[dict]:
+def _identifier_only(line: str, term: str) -> bool:
+    """The term appears only in code spans, links, a heading/topic label or as a significance level (not a claim)."""
+    if line.lstrip().startswith("#"):
+        return True
+    stripped = re.sub(r"`[^`]*`|\[[^\]]*\]\([^)]*\)|alpha\s*[\d(=/]|posterior[ -]predictive|<!--.*?-->", " ",
+                      line.lower())
+    return not re.search(rf"\b{term}", stripped)
+
+
+LIST_ITEM = re.compile(r"^\s*(?:[-*]|\d+\.)\s")
+
+
+def _context(lines: list[str], n: int) -> str:
+    """Lower-cased sentence context of line ``n`` (1-based).
+
+    For a list item: the item plus its list header (the nearest earlier non-item line, if it ends with ':').
+    Otherwise: the sentences of the paragraph that overlap the line.
+    """
+    i = n - 1
+    if lines[i].startswith("  ") and not LIST_ITEM.match(lines[i]):   # continuation of a list item
+        k = i
+        while k > 0 and lines[k].startswith("  ") and not LIST_ITEM.match(lines[k]):
+            k -= 1
+        if LIST_ITEM.match(lines[k]):
+            return f"{_context(lines, k + 1)} {lines[i].lower()}"
+    if LIST_ITEM.match(lines[i]):
+        j = i - 1
+        while j >= 0 and (LIST_ITEM.match(lines[j]) or not lines[j].strip() or lines[j].startswith("  ")):
+            j -= 1
+        header = lines[j] if j >= 0 and lines[j].rstrip().endswith(":") else ""
+        return f"{header} {lines[i]}".lower()
+    start = i
+    while start > 0 and lines[start - 1].strip() and not LIST_ITEM.match(lines[start - 1]):
+        start -= 1
+    end = i
+    while end + 1 < len(lines) and lines[end + 1].strip() and not LIST_ITEM.match(lines[end + 1]):
+        end += 1
+    offset = sum(len(x) + 1 for x in lines[start:i])
+    span = (offset, offset + len(lines[i]))
+    text = " ".join(lines[start:end + 1])
+    out, position = [], 0
+    for sentence in re.split(r"(?<=[.!?])\s+", text):
+        begin = text.index(sentence, position)
+        position = begin + len(sentence)
+        if begin < span[1] and position > span[0]:
+            out.append(sentence)
+    return " ".join(out).lower()
+
+
+def review_key(file: str, term: str, text: str) -> str:
+    return hashlib.sha256(f"{file}|{term}|{text}".encode()).hexdigest()[:16]
+
+
+def term_audit(docs: list[Path], root: Path = PROJECT_ROOT, *, reviews: dict | None = None) -> list[dict]:
+    """Classify every risky-term occurrence as SUPPORTED, QUALIFIED, NEGATED or OVERCLAIM.
+
+    Automatic rules: identifiers, code and topic labels -> SUPPORTED; a negation in the term's sentence (or a
+    list item's header) -> NEGATED; a qualifier or a hypothesis reference there -> QUALIFIED.
+    Anything else needs a recorded manual review (``configs/v07/claim-review.json``); without one it stays
+    REVIEW, which the audit reports as an issue.
+    """
+    reviews = reviews if reviews is not None else load_reviews(root)
     findings = []
     for doc in docs:
-        for n, line in enumerate(doc.read_text(encoding="utf-8").splitlines(), 1):
+        lines = doc.read_text(encoding="utf-8").splitlines()
+        fenced = False
+        for n, line in enumerate(lines, 1):
+            if line.lstrip().startswith("```"):
+                fenced = not fenced
+                continue
             low = line.lower()
+            context = _context(lines, n).replace("*", "")
             for term in RISKY:
-                if re.search(rf"\b{term}", low):
-                    qualified = any(q in low for q in QUALIFIERS)
-                    findings.append({"file": doc.relative_to(root).as_posix(), "line": n, "term": term,
-                                     "classification": "QUALIFIED" if qualified else "REVIEW", "text": line.strip()[:200]})
+                if not re.search(rf"\b{term}", low):
+                    continue
+                file = doc.relative_to(root).as_posix()
+                text = line.strip()[:200]
+                if fenced or _identifier_only(line, term):
+                    label, reason = "SUPPORTED", "identifier or topic label, not a claim"
+                elif any(q in context for q in NEGATIONS):
+                    label, reason = "NEGATED", "negated in its sentence or list header"
+                elif any(q in context for q in QUALIFIERS):
+                    label, reason = "QUALIFIED", "qualified or tied to a registered hypothesis"
+                elif (r := reviews.get(review_key(file, term, text))) is not None:
+                    label, reason = r["classification"], "manual review: " + r["reason"]
+                else:
+                    label, reason = "REVIEW", "needs manual review"
+                findings.append({"file": file, "line": n, "term": term, "classification": label, "reason": reason,
+                                 "text": text})
     return findings
+
+
+def load_reviews(root: Path = PROJECT_ROOT) -> dict:
+    path = root / REVIEW_PATH
+    if not path.is_file():
+        return {}
+    entries = json.loads(path.read_text(encoding="utf-8"))["reviews"]
+    for e in entries:
+        if e["classification"] not in CLASSES:
+            raise ValueError(f"invalid review classification {e['classification']}")
+    return {e["key"]: e for e in entries}
 
 
 def audit(table: list[dict], graph: dict, docs: list[Path], root: Path = PROJECT_ROOT, *,
@@ -218,7 +313,8 @@ def audit(table: list[dict], graph: dict, docs: list[Path], root: Path = PROJECT
             if digest is not None and not verify_run(root / run, root=root)["valid"]:
                 issues.append(f"{node['claim']}: evidence run {run} does not verify")
     for o in overclaims or []:
-        issues.append(f"OVERCLAIM {o['file']}:{o['line']} '{o['term']}'")
+        if o["classification"] in {"OVERCLAIM", "REVIEW"}:
+            issues.append(f"{o['classification']} {o['file']}:{o['line']} '{o['term']}'")
     return {"valid": not issues, "issues": issues, "claims": len(graph["claims"])}
 
 
