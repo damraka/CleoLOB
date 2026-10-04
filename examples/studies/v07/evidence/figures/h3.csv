@@ -1,0 +1,9 @@
+label,estimate,low,high,status
+G1_state_hawkes@deribit-eth-perp-2020-11-01,0.002779708130646282,0.0,0.04671564333835216,NOT_ESTABLISHED
+G2_regime_switching@deribit-eth-perp-2020-11-01,0.0,0.0,0.0,NOT_ESTABLISHED
+G3_conditional_ar@deribit-eth-perp-2020-11-01,0.0,0.0,0.002777777777777778,NOT_ESTABLISHED
+G4_neural_temporal@deribit-eth-perp-2020-11-01,0.015288394718554551,0.002777777777777778,0.04777840514246001,NOT_ESTABLISHED
+G1_state_hawkes@deribit-eth-perp-2020-12-01,0.0,0.0,0.0,NOT_ESTABLISHED
+G2_regime_switching@deribit-eth-perp-2020-12-01,0.0,0.0,0.0,NOT_ESTABLISHED
+G3_conditional_ar@deribit-eth-perp-2020-12-01,0.0,0.0,0.0,NOT_ESTABLISHED
+G4_neural_temporal@deribit-eth-perp-2020-12-01,0.0,0.0,0.0,NOT_ESTABLISHED

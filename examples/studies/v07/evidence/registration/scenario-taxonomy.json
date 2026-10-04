@@ -1,0 +1,16 @@
+{
+  "schema": "cleolob-v07-scenarios-1",
+  "labels": {
+    "EMPIRICAL": "historical replay of real data; bounded fills",
+    "CALIBRATED": "a point-calibrated generator fitted on development and selected on selection",
+    "POSTERIOR_SAMPLE": "a draw from a registered posterior",
+    "STRUCTURAL_INTERVENTION": "a calibrated world with one registered mechanism changed",
+    "SYNTHETIC_STRESS": "a deliberately implausible or extreme scenario; never in the plausible set",
+    "EXPLORATORY": "anything else"
+  },
+  "rules": [
+    "Every simulated world carries exactly one label in its manifest.",
+    "Only CALIBRATED and POSTERIOR_SAMPLE worlds enter the plausible world set.",
+    "SYNTHETIC_STRESS results are reported separately and never support robustness claims."
+  ]
+}

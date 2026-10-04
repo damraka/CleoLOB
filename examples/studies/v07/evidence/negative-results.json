@@ -1,0 +1,87 @@
+{
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H12",
+    "H13"
+  ],
+  "attempts": [
+    {
+      "design": "m6-recovery-registered",
+      "outcome": "FAILED",
+      "directory": "results/v07/m6/recovery",
+      "note": "third truth (seeded prior draw) violated the 500 events/s guard while simulating its synthetic target; the run aborted unsealed after 2 of 3 truths. Fix: implausible truths are rejected and redrawn (seeded, recorded); rerun in results/v07/m6/recovery-2.",
+      "ledger_index": 90
+    },
+    {
+      "design": "m6-posterior-registered",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m6/posterior",
+      "note": "process stopped by the host (system low on memory) during an SMC-ABC run; no result sealed; selection and execution-aware steps never started. Recovery-2 completed and is sealed (ASSUMPTION_DEPENDENT).",
+      "ledger_index": 92
+    },
+    {
+      "design": "m8-identifiability-v2",
+      "outcome": "FAILED",
+      "directory": "results/v07/m8/identifiability",
+      "note": "components unevaluable in single-seed noise runs produced NaN noise scales; eigendecomposition failed. Fixed (drop rows without a finite noise estimate) with a regression test; rerun in results/v07/m8/identifiability-2.",
+      "ledger_index": 100
+    },
+    {
+      "design": "m8-identifiability-v2",
+      "outcome": "INVALID",
+      "directory": "results/v07/m8/identifiability-2",
+      "note": "sealed run retained; a zero-seed-noise observable (exceed_spread_p99) hit the 1e-6 noise floor and dominated the standardized Jacobian (row norm 2.6e7 vs median 149), making rank and sloppiness meaningless. Fixed: noise floored at 10% of the median noise (regression test); rerun in identifiability-3. Descriptive, development-only analysis; no holdout involved.",
+      "ledger_index": 110
+    },
+    {
+      "design": "m17-holdout-realism",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m17/deribit-eth-perp-2020-12-01",
+      "note": "stopped by the host for low system memory after the downloaded and opened stages; no tape built, no statistic computed, no outcome inspected. Rerun under the same sealed design in results/v07/m17/deribit-eth-perp-2020-12-01-2 with one job at a time.",
+      "ledger_index": 113
+    },
+    {
+      "design": "m15-execution-model-risk-registered",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m15/execution",
+      "note": "stopped by the host for low system memory during episode simulation; nothing sealed. Rerun with identical seeds and settings, 4 workers, in results/v07/m15/execution-2; policy training and predictions had not started.",
+      "ledger_index": 114
+    },
+    {
+      "design": "m17-holdout-realism",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m17/deribit-eth-perp-2020-12-01",
+      "note": "correction to entry 113: the aborted run had also completed the parsed stage (entry 112, tape built) before the host stopped it; no statistic was computed, no evaluated stage was recorded and no outcome was inspected. The rerun uses the same sealed design.",
+      "ledger_index": 118
+    },
+    {
+      "design": "m16-transfer",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m16/transfer",
+      "note": "stopped for low system memory after the downloaded, opened and parsed stages (144 episodes), while replay workers held pickled episode slices (about 3 GB each); no replay row written, no statistic computed, no outcome inspected. Entry 185 recorded git_dirty true: the only uncommitted change in the main checkout was a README draft (no code). Rerun under the same sealed design with a lower-memory episode representation, in results/v07/m16/transfer-2.",
+      "ledger_index": 186
+    },
+    {
+      "design": "m16-transfer",
+      "outcome": "ABORTED",
+      "directory": "results/v07/m16/transfer-2",
+      "note": "rerun with CLEOLOB_WORKERS=4 launched at commit 65b6058; stopped by the operator after the downloaded and opened stages (entries 187-188) when the instruction to use one worker arrived; no episodes parsed, no replay row, no statistic, no outcome inspected. The empty write-once directory is retained. Rerun under the same sealed design with CLEOLOB_WORKERS=1 in results/v07/m16/transfer-3.",
+      "ledger_index": 189
+    },
+    {
+      "design": "m22-final-analysis",
+      "outcome": "INVALID",
+      "directory": "results/v07/m22/final",
+      "note": "the M3 queue sensitivity is a conservative-to-optimistic width of the mean passive fill fraction, but the decision benchmark stored it as queue_sensitivity_bps. Values are unchanged; the field is renamed queue_sensitivity_fill_fraction with a regression test. The sealed run is retained; rerun in results/v07/m22/final-2. Synthesis of sealed runs only; no data access.",
+      "ledger_index": 195
+    }
+  ]
+}

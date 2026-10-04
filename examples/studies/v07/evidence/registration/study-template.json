@@ -1,0 +1,56 @@
+{
+  "schema": "cleolob-v07-study-template-1",
+  "question": "<one sentence: which decision or scientific question does the study answer?>",
+  "hypotheses": [
+    {
+      "id": "<Hn>",
+      "direction": "<lower is better | higher is better>",
+      "estimator": "<statistic>",
+      "threshold": "<registered rule>",
+      "margin": null,
+      "failure_semantics": "<FAILED / NOT_ESTABLISHED rule>"
+    }
+  ],
+  "statistical_family": {
+    "name": "<family>",
+    "kind": "confirmatory",
+    "size": 1,
+    "correction": "bonferroni",
+    "alpha": 0.05
+  },
+  "power": {
+    "target_effect": null,
+    "variance_source": "<pilot / prior version>",
+    "mde": null,
+    "power": 0.8
+  },
+  "datasets": [
+    {
+      "id": "<dataset id>",
+      "role": "development"
+    }
+  ],
+  "holdouts": {
+    "sealed_design_before_access": true,
+    "ledger_stage_entries": ["downloaded", "opened", "parsed", "evaluated"]
+  },
+  "compute_budget": {
+    "simulations": null,
+    "seeds": null,
+    "training_steps": null,
+    "early_stopping": "prohibited"
+  },
+  "seeds": {
+    "source": "configs/v07/protocol.json seeds or a sealed design"
+  },
+  "configs": ["<paths>"],
+  "expected_artifacts": ["result.json", "binding.json", "provenance.json", "checksums.json"],
+  "figures": [
+    {
+      "name": "<figure>",
+      "source_table": "<csv>",
+      "uncertainty": "interval | posterior spread | seed spread"
+    }
+  ],
+  "claim_skeleton": "[C-<Hn>] <statement naming the status, scope and limitation>"
+}

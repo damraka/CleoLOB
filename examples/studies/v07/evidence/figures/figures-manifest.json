@@ -1,0 +1,96 @@
+{
+  "figures": [
+    {
+      "figure": "h1.svg",
+      "source": "h1.csv",
+      "source_sha256": "2c2409083ac2f7618ac52484a44b1cced18d1a9da6c3a8db0bc93a1a3a1801bd",
+      "rows": 2,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h2.svg",
+      "source": "h2.csv",
+      "source_sha256": "68b0016967387d17f29d684d44ff4f042acd674f414537b90517ab96b98d6be3",
+      "rows": 8,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h3.svg",
+      "source": "h3.csv",
+      "source_sha256": "8bd6f5be20b714f45bd22722431161629ed0c11ccd7e6cdf90be705b3d91f7a1",
+      "rows": 8,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h4.svg",
+      "source": "h4.csv",
+      "source_sha256": "24c0688fcd865725338315e981ced24ace27a3a709ae2657d27fa5345ae00821",
+      "rows": 1,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/deribit-btc-perp-2020-11-01"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h5.svg",
+      "source": "h5.csv",
+      "source_sha256": "fb2373191fbbd50276cd91536ea495ac7573850f4218c2330d6729508b3cb1f2",
+      "rows": 1,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/bitmex-xbtusd-2020-11-01"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h8.svg",
+      "source": "h8.csv",
+      "source_sha256": "1b8f08470c73a4dfa877272229f65caf16a6a9289b3d4c01e2dbe9656b903ad8",
+      "rows": 28,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m15/execution-2"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h10.svg",
+      "source": "h10.csv",
+      "source_sha256": "0899888235e89a957daa8dfdc2d855bbaf56cfe623f4af9c30e2cbca2a031366",
+      "rows": 2,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m17/deribit-eth-perp-2020-11-01",
+        "results/v07/m17/deribit-eth-perp-2020-12-01-2"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    },
+    {
+      "figure": "h12.svg",
+      "source": "h12.csv",
+      "source_sha256": "6f119caed60d4aa248d21c5be44bf9280f3d63469ca131d58bb101d98395a352",
+      "rows": 4,
+      "unit": "estimate",
+      "runs": [
+        "results/v07/m16/transfer-3"
+      ],
+      "script": "lob.v07.reports.figures.interval_plot"
+    }
+  ]
+}
