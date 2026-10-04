@@ -50,6 +50,26 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
+### v0.7 research branch: generative market dynamics and model risk (not released)
+
+v0.7 tests whether richer generators, posterior calibration and execution-aware calibration
+close the realism gap, and which execution conclusions survive model uncertainty. Everything was
+preregistered (`configs/v07/`) and evaluated on four fresh 2020 holdouts plus a final transfer
+holdout (ETH 2021-01-01). The branch is at development version `0.7.0.dev0`; nothing is tagged
+or published.
+
+| Question | v0.7 result |
+|---|---|
+| Posterior calibration (H1) | FAILED. SMC-ABC posterior-predictive realism was worse than the v0.6 point model on both fresh ETH days (+0.39 and +0.57). Synthetic recovery is ASSUMPTION_DEPENDENT (coverage 0.71, 0.71, 1.0 vs 0.80 registered). The posterior is multimodal (H6, descriptive) and diffuse. |
+| Richer generators (H2–H5) | Not supported. Every family is separable from history (AUC ≈ 1; H2 VACUOUS), support coverage is 0–1.5% (H3), and the selected generator G3 is worse than G0 cross-instrument (H4 FAILED) and cross-venue (H5 FAILED). |
+| Execution-aware calibration (H10, H11) | H10 NOT_ESTABLISHED; H11 FAILED (generic realism loss beyond the noninferiority margin). |
+| Model risk over 21 plausible worlds (H7–H9) | Model uncertainty is material for POV only (H7). No policy comparison is robust (H8 NOT_ESTABLISHED); 21 worlds give 21 distinct rankings; H9 INCONCLUSIVE. |
+| Historical transfer (H12, H13) | H12_ROW |
+| Identifiability | No parameter of the 14 is identified at this resolution (effective rank 8). |
+
+See the [v0.7 report](docs/v07-paper.md), the [final report](docs/v07-final-report.md) and the
+[requirement coverage](docs/v07-requirement-coverage.md).
+
 ### v0.6.0: market realism, calibration uncertainty and model risk (current release)
 
 v0.6 asks why simulator conclusions are unstable. It uses preregistered hypotheses, sealed
@@ -336,6 +356,12 @@ risk, a domain-gap study, regime conditioning and historical transfer v2. Every 
 vacuous and invalid outcome is retained in the [v0.6 report](docs/v06-paper.md) and the
 [final report](docs/v06-final-report.md). See the [v0.6 roadmap](docs/v06-roadmap.md).
 
+v0.7, **generative market dynamics, posterior calibration, robust execution and cross-market
+validation**, is complete on the research branch and not released. Its preregistered results,
+including every failed, null, vacuous, aborted and invalid outcome, are in the
+[v0.7 report](docs/v07-paper.md) and the [final report](docs/v07-final-report.md). See the
+[v0.7 roadmap](docs/v0.7-roadmap.md).
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -366,6 +392,13 @@ vacuous and invalid outcome is retained in the [v0.6 report](docs/v06-paper.md) 
   [calibration and identifiability](docs/v06-calibration.md), [model risk and execution stability](docs/v06-model-risk.md),
   [domain gap](docs/v06-domain-gap.md), [transfer](docs/v06-transfer.md), [statistics](docs/v06-statistics.md),
   [performance](docs/v06-performance.md), [reproduction](docs/v06-reproduction.md)
+- [v0.7 roadmap](docs/v0.7-roadmap.md), [research report](docs/v07-paper.md), [final report](docs/v07-final-report.md)
+  and [requirement coverage](docs/v07-requirement-coverage.md)
+- v0.7 details: [data](docs/v07-data.md), [execution and exchange](docs/v07-execution.md),
+  [generators](docs/v07-generators.md), [calibration](docs/v07-calibration.md),
+  [identifiability](docs/v07-identifiability.md), [realism](docs/v07-realism.md),
+  [model risk](docs/v07-model-risk.md), [transfer](docs/v07-transfer.md),
+  [performance](docs/v07-performance.md), [reproduction](docs/v07-reproduction.md)
 
 ## Citation
 
