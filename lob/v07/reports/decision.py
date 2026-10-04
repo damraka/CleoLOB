@@ -122,7 +122,7 @@ def failure_catalogue(evidence: dict[str, list[str]]) -> dict:
 
 
 def decision_benchmark(edges: dict, *, margin: float, mde: float | None, worst: dict, history: dict | None,
-                       regime_world: str | None = None, queue_width_bps: float | None = None) -> dict:
+                       regime_world: str | None = None, queue_fill_fraction_width: float | None = None) -> dict:
     """One row per policy pair, ending in the certification status."""
     rows = {}
     for pair, e in edges.items():
@@ -145,7 +145,7 @@ def decision_benchmark(edges: dict, *, margin: float, mde: float | None, worst: 
                       "fraction_worlds_positive": signs.count(1) / n if n else None,
                       "fraction_indeterminate": signs.count(0) / n if n else None,
                       "worst_plausible": worst.get(pair), "regime_sensitivity": per.get(regime_world),
-                      "queue_sensitivity_bps": queue_width_bps,
+                      "queue_sensitivity_fill_fraction": queue_fill_fraction_width,
                       "historical_conservative": (hist or {}).get("conservative"),
                       "historical_optimistic": (hist or {}).get("optimistic"),
                       "h8_edge": e["edge"], "final_status": cert["status"], "certification": cert}

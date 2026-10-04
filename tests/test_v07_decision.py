@@ -20,11 +20,13 @@ def test_decision_benchmark_certifies_only_robust_pairs() -> None:
     worst = {"a|b": {"difference": -0.5}, "a|c": {"difference": 0.5}, "b|c": {"difference": 0.4}}
     history = {"a|b": {"conservative": {"direction": -1}, "optimistic": {"direction": -1}}}
     out = decision.decision_benchmark(edges, margin=1.0, mde=0.9, worst=worst, history=history, regime_world="G2",
-                                      queue_width_bps=0.7)
+                                      queue_fill_fraction_width=0.07)
     assert out["pairs"]["a|b"]["final_status"] == "ROBUST_ACROSS_MODEL_UNCERTAINTY"
     assert out["pairs"]["a|c"]["final_status"] in {"NOT_ESTABLISHED", "INCONCLUSIVE"}
     assert out["pairs"]["b|c"]["final_status"] == "MODEL_DEPENDENT"
     assert out["pairs"]["a|b"]["fraction_worlds_negative"] == 1.0
+    assert out["pairs"]["a|b"]["queue_sensitivity_fill_fraction"] == 0.07   # a fraction, never labelled bps
+    assert not any("queue" in k and k.endswith("_bps") for k in out["pairs"]["a|b"])
 
 
 def test_complexity_overfitting_scaling_and_value() -> None:

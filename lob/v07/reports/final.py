@@ -103,9 +103,9 @@ def run(out: str | Path, *, root: Path = PROJECT_ROOT) -> dict:
     worst = {k: v["worst_plausible"] for k, v in ex["H8"]["edges"].items()}
     bench = decision.decision_benchmark(ex["H8"]["edges"], margin=1.0, mde=0.924, worst=worst, history=hist["pairs"],
                                         regime_world="G2_regime_switching",
-                                        queue_width_bps=queue["bound_width_mean_fill_fraction"])
-    for pair, entry in bench["pairs"].items():
-        entry["queue_sensitivity_unit"] = "conservative-to-optimistic mean fill-fraction width (M3, development)"
+                                        queue_fill_fraction_width=queue["bound_width_mean_fill_fraction"])
+    bench["queue_sensitivity_definition"] = ("conservative-to-optimistic width of the mean passive fill fraction "
+                                             "(M3, development day); a fraction of order size, not bps")
     fresh = {m: float(np.mean([holdouts[d]["contrasts"]["models"][m]["objective"] for d in FRESH]))
              for m in holdouts[FRESH[0]]["contrasts"]["models"]}
     month2 = next(d for d in drift["days"].values() if d["month"] == 2)
