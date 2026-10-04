@@ -108,8 +108,7 @@ AUC (tested).
   - **spread** and **event rate** on ETH 2020-11-01
   - **depth** on ETH 2020-12-01
   - **spread** and **depth** on BTC and BitMEX
-- Dropping any one family does not remove the gap: the remaining features still separate the
-  windows perfectly.
+- Dropping any one family does not remove the gap: the remaining features still separate the windows with AUC ≥ 0.997.
 
 This is associational attribution of detectability, not a causal account.
 
