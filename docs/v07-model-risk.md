@@ -47,9 +47,9 @@ world):
 | spread-aware | 3.16 | 2.19–4.89 | G3 |
 | MPC (exploratory) | 3.28 | 2.89–4.48 | G4 |
 
-## H7 — model uncertainty material to execution cost [C-H7]
+## H7 — model uncertainty material to execution cost
 
-**H7 is ESTABLISHED (Holm over 8 policies, between-world SD ≥ 0.5 bps)** for one policy: POV.
+**H7 is ESTABLISHED for one policy, POV** (Holm over 8 policies, between-world SD ≥ 0.5 bps). [C-H7]
 For POV, the between-world SD of world means is 0.96 bps and the ratio to the within-world seed
 SE is 2.85 (p < 0.001).
 
@@ -58,9 +58,9 @@ For the other 7 policies:
 - None passes the Holm thresholds, so each is NOT_ESTABLISHED.
 - Their between-world SDs are 0.43–0.78 bps.
 
-## H8 — robust policy comparison [C-H8]
+## H8 — robust policy comparison
 
-**H8 is NOT_ESTABLISHED.** No pair satisfies the registered robustness rule.
+**H8 is NOT_ESTABLISHED.** [C-H8] No pair satisfies the registered robustness rule.
 
 **Edges** (alpha 0.05 / 28):
 - 27 pairs: the pooled interval lies inside ±1 bps (EQUIVALENT_WITHIN_MARGIN, descriptive, using
@@ -77,9 +77,9 @@ not evidence that the policies perform the same in every plausible market. The a
 draws are noisier (64 vs 256 seeds), but deviations of up to 8.5 bps exceed what seed noise
 alone explains.
 
-## H9 — single-world rankings under model uncertainty [C-H9]
+## H9 — single-world rankings under model uncertainty
 
-**H9 is INCONCLUSIVE (descriptive).** No pair is determinate (alpha 0.05 / 28) even in the
+**H9 is INCONCLUSIVE (descriptive).** [C-H9] No pair is determinate (alpha 0.05 / 28) even in the
 single G0 point world, so no apparent single-world ranking exists that model uncertainty could
 overturn.
 

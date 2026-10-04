@@ -133,4 +133,72 @@ H5 is FAILED.
 **Venue × venue fitting: NOT_AVAILABLE.** BitMEX data exist only as a fresh holdout, which must
 not be fitted.
 
-## Historical bounded transfer (H12, H13) — see the section below, filled from `results/v07/m16/transfer`
+## Historical bounded transfer, ETH 2021-01-01 (H12, H13; workstreams 5, 32, 92)
+
+**Runs.**
+- `results/v07/m14/policies`: PPO and DQN, each trained single-world (G0 point) and
+  posterior-world (domain-randomized over the posterior draws), 4 training seeds each, 16,384
+  timesteps per model. Offline RL is NOT_AVAILABLE: no logged historical actions exist.
+- `results/v07/m16/predictions`: simulated costs of every learned policy in its training
+  worlds (64 markets; 8,704 rows; 0 invalid).
+- `configs/v07/transfer-design.json`: the policy evaluation lock (ledger entry 182). It fixes the
+  policies, predictions, H8 classification (no robust pair), mandate, episode rule and both fill
+  modes before any access.
+- `results/v07/m16/transfer-3`: the sealed evaluation. Two earlier attempts are retained as
+  ABORTED: `m16/transfer` (low memory, entry 186) and `m16/transfer-2` (stopped by the operator
+  before parsing, entry 189).
+
+**Episodes.** 144 of 144 planned episodes (first capture + 300 s + 600 s·k, 186 s windows) were
+replayed under the conservative and optimistic fill bounds. Every one of the 8 primary
+classical policies and 16 learned models ran in each; 0 rows were invalid. Replay has no market
+impact of the hypothetical parent, and passive fills are bounds, never exact fills.
+
+### H12 — posterior training and historical transfer
+
+**H12 is NOT_ESTABLISHED.** [C-H12] The estimand is the gap |simulated cost − bounded historical cost|
+of posterior-trained minus single-world-trained policies. It is averaged over training seeds
+and episodes, with a two-stage bootstrap and Bonferroni alpha 0.0125 per member.
+
+| Member | Gap, posterior (bps) | Gap, single (bps) | Difference | Interval | Status |
+|---|---|---|---|---|---|
+| PPO, conservative | 0.03 | 0.00 | +0.03 | [−2.49, 1.60] | NOT_ESTABLISHED |
+| PPO, optimistic | 0.00 | 0.10 | −0.10 | [−2.76, 1.58] | NOT_ESTABLISHED |
+| DQN, conservative | 0.46 | 0.46 | −0.01 | [−2.51, 1.47] | NOT_ESTABLISHED |
+| DQN, optimistic | 0.54 | 0.51 | +0.03 | [−2.67, 1.54] | NOT_ESTABLISHED |
+
+Every interval contains zero and is about 4 bps wide, wider than the prospective MDE of
+2.585 bps. This is not evidence that the two training regimes transfer equally well.
+
+### H13 — robust conclusions under both fill bounds
+
+**H13 is INCONCLUSIVE.** [C-H13] H8 found no robust policy pair, so there was nothing to carry to
+history. The registered rule reports this case (NOT_EVALUABLE) as INCONCLUSIVE. H13 never
+upgrades H8.
+
+### Historical costs (descriptive)
+
+Mean completion-adjusted cost over the 144 episodes (bps):
+
+| Policy | Conservative | Optimistic |
+|---|---|---|
+| POV | 2.08 | 2.08 |
+| imbalance-aware | 2.53 | 2.53 |
+| urgency | 2.53 | 2.53 |
+| liquidity-sensitive | 2.55 | 2.55 |
+| VWAP | 2.58 | 2.58 |
+| AC | 2.63 | 2.63 |
+| TWAP | 2.68 | 2.68 |
+| spread-aware | 2.70 | 2.53 |
+| DQN single / posterior | 2.80 / 2.89 | 2.75 / 2.81 |
+| PPO single / posterior | 3.13 / 3.15 | 3.03 / 3.12 |
+
+- **No pair is determinate.** Of the 28 classical pairs, none is determinate under either fill
+  bound at alpha 0.05/56 (`results/v07/m22/final-2`). For example, POV − AC is −0.55
+  [−1.83, 0.70] bps (conservative).
+- **Fill bounds rarely matter here.** Only spread-aware, which rests passive orders, differs
+  between them. The other classical policies take liquidity, so their two bounds coincide.
+- **POV is not consistent across simulation and history.** It has the highest mean cost in
+  simulation (3.49 bps over 21 worlds) and the lowest point estimate in history. Neither
+  ordering is determinate.
+- **Learned policies** cost more than every classical policy in point estimate, as in v0.5 and
+  v0.6. No learned-vs-classical contrast was registered, so this is descriptive.

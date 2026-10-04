@@ -72,14 +72,14 @@ Five families were fitted on the development day and scored on development and s
 selection rule picked **G3** (conditional AR resampling; selection objective 2.005, vs. 2.461
 for the v0.6 point model G0).
 
-### 3.2 Posterior calibration (M6) [C-H1] [C-H6]
+### 3.2 Posterior calibration (M6)
 
 - **Recovery is ASSUMPTION_DEPENDENT.** Marginal 90% coverage was 0.714, 0.714 and 1.0 for the
   three synthetic truths, against the registered 80%. Every conclusion that uses the posterior
   inherits this limitation.
-- **H6 is ESTABLISHED (descriptive).** All three SMC-ABC runs are multimodal, but each major
+- **H6 is ESTABLISHED (descriptive).** [C-H6] All three SMC-ABC runs are multimodal, but each major
   component holds only 5–13% of mass and the posterior is diffuse at the reached tolerance.
-- **H1 is FAILED.** Posterior-predictive realism was *worse* than the point model on both fresh
+- **H1 is FAILED.** [C-H1] Posterior-predictive realism was *worse* than the point model on both fresh
   ETH days: +0.387 [0.211, 0.627] in November and +0.568 [0.303, 0.932] in December.
 - The first posterior attempt was ABORTED by the host for low memory and is kept in the ledger.
 
@@ -90,46 +90,73 @@ sensitivity eigenvalues span 17.8 decades). `inside_spread_prob` is structurally
 other 13 are practically not identified (`docs/v07-identifiability.md`). Two earlier attempts
 (FAILED, INVALID) are kept.
 
-### 3.4 Realism, domain gap and transfer of realism (M10, M17) [C-H2] [C-H3] [C-H4] [C-H5]
+### 3.4 Realism, domain gap and transfer of realism (M10, M17)
 
-- **H2 is NOT_ESTABLISHED and VACUOUS.** Every family, including G0, is separated from
+- **H2 is NOT_ESTABLISHED and VACUOUS.** [C-H2] Every family, including G0, is separated from
   history with AUC ≈ 1 at 10 s, 60 s and 300 s, so there is no room for a reduction.
-- **H3 is NOT_ESTABLISHED.** Support coverage of fresh windows is 0–1.5% for every family.
-- **H4 is FAILED.** G3 is worse than G0 cross-instrument (BTC): +0.717 [0.643, 0.768].
-- **H5 is FAILED.** G3 is worse than G0 cross-venue (BitMEX XBTUSD): +0.616 [0.527, 0.663].
+- **H3 is NOT_ESTABLISHED.** [C-H3] Support coverage of fresh windows is 0–1.5% for every family.
+- **H4 is FAILED.** [C-H4] G3 is worse than G0 cross-instrument (BTC): +0.717 [0.643, 0.768].
+- **H5 is FAILED.** [C-H5] G3 is worse than G0 cross-venue (BitMEX XBTUSD): +0.616 [0.527, 0.663].
 - The added capacity of G3 and G4 is not justified on untouched data. Their development and
   selection advantage disappears on fresh same-instrument days and reverses out of domain.
 
-### 3.5 Execution-aware calibration (M7, M17) [C-H10] [C-H11]
+### 3.5 Execution-aware calibration (M7, M17)
 
-- **H10 is NOT_ESTABLISHED.** The execution-sensitive objective of the execution-aware model was
+- **H10 is NOT_ESTABLISHED.** [C-H10] The execution-sensitive objective of the execution-aware model was
   not better than G0's on either fresh day: +0.189 [−0.002, 0.311] and +0.088 [−0.068, 0.236].
-- **H11 is FAILED.** Its generic realism loss exceeded the registered noninferiority margin
+- **H11 is FAILED.** [C-H11] Its generic realism loss exceeded the registered noninferiority margin
   δ = 0.246 on both days (one-sided upper bounds 0.486 and 0.453).
 
-### 3.6 Model risk across 21 plausible worlds (M15) [C-H7] [C-H8] [C-H9]
+### 3.6 Model risk across 21 plausible worlds (M15)
 
-- **H7 is ESTABLISHED for POV only.** Its between-world SD of mean cost is 0.96 bps, 2.85 times
+- **H7 is ESTABLISHED for POV only.** [C-H7] Its between-world SD of mean cost is 0.96 bps, 2.85 times
   the within-world seed SE. For the other 7 policies it is NOT_ESTABLISHED.
-- **H8 is NOT_ESTABLISHED.** No policy pair is robustly ordered. 27 of 28 pairs have pooled
+- **H8 is NOT_ESTABLISHED.** [C-H8] No policy pair is robustly ordered. 27 of 28 pairs have pooled
   intervals inside ±1 bps (descriptive equivalence within the margin, averaged over worlds),
   and 1 is INDETERMINATE. The most adverse plausible world moves each pair by 0.75–8.5 bps, so
   the average does not describe every world.
-- **H9 is INCONCLUSIVE.** No pair is determinate even in the single G0 world.
+- **H9 is INCONCLUSIVE.** [C-H9] No pair is determinate even in the single G0 world.
 - 21 worlds give 21 distinct policy rankings. Market randomness dominates the variance of
   single episodes; among model components, the simulator family contributes more than the
   posterior spread.
 
-### 3.7 Historical bounded transfer, ETH 2021-01-01 (M14, M16) [C-H12] [C-H13]
+### 3.7 Historical bounded transfer, ETH 2021-01-01 (M14, M16)
 
-<!-- filled from results/v07/m16/transfer -->
+- **H12 is NOT_ESTABLISHED.** [C-H12] On the 144 replay episodes, the gap between simulated and bounded
+  historical cost of posterior-trained policies did not differ from that of single-world
+  policies for any member. Differences range from −0.10 to +0.03 bps, with intervals of about
+  [−2.7, 1.6] bps (alpha 0.0125 each). This is not equivalence.
+- **H13 is INCONCLUSIVE.** [C-H13] No H8-robust pair exists, which is the registered NOT_EVALUABLE case.
+- Descriptively, no classical pair is determinate in history under either fill bound. Learned
+  policies cost more than every classical policy in point estimate.
+- Two earlier attempts of this evaluation were ABORTED for memory and are kept in the ledger.
 
-### 3.8 What this means
+### 3.8 Decision benchmark and synthesis (M22) — `results/v07/m22/final-2`
+
+- **Certification.** All 28 policy pairs end NOT_ESTABLISHED: the framework abstains on every
+  ranking. Robust-selection criteria over the 21 worlds pick different policies:
+  - expectation: imbalance-aware
+  - worst case: urgency
+  - CVaR over worlds: liquidity-sensitive
+  - distributionally robust: urgency
+- **Realism to decision.** World realism did not predict the decision deviation (median Spearman
+  −0.35 over 21 worlds; UNRESOLVED).
+- **Ablations.** None of the six complexity components helped in point estimate: posterior
+  calibration, neural generator, continuous conditioning, discrete regimes, execution-aware
+  calibration and posterior-world policy training. The complexity penalty finds no family whose
+  fresh realism beats every simpler family.
+- **Overfitting.** The more flexible generators deteriorate most from development to fresh
+  data: +2.36 for G4 and +2.29 for G3, against +1.64 for G0.
+- The first M22 run (`m22/final`) is retained as INVALID: it labelled a fill-fraction queue
+  width as bps.
+
+### 3.9 What this means
 
 Under the registered tests, no v0.7 complexity (posterior calibration, richer generators,
 execution-aware calibration) improved fresh-data realism over the v0.6 point model, and no
 execution conclusion is robust across the plausible worlds. The positive results are
-descriptive (H6) or about uncertainty itself (H7 for POV). These are negative and null results
+descriptive (H6) or about uncertainty itself (H7 for POV). Posterior-world policy training did
+not change historical transfer (H12), and no conclusion reached history robustly (H13). These are negative and null results
 for these designs, data and budgets; they are not evidence that such methods cannot work.
 
 ## 4. Limits stated in advance
