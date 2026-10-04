@@ -269,6 +269,7 @@ def render(rows: list[dict] | None = None) -> str:
 
 
 def audit(root: Path, rows: list[dict] | None = None) -> dict:
+    from .registry import resolve
     rows = rows or ROWS
     issues = []
     ids = [r["id"] for r in rows]
@@ -284,7 +285,7 @@ def audit(root: Path, rows: list[dict] | None = None) -> dict:
             issues.append(f"{r['id']}: NOT_AVAILABLE without a reason")
         for part in str(r["experiment"]).split(";"):
             part = part.strip().split(" ")[0]
-            if part.startswith(R) and part.count("/") >= 3 and not (root / part / "binding.json").is_file():
+            if part.startswith(R) and part.count("/") >= 3 and not (root / resolve(root, part) / "binding.json").is_file():
                 issues.append(f"{r['id']}: experiment run {part} is not sealed")
     from ..protocol import core as pr
     state = pr.replay_ledger(pr.read_ledger(root / pr.LEDGER_PATH), pr.load_protocol(root / pr.PROTOCOL_PATH))
