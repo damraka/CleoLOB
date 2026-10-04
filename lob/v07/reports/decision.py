@@ -108,7 +108,7 @@ def compute_value(models: dict[str, dict], baseline: str) -> dict:
         if name == baseline:
             continue
         gain = (base.get("fresh") - m["fresh"]) if base.get("fresh") is not None and m.get("fresh") is not None else None
-        extra = (m.get("compute_s") or 0) - (base.get("compute_s") or 0)
+        extra = (m["compute_s"] - base["compute_s"]) if m.get("compute_s") is not None and             base.get("compute_s") is not None else None   # unmeasured compute is never imputed
         out[name] = {"extra_compute_s": extra, "fresh_realism_gain": gain,
                      "changed_conclusion": m.get("changed_conclusion"),
                      "verdict": ("expensive complexity did not matter" if gain is not None and gain <= 0 else

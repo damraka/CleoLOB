@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from lob.v07.reports import coverage, decision
+from lob.v07.reports import coverage, decision, final
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -38,6 +38,20 @@ def test_complexity_overfitting_scaling_and_value() -> None:
     assert decision.scaling(models)["status"] == "EXPLORATORY"
     value = decision.compute_value(models, "G0")
     assert value["G1"]["verdict"] == "expensive complexity did not matter"
+    models["G2"] = {"parameters": 30, "compute_s": None, "fresh": 3.0}
+    assert decision.compute_value(models, "G0")["G2"]["extra_compute_s"] is None   # never imputed as zero
+
+
+def test_historical_pairs_direction_per_fill_mode() -> None:
+    rows = [{"agent": a, "episode": k, "fill_mode": m,
+             "mandate_completion_adjusted_cost_bps": (1.0 if a == "a" else 3.0) + 0.01 * k if m == "conservative" else
+             2.0 + (0.5 if k % 2 else -0.5)}
+            for a in ("a", "b") for k in range(40) for m in ("conservative", "optimistic")]
+    out = final.historical_pairs(rows, ["a", "b"], samples=500)
+    assert out["pairs"]["a|b"]["conservative"]["direction"] == -1
+    assert out["pairs"]["a|b"]["optimistic"]["direction"] == 0 and out["alpha"] == 0.025
+    rows = [r for r in rows if r["episode"] < 5]
+    assert final.historical_pairs(rows, ["a", "b"])["pairs"]["a|b"]["conservative"]["mean"] is None
 
 
 def test_realism_to_decision_ablation_and_failure_catalogue() -> None:
