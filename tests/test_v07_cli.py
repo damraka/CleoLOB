@@ -45,11 +45,20 @@ def test_public_benchmark_reproduces(capsys) -> None:
     assert json.loads(capsys.readouterr().out)["reproduced"]
 
 
-def test_study_run_defaults_point_to_sealed_runs() -> None:
-    """Regression: defaults must name sealed runs, never retained aborted attempts."""
+def test_study_run_defaults_never_name_retained_attempts() -> None:
+    """Regression: defaults must never name a FAILED/ABORTED/INVALID attempt recorded in the ledger.
+
+    The sealed runs themselves are local-only (``results/`` is never committed); where present they must verify.
+    """
     from lob.cli import parser
     from lob.v07.evidence.runs import verify_run
+    from lob.v07.protocol import core as pr
     args = parser().parse_args(["transfer-study-v07", "seal", "--out", "unused"])
+    state = pr.replay_ledger(pr.read_ledger(ROOT / pr.LEDGER_PATH), pr.load_protocol(ROOT / pr.PROTOCOL_PATH))
+    attempts = {a["directory"] for a in state.attempts if a.get("directory")}
+    assert "results/v07/m15/execution" in attempts      # the retained ABORTED attempt the old default named
     for name in ("generator_run", "posterior_run", "ea_run", "bank_run", "selection_run", "policy_run",
                  "prediction_run", "execution_run"):
-        assert verify_run(ROOT / getattr(args, name), root=ROOT)["valid"], name
+        assert getattr(args, name) not in attempts, name
+        if (ROOT / getattr(args, name) / "binding.json").is_file():
+            assert verify_run(ROOT / getattr(args, name), root=ROOT)["valid"], name

@@ -106,9 +106,11 @@ def test_referenced_config_change_is_detected(root: Path) -> None:
     assert not report["valid"] and any("compute-budget" in issue for issue in report["issues"])
 
 
-def test_line_ending_changes_do_not_break_config_hashes(root: Path) -> None:
+@pytest.mark.parametrize("ending", [b"\r\n", b"\n"])
+def test_line_ending_changes_do_not_break_config_hashes(root: Path, ending: bytes) -> None:
+    """Holds for LF and CRLF checkouts alike (e.g. Windows runners with core.autocrlf)."""
     path = root / "configs/v07/compute-budget.json"
-    path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+    path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", ending))
     assert pr.verify_protocol_files(root)["valid"]
 
 
