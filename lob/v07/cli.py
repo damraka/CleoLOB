@@ -65,7 +65,7 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
         c.add_argument("--selection-run", default="results/v07/m6/select")
         c.add_argument("--policy-run", default="results/v07/m14/policies")
         c.add_argument("--prediction-run", default="results/v07/m16/predictions")
-        c.add_argument("--execution-run", default="results/v07/m15/execution")
+        c.add_argument("--execution-run", default="results/v07/m15/execution-2")
         c.add_argument("--dataset")
     c = commands.add_parser("benchmark-v07", help="frozen benchmark tasks; 'public' reruns the public replication subset")
     c.add_argument("group", choices=("all", "public"))

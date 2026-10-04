@@ -48,22 +48,37 @@ hashes. `lob.v07.benchmark.compute.environment()` adds:
 1. Obtain the Tardis.dev free first-day-of-month samples for the dataset IDs in
    `configs/v07/protocol.json`.
 2. Place them under `data/v07/tardis` (or `data/public`, `data/v06/tardis`).
-3. Run the registered commands in order:
+3. Run the registered commands in order. The run names are the sealed ones; earlier attempts are
+   kept as listed in `docs/v07-final-report.md`. Worker counts (`--workers`, `CLEOLOB_WORKERS`)
+   are resource control only.
 
    ```
+   cleo queue-study-v07 --out results/v07/m3/queue
    cleo generator-study-v07 --out results/v07/m5/fit
    cleo posterior-study-v07 recovery --out results/v07/m6/recovery-2
-   cleo posterior-study-v07 run --out results/v07/m6/posterior-2
-   cleo posterior-study-v07 select --out results/v07/m6/select
-   cleo calibration-v4 --out results/v07/m7/execution-aware
-   cleo realism-v2 bank --out results/v07/m10/bank
-   cleo realism-v2 seal --out unused
-   cleo realism-v2 evaluate --dataset <id> --out results/v07/m17/<id>
-   cleo execution-study-v07 --out results/v07/m15/execution
-   cleo robust-policy-study-v07 run --out results/v07/m14/policies
-   cleo robust-policy-study-v07 predict --out results/v07/m16/predictions
-   cleo transfer-study-v07 seal --out unused
-   cleo transfer-study-v07 run --out results/v07/m16/transfer
+   cleo posterior-study-v07 run --out results/v07/m6/posterior-2 --workers 8
+   cleo posterior-study-v07 select --out results/v07/m6/select --posterior-run results/v07/m6/posterior-2 --generator-run results/v07/m5/fit
+   cleo calibration-v4 run --out results/v07/m7/execution-aware --posterior-run results/v07/m6/posterior-2
+   cleo calibration-v4 surrogate --out results/v07/m7/surrogate --workers 4
+   cleo identifiability-v2 --out results/v07/m8/identifiability-3 --posterior-run results/v07/m6/posterior-2
+   cleo realism-v2 bank --out results/v07/m10/bank --generator-run results/v07/m5/fit --posterior-run results/v07/m6/posterior-2 --ea-run results/v07/m7/execution-aware
+   cleo realism-v2 seal --out unused --bank-run results/v07/m10/bank --selection-run results/v07/m6/select --generator-run results/v07/m5/fit
+   cleo realism-v2 evaluate --dataset <fresh id> --out results/v07/m17/<fresh id>      (one dataset at a time)
+   cleo drift-study-v07 --out results/v07/m11/drift --bank-run results/v07/m10/bank
+   cleo transfer-study-v07 matrix --out results/v07/m12/matrix --workers 2
+   cleo impact-study-v07 run --out results/v07/m13/impact --generator-run results/v07/m5/fit --posterior-run results/v07/m6/posterior-2
+   cleo impact-study-v07 ecology --out results/v07/m13/ecology
+   cleo execution-study-v07 --out results/v07/m15/execution-2 --generator-run results/v07/m5/fit --posterior-run results/v07/m6/posterior-2 --workers 4
+   cleo impact-study-v07 stress --out results/v07/m15/stress --workers 4
+   cleo robust-policy-study-v07 run --out results/v07/m14/policies --posterior-run results/v07/m6/posterior-2 --workers 4
+   cleo robust-policy-study-v07 predict --out results/v07/m16/predictions --policy-run results/v07/m14/policies
+   cleo transfer-study-v07 seal --out unused --policy-run results/v07/m14/policies --prediction-run results/v07/m16/predictions --execution-run results/v07/m15/execution-2
+   CLEOLOB_WORKERS=1 cleo transfer-study-v07 run --out results/v07/m16/transfer-3
+   cleo final-analysis-v07 --out results/v07/m22/final-2
+   cleo report-v07 --out results/v07/report
+   cleo evidence-export-v07 --out examples/studies/v07/evidence
+   cleo claim-audit-v07
+   cleo verify-v07 && cleo verify-v07 --bundle examples/studies/v07/evidence
    ```
 
 **Ledger and seed caveats.**

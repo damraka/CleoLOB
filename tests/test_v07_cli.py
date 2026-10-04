@@ -43,3 +43,13 @@ def test_validate_and_replay_smoke(tmp_path, capsys) -> None:
 def test_public_benchmark_reproduces(capsys) -> None:
     assert cli_main(["benchmark-v07", "public", "--root", str(ROOT)]) == 0
     assert json.loads(capsys.readouterr().out)["reproduced"]
+
+
+def test_study_run_defaults_point_to_sealed_runs() -> None:
+    """Regression: defaults must name sealed runs, never retained aborted attempts."""
+    from lob.cli import parser
+    from lob.v07.evidence.runs import verify_run
+    args = parser().parse_args(["transfer-study-v07", "seal", "--out", "unused"])
+    for name in ("generator_run", "posterior_run", "ea_run", "bank_run", "selection_run", "policy_run",
+                 "prediction_run", "execution_run"):
+        assert verify_run(ROOT / getattr(args, name), root=ROOT)["valid"], name
