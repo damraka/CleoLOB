@@ -158,7 +158,9 @@ def _classical_rows(task: tuple) -> list[dict]:
 
 
 def _workers() -> int:
-    return max(1, min(14, (os.cpu_count() or 2) - 2))
+    """Resource control only: rows are keyed by episode with per-episode seeds, so results do not depend on it."""
+    cap = int(os.environ.get("CLEOLOB_WORKERS") or 14)
+    return max(1, min(cap, 14, (os.cpu_count() or 2) - 2))
 
 
 def predict(out: str | Path, *, policy_run: str, root: Path = PROJECT_ROOT, markets: int = PREDICTION_MARKETS) -> dict:

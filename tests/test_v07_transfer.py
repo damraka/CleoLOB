@@ -1,6 +1,8 @@
 """v0.7 transfer statistics (H12, H13) on constructed replay rows."""
 from __future__ import annotations
 
+import os
+
 import numpy as np
 
 from lob.v07.transfer import study as ts
@@ -50,3 +52,10 @@ def test_h13_survival_and_failure() -> None:
     assert bad["status"] == "FAILED"
     weak = ts.h13(rows, {"twap|pov": "ROBUSTLY_BETTER"}, alpha=0.05, samples=200, seed=0)
     assert weak["status"] == "NOT_ESTABLISHED"
+
+
+def test_worker_cap_is_resource_control_only(monkeypatch) -> None:
+    monkeypatch.setenv("CLEOLOB_WORKERS", "3")
+    assert ts._workers() == min(3, max(1, (os.cpu_count() or 2) - 2))
+    monkeypatch.delenv("CLEOLOB_WORKERS")
+    assert 1 <= ts._workers() <= 14
