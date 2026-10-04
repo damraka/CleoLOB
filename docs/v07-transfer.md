@@ -202,3 +202,29 @@ Mean completion-adjusted cost over the 144 episodes (bps):
   ordering is determinate.
 - **Learned policies** cost more than every classical policy in point estimate, as in v0.5 and
   v0.6. No learned-vs-classical contrast was registered, so this is descriptive.
+
+### Remaining uncertainty components (workstream 45, descriptive)
+
+These complete the decomposition in `docs/v07-model-risk.md`.
+
+**Training seed (simulation, `m16/predictions`).** SD of the 4 per-seed mean costs in the training
+worlds:
+
+| Model | Single-world | Posterior-world |
+|---|---|---|
+| PPO | 1.29 bps | 0.40 bps |
+| DQN | 1.34 bps | 0.16 bps |
+
+Posterior-world training made learned policies much less seed-dependent *in simulation*. In
+historical replay the per-seed means of all four variants lie within 2.47–3.28 bps. H12 found no
+difference in transfer.
+
+**Historical fill bound (`m16/transfer-3`).** Mean |conservative − optimistic| episode cost:
+- 0 for the seven liquidity-taking classical policies;
+- 0.21 bps for spread-aware;
+- 0.09–0.23 bps for the learned policies, with single episodes up to 7.4 bps.
+
+**Queue assumption (`m3/queue`, development day).** The conservative-to-optimistic width of the
+mean passive fill fraction is 0.072 of order size. It matters only for policies that rest passive
+orders.
+
