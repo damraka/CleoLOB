@@ -3,6 +3,14 @@
   "rule": "manual classification of risky-term occurrences that the automatic rules leave for review; keyed by sha256(file|term|text); OVERCLAIM entries fail claim-audit-v07",
   "reviews": [
     {
+      "key": "3d5fa5969c9d5a0a",
+      "file": "README.md",
+      "term": "robust",
+      "text": "v0.7, **generative market dynamics, posterior calibration, robust execution and cross-market",
+      "classification": "SUPPORTED",
+      "reason": "title of the v0.7 research program; the robustness results are H8 NOT_ESTABLISHED and M22 abstention"
+    },
+    {
       "key": "0d18d53fedddecf4",
       "file": "README.md",
       "term": "stable",
