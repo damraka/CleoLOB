@@ -59,3 +59,19 @@ def test_worker_cap_is_resource_control_only(monkeypatch) -> None:
     assert ts._workers() == min(3, max(1, (os.cpu_count() or 2) - 2))
     monkeypatch.delenv("CLEOLOB_WORKERS")
     assert 1 <= ts._workers() <= 14
+
+
+def test_compact_episodes_expand_to_the_reference_episodes(tmp_path) -> None:
+    """Regression (ABORTED final-transfer attempt, low memory): the compact form must not change any episode."""
+    from tests.v07_fixtures import write_tardis
+    files = write_tardis(tmp_path, seconds=1500.0)
+    kwargs = {"tick": 0.05, "lots_per_native": 0.1, "label": "fixture"}
+    reference, info = ts.extract_episodes(files, **kwargs)
+    compact, info_compact = ts.extract_episodes(files, compact=True, **kwargs)
+    assert info == info_compact and len(reference) >= 1
+    for ref, small in zip(reference, compact, strict=True):
+        assert isinstance(small, ts.CompactEpisode)
+        expanded = small.expand()
+        assert expanded == ref
+        assert [list(b) for _, b, _ in expanded.updates] == [list(b) for _, b, _ in ref.updates]   # key order
+        assert all(type(k) is int and type(q) is float for _, b, a in expanded.updates for k, q in {**b, **a}.items())

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor
 import csv
+from dataclasses import dataclass, field
 import gzip
 from itertools import combinations
 import json
@@ -63,18 +64,84 @@ class HistoricalWorld:
         return HistoricalSimulator(cfg, self.episode, self.fill_mode)
 
 
-def extract_episodes(files: dict, *, tick: float, lots_per_native: float, label: str) -> tuple[list, dict]:
-    """The v0.6 episode rule (first capture + 300 s + 600 s k, clock ratio 1) with the v0.7 reader limits."""
+@dataclass
+class CompactEpisode:
+    """Memory-compact form of a ``HistoricalEpisode``: snapshots packed into contiguous float64 arrays.
+
+    ``bids``/``asks`` hold (tick, qty) columns of every snapshot back to back, delimited by ``*_offsets``. Ticks
+    are integers far below 2**53, so they round-trip exactly; ``expand`` rebuilds the identical episode (same keys,
+    values and key order). Resource control only: replay semantics are unchanged.
+    """
+
+    start_s: float
+    times: np.ndarray
+    bids: np.ndarray            # (2, total bid levels)
+    bid_offsets: np.ndarray     # len(times) + 1
+    asks: np.ndarray
+    ask_offsets: np.ndarray
+    prints: list
+    tick_size: float
+    clock_ratio: float
+    label: str = ""
+    meta: dict = field(default_factory=dict)
+
+    @staticmethod
+    def pack(updates: list) -> tuple:
+        """[(t, bids (2, n), asks (2, m))] -> (times, bids, bid_offsets, asks, ask_offsets)."""
+        out = [np.asarray([u[0] for u in updates], dtype=np.float64)]
+        for side in (1, 2):
+            sizes = [u[side].shape[1] for u in updates]
+            out += [np.concatenate([u[side] for u in updates], axis=1),
+                    np.concatenate([[0], np.cumsum(sizes)]).astype(np.int64)]
+        return tuple(out)
+
+    def expand(self) -> HistoricalEpisode:
+        def book(levels, offsets, i):
+            ticks, qty = levels[:, offsets[i]:offsets[i + 1]]
+            return {int(k): float(q) for k, q in zip(ticks, qty)}
+        updates = [(float(t), book(self.bids, self.bid_offsets, i), book(self.asks, self.ask_offsets, i))
+                   for i, t in enumerate(self.times)]
+        return HistoricalEpisode(self.start_s, updates, self.prints, self.tick_size, self.clock_ratio,
+                                 label=self.label, meta=self.meta)
+
+
+def _expanded(episode):
+    return episode.expand() if isinstance(episode, CompactEpisode) else episode
+
+
+def _side(levels, tick: float, lots_per_native: float, compact: bool):
+    if compact:
+        return np.asarray([[round(float(p) / tick) for p, _ in levels], [float(q) * lots_per_native for _, q in levels]],
+                          dtype=np.float64).reshape(2, -1)
+    return {int(round(float(p) / tick)): float(q) * lots_per_native for p, q in levels}
+
+
+def _window_updates(window: list, start: float) -> list | None:
+    """The v0.6 window rule: book state at ``start`` followed by the later updates; None if not covered."""
+    updates = [u for u in window if u[0] <= start + WINDOW_S]
+    if not updates or updates[0][0] > start:
+        return None
+    head = [u for u in updates if u[0] <= start][-1]
+    return [(start, head[1], head[2])] + [u for u in updates if u[0] > start]
+
+
+def extract_episodes(files: dict, *, tick: float, lots_per_native: float, label: str,
+                     compact: bool = False) -> tuple[list, dict]:
+    """The v0.6 episode rule (first capture + 300 s + 600 s k, clock ratio 1) with the v0.7 reader limits.
+
+    ``compact=True`` packs each window as soon as replay time passes its end (``CompactEpisode``), bounding peak
+    memory on busy days; it yields the same episodes.
+    """
     replay = L2Replay(files["l2"], depth=20, **READER_LIMITS)
     starts = windows = first = previous = None
+    finished: dict[int, tuple | None] = {}
     for state in replay:
         t = state.local_timestamp_us / 1e6
         if starts is None:
             first = t
             starts = [first + 300.0 + 600.0 * k for k in range(EPISODES)]
             windows = [[] for _ in starts]
-        snapshot = (t, {int(round(float(p) / tick)): float(q) * lots_per_native for p, q in state.bids},
-                    {int(round(float(p) / tick)): float(q) * lots_per_native for p, q in state.asks})
+        snapshot = (t, _side(state.bids, tick, lots_per_native, compact), _side(state.asks, tick, lots_per_native, compact))
         k = int((t - first - 300.0) // 600.0)
         for j in (k, k + 1):
             if 0 <= j < len(starts) and starts[j] - 5.0 <= t <= starts[j] + WINDOW_S:
@@ -82,6 +149,12 @@ def extract_episodes(files: dict, *, tick: float, lots_per_native: float, label:
                     windows[j].append(previous)
                 windows[j].append(snapshot)
         previous = snapshot
+        if compact:   # no later update can enter a window whose end has passed
+            while len(finished) < len(starts) and t > starts[len(finished)] + WINDOW_S:
+                j = len(finished)
+                updates = _window_updates(windows[j], starts[j])
+                finished[j] = None if updates is None else CompactEpisode.pack(updates)
+                windows[j] = []
     if not replay.stats["complete"]:
         raise ValueError("L2 source incomplete")
     prints = [[] for _ in starts]
@@ -98,13 +171,20 @@ def extract_episodes(files: dict, *, tick: float, lots_per_native: float, label:
                                   "BUY" if side == "buy" else "SELL"))
     episodes, skipped = [], []
     for k, start in enumerate(starts):
-        updates = [u for u in windows[k] if u[0] <= start + WINDOW_S]
-        if not updates or updates[0][0] > start:
+        meta = {"label": f"{label}#{k}", "meta": {"index": k}}
+        if compact:
+            packed = finished[k] if k in finished else (
+                None if (u := _window_updates(windows[k], start)) is None else CompactEpisode.pack(u))
+            if packed is None:
+                skipped.append(k)
+                continue
+            episodes.append(CompactEpisode(start, *packed, prints[k], tick, 1.0, **meta))
+            continue
+        updates = _window_updates(windows[k], start)
+        if updates is None:
             skipped.append(k)
             continue
-        head = [u for u in updates if u[0] <= start][-1]
-        updates = [(start, head[1], head[2])] + [u for u in updates if u[0] > start]
-        episodes.append(HistoricalEpisode(start, updates, prints[k], tick, 1.0, label=f"{label}#{k}", meta={"index": k}))
+        episodes.append(HistoricalEpisode(start, updates, prints[k], tick, 1.0, **meta))
     return episodes, {"episodes": len(episodes), "planned": len(starts), "skipped": skipped, "window_s": WINDOW_S}
 
 
@@ -124,7 +204,8 @@ def _learned_rows(task: tuple) -> list[dict]:
     world = World.from_dict(world_dict)
     rows = []
     for item in (historical or [(None, s) for s in seeds]):
-        episode_obj, seed = item if historical else item
+        episode_obj, seed = item
+        episode_obj = _expanded(episode_obj) if historical else episode_obj
         modes = FILL_MODES if historical else (None,)
         for mode in modes:
             try:
@@ -150,6 +231,7 @@ def _classical_rows(task: tuple) -> list[dict]:
     episodes, agent, config, profile = task
     rows = []
     for e in episodes:
+        e = _expanded(e)   # one episode expanded at a time
         for mode in FILL_MODES:
             row = ep.run(HistoricalWorld(config, e, mode), agent, ep.MANDATE, 900_000 + e.meta["index"], profile=profile)
             rows.append({"agent": agent, "training_seed": None, "episode": e.meta["index"], "fill_mode": mode,
@@ -361,7 +443,7 @@ def evaluate(out: str | Path, *, root: Path = PROJECT_ROOT, downloader=None) -> 
     declaration = pr.dataset_declaration(protocol, DATASET)
     tick = float(venue_spec(declaration["venue"], declaration["instrument"]).tick)
     episodes, extraction = extract_episodes(files, tick=tick, lots_per_native=1.0 / frozen["scale_native_per_lot"],
-                                            label=DATASET)
+                                            label=DATASET, compact=True)
     pr.append_event(root / pr.LEDGER_PATH, "access", dataset=DATASET, role=declaration["role"], design=DESIGN,
                     reason="replay episodes extracted", protocol=protocol, root=root,
                     payload={"use": "evaluate", "stage": "parsed", "episodes": extraction["episodes"]})
