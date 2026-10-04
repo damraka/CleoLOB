@@ -105,7 +105,7 @@ against every dataset.
 | G1 | 3.61 | 4.35 | 4.69 |
 
 **Activity similarity.** Transfer error correlates with the dissimilarity of event activity
-between source and target: Spearman 0.34 for G3, 0.03 for G1.
+between source and target: Pearson correlation 0.34 for G3, 0.03 for G1.
 
 **Related-instrument cells: NOT_AVAILABLE.** No consumed related-instrument data exist, for
 example BTC futures.
