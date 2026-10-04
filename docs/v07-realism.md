@@ -9,7 +9,7 @@ Code: `lob/v07/realism/` (`holdout.py`, `contrast.py`, `metrics.py`, `folds.py`,
 **Sealed design.** `configs/v07/holdout-design.json`, ledger entry 101.
 
 **Attempt history.** The first ETH 2020-12-01 attempt was ABORTED by the host for low memory
-after the parsed stage, with no statistic computed or inspected (ledger entries 113 and 129).
+after the parsed stage, with no statistic computed or inspected (ledger entries 113 and 118).
 It was rerun under the same sealed design in `...-2`.
 
 All four realism holdouts passed the registered data-quality rules: 143 of 143 blocks used and
