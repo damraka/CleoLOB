@@ -130,3 +130,120 @@ Deribit or BitMEX queues.
 - The conservative-to-optimistic width is 0.072, about half the conservative value. Queue
   assumptions alone move passive fills by this much on this data. Historical transfer (M16)
   therefore reports both fill bounds and the queue sensitivity.
+
+## Meta-orders, TCA and the impact zoo (workstreams 28–30) — `results/v07/m13/impact`
+
+**Design.** The grid is simulation only (EXPLORATORY):
+- direction: buy or sell
+- quantity: 7, 14, 56 or 224 lots
+- horizon: 60 or 120 s
+- urgency: uniform or front-loaded
+- one POV arm at 10% participation
+- worlds: the G0 point model, G3, G4 and four posterior draws
+- 8 market seeds per cell
+
+**TCA.** The decomposition into spread crossing, drift and impact, fees, rebates (zero under the
+mandate fee convention) and opportunity/completion cost holds exactly. The maximum identity error
+is 0 in every cell. Residual inventory is valued, never liquidated. Every parent completed in
+every cell.
+
+**Mean shortfall by world:**
+
+| World | Mean shortfall (bps) |
+|---|---|
+| G0 point | 3.5 |
+| G3 | 5.4 |
+| G4 | 5.2 |
+| four posterior draws | 2.0–2.4 |
+
+**Endogenous impact differs by family.** For a 224-lot buy, the temporary move at the end of
+trading is:
+
+| World | 120 s horizon (bps) | 60 s horizon (bps) |
+|---|---|---|
+| G0 point | 2.6 | 1.7 |
+| G3 | 11.8 | 18.0 |
+| G4 | 8.3 | 8.3 |
+| posterior draws | between −3.3 and 5.7 | (same range) |
+
+The event-driven generators respond far more strongly to the strategy's own flow than the v0.6
+family.
+
+**Impact zoo.**
+- No law is resolved. Linear, square-root and power-law propagator fits have R² between −0.05
+  and 0.21 across worlds.
+- Transferring the G0 point fit to the other worlds gives R² between −0.81 and 0.06.
+- With 8 seeds per cell, market noise dominates the impact signal. No empirical impact law is
+  asserted.
+
+## Ecology, strategic interaction and the market maker (workstreams 46–48) — `results/v07/m13/ecology`
+
+**Conservation.** Over 16 seeds, the summed inventory and cash across all owners are exactly 0.
+
+**Inventory-sensitive maker** (per run, in ticks):
+- spread capture 0.5
+- adverse selection 3.3
+- inventory penalty 1.8
+- net after penalty about −0.26
+
+**Strategic interaction.** Fast (5-slice) minus slow (20-slice) parent shortfall:
+
+| Environment | Difference (bps) | 95% interval |
+|---|---|---|
+| passive maker | +0.40 | [−0.40, 1.26] |
+| reactive maker | +0.16 | [−0.94, 1.32] |
+
+Both are indeterminate, so the comparison between environments is EXPLORATORY. The stylized
+agents are not real participant classes.
+
+## Registered stresses (workstream 40) — `results/v07/m15/stress` (SYNTHETIC_STRESS)
+
+**Setup.** The 11 market stresses and the fee stress, applied to the G0 point world, run each of
+the 8 primary policies on 64 market seeds.
+
+**Policy rankings change across stresses.** Best policy by mean cost:
+
+| Condition | Best policy |
+|---|---|
+| unstressed | imbalance-aware |
+| liquidity drought | urgency |
+| spread explosion | urgency |
+| event-rate surge | liquidity-sensitive |
+| regime transition | liquidity-sensitive |
+| asymmetric book shock | spread-aware |
+| volatility spike | spread-aware |
+| structural misspecification | spread-aware |
+| cancellation surge | TWAP |
+
+**TWAP mean cost by condition** (bps):
+- 4.3 unstressed
+- 8.3 liquidity drought
+- 10.2 spread explosion
+- 10.4 volatility spike
+- 8.3 fee change
+
+Stress results describe the simulator only and never support a robustness claim.
+
+## Accounting v3 and horizon semantics (workstreams 78, 79)
+
+`lob.v07.execution.accounting.statement` separates:
+- cash
+- inventory
+- fees and rebates
+- realized fill value
+- residual mark (never liquidated)
+- implementation shortfall
+- within-horizon vs. post-horizon (settlement) fills
+
+Every execution row keeps the five registered horizon fields separate, and missing fields are
+refused. Both properties are property-tested.
+
+## Multi-instrument groundwork and portfolio execution (workstreams 49, 50)
+
+`CoupledMarkets` has a zero-coupling baseline that is identical to independent markets (tested),
+and synthetic coupling propagates aggressive orders. `PortfolioExecution` applies shared capital
+and risk limits, and its accounting is exact: the portfolio shortfall equals the sum of the
+instrument shortfalls.
+
+These are EXPLORATORY synthetic demonstrations. No cross-impact is validated: no consumed
+multi-instrument data exists that could validate one.
