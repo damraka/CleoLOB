@@ -1,0 +1,158 @@
+{
+  "schema": "cleolob-v07-claim-review-1",
+  "rule": "manual classification of risky-term occurrences that the automatic rules leave for review; keyed by sha256(file|term|text); OVERCLAIM entries fail claim-audit-v07",
+  "reviews": [
+    {
+      "key": "0d18d53fedddecf4",
+      "file": "README.md",
+      "term": "stable",
+      "text": "- Stable-Baselines3 PPO and discrete-action DQN research workflows",
+      "classification": "SUPPORTED",
+      "reason": "library name Stable-Baselines3; no stability claim"
+    },
+    {
+      "key": "48b4b4a85f54de28",
+      "file": "docs/v07-execution.md",
+      "term": "transfer",
+      "text": "- Transferring the G0 point fit to the other worlds gives R² between −0.81 and 0.06.",
+      "classification": "SUPPORTED",
+      "reason": "measured negative statement from results/v07/m13/impact (R^2 -0.81 to 0.06)"
+    },
+    {
+      "key": "dc923cf964ffb8de",
+      "file": "docs/v07-final-report.md",
+      "term": "robust",
+      "text": "**Robust selection over the 21 world means** (bps; lower is better):",
+      "classification": "SUPPORTED",
+      "reason": "'robust' names a registered selection criterion or a statistical baseline; no robustness claim"
+    },
+    {
+      "key": "f3d4e260b3f1b816",
+      "file": "docs/v07-final-report.md",
+      "term": "robust",
+      "text": "change-point method before results were reported; CUSUM is retained as a robust-baseline",
+      "classification": "SUPPORTED",
+      "reason": "'robust' names a registered selection criterion or a statistical baseline; no robustness claim"
+    },
+    {
+      "key": "ec8d8f061a212a80",
+      "file": "docs/v07-final-report.md",
+      "term": "robust",
+      "text": "| Policy | Expectation | Worst case | CVaR (worst 25% of worlds) | Distributionally robust |",
+      "classification": "SUPPORTED",
+      "reason": "'robust' names a registered selection criterion or a statistical baseline; no robustness claim"
+    },
+    {
+      "key": "4628885874af805c",
+      "file": "docs/v07-final-report.md",
+      "term": "transfer",
+      "text": "- transfer",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "4bce03a5f820e0d9",
+      "file": "docs/v07-final-report.md",
+      "term": "transfer",
+      "text": "2. **Dirty flags in the ledger.** Entry 185 (parsed stage of the first final-transfer attempt)",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "4c8efa3cedce5b06",
+      "file": "docs/v07-final-report.md",
+      "term": "transfer",
+      "text": "| ETH 2021-01-01 | final transfer | **consumed by v0.7** (after the policy evaluation lock, entry 182) |",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "665b9b0fa2cac342",
+      "file": "docs/v07-final-report.md",
+      "term": "transfer",
+      "text": "| M16 transfer-3 | 3,669 | 1 |",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "873b181d48000e93",
+      "file": "docs/v07-model-risk.md",
+      "term": "transfer",
+      "text": "Training-seed, queue and historical-fill components are reported with the transfer results",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "fbe27e07bb430913",
+      "file": "docs/v07-paper.md",
+      "term": "robust",
+      "text": "- distributionally robust: urgency",
+      "classification": "SUPPORTED",
+      "reason": "'robust' names a registered selection criterion or a statistical baseline; no robustness claim"
+    },
+    {
+      "key": "313aceabfb8a8e7a",
+      "file": "docs/v07-paper.md",
+      "term": "transfer",
+      "text": "| final transfer | Deribit ETH-PERPETUAL 2021-01-01 (after the policy evaluation lock) |",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "cef480ed4c56705d",
+      "file": "docs/v07-performance.md",
+      "term": "transfer",
+      "text": "- the first final-transfer evaluation (`results/v07/m16/transfer`, ledger entry 186). Each in-window",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "9257942a47ba220e",
+      "file": "docs/v07-performance.md",
+      "term": "transfer",
+      "text": "- transfer",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "63ebc0fc0c5a07eb",
+      "file": "docs/v07-reproduction.md",
+      "term": "transfer",
+      "text": "- the transfer-hierarchy variance decomposition",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "8870117b7e22d84a",
+      "file": "docs/v07-transfer.md",
+      "term": "transfer",
+      "text": "**Activity similarity.** Transfer error correlates with the dissimilarity of event activity",
+      "classification": "SUPPORTED",
+      "reason": "measured association (Pearson 0.34 / 0.03) in an EXPLORATORY section, results/v07/m12/matrix"
+    },
+    {
+      "key": "5bc9075e69f1cc83",
+      "file": "docs/v07-transfer.md",
+      "term": "transfer",
+      "text": "**Mean objective by transfer type:**",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "e25f23ade08efcfa",
+      "file": "docs/v07-transfer.md",
+      "term": "transfer",
+      "text": "- `results/v07/m12/matrix`: transfer matrices and hierarchy",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    },
+    {
+      "key": "c391dbaa96eabc4b",
+      "file": "docs/v07-transfer.md",
+      "term": "transfer",
+      "text": "transfer holdout, ETH 2021-01-01, after the policy evaluation lock.",
+      "classification": "SUPPORTED",
+      "reason": "'transfer' names the registered transfer study, holdout, run or matrix; no claim that anything transfers"
+    }
+  ]
+}

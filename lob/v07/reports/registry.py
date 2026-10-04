@@ -223,7 +223,7 @@ def _context(lines: list[str], n: int) -> str:
         j = i - 1
         while j >= 0 and (LIST_ITEM.match(lines[j]) or not lines[j].strip() or lines[j].startswith("  ")):
             j -= 1
-        header = lines[j] if j >= 0 and lines[j].rstrip().endswith(":") else ""
+        header = lines[j] if j >= 0 and lines[j].rstrip("* ").endswith(":") else ""
         return f"{header} {lines[i]}".lower()
     start = i
     while start > 0 and lines[start - 1].strip() and not LIST_ITEM.match(lines[start - 1]):
