@@ -155,8 +155,9 @@ other 13 are practically not identified (`docs/v07-identifiability.md`). Two ear
 Under the registered tests, no v0.7 complexity (posterior calibration, richer generators,
 execution-aware calibration) improved fresh-data realism over the v0.6 point model, and no
 execution conclusion is robust across the plausible worlds. The positive results are
-descriptive (H6) or about uncertainty itself (H7 for POV). Posterior-world policy training did
-not change historical transfer (H12), and no conclusion reached history robustly (H13). These are negative and null results
+descriptive (H6) or about uncertainty itself (H7 for POV). No difference in historical
+transfer from posterior-world policy training was established (H12), and no robust conclusion
+existed to carry to history (H13). These are negative and null results
 for these designs, data and budgets; they are not evidence that such methods cannot work.
 
 ## 4. Limits stated in advance

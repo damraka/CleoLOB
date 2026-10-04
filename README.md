@@ -64,8 +64,9 @@ or published.
 | Richer generators (H2–H5) | Not supported. Every family is separable from history (AUC ≈ 1; H2 VACUOUS), support coverage is 0–1.5% (H3), and the selected generator G3 is worse than G0 cross-instrument (H4 FAILED) and cross-venue (H5 FAILED). |
 | Execution-aware calibration (H10, H11) | H10 NOT_ESTABLISHED; H11 FAILED (generic realism loss beyond the noninferiority margin). |
 | Model risk over 21 plausible worlds (H7–H9) | Model uncertainty is material for POV only (H7). No policy comparison is robust (H8 NOT_ESTABLISHED); 21 worlds give 21 distinct rankings; H9 INCONCLUSIVE. |
-| Historical transfer (H12, H13) | H12_ROW |
+| Historical transfer (H12, H13) | H12 NOT_ESTABLISHED: on 144 bounded replay episodes of the final holdout (ETH 2021-01-01), no difference was established between posterior-world and single-world training in the simulation-to-history cost gap of PPO or DQN, under either fill bound. The intervals are about 4 bps wide, so this is not evidence of equivalence. H13 INCONCLUSIVE: no H8-robust pair existed to test. No classical pair is determinate in history. |
 | Identifiability | No parameter of the 14 is identified at this resolution (effective rank 8). |
+| Decision benchmark (M22) | All 28 policy pairs end NOT_ESTABLISHED (abstention). Expectation, worst-case, CVaR and distributionally robust selection pick different policies. No added model complexity improved fresh-data realism, even in point estimate. |
 
 See the [v0.7 report](docs/v07-paper.md), the [final report](docs/v07-final-report.md) and the
 [requirement coverage](docs/v07-requirement-coverage.md).
@@ -339,6 +340,10 @@ CleoLOB does not currently establish:
 - unique identification of calibrated simulator parameters (v0.6 H4)
 - absolute realism of calibrated simulators: real and simulated windows remain distinguishable
   (v0.6 H8)
+- improved fresh-data realism from posterior calibration, richer generators or execution-aware
+  calibration (v0.7 H1–H5, H10, H11)
+- a policy ranking that is robust across plausible simulator worlds (v0.7 H8)
+- better historical transfer from posterior-world policy training (v0.7 H12)
 
 These are explicit research boundaries rather than hidden assumptions.
 
