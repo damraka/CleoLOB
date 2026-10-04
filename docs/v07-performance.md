@@ -39,6 +39,20 @@ time, not results.
 dry run) when memory ran critically low. It is recorded as ABORTED. The rerun used 8 workers
 with identical seeds and budgets.
 
+Later memory incidents, all recorded as ABORTED in the ledger and rerun under the same sealed
+designs:
+- the first ETH 2020-12-01 holdout evaluation and the first execution study (host low memory;
+  rerun one job at a time with at most 4 workers);
+- the first final-transfer evaluation (`results/v07/m16/transfer`, ledger entry 186). Each in-window
+  L2 update was held as two Python dicts, and the main process reached about 10.8 GB on the
+  busy 2021-01-01 day. The fix packs each episode into contiguous arrays as soon as replay time
+  passes its window (`CompactEpisode`). A regression test shows that expansion reproduces the
+  reference episodes exactly (values, key order and types). On a test fixture, retained memory
+  falls about 5×; on the real day the main process stayed under 1 GB while parsing.
+- a rerun with 4 workers (`results/v07/m16/transfer-2`, ledger entry 189), stopped by the operator
+  before parsing when the instruction to use a single worker arrived. The single-worker rerun
+  is `results/v07/m16/transfer-3`.
+
 ## GPU (workstream 55)
 
 **NOT_AVAILABLE.** There is no CUDA device. The GPU stack is optional and absent, and the
