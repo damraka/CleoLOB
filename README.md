@@ -50,13 +50,13 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
-### v0.7 research branch: generative market dynamics and model risk (not released)
+### v0.7.0: generative market dynamics, posterior calibration and robust execution (current release)
 
 v0.7 tests whether richer generators, posterior calibration and execution-aware calibration
 close the realism gap, and which execution conclusions survive model uncertainty. Everything was
 preregistered (`configs/v07/`) and evaluated on four fresh 2020 holdouts plus a final transfer
-holdout (ETH 2021-01-01). The branch is at development version `0.7.0.dev0`; nothing is tagged
-or published.
+holdout (ETH 2021-01-01). The registered studies were run on the research branch at development
+version `0.7.0.dev0` and are released unchanged in `v0.7.0`:
 
 | Question | v0.7 result |
 |---|---|
@@ -71,7 +71,7 @@ or published.
 See the [v0.7 report](docs/v07-paper.md), the [final report](docs/v07-final-report.md) and the
 [requirement coverage](docs/v07-requirement-coverage.md).
 
-### v0.6.0: market realism, calibration uncertainty and model risk (current release)
+### v0.6.0: market realism, calibration uncertainty and model risk
 
 v0.6 asks why simulator conclusions are unstable. It uses preregistered hypotheses, sealed
 designs, and fresh Deribit holdouts from September and October 2020. The registered studies
@@ -91,7 +91,8 @@ unchanged in `v0.6.0`:
 
 See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
 
-The [v0.6 final report](docs/v06-final-report.md) documents the latest release, `v0.6.0`.
+The [v0.7 final report](docs/v07-final-report.md) documents the latest release, `v0.7.0`.
+The [v0.6 final report](docs/v06-final-report.md) documents `v0.6.0`.
 The [v0.5 research report](docs/v05-paper.md) and
 [v0.5 final report](docs/v05-final-report.md) document the real-market validation study
 released as `v0.5.0`.
@@ -311,6 +312,8 @@ cleo verify-artifact examples/studies/v04/evidence
 cleo verify-artifact examples/studies/v05/evidence
 cleo verify-artifact examples/studies/v06/evidence
 cleo protocol-v06 verify
+cleo verify-v07 --bundle examples/studies/v07/evidence
+cleo protocol-v07 verify
 ```
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
@@ -362,7 +365,7 @@ vacuous and invalid outcome is retained in the [v0.6 report](docs/v06-paper.md) 
 [final report](docs/v06-final-report.md). See the [v0.6 roadmap](docs/v06-roadmap.md).
 
 v0.7, **generative market dynamics, posterior calibration, robust execution and cross-market
-validation**, is complete on the research branch and not released. Its preregistered results,
+validation**, was released as `v0.7.0`. Its preregistered results,
 including every failed, null, vacuous, aborted and invalid outcome, are in the
 [v0.7 report](docs/v07-paper.md) and the [final report](docs/v07-final-report.md). See the
 [v0.7 roadmap](docs/v0.7-roadmap.md).
