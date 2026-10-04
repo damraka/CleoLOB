@@ -70,6 +70,8 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
     c = commands.add_parser("benchmark-v07", help="frozen benchmark tasks; 'public' reruns the public replication subset")
     c.add_argument("group", choices=("all", "public"))
     c.add_argument("--root", type=Path, default=Path("."))
+    c = commands.add_parser("final-analysis-v07", help="M22 synthesis over the sealed runs (no new data access)")
+    _common(c)
     c = commands.add_parser("report-v07", help="regenerate registry, hypothesis table, claim graph, figures, explorer")
     _common(c)
     c = commands.add_parser("evidence-export-v07", help="export the public v0.7 evidence bundle")
@@ -218,6 +220,14 @@ def _benchmark(a):
     return 0
 
 
+def _final(a):
+    from .reports import final
+    r = final.run(a.out, root=a.root)
+    _print({"robust_selection": r["robust_selection"]["selected"], "realism_to_decision": r["realism_to_decision"]["verdict"],
+            "certified": {k: v["final_status"] for k, v in r["decision_benchmark"]["pairs"].items()}})
+    return 0
+
+
 def _report(a):
     from .reports import build
     r = build.build(a.root / a.out, root=a.root)
@@ -271,7 +281,7 @@ STUDIES = ("queue-study-v07", "generator-study-v07", "calibration-v4", "posterio
            "execution-study-v07", "robust-policy-study-v07", "model-risk-v07", "transfer-study-v07")
 HANDLERS: dict[str, Callable] = {"protocol-v07": _protocol, "dataset-registry-v07": _registry,
                                  "validate-market-data-v07": _validate, "replay-v07": _replay,
-                                 "benchmark-v07": _benchmark, "report-v07": _report, "evidence-export-v07": _export,
+                                 "benchmark-v07": _benchmark, "final-analysis-v07": _final, "report-v07": _report, "evidence-export-v07": _export,
                                  "claim-audit-v07": _claims, "verify-v07": _verify, **{s: _study for s in STUDIES}}
 
 
