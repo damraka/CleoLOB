@@ -272,7 +272,60 @@ stores this table without the M14 and M16 rows, which are taken from the same lo
 
 ## Evidence and verification
 
-EVIDENCE_SECTION
+- **Sealed runs.** `cleo verify-v07` reports 27 sealed runs, all valid: 21 registered study
+  runs, the superseded `m8/identifiability-2` and `m22/final` (both INVALID in the ledger), the
+  final `m22/final-2`, the transfer `m16/transfer-3`, and 2 labelled pilots. Unsealed attempt
+  directories are retained:
+  - `m6/recovery`, `m6/posterior`
+  - `m8/identifiability`
+  - `m15/execution`
+  - `m16/transfer`, `m16/transfer-2`
+  - `m17/deribit-eth-perp-2020-12-01`
+- **Protocol and ledger.** `cleo protocol-v07 verify`: valid, protocol `63fb6e56…`, 196 ledger
+  entries, head `8a1cb71d…`, 0 amendments, no fresh dataset remaining. The v0.6 (80 entries) and
+  v0.5 (80 entries) protocols verify unchanged. No v0.5/v0.6 configuration, frozen module, evidence
+  file or tag differs from `v0.6.0`.
+- **Public bundle.** `examples/studies/v07/evidence` contains:
+  - the protocol and registration documents, the ledger and the sealed designs
+  - per-run config, result, binding and provenance
+  - registry, hypothesis table, claim graph, negative results
+  - figure sources and the figure manifest
+  - requirement coverage and this report
+
+  86 files derived from restricted data, or large outputs, are excluded and listed with their
+  SHA-256 values. `cleo verify-v07 --bundle` is valid. The bundle was scanned for credentials,
+  tokens and personal absolute paths; none were found.
+- **Regeneration (tier 2).** `cleo report-v07` regenerated the registry, tables, claim graph,
+  8 figures with CSV sources and the explorer. A second regeneration was byte-identical, and the
+  figure manifest check is clean.
+- **Public reproduction (tier 3).** `cleo benchmark-v07 public` reproduces the stored digest
+  `304ecefa…`.
+- **Claim audit.** `cleo claim-audit-v07`: valid. 13 claims resolve from hypothesis through
+  protocol, dataset, run, statistic and artifact to sentence. Of 185 risky-term occurrences:
+  - 77 SUPPORTED, 10 QUALIFIED, 98 NEGATED
+  - 0 OVERCLAIM, 0 unreviewed
+
+  The 19 manual classifications are recorded with reasons in `configs/v07/claim-review.json`.
+- **Requirement coverage.** `coverage.audit`: valid, exactly 100 rows:
+  - 82 IMPLEMENTED
+  - 13 EXPLORATORY
+  - 2 ASSUMPTION_DEPENDENT
+  - 3 NOT_AVAILABLE
+- **Meaning of verification:** byte integrity plus binding consistency. It is not independent
+  scientific replication.
+
+## Release-prep audit (local, Windows 11, CPython 3.14)
+
+| Item | Result |
+|---|---|
+| Full test suite | **1,618 passed** (1,090 at the v0.6 baseline). The 2 gymnasium warnings are third-party and pre-existing. |
+| Ruff, compileall (`lob`, `tools`, `examples`, `tests`), pip check, `git diff --check` | all pass |
+| Build | `cleolob-0.7.0.dev0` wheel (203 `lob` modules, 96 in `lob.v07`) and sdist (332 entries). Twine check passes for both. Neither contains `data/`, `results/`, archives, arrays, pickles or checkpoints. The only path- or credential-like strings are deliberate negative-test fixtures. |
+| Isolated wheel install (new venv outside the checkout) | version 0.7.0.dev0; `lob` imports from `site-packages`; pip check clean; `cleo --help` and `cleo smoke` pass; all 24 v0.7 commands answer `--help`; the installed CLI verifies the public bundle; misuse exits 1 with `valid: false` |
+| Commits | all by the configured author; no AI attribution trailers |
+| Credential scan | no credentials, keys, tokens or personal paths in the files added on the branch |
+| Tags and release | none created; nothing pushed or published |
+
 
 ## Known limitations
 
@@ -294,4 +347,11 @@ EVIDENCE_SECTION
 
 ## Remaining blockers
 
-BLOCKERS_SECTION
+**Scientific blockers:** none. The negative, null, vacuous and assumption-dependent results above
+are outcomes, not blockers.
+
+**Engineering items for release preparation (not blockers for release-prep readiness):**
+- **CI.** The branch has not been pushed, so CI (including the Linux cross-platform run,
+  workstream 73) has not run on it.
+- **Release.** No v0.7.0 tag, GitHub release or PyPI upload exists, by instruction.
+
