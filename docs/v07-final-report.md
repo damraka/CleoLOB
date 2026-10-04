@@ -320,10 +320,10 @@ stores this table without the M14 and M16 rows, which are taken from the same lo
 |---|---|
 | Full test suite | **1,618 passed** (1,090 at the v0.6 baseline). The 2 gymnasium warnings are third-party and pre-existing. |
 | Ruff, compileall (`lob`, `tools`, `examples`, `tests`), pip check, `git diff --check` | all pass |
-| Build | `cleolob-0.7.0.dev0` wheel (203 `lob` modules, 96 in `lob.v07`) and sdist (332 entries). Twine check passes for both. Neither contains `data/`, `results/`, archives, arrays, pickles or checkpoints. The only path- or secret-like strings are deliberate negative-test fixtures. |
+| Build | `cleolob-0.7.0.dev0` wheel (203 `lob` modules, 96 in `lob.v07`) and sdist (332 entries). Twine check passes for both. Neither contains `data/`, `results/`, archives, arrays, pickles or checkpoints. The only path- or credential-like strings are deliberate negative-test fixtures. |
 | Isolated wheel install (new venv outside the checkout) | version 0.7.0.dev0; `lob` imports from `site-packages`; pip check clean; `cleo --help` and `cleo smoke` pass; all 24 v0.7 commands answer `--help`; the installed CLI verifies the public bundle; misuse exits 1 with `valid: false` |
 | Commits | all by the configured author; no AI attribution trailers |
-| Secret scan | no credentials, keys, tokens or personal paths in the files added on the branch |
+| Credential scan | no credentials, keys, tokens or personal paths in the files added on the branch |
 | Tags and release | none created; nothing pushed or published |
 
 
