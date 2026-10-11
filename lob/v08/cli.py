@@ -173,7 +173,23 @@ def _validate(a) -> int:
     return 0 if r["status"] != "FAIL" else 1
 
 
+# inputs each study (or study phase) needs; validated before any run directory is created
+REQUIRES: dict[str, tuple[str, ...]] = {
+    "mpc-study-v08": ("worlds",), "robust-execution-v08": ("worlds",), "completion-study-v08": ("worlds",),
+    "uncertainty-study-v08": ("worlds", "posterior"), "policy-selection-v08": ("worlds",),
+    "policy-abstention-v08": ("worlds", "posterior"), "ood-study-v08": ("worlds", "posterior"),
+    "conformal-study-v08": ("worlds",), "latency-study-v08": ("worlds",), "adversarial-stress-v08": ("worlds",),
+    "calibration-utility-v08": ("posterior",), "posterior-study-v08": ("posterior",),
+    "identifiability-v3": ("posterior",), "change-point-study-v08": ("posterior",), "regime-study-v08": ("posterior",),
+    "counterfactual-bounds-v08:synthetic": ("worlds",), "inference-v08:worlds": ("posterior",),
+    "adaptive-calibration-v08:drift": ("posterior",), "adaptive-calibration-v08:regime": ("posterior",),
+    "adaptive-calibration-v08:switch": ("posterior",), "model-averaging-v08:real": ("posterior",),
+    "transfer-study-v08:portfolio": ("worlds",), "ranking-transfer-v08:retrospective": ("mpc", "transfer"),
+    "ranking-transfer-v08:fresh": ("fresh",)}
+
+
 def _study(a) -> int:
+    from .studies.common import input_run
     module_name, _, _ = STUDIES[a.command]
     module = importlib.import_module(f"lob.v08.studies.{module_name}")
     inputs = {}
@@ -183,6 +199,14 @@ def _study(a) -> int:
         key, value = item.split("=", 1)
         inputs[key] = value
     a.inputs = inputs
+    if a.namespace in ("confirm", "holdout") and not a.design:
+        raise ValueError(f"namespace {a.namespace} requires --design (a sealed design that opened it)")
+    needed = REQUIRES.get(a.command, ()) + REQUIRES.get(f"{a.command}:{getattr(a, 'phase', '')}", ())
+    missing = [k for k in needed if k not in inputs]
+    if missing:
+        raise ValueError(f"missing --input {', '.join(missing)} (KEY=RUN of a sealed v0.8 run)")
+    for key in inputs:
+        input_run(a, key)          # every provided input must be a sealed, verifying v0.8 run
     summary = module.run(a)
     _print(summary)
     return 0 if summary.get("status") not in ("INVALID", "ERROR") else 1
@@ -216,7 +240,8 @@ def _verify(a) -> int:
     else:
         from . import artifacts, protocol as pr
         runs = a.root / a.runs
-        tree = artifacts.verify_tree(runs, root=a.root) if runs.is_dir() else {"valid": True, "runs": 0, "invalid": []}
+        found = artifacts.runs_under(runs) if runs.is_dir() else []
+        tree = artifacts.verify_tree(runs, root=a.root) if found else {"valid": True, "runs": 0, "invalid": []}
         proto = pr.verify_protocol_files(a.root)
         dag = artifacts.dag(runs, root=a.root) if runs.is_dir() else {"acyclic": True, "dangling_inputs": []}
         r = {"valid": tree["valid"] and proto["valid"] and dag["acyclic"] and not dag["dangling_inputs"],

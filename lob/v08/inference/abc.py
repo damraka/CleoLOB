@@ -321,10 +321,13 @@ def summarize(theta: np.ndarray, w: np.ndarray, prior: Prior) -> dict:
         out["parameters"][name] = {"mean": mean, "sd": sd, "q05": _wquantile(x, w, 0.05), "q50": _wquantile(x, w, 0.5),
                                    "q95": _wquantile(x, w, 0.95), "contraction": 1 - su / prior.sd_unit(),
                                    "modes": count_modes(u[:, j], w)}
-    if theta.shape[1] > 1:
-        cov = np.cov(u.T, aweights=w)
-        sd = np.sqrt(np.diag(cov)) + 1e-12
-        out["correlation"] = (cov / np.outer(sd, sd)).tolist()
+    if theta.shape[1] > 1 and out["ess"] > 1.5:
+        with np.errstate(divide="ignore", invalid="ignore"):
+            cov = np.cov(u.T, aweights=w)
+        sd = np.sqrt(np.clip(np.diag(cov), 0.0, None)) + 1e-12
+        out["correlation"] = np.nan_to_num(cov / np.outer(sd, sd)).tolist()
+    elif theta.shape[1] > 1:
+        out["correlation"] = None     # degenerate population (effective sample size below two)
     return out
 
 

@@ -138,7 +138,11 @@ def verify_run(out: str | Path, *, root: Path = PROJECT_ROOT, check_source: bool
 
 
 def runs_under(base: Path) -> list[Path]:
-    return sorted(p.parent for p in Path(base).rglob("binding.json"))
+    """Sealed runs below ``base``, skipping nested isolated protocol roots (e.g. smoke roots with their own ledger)."""
+    base = Path(base)
+    nested = [p.parent.parent.parent for p in base.rglob("configs/v08/protocol.json")]
+    return sorted(p.parent for p in base.rglob("binding.json")
+                  if not any(n != base and n in p.parents for n in nested))
 
 
 def verify_tree(base: str | Path, *, root: Path = PROJECT_ROOT) -> dict:
