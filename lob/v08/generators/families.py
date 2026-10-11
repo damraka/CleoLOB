@@ -541,6 +541,14 @@ def fixed_share(component_ll: np.ndarray, prior: np.ndarray, switch: float) -> t
         top = row.max()
         like = w * np.exp(row - top)
         total = like.sum()
+        if total <= 0.0:
+            # the best component has zero weight (possible when switch == 0) and every weighted term underflowed:
+            # normalise in log space instead, so the predictive stays finite and the weights stay a distribution
+            with np.errstate(divide="ignore"):
+                lw = np.log(w) + row
+            top = lw.max()
+            like = np.exp(lw - top)
+            total = like.sum()
         out[i] = float(math.log(total) + top)
         w = (1 - switch) * like / total + switch * np.asarray(prior)
     return out, path

@@ -301,3 +301,19 @@ def test_regression_strategy_order_never_leaves_the_window() -> None:
         book.market(SELL, book.bq[0], 0.0)
     book.check()
     assert len(book.bq) == book.levels               # the grown window shrinks back
+
+
+def test_fixed_share_survives_a_zero_weight_dominant_component() -> None:
+    # regression: with switch 0 a component weight can reach exactly 0; when that component later has the
+    # highest log-likelihood every weighted term underflowed and math.log(0) raised (ood-study-v08 INVALID)
+    from lob.v08.generators.families import fixed_share
+    comp = np.array([[0.0, -1000.0], [-1000.0, 0.0], [-2.0, -1.0]])
+    out, path = fixed_share(comp, np.array([0.5, 0.5]), 0.0)
+    assert np.all(np.isfinite(out))
+    assert out[1] == pytest.approx(-1000.0)
+    assert np.allclose(path.sum(1), 1.0)
+    # the ordinary (non-underflow) path is unchanged
+    ok = np.array([[-1.0, -2.0], [-0.5, -0.7]])
+    w = np.array([0.3, 0.7])
+    expected0 = np.log(0.3 * np.exp(-1.0) + 0.7 * np.exp(-2.0))
+    assert fixed_share(ok, w, 0.01)[0][0] == pytest.approx(expected0, abs=1e-12)
