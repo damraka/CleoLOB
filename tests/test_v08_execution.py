@@ -143,7 +143,7 @@ def test_cancel_races_can_be_lost_to_fills() -> None:
 
 
 def test_hard_completion_buys_the_remainder_after_cancels_confirm() -> None:
-    w = world(market=0.2)
+    w = world(market=0.01)          # almost no sellers: a passive bid cannot complete by itself
     lag = LatencyProfile(send=LatencyModel("fixed", 0.05, 0.0), ack=LatencyModel("fixed", 0.05, 0.0),
                          cancel=LatencyModel("fixed", 0.05, 0.0))
     passive = Fixed({0: [limit(20)]})

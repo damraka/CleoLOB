@@ -267,3 +267,37 @@ def test_market_sim_strategy_messages_are_time_ordered() -> None:
     order = []
     sim.run_bin([(0.05, 1, lambda: order.append("late")), (0.01, 0, lambda: order.append("early"))])
     assert order == ["early", "late"]
+
+
+def test_regression_uniform_cancels_keep_integer_queue_positions() -> None:
+    """Regression: continuous cancel positions made ``ahead`` fractional; FIFO then left an epsilon-sized
+    strategy remainder resting at an emptied touch ("strategy volume at an empty touch")."""
+    rng = np.random.default_rng(7)
+    for trial in range(200):
+        book = AggBook(refill=lambda level, r: 5, rng=np.random.default_rng(trial), levels=10, mid_ticks=1000)
+        oid = book.submit_limit(BUY, int(rng.integers(1, 4)), 0.0)
+        book.add(BUY, 0, int(rng.integers(1, 10)))
+        for _ in range(int(rng.integers(1, 4))):
+            book.cancel(BUY, 0, int(rng.integers(1, 4)))
+        assert float(book.own[oid].ahead).is_integer()
+        book.market(SELL, book.bq[0], 1.0)            # consume exactly the visible touch
+        book.check()
+        assert book.own[oid].status == "filled" and book.own[oid].remaining == 0
+
+
+def test_regression_strategy_order_never_leaves_the_window() -> None:
+    """Regression: a long rally of touch improvements dropped the level holding a strategy bid."""
+    book = make_book(depth=5, levels=10)
+    oid = book.submit_limit(BUY, 2, 0.0)
+    for _ in range(30):                                # widen the spread, then improve the bid touch
+        book.market(BUY, book.aq[0], 0.0)
+        book.add(BUY, -1, 1)
+    book.check()
+    order = book.own[oid]
+    assert order.status == "resting" and book.index(BUY, order.price) is not None
+    assert len(book.bq) > book.levels
+    book.cancel_own(oid)
+    for _ in range(40):
+        book.market(SELL, book.bq[0], 0.0)
+    book.check()
+    assert len(book.bq) == book.levels               # the grown window shrinks back

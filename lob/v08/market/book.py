@@ -13,11 +13,14 @@ Semantics (each covered by tests):
   is consumed in FIFO order: background ahead of the first strategy order, that
   order, background between, the next order, ..., then background behind;
 * a depleted touch moves the price away (``shift_out``) and a new deepest level
-  is drawn from the registered refill sampler;
+  is drawn from the registered refill sampler; when the touch improves
+  (``shift_in``) the deepest level leaves the window unless a strategy order
+  rests there, in which case the window grows (it shrinks back as the touch
+  recedes), so strategy orders are never dropped;
 * a background addition joins the back of its level (strategy positions are
   unchanged); an addition inside the spread creates a new touch;
-* a background cancellation removes a contiguous block of background volume at
-  a position chosen by ``cancel_position`` (``uniform``: the ground-truth default;
+* a background cancellation removes a contiguous block of whole background lots
+  at a position chosen by ``cancel_position`` (``uniform``: the ground-truth default;
   ``front``/``back``: the extreme assumptions used for bounds), never strategy
   volume, and reduces the ``ahead`` of each strategy order by the overlap;
 * ``hidden_fraction`` > 0 makes a fully consumed touch replenish once per market
@@ -50,7 +53,7 @@ class OwnOrder:
     price: int
     qty: int
     remaining: int
-    ahead: float                  # background volume in front of this order at its price
+    ahead: int                    # background lots in front of this order at its price (whole lots)
     entered_t: float
     status: str = "resting"       # resting | filled | cancelled
     fills: list = field(default_factory=list)   # (exchange time, price, qty)
@@ -96,7 +99,7 @@ class AggBook:
 
     def index(self, side: int, price: int) -> int | None:
         i = self.bid_px - price if side == BUY else price - self.ask_px
-        return i if 0 <= i < self.levels else None
+        return i if 0 <= i < len(self.queues(side)) else None
 
     def price(self, side: int, level: int) -> int:
         return self.bid_px - level if side == BUY else self.ask_px + level
@@ -115,7 +118,8 @@ class AggBook:
             if self._at.get((side, self.touch(side))):
                 raise BookError("strategy volume at an empty touch")
             q.pop(0)
-            q.append(max(1, int(self.refill(self.levels - 1, self.rng))))
+            if len(q) < self.levels:      # a window grown by _shift_in shrinks back to its registered size
+                q.append(max(1, int(self.refill(self.levels - 1, self.rng))))
             if side == BUY:
                 self.bid_px -= 1
             else:
@@ -127,10 +131,9 @@ class AggBook:
     def _shift_in(self, side: int, ticks: int) -> None:
         q = self.queues(side)
         for _ in range(ticks):
-            dropped = self.price(side, self.levels - 1)
-            if self._at.get((side, dropped)):
-                raise BookError("strategy order would leave the modelled window")
-            q.pop()
+            dropped = self.price(side, len(q) - 1)
+            if len(q) >= self.levels and not self._at.get((side, dropped)):
+                q.pop()           # the deepest level leaves the window unless a strategy order rests there
             q.insert(0, 0)
             if side == BUY:
                 self.bid_px += 1
@@ -149,14 +152,14 @@ class AggBook:
             if ticks > 0:
                 self._shift_in(side, ticks)
             level = 0
-        level = min(level, self.levels - 1)
+        level = min(level, len(self.queues(side)) - 1)
         self.queues(side)[level] += qty
         return qty
 
     def cancel(self, side: int, level: int, qty: int) -> int:
         """Remove up to ``qty`` background lots at ``level`` (never strategy volume)."""
-        level = min(max(level, 0), self.levels - 1)
         q = self.queues(side)
+        level = min(max(level, 0), len(q) - 1)
         price = self.price(side, level)
         ids = self._at.get((side, price), ())
         own = sum(self.own[o].remaining for o in ids)
@@ -165,17 +168,18 @@ class AggBook:
         if c <= 0:
             return 0
         if ids:
+            # block positions are whole lots, so every strategy order's queue position stays an integer
             if self.cancel_position == "uniform":
-                start = float(self.rng.uniform(0.0, background - c)) if background > c else 0.0
+                start = int(self.rng.integers(0, background - c + 1)) if background > c else 0
             elif self.cancel_position == "front":
-                start = 0.0
+                start = 0
             else:
-                start = float(background - c)
+                start = background - c
             end = start + c
             for oid in ids:
                 order = self.own[oid]
-                overlap = max(0.0, min(order.ahead, end) - start) if start < order.ahead else 0.0
-                order.ahead = max(0.0, order.ahead - overlap)
+                overlap = max(0, min(order.ahead, end) - start) if start < order.ahead else 0
+                order.ahead = max(0, order.ahead - overlap)
         q[level] -= c
         if level == 0 and q[0] <= 0:
             self._shift_out(side)
@@ -221,10 +225,10 @@ class AggBook:
         if not ids:
             return
         rem = take
-        consumed_bg = 0.0
+        consumed_bg = 0
         for oid in list(ids):
             order = self.own[oid]
-            bg = min(rem, max(0.0, order.ahead - consumed_bg))
+            bg = min(rem, max(0, order.ahead - consumed_bg))
             consumed_bg += bg
             rem -= bg
             if rem <= 0:
@@ -234,7 +238,8 @@ class AggBook:
                 order.remaining -= mine
                 order.fills.append((t, price, int(mine)))
                 rem -= mine
-            if order.remaining == 0:
+            if order.remaining <= 0:
+                order.remaining = 0
                 order.status = "filled"
                 ids.remove(oid)
             if rem <= 0:
@@ -242,7 +247,7 @@ class AggBook:
         consumed_bg += max(rem, 0)
         for oid in ids:
             order = self.own[oid]
-            order.ahead = max(0.0, order.ahead - min(consumed_bg, order.ahead))
+            order.ahead = max(0, order.ahead - min(consumed_bg, order.ahead))
         if not ids:
             del self._at[(side, price)]
 
@@ -261,13 +266,13 @@ class AggBook:
             if ticks > 0:
                 self._shift_in(side, ticks)
             level = 0
-        level = min(max(level, 0), self.levels - 1)
-        price = self.price(side, level)
         q = self.queues(side)
+        level = min(max(level, 0), len(q) - 1)
+        price = self.price(side, level)
         own = self.own_volume(side, price)
         oid = self._next
         self._next += 1
-        self.own[oid] = OwnOrder(oid, side, price, qty, qty, float(q[level] - own), t)
+        self.own[oid] = OwnOrder(oid, side, price, qty, qty, int(q[level] - own), t)
         self._at.setdefault((side, price), []).append(oid)
         q[level] += qty
         return oid
@@ -313,7 +318,7 @@ class AggBook:
             raise BookError("crossed or locked book")
         for side in (BUY, SELL):
             q = self.queues(side)
-            if q[0] <= 0 or min(q) < 0 or len(q) != self.levels:
+            if q[0] <= 0 or min(q) < 0 or len(q) < self.levels:
                 raise BookError("invalid queue sizes")
         for (side, price), ids in self._at.items():
             i = self.index(side, price)
@@ -321,5 +326,5 @@ class AggBook:
                 raise BookError("strategy volume exceeds its level")
             for oid in ids:
                 o = self.own[oid]
-                if o.status != "resting" or o.remaining <= 0 or o.ahead < -1e-9:
+                if o.status != "resting" or o.remaining <= 0 or o.ahead < 0 or o.ahead != int(o.ahead):
                     raise BookError("inconsistent strategy order")
