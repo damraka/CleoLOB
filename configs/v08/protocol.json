@@ -1021,5 +1021,28 @@
     "no causal or permanent real-market impact claims",
     "no HFT latency claims; benchmarks are local research-workload measurements",
     "Bitstamp order-level captures are not used in v0.8"
+  ],
+  "mandate_secondary": {
+    "qty_lots": 400,
+    "role": "registered secondary mandate (amendment 1); every hypothesis status is decided on the primary mandate only; secondary results are reported beside each member and labelled SECONDARY",
+    "studies": [
+      "mpc_benchmark",
+      "robust_benchmark",
+      "completion_benchmark",
+      "plausible_world_design (H5)",
+      "selection_benchmark",
+      "abstention_benchmark",
+      "conformal (H19)",
+      "counterfactual_benchmark"
+    ]
+  },
+  "amendments": [
+    {
+      "number": 1,
+      "before_confirmatory_data": true,
+      "change": "adds the secondary 400-lot mandate (20 x the median touch) to the execution studies; no hypothesis, endpoint, margin, threshold, alpha, dataset role or primary mandate changes",
+      "reason": "a development-seed pilot in worlds built from the registered development and calibration fits showed that under the primary 40-lot mandate every aggressive policy pays about the half spread plus the taker fee (decision problem nearly degenerate); a larger registered mandate is reported alongside so the contrast is visible, while statuses stay tied to the frozen primary mandate",
+      "pilot_disclosure": "pilot runs used dev seeds only (results/v08/dev, results/v08/inference); no confirm or holdout namespace had been opened"
+    }
   ]
 }
