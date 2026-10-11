@@ -128,6 +128,8 @@ def parser() -> argparse.ArgumentParser:
     _v06_commands(commands)
     from .v07.cli import add_commands as _v07_commands
     _v07_commands(commands)
+    from .v08.cli import add_commands as _v08_commands
+    _v08_commands(commands)
     return result
 
 
@@ -248,8 +250,14 @@ def _run_v07(args) -> int | None:
     return dispatch(args)
 
 
+def _run_v08(args) -> int | None:
+    from .v08.cli import dispatch
+    return dispatch(args)
+
+
 OPTIONAL_EXTRAS = {"rl": ("stable_baselines3", "torch", "tensorboard"), "plots": ("plotly",),
-                   "web": ("fastapi", "uvicorn", "streamlit")}
+                   "web": ("fastapi", "uvicorn", "streamlit"), "inference": ("scipy",),
+                   "distributed": ("dask", "distributed")}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -404,6 +412,8 @@ def main(argv: list[str] | None = None) -> int:
         elif (code := _run_v06(args)) is not None:
             return code
         elif (code := _run_v07(args)) is not None:
+            return code
+        elif (code := _run_v08(args)) is not None:
             return code
         elif args.command == "protocol":
             from .preregistration import verify_protocol_files

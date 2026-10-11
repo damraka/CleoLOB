@@ -1,0 +1,19 @@
+{
+ "schema": "cleolob-v08-compute-1",
+ "machine_note": "single workstation (16 logical CPUs, 32 GB RAM); at most 8 worker processes; one historical tape in memory at a time",
+ "budgets": {
+  "tiny": "CI fixtures and smoke (minutes)",
+  "small": "pilot sizing on dev seeds",
+  "medium": "registered confirmatory size unless a design states otherwise",
+  "large": "only if a sealed design requests it",
+  "exhaustive": "never used without an amendment"
+ },
+ "limits": {
+  "max_workers": 8,
+  "max_wall_hours_per_study": 6,
+  "max_episodes_per_study": 200000,
+  "max_abc_simulations_per_posterior": 6000
+ },
+ "early_stopping": "none: every planned unit runs; interrupted runs resume from checkpoints with identical settings or are retained as ABORTED attempts",
+ "planning_rule": "a plan.json (planner estimate + seed plan from a dev-seed pilot SD) is written before every confirmatory run"
+}
