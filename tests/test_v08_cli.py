@@ -75,3 +75,12 @@ def test_optional_extras_are_declared() -> None:
     text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     for extra in ("inference", "neural", "distributed", "all"):
         assert f"{extra} = [" in text
+
+
+def test_smoke_standalone_mode_without_repository_configs(tmp_path, monkeypatch) -> None:
+    """An installed wheel has no repository configs: the smoke must still run, with binding NOT_AVAILABLE."""
+    import lob.v08.smoke as smoke
+    monkeypatch.setattr(smoke, "PROJECT_ROOT", tmp_path / "no-repo")
+    report = smoke.run(tmp_path / "out")
+    assert report["valid"] and report["mode"] == "standalone"
+    assert report["protocol_binding"].startswith("NOT_AVAILABLE")

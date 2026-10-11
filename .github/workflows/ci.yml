@@ -44,10 +44,27 @@ jobs:
           "$PY" -m lob.cli --help
           "$PY" -m lob.cli smoke --out "wheel-smoke-${{ matrix.python-version }}"
           "$PY" -m lob.cli verify-artifact "wheel-smoke-${{ matrix.python-version }}"
+          for c in protocol-v08 dataset-registry-v08 validate-market-data-v08 regime-study-v08 change-point-study-v08                    adaptive-calibration-v08 inference-v08 identifiability-v3 posterior-study-v08 model-averaging-v08                    uncertainty-study-v08 ood-study-v08 conformal-study-v08 calibration-utility-v08 completion-study-v08                    robust-execution-v08 mpc-study-v08 policy-selection-v08 policy-abstention-v08 adversarial-stress-v08                    counterfactual-bounds-v08 latency-study-v08 transfer-study-v08 ranking-transfer-v08 benchmark-v08                    final-analysis-v08 report-v08 evidence-export-v08 claim-audit-v08 verify-v08 smoke-v08; do
+            "$PY" -m lob.cli "$c" --help > /dev/null
+          done
+          "$PY" -m lob.cli smoke-v08 --out "wheel-smoke-v08-${{ matrix.python-version }}"
       - name: Verify committed compact evidence
         run: python -m lob.cli verify-artifact examples/studies/v03
       - name: Verify v0.4 compact evidence
         run: python -m lob.cli verify-artifact examples/studies/v04/evidence
+      - name: Verify the v0.8 protocol, ledger and public bundle
+        shell: bash
+        run: |
+          python -m lob.cli protocol-v08 verify
+          python -m lob.cli verify-v08 --bundle examples/studies/v08
+          python -m lob.cli claim-audit-v08 --bundle examples/studies/v08
+          python -m lob.cli smoke-v08 --out "$RUNNER_TEMP/smoke-v08"
+      - name: Build and check distributions
+        shell: bash
+        run: |
+          python -m pip install build twine
+          python -m build --outdir build-dist
+          python -m twine check build-dist/*
 
   container:
     runs-on: ubuntu-latest
