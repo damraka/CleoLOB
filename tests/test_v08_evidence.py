@@ -142,3 +142,21 @@ def test_bundle_export_and_offline_verification(v08_root) -> None:
     assert reporting.verify_bundle(v08_root / "bundle")["valid"]
     (v08_root / "bundle/runs/final/result.json").write_text("{}", encoding="utf-8")
     assert not reporting.verify_bundle(v08_root / "bundle")["valid"]
+
+
+def test_claim_graph_never_resolves_to_a_retained_failed_attempt(v08_root) -> None:
+    # regression: the claim graph took the newest run per analysis by mtime, so a retained INVALID attempt with
+    # the same analysis could be cited if it was touched after its rerun
+    import os
+    from lob.v08 import protocol as pr
+    good = artifacts.new_run(v08_root / "results/v08/confirm/study-2")
+    artifacts.finalize(good, analysis="study", config={}, result={"v": "good"}, root=v08_root, check_source=False)
+    bad = artifacts.new_run(v08_root / "results/v08/confirm/study")
+    artifacts.finalize(bad, analysis="study", config={}, result={"v": "bad"}, root=v08_root, check_source=False)
+    os.utime(bad, None)
+    pr.append_event(v08_root / pr.LEDGER_PATH, "attempt", design="d", reason="retained", root=v08_root,
+                    protocol=pr.load_protocol(v08_root / pr.PROTOCOL_PATH),
+                    payload={"directory": "results/v08/confirm/study", "outcome": "INVALID", "note": "defect"})
+    runs = claims._runs_by_analysis(v08_root / "results/v08",
+                                    claims._retained_attempts(v08_root / pr.LEDGER_PATH))
+    assert runs["study"] == good

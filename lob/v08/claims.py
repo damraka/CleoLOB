@@ -44,12 +44,26 @@ def _pointer(doc, pointer: str):
     return cur
 
 
-def _runs_by_analysis(base: Path) -> dict[str, Path]:
+def _retained_attempts(ledger: Path) -> set[str]:
+    """Run directories (relative to ``results/v08``) that the ledger records as INVALID/ABORTED/... attempts."""
+    if not ledger.is_file():
+        return set()
+    out = set()
+    for line in ledger.read_text(encoding="utf-8").splitlines():
+        entry = json.loads(line) if line.strip() else {}
+        directory = (entry.get("payload") or {}).get("directory") if entry.get("event") == "attempt" else None
+        if directory:
+            out.add(directory.removeprefix("results/v08/").strip("/"))
+    return out
+
+
+def _runs_by_analysis(base: Path, excluded: set[str] = frozenset()) -> dict[str, Path]:
+    """Latest sealed run per analysis, never a run the ledger retains as a failed attempt."""
     found: dict[str, Path] = {}
     if not base.is_dir():
         return found
     for run in artifacts.runs_under(base):
-        if "/dev/" in run.as_posix() + "/":
+        if "/dev/" in run.as_posix() + "/" or run.relative_to(base).as_posix() in excluded:
             continue
         binding = json.loads((run / "binding.json").read_text(encoding="utf-8"))
         prev = found.get(binding["analysis"])
@@ -62,7 +76,8 @@ def graph(root: Path, *, final: str = "results/v08/final", bundle: Path | None =
     base = bundle / "runs" if bundle else root / "results/v08"
     registry = json.loads(((bundle / "configs" / "claim-registry.json") if bundle else
                            root / pr.CONFIG_DIR / "claim-registry.json").read_text(encoding="utf-8"))
-    runs = _runs_by_analysis(base)
+    ledger = (bundle / "configs" / Path(pr.LEDGER_PATH).name) if bundle else root / pr.LEDGER_PATH
+    runs = _runs_by_analysis(base, _retained_attempts(ledger))
     final_dir = (bundle / "runs" / Path(final).name) if bundle else root / final
     if (final_dir / "result.json").is_file():
         runs["final_analysis"] = final_dir
