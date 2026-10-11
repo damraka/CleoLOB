@@ -69,7 +69,8 @@ def _smooth(previous: MarketGenerator, new: MarketGenerator, rho: float) -> Mark
 
 
 def compare(template: MarketGenerator, windows: list[EventFrame], *, initial: int = 2, window: int = 3,
-            rho: float = 0.3, labeler=None, schemes: tuple[str, ...] = SCHEMES, cusum_h: float = 3.0) -> dict:
+            rho: float = 0.3, labeler=None, schemes: tuple[str, ...] = SCHEMES, cusum_h: float = 3.0,
+            block: int = 300) -> dict:
     if len(windows) <= initial:
         raise ValueError("need more windows than the initial calibration span")
     schemes = tuple(s for s in schemes if s != "regime" or labeler is not None)
@@ -90,11 +91,11 @@ def compare(template: MarketGenerator, windows: list[EventFrame], *, initial: in
         from ..regimes import block_features
         labelled: dict[int, list[EventFrame]] = {}
         for i in range(initial):
-            feats = block_features(windows[i])
+            feats = block_features(windows[i], block)
             labels = labeler.label(feats)
             for b, lab in enumerate(labels):
                 if lab >= 0:
-                    labelled.setdefault(int(lab), []).append(windows[i].slice(b * 300, (b + 1) * 300))
+                    labelled.setdefault(int(lab), []).append(windows[i].slice(b * block, (b + 1) * block))
         regime_models = {lab: template.fit(concat(parts)) for lab, parts in labelled.items() if len(parts) >= 2}
     for t in range(initial, len(windows)):
         target = windows[t]
@@ -111,7 +112,7 @@ def compare(template: MarketGenerator, windows: list[EventFrame], *, initial: in
             losses["forgetting"].append(loss(smoothed, target))
         if "regime" in schemes:
             from ..regimes import block_features
-            first = labeler.label(block_features(windows[t - 1]))
+            first = labeler.label(block_features(windows[t - 1], block))
             lab = int(first[-1]) if len(first) and first[-1] >= 0 else -1
             model = regime_models.get(lab, frozen)
             losses["regime"].append(loss(model, target))
