@@ -24,7 +24,8 @@ import numpy as np
 SOURCES = ("parameter", "calibration_window", "model_family", "queue", "latency", "hidden_liquidity", "regime")
 
 
-def decompose(values: np.ndarray, levels: dict[str, list], *, n_boot: int = 500, seed: int = 0) -> dict:
+def decompose(values: np.ndarray, levels: dict[str, list], *, n_boot: int = 500, seed: int = 0,
+              alpha: float = 0.05) -> dict:
     """``values``: worlds x seeds; ``levels``: source -> per-world level labels (sources may be absent)."""
     y = np.asarray(values, float)
     out = _decompose(y, levels)
@@ -35,8 +36,9 @@ def decompose(values: np.ndarray, levels: dict[str, list], *, n_boot: int = 500,
         boots.append(_decompose(y[idx], {k: [v[i] for i in idx] for k, v in levels.items()}))
     for key in ("aleatoric_var", "epistemic_var", "epistemic_share", *[f"share_{s}" for s in levels]):
         vals = np.asarray([b[key] for b in boots], float)
-        out[f"{key}_ci"] = [float(np.quantile(vals, 0.025)), float(np.quantile(vals, 0.975))]
+        out[f"{key}_ci"] = [float(np.quantile(vals, alpha / 2)), float(np.quantile(vals, 1 - alpha / 2))]
     out["n_boot"] = n_boot
+    out["alpha"] = alpha
     return out
 
 
@@ -68,7 +70,8 @@ def _decompose(y: np.ndarray, levels: dict[str, list]) -> dict:
 
 
 def summarize_policy_costs(rows: list[dict], *, value: str, policies: list[str], sources: list[str],
-                           n_boot: int = 300, seed: int = 0) -> dict:
+                           n_boot: int = 300, seed: int = 0, alpha: float = 0.05,
+                           pairs: list[tuple[str, str]] | None = None) -> dict:
     """Decompose per-policy values and pairwise differences from flat episode rows."""
     worlds = sorted({r["world_id"] for r in rows})
     seeds = sorted({r["seed"] for r in rows})
@@ -81,11 +84,13 @@ def summarize_policy_costs(rows: list[dict], *, value: str, policies: list[str],
         if np.isnan(y).any():
             out["policies"][p] = {"status": "INVALID", "reason": "missing episodes"}
             continue
-        out["policies"][p] = decompose(y, levels, n_boot=n_boot, seed=seed)
-    for i, a in enumerate(policies):
-        for b in policies[i + 1:]:
-            y = np.asarray([[table.get((w, s, a), np.nan) - table.get((w, s, b), np.nan) for s in seeds]
-                            for w in worlds], float)
-            if not np.isnan(y).any():
-                out["pairs"][f"{a}-{b}"] = decompose(y, levels, n_boot=n_boot, seed=seed)
+        out["policies"][p] = decompose(y, levels, n_boot=n_boot, seed=seed, alpha=alpha)
+    pairs = pairs or [(a, b) for i, a in enumerate(policies) for b in policies[i + 1:]]
+    for a, b in pairs:
+        y = np.asarray([[table.get((w, s, a), np.nan) - table.get((w, s, b), np.nan) for s in seeds]
+                        for w in worlds], float)
+        if np.isnan(y).any():
+            out["pairs"][f"{a}|{b}"] = {"status": "INVALID", "reason": "missing or INVALID episodes"}
+        else:
+            out["pairs"][f"{a}|{b}"] = decompose(y, levels, n_boot=n_boot, seed=seed, alpha=alpha)
     return out

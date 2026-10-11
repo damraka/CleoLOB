@@ -363,3 +363,29 @@ def summarize(values) -> dict:
     return {"n": int(len(v)), "mean": float(v.mean()), "sd": float(v.std(ddof=1)) if len(v) > 1 else 0.0,
             "p05": float(np.quantile(v, 0.05)), "median": float(np.median(v)), "p95": float(np.quantile(v, 0.95)),
             "max": float(v.max()), "cvar90": cvar(v, 0.9)}
+
+
+def hierarchical_paired(a: np.ndarray, b: np.ndarray, stat: Callable[[np.ndarray], float], *, alpha: float = 0.05,
+                        n_boot: int = 2000, seed: int = 0) -> dict:
+    """Paired worlds x seeds matrices; statistic of world means, difference ``stat(a) - stat(b)``.
+
+    Two-stage bootstrap (worlds, then seeds within each world, shared between a and b so pairing is kept).
+    Returns estimate, percentile interval and a two-sided bootstrap p-value for a zero difference.
+    """
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    if a.shape != b.shape or a.ndim != 2:
+        raise ValueError("a and b must be equal-shape worlds x seeds matrices")
+    w, s = a.shape
+    rng = np.random.default_rng(seed)
+    point = float(stat(a.mean(1)) - stat(b.mean(1)))
+    boots = np.empty(n_boot)
+    for k in range(n_boot):
+        wi = rng.integers(0, w, w)
+        si = rng.integers(0, s, (w, s))
+        ma = a[wi[:, None], si].mean(1)
+        mb = b[wi[:, None], si].mean(1)
+        boots[k] = stat(ma) - stat(mb)
+    lo, hi = np.quantile(boots, [alpha / 2, 1 - alpha / 2])
+    p = float(min(1.0, 2 * min(np.mean(boots <= 0), np.mean(boots >= 0))))
+    return {"estimate": point, "ci_low": float(lo), "ci_high": float(hi), "p_value": p, "worlds": w, "seeds": s,
+            "alpha": alpha, "method": "hierarchical paired bootstrap (worlds, then seeds)"}
