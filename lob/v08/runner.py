@@ -19,6 +19,7 @@ import hashlib
 import importlib
 import json
 from pathlib import Path
+import sys
 from typing import Any, Callable
 
 from ..config import canonical_json
@@ -44,6 +45,31 @@ class Task:
 def _resolve(fn: str) -> Callable:
     module, name = fn.split(":")
     return getattr(importlib.import_module(module), name)
+
+
+def disable_power_throttling() -> bool:
+    """Opt this process out of Windows execution-speed (EcoQoS) throttling; a no-op elsewhere.
+
+    Windows can treat windowless pool workers as background work and confine them to efficiency cores; on a
+    hybrid laptop CPU that left 16 workers sharing about three cores. Results are unaffected either way.
+    """
+    if sys.platform != "win32":
+        return False
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        class _State(ctypes.Structure):
+            _fields_ = [("Version", wintypes.ULONG), ("ControlMask", wintypes.ULONG), ("StateMask", wintypes.ULONG)]
+
+        kernel32 = ctypes.WinDLL("kernel32")
+        kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        kernel32.SetProcessInformation.argtypes = [wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD]
+        state = _State(1, 1, 0)   # version 1; control execution speed; state off = never throttle
+        return bool(kernel32.SetProcessInformation(kernel32.GetCurrentProcess(), 4, ctypes.byref(state),
+                                                   ctypes.sizeof(state)))
+    except (OSError, AttributeError):
+        return False
 
 
 def _execute(task: Task) -> tuple[str, Any]:
@@ -129,7 +155,7 @@ def run_tasks(tasks: list[Task], *, workers: int = 1, checkpoint: Path | None = 
                 if progress:
                     progress(len(results), len(tasks))
         else:
-            with ProcessPoolExecutor(max_workers=workers) as pool:
+            with ProcessPoolExecutor(max_workers=workers, initializer=disable_power_throttling) as pool:
                 futures = [pool.submit(_execute, t) for t in pending]
                 for future in as_completed(futures):
                     task_id, value = future.result()

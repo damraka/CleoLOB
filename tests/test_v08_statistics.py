@@ -154,3 +154,12 @@ def test_planning_budgets_estimates_and_seed_plans(tmp_path) -> None:
     assert planning.within_budget(est, planning.budget("tiny"))["within_budget"] is False
     path = planning.write_plan(tmp_path / "plan", {"estimate": est, "seeds": plan})
     assert json.loads(path.read_text())["seeds"]["seeds"] == plan["seeds"]
+
+
+def test_worker_power_throttling_opt_out_is_safe_on_every_platform() -> None:
+    import sys
+    from lob.v08.runner import disable_power_throttling
+    result = disable_power_throttling()
+    assert result is (sys.platform == "win32") or result is False
+    if sys.platform != "win32":
+        assert result is False
