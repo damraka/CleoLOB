@@ -99,6 +99,9 @@ def add_commands(commands: argparse._SubParsersAction) -> None:
         c.add_argument("--root", type=Path, default=Path("."))
         c.add_argument("--out", required=True)
         c.add_argument("--final", default="results/v08/final", help="final-analysis run directory")
+        if name == "report-v08":
+            c.add_argument("--input", action="append", default=[], metavar="KEY=RUN",
+                           help="exploratory runs for figures: transfer, latency, ood, posterior, averaging")
     c = commands.add_parser("claim-audit-v08", help="fail-closed claim graph and wording audit of README and v0.8 docs")
     c.add_argument("--root", type=Path, default=Path("."))
     c.add_argument("--final", default="results/v08/final")
@@ -213,8 +216,17 @@ def _study(a) -> int:
 
 
 def _report(a) -> int:
-    from .reporting import build_report
-    r = build_report(a.root, out=a.out, final=a.final)
+    from .reporting import FIGURE_INPUTS, build_report
+    from .artifacts import verify_run
+    extra = {}
+    for item in a.input:
+        key, sep, value = item.partition("=")
+        if not sep or key not in FIGURE_INPUTS:
+            raise ValueError(f"--input must be KEY=RUN with KEY in {', '.join(FIGURE_INPUTS)}")
+        if not verify_run(a.root / value, root=a.root)["valid"]:
+            raise ValueError(f"--input {key}: {value} is not a sealed, verifying v0.8 run")
+        extra[key] = value
+    r = build_report(a.root, out=a.out, final=a.final, extra_inputs=extra)
     _print(r)
     return 0
 

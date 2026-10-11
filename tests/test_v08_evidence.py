@@ -160,3 +160,26 @@ def test_claim_graph_never_resolves_to_a_retained_failed_attempt(v08_root) -> No
     runs = claims._runs_by_analysis(v08_root / "results/v08",
                                     claims._retained_attempts(v08_root / pr.LEDGER_PATH))
     assert runs["study"] == good
+
+
+def test_report_draws_figures_from_exploratory_inputs(v08_root) -> None:
+    # regression: report-v08 could not receive exploratory runs, so their figures were never drawn
+    _final(v08_root, {f"H{k}": "NOT_AVAILABLE" for k in range(1, 22)})
+    profiles = ("zero", "uniform_5ms", "uniform_50ms", "uniform_250ms", "stale_feed_1s")
+    lat = _run(v08_root, "explore/latency", {"summary": {"twap": {p: {"economic_cost_mean_bps": 1.0}
+                                                                   for p in profiles}}})
+    rel = lat.relative_to(v08_root).as_posix()
+    out = reporting.build_report(v08_root, out="results/v08/report", final="results/v08/final",
+                                 extra_inputs={"latency": rel})
+    assert out["status"] == "SEALED"
+    figs = json.loads((v08_root / "results/v08/report/figures.json").read_text(encoding="utf-8"))
+    assert any(f["figure"] == "latency_sensitivity.svg" for f in figs)
+
+
+def test_report_cli_rejects_unknown_or_unsealed_inputs(v08_root, capsys) -> None:
+    from lob.cli import main as cli_main
+    _final(v08_root, {f"H{k}": "NOT_AVAILABLE" for k in range(1, 22)})
+    for bad in ("nonsense=results/v08/final", "latency=results/v08/not-a-run"):
+        code = cli_main(["report-v08", "--root", str(v08_root), "--out", "results/v08/r", "--input", bad])
+        assert code == 1 and json.loads(capsys.readouterr().out)["status"] == "INVALID"
+    assert not (v08_root / "results/v08/r").exists()

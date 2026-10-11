@@ -148,12 +148,15 @@ def _figs(root: Path, final: dict, figdir: Path) -> list[dict]:
                                         is not None else None for k in names],
                                 title="Bounded paired cost differences on twin tapes (H14)", ylabel="bps",
                                 provenance={"run": inputs["counterfactual"], "pointer": "/mandates/primary/pairs"}))
-    for extra_key, maker in (("transfer", _transfer_fig), ("latency", _latency_fig), ("ood", _ood_fig),
-                             ("posterior", _posterior_fig), ("averaging", _averaging_fig)):
+    for extra_key, maker in zip(FIGURE_INPUTS, (_transfer_fig, _latency_fig, _ood_fig, _posterior_fig,
+                                                _averaging_fig)):
         e = res(extra_key)
         if e:
             made.extend(maker(figdir, e, inputs[extra_key]))
     return made
+
+
+FIGURE_INPUTS = ("transfer", "latency", "ood", "posterior", "averaging")
 
 
 def _transfer_fig(figdir, e, run):
