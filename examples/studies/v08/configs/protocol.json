@@ -1,0 +1,1055 @@
+{
+  "schema": "cleolob-v08-protocol-1",
+  "protocol_id": "cleolob-v0.8-decision-uncertainty",
+  "frozen_at_utc": "2026-10-11T15:12:34Z",
+  "base_commit": "6742eb6ab061c1e9019cb4288ab4508cf56570bd",
+  "branch": "research/v0.8-decision-uncertainty",
+  "research_question": "Can execution decisions remain scientifically reliable when market models are imperfect, regimes drift through time, model/parameter/queue/latency uncertainty is explicit, execution completion is mandatory or constrained, and conclusions must transfer across time, instruments, venues and plausible market worlds?",
+  "statuses": [
+    "ESTABLISHED",
+    "NOT_ESTABLISHED",
+    "FAILED",
+    "INVALID",
+    "INCONCLUSIVE",
+    "NOT_AVAILABLE",
+    "EXPLORATORY",
+    "ASSUMPTION_DEPENDENT",
+    "NOT_EVALUABLE"
+  ],
+  "gate_statuses": [
+    "ACCEPTED_UNDER_GATE",
+    "REJECTED",
+    "NOT_ESTABLISHED",
+    "NO_ACCEPTABLE_MODEL",
+    "NOT_EVALUABLE"
+  ],
+  "history": {
+    "v07_protocol_sha256": "63fb6e566ee713b7080b9c6a00385e8f0184c9e2511171562fbdc0e4d145455c",
+    "v07_ledger_entries": 196,
+    "v07_ledger_head_sha256": "8a1cb71dc4e7ac6717bfaeb6b3ee0afbbdc1a101fb2bc42c5a9b19df426dea22"
+  },
+  "m0_audit_disclosure": "Before this freeze, during the M0 repository audit, cached tapes of consumed days (ETH 2020-04-01, 2020-10-01 and 2020-12-01, BTC 2020-11-01, BitMEX XBTUSD 2020-11-01) were opened to read lot scales, touch sizes and 100 ms event rates. No v0.8 model was fitted to them and no v0.8 outcome was computed. Development of the v0.8 code used synthetic worlds and the dev seed namespace only. A headers-only probe of an already-consumed Tardis file returned HTTP 403.",
+  "datasets": [
+    {
+      "id": "deribit-eth-perp-2020-04-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-04-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-05-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-05-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-06-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-06-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-07-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-08-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-08-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-09-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-10-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-10-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "development",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-11-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "calibration",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2020-12-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2020-12-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "selection",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2021-01-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2021-01-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-btc-perp-2020-07-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-07-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-btc-perp-2020-09-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-09-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-btc-perp-2020-11-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "bitmex-xbtusd-2020-11-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "bitmex",
+      "instrument": "XBTUSD",
+      "date": "2020-11-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "retrospective",
+      "freshness_at_freeze": "consumed",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2021-02-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2021-02-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_temporal",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-btc-perp-2021-02-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2021-02-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_instrument",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "bitmex-xbtusd-2021-02-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "bitmex",
+      "instrument": "XBTUSD",
+      "date": "2021-02-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "fresh_cross_venue",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-eth-perp-2021-03-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "ETH-PERPETUAL",
+      "date": "2021-03-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "final_holdout",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "deribit-btc-perp-2021-03-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "deribit",
+      "instrument": "BTC-PERPETUAL",
+      "date": "2021-03-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "final_holdout",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    },
+    {
+      "id": "bitmex-xbtusd-2021-03-01",
+      "provider": "Tardis.dev free first-day-of-month sample",
+      "venue": "bitmex",
+      "instrument": "XBTUSD",
+      "date": "2021-03-01",
+      "data_types": [
+        "incremental_book_L2",
+        "trades"
+      ],
+      "capability_level": "aggregate_l2",
+      "role": "final_holdout",
+      "freshness_at_freeze": "fresh",
+      "allowed_claims": [
+        "aggregate_book_statistics",
+        "generator_calibration",
+        "regime_detection",
+        "drift_detection",
+        "bounded_counterfactual_execution",
+        "ranking_transfer_bounded"
+      ]
+    }
+  ],
+  "periods": {
+    "development": [
+      "deribit-eth-perp-2020-10-01"
+    ],
+    "calibration": [
+      "deribit-eth-perp-2020-11-01"
+    ],
+    "selection": [
+      "deribit-eth-perp-2020-12-01"
+    ],
+    "retrospective_chronology": [
+      "deribit-eth-perp-2020-04-01",
+      "deribit-eth-perp-2020-05-01",
+      "deribit-eth-perp-2020-06-01",
+      "deribit-eth-perp-2020-07-01",
+      "deribit-eth-perp-2020-08-01",
+      "deribit-eth-perp-2020-09-01",
+      "deribit-eth-perp-2020-10-01",
+      "deribit-eth-perp-2020-11-01",
+      "deribit-eth-perp-2020-12-01",
+      "deribit-eth-perp-2021-01-01"
+    ],
+    "retrospective_transfer": {
+      "temporal": "deribit-eth-perp-2021-01-01",
+      "instrument": "deribit-btc-perp-2020-11-01",
+      "venue": "bitmex-xbtusd-2020-11-01"
+    },
+    "fresh_transfer": {
+      "temporal": "deribit-eth-perp-2021-02-01",
+      "instrument": "deribit-btc-perp-2021-02-01",
+      "venue": "bitmex-xbtusd-2021-02-01"
+    },
+    "final_holdout": [
+      "deribit-eth-perp-2021-03-01",
+      "deribit-btc-perp-2021-03-01",
+      "bitmex-xbtusd-2021-03-01"
+    ],
+    "real_windows": {
+      "count": 24,
+      "seconds": 600,
+      "offset_s": 900,
+      "rule": "window h starts h * 3600 + 900 s after the first tape sample; windows with < 95% valid bins are excluded and listed"
+    },
+    "lot_rule": "lot = median touch size (both sides, valid samples) of that dataset / 20"
+  },
+  "holdout_rules": {
+    "fresh_holdouts": "declared fresh in this ledger before the freeze; read only by a sealed design listing them; first access recorded before any outcome is computed; later readers are posthoc",
+    "no_model_selection_on_holdouts": true,
+    "no_training_on_holdouts": true,
+    "retrospective_cap": "results on consumed days carry RETROSPECTIVE and are capped at EXPLORATORY"
+  },
+  "acquisition_rule": {
+    "probe": "headers-only GET (Range bytes=0-0) of the consumed control file https://datasets.tardis.dev/v1/deribit/trades/2021/01/01/ETH-PERPETUAL.csv.gz",
+    "on_probe_failure": "ledger attempt NOT_AVAILABLE for each holdout the design reads; no holdout byte is requested; the holdout stays fresh; dependent hypotheses are NOT_AVAILABLE",
+    "on_probe_success": "ledger the downloaded stage, then download with the v0.7 bounded downloader; one retry; no substitution of dates, instruments or venues"
+  },
+  "seed_namespaces": {
+    "names": [
+      "dev",
+      "confirm",
+      "holdout"
+    ],
+    "derivation": "SeedSequence([namespace id, int(sha256(study)[:12], 16), index]) -> uint32",
+    "dev": "development, pilots and tests; never used for confirmatory statistics",
+    "confirm": "opened only by a sealed design after the freeze (ledger open_namespace)",
+    "holdout": "the sealed synthetic multi-axis holdout; opened exactly once by the final design"
+  },
+  "mandate": {
+    "side": "buy",
+    "qty_lots": 40,
+    "horizon_s": 120.0,
+    "decision_dt_s": 5.0,
+    "warmup_s": 30.0,
+    "settlement_s": 10.0,
+    "fees": {
+      "taker_bps": 1.0,
+      "maker_bps": -0.25,
+      "per_lot_ticks": 0.0
+    },
+    "completion_primary": "hard",
+    "penalty_bps": 25.0,
+    "urgency_fraction": 0.8,
+    "cost_endpoint": "economic_cost_bps (actual fills only; completion, hypothetical residual, penalty and optimization objective reported separately)"
+  },
+  "policies": {
+    "baselines": {
+      "twap": {},
+      "vwap": {},
+      "pov": {
+        "participation": 0.1
+      },
+      "ac": {
+        "kappa_t": 1.5
+      },
+      "heuristic": {
+        "lag_slices": 1.0
+      },
+      "random": {}
+    },
+    "adaptive": {
+      "adaptive_twap": {
+        "lag_slices": 1.0
+      },
+      "liquidity_twap": {
+        "low": 0.5,
+        "high": 2.0
+      },
+      "adaptive_vwap": {},
+      "volatility_aware": {
+        "kappa_t": 1.5,
+        "max_kappa_t": 4.0
+      },
+      "adaptive_pov": {
+        "participation": 0.1,
+        "max_participation": 0.5
+      },
+      "dynamic_ac": {
+        "risk_aversion": 0.0001
+      }
+    },
+    "mpc": {
+      "mpc": {
+        "risk_aversion": 0.0001,
+        "completion_weight": 2.0
+      },
+      "mpc_robust": {
+        "robust": true
+      }
+    },
+    "robust_family": {
+      "param_schedule": {
+        "urgency": [
+          0.0,
+          1.0,
+          2.0,
+          4.0
+        ],
+        "passive": [
+          0.0,
+          0.5
+        ],
+        "catchup": [
+          1.0,
+          3.0
+        ]
+      }
+    },
+    "safe_baseline": "twap",
+    "parameters_fixed_across_worlds": true
+  },
+  "worlds": {
+    "families": [
+      "poisson",
+      "hawkes",
+      "queue_reactive",
+      "regime_switching",
+      "state_dependent",
+      "mixture"
+    ],
+    "mixture_definition": "stacking-weighted mixture of the five other families fitted on development windows",
+    "development_fit": "each family fitted by its registered estimator on the 24 development windows (lot-scaled); book model fitted by moments from the same windows",
+    "posterior": "ABC-SMC on calibration-day summaries (particles 120, generations 5, quantile 0.5, 900 bins per simulation) over each family's registered parameters; prior box = development point estimate x [1/3, 3] for rates and the family's registered box otherwise",
+    "plausible_set": "4 posterior draws per family (resampling seed 801) = 24 selection worlds",
+    "heldout_set": "4 further posterior draws per family (resampling seed 802) = 24 evaluation worlds, never used for selection",
+    "uncertainty_factors": {
+      "queue": [
+        "uniform",
+        "front",
+        "back"
+      ],
+      "latency_ms": [
+        0,
+        50,
+        250
+      ],
+      "hidden_fraction": [
+        0.0,
+        0.5
+      ]
+    },
+    "stress_scenarios": [
+      "liquidity_drought",
+      "spread_widening",
+      "cancellation_burst",
+      "market_order_burst",
+      "volatility_shock",
+      "latency_spike",
+      "stale_data_shock",
+      "resilience_collapse",
+      "asymmetric_order_flow",
+      "queue_disadvantage",
+      "hidden_liquidity_sensitivity",
+      "regime_transition",
+      "combined"
+    ],
+    "ood_scenarios": [
+      "liquidity_drought",
+      "market_order_burst",
+      "resilience_collapse",
+      "asymmetric_order_flow"
+    ],
+    "synthetic_holdout": {
+      "family": "ecology with endogenous response and a regime transition",
+      "box": "agent intensities x U[0.5, 2]; depletion U[0.5, 2]; replenish U[0, 1]; regime switch probability U[0.002, 0.02]",
+      "worlds": 12,
+      "namespace": "holdout"
+    }
+  },
+  "experiment_families": {
+    "drift_benchmark": {
+      "hypotheses": [
+        "H1",
+        "H18"
+      ],
+      "scenarios": {
+        "step_rate": "poisson truth; market and add rates x2 from window 6",
+        "branching_change": "hawkes truth; branching 0.3 -> 0.7 from window 6",
+        "gradual_rates": "poisson truth; all rates x (1 + 0.08 k) in window k",
+        "gradual_mix": "mixture of calm and active poisson worlds; active weight 0.1 -> 0.9 linearly"
+      },
+      "windows": 12,
+      "bins_per_window": 600,
+      "initial": 2,
+      "rolling": 3,
+      "forgetting_rho": 0.3,
+      "family": "state_dependent",
+      "change_window": 6,
+      "half_life": "frozen fit on window 1; degradation D(h) at horizons 1..10 windows; registered fit D_inf(1 - exp(-h/tau))"
+    },
+    "regime_benchmark": {
+      "hypotheses": [
+        "H2"
+      ],
+      "truths": "regime_switching, mean regime durations 60 s and 300 s, rate ratios 2 and 4 (4 worlds)",
+      "windows": 12,
+      "bins_per_window": 600,
+      "family": "poisson",
+      "labeler": "threshold"
+    },
+    "model_switch_benchmark": {
+      "hypotheses": [
+        "H3"
+      ],
+      "sequences": "12 windows of 600 bins; generating family switches among poisson, hawkes, queue_reactive, regime_switching at windows 4 and 8 (6 registered orders)",
+      "train": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "select": [
+        4,
+        5
+      ],
+      "evaluate": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "dma_forgetting": 0.99
+    },
+    "recovery_benchmark": {
+      "hypotheses": [
+        "H4"
+      ],
+      "families": {
+        "poisson": [
+          "market",
+          "add",
+          "cancel"
+        ],
+        "hawkes": [
+          "branching",
+          "beta"
+        ],
+        "queue_reactive": [
+          "gamma.0",
+          "gamma.2",
+          "gamma.4"
+        ]
+      },
+      "truths_per_family": 12,
+      "particles": 120,
+      "generations": 5,
+      "quantile": 0.5,
+      "bins": 900,
+      "interval": 0.9
+    },
+    "plausible_world_design": {
+      "hypotheses": [
+        "H5",
+        "H8",
+        "H9",
+        "H19"
+      ],
+      "pairs_H5": [
+        "twap|mpc",
+        "twap|adaptive_twap",
+        "twap|heuristic",
+        "twap|pov"
+      ],
+      "cvar_level": 0.8
+    },
+    "decision_calibration_benchmark": {
+      "hypotheses": [
+        "H6"
+      ],
+      "truths": "one world per core family from the development fits",
+      "candidates": "six families fitted on one 600 s window of truth data plus two posterior-draw variants each",
+      "policies": [
+        "twap",
+        "vwap",
+        "pov",
+        "ac",
+        "heuristic",
+        "adaptive_twap",
+        "mpc",
+        "dynamic_ac"
+      ],
+      "execution_aware_summaries": [
+        "rate_market",
+        "spread_mean",
+        "p_spread1",
+        "log_depth_mean",
+        "vol_1s",
+        "vol_10s",
+        "mean_market_size",
+        "depletion_rate"
+      ]
+    },
+    "completion_benchmark": {
+      "hypotheses": [
+        "H7"
+      ],
+      "members": [
+        "pov",
+        "heuristic",
+        "adaptive_twap",
+        "mpc"
+      ],
+      "arms": [
+        "none",
+        "hard"
+      ],
+      "completion_threshold": 0.95
+    },
+    "robust_benchmark": {
+      "hypotheses": [
+        "H8"
+      ],
+      "criteria": [
+        "nominal",
+        "posterior_expected",
+        "worst_case",
+        "minimax_regret",
+        "cvar",
+        "kl_dro"
+      ],
+      "kl_rho": 0.1,
+      "cvar_level": 0.8,
+      "nominal_world": "the poisson development point fit"
+    },
+    "mpc_benchmark": {
+      "hypotheses": [
+        "H9"
+      ],
+      "members": [
+        "mpc",
+        "mpc_robust",
+        "best_adaptive_dev"
+      ],
+      "comparator": "twap"
+    },
+    "selection_benchmark": {
+      "hypotheses": [
+        "H10"
+      ],
+      "policies": [
+        "twap",
+        "ac",
+        "adaptive_twap",
+        "heuristic",
+        "pov",
+        "mpc"
+      ],
+      "regimes": {
+        "calm": "x0.6 rates",
+        "active": "x1.8 market and cancel rates",
+        "thin": "refill x0.4"
+      }
+    },
+    "abstention_benchmark": {
+      "hypotheses": [
+        "H11",
+        "H12"
+      ],
+      "ood_fpr": 0.05,
+      "ood_detector": "mahalanobis",
+      "uncertainty_detector": "ensemble disagreement over the six family worlds (95th percentile of ID)",
+      "incorrect_margin_bps": 0.5,
+      "large_degradation_bps": 2.0
+    },
+    "counterfactual_benchmark": {
+      "hypotheses": [
+        "H14"
+      ],
+      "policies": [
+        "twap",
+        "ac",
+        "heuristic",
+        "adaptive_twap",
+        "pov",
+        "mpc"
+      ],
+      "pairs": [
+        "twap|heuristic",
+        "twap|pov",
+        "twap|mpc",
+        "twap|adaptive_twap",
+        "heuristic|adaptive_twap"
+      ],
+      "grid": {
+        "queue": [
+          "optimistic",
+          "neutral",
+          "conservative"
+        ],
+        "latency_s": [
+          0.0,
+          0.1
+        ],
+        "hidden_fraction": [
+          0.0,
+          0.5
+        ],
+        "impact": [
+          "none",
+          "transient",
+          "persistent"
+        ],
+        "permanent_ticks_per_lot": [
+          0.0,
+          0.05
+        ]
+      },
+      "coverage_check": "expected-value coverage is rejected for a policy if the 95% interval of mean(truth - lower) lies below 0 or of mean(upper - truth) lies below 0"
+    },
+    "historical_replay": {
+      "hypotheses": [
+        "H13",
+        "H15",
+        "H16",
+        "H17",
+        "H20"
+      ],
+      "start_bin": 300,
+      "policies": [
+        "twap",
+        "vwap",
+        "pov",
+        "ac",
+        "heuristic",
+        "adaptive_twap",
+        "liquidity_twap",
+        "mpc"
+      ]
+    },
+    "synthetic_holdout": {
+      "hypotheses": [
+        "H21"
+      ],
+      "carried": "conclusions ESTABLISHED by H8/H9"
+    }
+  },
+  "statistics": {
+    "bootstrap_replicates": 2000,
+    "hierarchical_bootstrap": "worlds, then seeds",
+    "alpha": 0.05,
+    "families": "configs/v08/statistical-families.json",
+    "equivalence": "TOST via the (1 - 2 alpha) interval; never inferred from non-significance",
+    "noninferiority_margin_bps": 3.0,
+    "practical_effect_bps": 0.25,
+    "equivalence_margin_bps": 0.5,
+    "sequential": "no interim looks are planned; group-sequential boundaries are implemented but unused"
+  },
+  "generator_gate": {
+    "dataset": "deribit-eth-perp-2020-12-01",
+    "criteria": {
+      "discriminator_auc_max": 0.75,
+      "support_coverage_min": 0.5,
+      "ppc_failure_fraction_max": 0.25,
+      "variance_ratio_log_mismatch_max": 0.5,
+      "queue_depletion_ratio_range": [
+        0.5,
+        2.0
+      ],
+      "execution_sensitive": "simulated TWAP mean economic cost within the historical bounded TWAP interval widened by 2 bps"
+    },
+    "outcome_rule": "ACCEPTED_UNDER_GATE only if every criterion passes; REJECTED otherwise; NO_ACCEPTABLE_MODEL if no family is accepted; the least-bad family is never relabelled as validated",
+    "evidence_level": "RETROSPECTIVE (consumed selection day)"
+  },
+  "abstention_rules": {
+    "ood_threshold": "Mahalanobis score at the 95th percentile of in-distribution calibration cases",
+    "uncertainty_threshold": "95th percentile of in-distribution ensemble disagreement",
+    "fallback": "twap with hard completion"
+  },
+  "completion_constraints": {
+    "primary_mode": "hard",
+    "chance_constraint": "P(actual completion) Wilson lower bound >= 0.95",
+    "separation": [
+      "actual fill",
+      "terminal inventory",
+      "hypothetical liquidation",
+      "completion penalty",
+      "economic cost",
+      "optimization objective"
+    ]
+  },
+  "resource_budgets": "configs/v08/compute-budget.json",
+  "failure_policies": {
+    "engineering": "attempt retained and ledgered (INVALID/ABORTED), root cause fixed with a regression test, rerun in a new directory; never overwritten",
+    "scientific": "reported under the registered status; never blocks completion",
+    "data_unavailable": "NOT_AVAILABLE; no substitution",
+    "invalid_episodes": "retained in results with status INVALID and counted in every summary"
+  },
+  "evidence_schemas": {
+    "run": "config.json, result.json, provenance.json, lineage.json, binding.json, checksums.json (write-once)",
+    "binding": "cleolob-v08-binding-1",
+    "lineage": "cleolob-v08-lineage-1",
+    "ledger": "cleolob-v08-ledger-1",
+    "checkpoint": "cleolob-v08-checkpoint-1"
+  },
+  "amendment_policy": "amendments are ledgered with the new protocol hash before the new protocol is written; they may not affect accessed holdouts or an opened synthetic holdout; every amendment is disclosed in the final report",
+  "referenced_configs": [
+    "configs/v08/hypotheses.json",
+    "configs/v08/statistical-families.json",
+    "configs/v08/dataset-registry.json",
+    "configs/v08/compute-budget.json",
+    "configs/v08/claim-registry.json"
+  ],
+  "exclusions": [
+    "no live trading, alpha, profitability or production claims",
+    "no exact historical fills or queue positions from aggregate L2",
+    "no hidden-liquidity claims from data",
+    "no causal or permanent real-market impact claims",
+    "no HFT latency claims; benchmarks are local research-workload measurements",
+    "Bitstamp order-level captures are not used in v0.8"
+  ],
+  "mandate_secondary": {
+    "qty_lots": 400,
+    "role": "registered secondary mandate (amendment 1); every hypothesis status is decided on the primary mandate only; secondary results are reported beside each member and labelled SECONDARY",
+    "studies": [
+      "mpc_benchmark",
+      "robust_benchmark",
+      "completion_benchmark",
+      "plausible_world_design (H5)",
+      "selection_benchmark",
+      "abstention_benchmark",
+      "conformal (H19)",
+      "counterfactual_benchmark"
+    ]
+  },
+  "amendments": [
+    {
+      "number": 1,
+      "before_confirmatory_data": true,
+      "change": "adds the secondary 400-lot mandate (20 x the median touch) to the execution studies; no hypothesis, endpoint, margin, threshold, alpha, dataset role or primary mandate changes",
+      "reason": "a development-seed pilot in worlds built from the registered development and calibration fits showed that under the primary 40-lot mandate every aggressive policy pays about the half spread plus the taker fee (decision problem nearly degenerate); a larger registered mandate is reported alongside so the contrast is visible, while statuses stay tied to the frozen primary mandate",
+      "pilot_disclosure": "pilot runs used dev seeds only (results/v08/dev, results/v08/inference); no confirm or holdout namespace had been opened"
+    },
+    {
+      "number": 2,
+      "before_confirmatory_data": false,
+      "change": "claim-registry bookkeeping only: CF-COVERAGE, STRESS and PORTFOLIO named an analysis key or result pointer that the implemented studies never write (counterfactual_bounds, transfer_study, /summary); they are re-pointed to the sealed analyses' actual keys, and the multi-part STRESS and PORTFOLIO statements are split into one claim per result subtree (STRESS-SEARCH, PORTFOLIO-REAL, BASKET). No hypothesis, H1-H21 claim, rule, endpoint, margin, threshold, alpha, dataset role, design, seed or mandate changes; no status depends on the claim registry",
+      "reason": "the fail-closed claim audit could not resolve these non-hypothesis claims to any sealed run",
+      "timing_disclosure": "applied after every confirmatory run sealed so no run's protocol binding changed mid-run"
+    }
+  ]
+}

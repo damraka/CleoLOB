@@ -1,0 +1,1053 @@
+{
+ "schema": "cleolob-v08-registry-1",
+ "runs": [
+  {
+   "run": "results/v08/confirm/abstention-4",
+   "analysis": "policy_abstention",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "2cfbd65c7e4861d00abcac6b2c50afe14876366563e55632f31f0505b5daab61",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "c48c26c23bd22706c5c060c38414cb8bccdd26cd",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/adaptive-drift",
+   "analysis": "adaptive_drift",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "c3645780f547a0112949cae37bb20fb7855745ec0246ec71b95c99a65f7daa22",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/adaptive-regime",
+   "analysis": "adaptive_regime",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "9c7f2035661d8af1eaf57b4cab27c1dce105101f53bfdb808f5778c4006b8753",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/adaptive-switch",
+   "analysis": "adaptive_switch",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "fb0511a846fe92649dbff31e75e21ad07ee12074e445770207796e91ddb2ee93",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/calibration-utility",
+   "analysis": "calibration_utility",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "74838b65db0df3adb6878986f8ad7e27253123c00bc09fab6f309368c625b91e",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/calibration-utility-2",
+   "analysis": "calibration_utility",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "c4be1aa06cff724d491b8ed316e4addb4ac9b1e632138ae2cb1450ecd0da3bb3",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/completion",
+   "analysis": "completion_study",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "e4228e976baa6d94e6ba2f07cadf88deb65bad13f96d96afbe9b8953b5a22b48",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/completion-2",
+   "analysis": "completion_study",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "bda0fb874779b76c35532f0fab719c422b63d579b3b03f801e96f41004f0401f",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/conformal",
+   "analysis": "conformal_study",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "946aac151d0a1636c8e04916090046b6d55bc0995c79c707365b724dfb49a9ef",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "c48c26c23bd22706c5c060c38414cb8bccdd26cd",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/counterfactual",
+   "analysis": "counterfactual_synthetic",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "ee3b096ec9037c2ca863b1ebc4a621fd550aa6a47b15700a5762a5ea7a64f068",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/mpc",
+   "analysis": "mpc_benchmark",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "1f6352a526fc2bf4037f53ee155e9ab860a199d96bfe54195a85ed72922f6cd9",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/mpc-2",
+   "analysis": "mpc_benchmark",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "1f6cb7cf48d8b047385ce9545c4423aa9b1e704eac8dde61564af2a8aefae473",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/recovery",
+   "analysis": "inference_recovery",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "4a5d575e2ec90036f94fab3773812e00947505d21423f63b076be6e8f0def3c4",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/robust",
+   "analysis": "robust_execution",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "60c21f9f965b161533ba4112e82d852492c277b68372494954ebbbf37fdf6644",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/robust-2",
+   "analysis": "robust_execution",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "01717aa1835b4847bc5509f370e28416338efae4f9ccfa9aeed022a7ed19dd6d",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/selection",
+   "analysis": "policy_selection",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "17aee00dedc7db7a6ca9a942ed878752c97117950e0af8675d5834b64c37afc3",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/selection-2",
+   "analysis": "policy_selection",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "77338845cb70e04e203aeb5a472ba76a8dbd6a3401604bdf8efb69dd0c0ea9ba",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/uncertainty",
+   "analysis": "uncertainty_study",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "c3460ad8cdc7c13536a6f031d3b4e71ae4910c8db2b9e56643c48304e06f0006",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-10-01"
+   ],
+   "git_commit": "e5a40a9d97fa07deff1a61dd6f284a92fa427cb1",
+   "valid": true
+  },
+  {
+   "run": "results/v08/confirm/uncertainty-2",
+   "analysis": "uncertainty_study",
+   "pilot": false,
+   "namespace": "confirm",
+   "result_sha256": "057160ddac9e3abb2ef8eac521c5acd32f6774993361cf9350d7a3a0d1274cb4",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-10-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/adaptive-drift-tiny",
+   "analysis": "adaptive_drift",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "6bbf961ad496e62fc2f4999be3c4c0221024ec91d907622728b9c0696430de55",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/adaptive-real-tiny",
+   "analysis": "adaptive_real",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "60d7435166ffdcf46ca59cfc5fd0031e8da44186ce8dde3c90510e53aad3040c",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/adaptive-regime-tiny2",
+   "analysis": "adaptive_regime",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "4107bcf1198e7df68e98ac9be5a46b76a2f4a448531cb71e0fc0c6dbbfdd8e44",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/adaptive-switch-tiny",
+   "analysis": "adaptive_switch",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "8cf5d27259cf526585a1c1e172e5d92e91bba52561ce6c4dcb8ad0b38a853862",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/adversarial-stress-tiny",
+   "analysis": "adversarial_stress",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "b31d0fd98d5e9b82d5928f9a7988cddc334114c53d54a78114fad44f90df35e1",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/calutil-tiny",
+   "analysis": "calibration_utility",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "b30c076d16ed5243f6db2177e0edb549ab23d29c06f7b2a49794de34b2ba4129",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/cf-synth-tiny",
+   "analysis": "counterfactual_synthetic",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "8bfe49aa44badcfedf522eb347bb65b3ae53d52f4ec7d40b921de6d0aeef8320",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/change-point-study-v08-tiny",
+   "analysis": "change_point_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "bb36af869ef887b9989bd16400574baace9e57355d24de5509a27b1388194acb",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/completion-tiny",
+   "analysis": "completion_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "e447256519644e9d72fa2fc3d9f2537378f7559c202a353953e88a4610f82805",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/conformal-study-tiny",
+   "analysis": "conformal_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "6f22de4f6ff9b545f8e2e90cc80a4d95b9f47784e7845d786d00762eb6f65107",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/hier-tiny",
+   "analysis": "inference_hierarchical",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "6cc5429fcebe9089f9bd0c684a5be047da1f795787f85da6ffc424412c10e79b",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "bitmex-xbtusd-2020-11-01",
+    "deribit-btc-perp-2020-07-01",
+    "deribit-btc-perp-2020-09-01",
+    "deribit-btc-perp-2020-11-01",
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/identifiability-v3-tiny",
+   "analysis": "identifiability",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "671c077908dec4494c36999376e89170de5afeb2c8972df92601025f6af80fde",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/inference-posterior-tiny",
+   "analysis": "inference_posterior",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "bff6f1d2d95c98a5f791efd9ac70f5d8ddcb0df0462bb24d68b3c9eae30913ad",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01"
+   ],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/latency-study-tiny",
+   "analysis": "latency_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "3b442de3ea895c4a6e133f202f4407e985b9127135f4b63f7a792ee85a75011e",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/model-averaging-v08-real-tiny",
+   "analysis": "model_averaging_real",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "af5a0c6e9fe1a1ae92b385c20bddeef4bf2b2a3ca0191554fbb0536d0a2eafbb",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-12-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/model-averaging-v08-synthetic-tiny",
+   "analysis": "model_averaging_synthetic",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "8ba4217dc88d7621924420349e1270d2ded948ed1e17b2461843bf3da2f84139",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/mpc-tiny",
+   "analysis": "mpc_benchmark",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "315d9aead6d80231966e9dc5a67a293f2b9aeeb3f6d20c56178e6e0d4ec08ee7",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/ood-study-tiny",
+   "analysis": "ood_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "ca889ddbcd063e0bf1da616b12a54ed0cd2f79d36a178a9d6cb007d1c1671467",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/policy-abstention-tiny",
+   "analysis": "policy_abstention",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "45d412a8538a61f3031f4b0252f10998d57b724f98c41cbe84cc63c728c19c73",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/policy-selection-tiny",
+   "analysis": "policy_selection",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "a220c32667b292f8e805f1f00c632131822fb461849ea837d9323bbea0590f3e",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/posterior-study-v08-tiny",
+   "analysis": "posterior_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "e84ffee11f59f8e89b9498c8b825a7673547860e513c9521c60104c878347920",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-12-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/recovery-tiny",
+   "analysis": "inference_recovery",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "7369d37d9986e0149f2c2aea5109b59add8ef8f1015f7421c72a43163dfb396c",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/regime-study-v08-tiny",
+   "analysis": "regime_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "f6d0d94b1196152319929759fc08213474aef406b5b4eedefbc38f80481f958c",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-10-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/robust-tiny",
+   "analysis": "robust_execution",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "8fb2167f29b9b865a4097ddca87dac5dd7abd1f3db32edb66b01419de9b11fd7",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/uncertainty-tiny",
+   "analysis": "uncertainty_study",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "218fcd4e597317dedf20eddcb015bf30481e39dcaf87cfb2c2dda5d059d9ddca",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-10-01"
+   ],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/dev/worlds-tiny",
+   "analysis": "inference_worlds",
+   "pilot": true,
+   "namespace": "dev",
+   "result_sha256": "6251775ef928fdfc0b2fa367f986144f702793b0c2f9c6f21c0dff2cd27b6524",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "29c0fdfb7696950a31bf6848c0f5e33863228985",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/adaptive-real",
+   "analysis": "adaptive_real",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "f54b573a6c5c045b29fcf511dd65d0b0297d12a6cf83018f5c14f9fd107f0331",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-08-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01",
+    "deribit-eth-perp-2020-12-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/averaging-real",
+   "analysis": "model_averaging_real",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "91292aff7aa1b3c3b1bfea5c08bcdcbe128753ce7a0322d81f509f35bf303195",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-12-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/averaging-synthetic",
+   "analysis": "model_averaging_synthetic",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "bc3f02432bd8e01a01d762618973a8952d586fe823ca51692ab0f79daa90411d",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/benchmark-2",
+   "analysis": "benchmark",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "8231b60802d146fd7f95af8c575fce3b4ed16c39a5c66b759196a3d3b214ae3d",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "9f899c4c7fa1cb765141831deaa584566318a5a8",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/change-point",
+   "analysis": "change_point_study",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "8994792788ddcf5a2cb4322699c158b44a570f7cd77005f5daf4df8c64fb3d85",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-08-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01",
+    "deribit-eth-perp-2020-12-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/counterfactual-real",
+   "analysis": "counterfactual_real",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "af7e730422f346f0557bba85dc12a709b47906cba0192c676e36e102918ae508",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-12-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/hierarchical",
+   "analysis": "inference_hierarchical",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "f943c1de00d451fb7486a0ade318ce61e5d7c993d141a14252eb330519f3259c",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "bitmex-xbtusd-2020-11-01",
+    "deribit-btc-perp-2020-07-01",
+    "deribit-btc-perp-2020-09-01",
+    "deribit-btc-perp-2020-11-01",
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/identifiability",
+   "analysis": "identifiability",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "aabb2a604adef41f3409b2877feb615f748416e30707e5c3b0bb91f9a6ab648f",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "aeccdf01e7a5faca88540cf401b002006886345d",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/latency",
+   "analysis": "latency_study",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "de09e30ed811d3be1dba2fdfab05e72f8405de2eac5f3bd1b55e2c532c134eb1",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/ood-2",
+   "analysis": "ood_study",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "d416306725adab934e5e1e101dc71e45d78ec92ac36bea926ddfb00e64a64a2a",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "c48c26c23bd22706c5c060c38414cb8bccdd26cd",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/portfolio",
+   "analysis": "portfolio",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "eb3da1c9e9f90b9630cfcb54cdeae3091d853abbdf955846eaa230b965d2dfdc",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "bitmex-xbtusd-2020-11-01",
+    "deribit-btc-perp-2020-11-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/posterior-study",
+   "analysis": "posterior_study",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "62d7af088e9473aa199cf47e6f9adf7365cfacf0a8ac9c777fab38c8ac08f4fd",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-12-01"
+   ],
+   "git_commit": "aeccdf01e7a5faca88540cf401b002006886345d",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/regime-study-2",
+   "analysis": "regime_study",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "7a8f8887a2a5a6fa63a2acc925b42f6550f5ab2c698bb5eaab8f549672b9146e",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "deribit-eth-perp-2020-04-01",
+    "deribit-eth-perp-2020-05-01",
+    "deribit-eth-perp-2020-06-01",
+    "deribit-eth-perp-2020-07-01",
+    "deribit-eth-perp-2020-08-01",
+    "deribit-eth-perp-2020-09-01",
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01",
+    "deribit-eth-perp-2020-12-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/stress",
+   "analysis": "adversarial_stress",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "9af525177e4f46ed76ccc8502d616aaa5535360bc2055da901dc356ce3136802",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/explore/transfer-retrospective",
+   "analysis": "transfer_retrospective",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "837d42875bf06b5da1c88514067ab311793c86898876e9ba99498b9348e9f33c",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [
+    "bitmex-xbtusd-2020-11-01",
+    "deribit-btc-perp-2020-11-01",
+    "deribit-eth-perp-2020-12-01",
+    "deribit-eth-perp-2021-01-01"
+   ],
+   "git_commit": "3734c6b8b3ce44e147ddf95c5d9bd0c3a52200d0",
+   "valid": true
+  },
+  {
+   "run": "results/v08/final-2",
+   "analysis": "final_analysis",
+   "pilot": false,
+   "namespace": "holdout",
+   "result_sha256": "f1ba372e9836e543419e401aceb254aefa2860e5078fd2028999ce258fedcbc9",
+   "protocol_sha256": "b84e1e97d99b721be94be10177cc91ea81f1fa59b590ce1a68c881e6a40d9d12",
+   "datasets": [],
+   "git_commit": "cc0f038ecff3ebf0e8274a961e394887f3cf7071",
+   "valid": true
+  },
+  {
+   "run": "results/v08/inference/posterior-2",
+   "analysis": "inference_posterior",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "0e8337d58206573866ef0051aaaff56504d9fa7b30a063731d26fc315fe94c3b",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [
+    "deribit-eth-perp-2020-10-01",
+    "deribit-eth-perp-2020-11-01"
+   ],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/inference/worlds",
+   "analysis": "inference_worlds",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "1792ec8b3c9a4036328abf8b6750438c66e1201370c1c667a5178f13165c45f6",
+   "protocol_sha256": "f80e53afff8f18a9355006971ada35c9d145fd4ca5ca506d044b3e56142c82ad",
+   "datasets": [],
+   "git_commit": "61f03a1f6140b4f908b740c8a622bd6d7ea96e6b",
+   "valid": true
+  },
+  {
+   "run": "results/v08/transfer/fresh",
+   "analysis": "transfer_fresh",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "d41e1c04fbaad8dbe9e8a18a35822957493265a21d91afbbf74b3e67024309c6",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "22792536505e6b68a27b6c978cb8d040fc75a191",
+   "valid": true
+  },
+  {
+   "run": "results/v08/transfer/ranking-fresh",
+   "analysis": "ranking_fresh",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "b3e16e3c2103d377de89982f3d098475745ccca318d05e78a0cbffadb148a30b",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "c48c26c23bd22706c5c060c38414cb8bccdd26cd",
+   "valid": true
+  },
+  {
+   "run": "results/v08/transfer/ranking-retrospective",
+   "analysis": "ranking_retrospective",
+   "pilot": false,
+   "namespace": "dev",
+   "result_sha256": "fa0461008b7798970f300f8d705f210c0e4aa0766b1f84aaf1eb4cfe363da4a7",
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "datasets": [],
+   "git_commit": "c48c26c23bd22706c5c060c38414cb8bccdd26cd",
+   "valid": true
+  }
+ ],
+ "attempts": [
+  {
+   "directory": "results/v08/inference/posterior",
+   "note": "source files were edited in the same checkout while the run executed; finalize refused to seal (provenance guard); rerun from a clean worktree at a committed revision",
+   "outcome": "INVALID",
+   "design": "inference-posterior",
+   "dataset": null,
+   "index": 72
+  },
+  {
+   "directory": "results/v08/confirm/abstention",
+   "note": "the driver process reached its background time limit before sealing; nothing sealed or inspected; rerun with identical design and seeds to results/v08/confirm/abstention-2",
+   "outcome": "ABORTED",
+   "design": "confirm-abstention",
+   "dataset": null,
+   "index": 188
+  },
+  {
+   "directory": "results/v08/confirm/uncertainty",
+   "invalid_episodes": 7,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-uncertainty",
+   "dataset": null,
+   "index": 201
+  },
+  {
+   "directory": "results/v08/confirm/calibration-utility",
+   "invalid_episodes": 17,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-calibration-utility",
+   "dataset": null,
+   "index": 202
+  },
+  {
+   "directory": "results/v08/confirm/completion",
+   "invalid_episodes": 42,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-completion",
+   "dataset": null,
+   "index": 203
+  },
+  {
+   "directory": "results/v08/confirm/robust",
+   "invalid_episodes": 193,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-robust",
+   "dataset": null,
+   "index": 204
+  },
+  {
+   "directory": "results/v08/confirm/mpc",
+   "invalid_episodes": 40,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-mpc",
+   "dataset": null,
+   "index": 205
+  },
+  {
+   "directory": "results/v08/confirm/selection",
+   "invalid_episodes": 183,
+   "note": "engineering defect in the v0.8 aggregate-queue book: fractional queue positions from continuous cancel-block positions left epsilon strategy remainders at emptied touches (BookError 'strategy volume at an empty touch'), and a strategy order could leave the 40-level window; episodes were INVALID (retained, counted). Fixed with regression tests; rerun with the same sealed design and seeds into a '-2' directory. Results were inspected only for the INVALID counts and rule dry-checks.",
+   "outcome": "INVALID",
+   "design": "confirm-selection",
+   "dataset": null,
+   "index": 206
+  },
+  {
+   "directory": "results/v08/confirm/abstention-2",
+   "note": "stopped by the operator before sealing after the book defect was found (18 INVALID episodes so far); rerun as abstention-3 with the fixed code",
+   "outcome": "ABORTED",
+   "design": "confirm-abstention",
+   "dataset": null,
+   "index": 207
+  },
+  {
+   "directory": "results/v08/explore/regime-study",
+   "note": "exploratory regime study started 21:46 local on pre-fix code (138b6c8, aggregate-queue book defect); stopped before completion, no result written; checkpoint retained. Rerun on fixed code into results/v08/explore/regime-study-2.",
+   "outcome": "ABORTED",
+   "design": "explore-regime-study",
+   "dataset": null,
+   "index": 296
+  },
+  {
+   "directory": "results/v08/explore/ood",
+   "note": "exploratory OOD study on 3734c6b failed with ValueError 'expected a positive input, got 0.0': fixed_share mixture predictive took math.log(0) when a zero-weight component dominated a bin (ensemble-disagreement detector). Fixed in 0fa4a49 with a regression test; previously finite outputs are bit-identical. Rerun into results/v08/explore/ood-2. No result was written.",
+   "outcome": "INVALID",
+   "design": "explore-ood",
+   "dataset": null,
+   "index": 297
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "fresh-transfer-h13-h17",
+   "dataset": "deribit-eth-perp-2021-02-01",
+   "index": 299
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "fresh-transfer-h13-h17",
+   "dataset": "deribit-btc-perp-2021-02-01",
+   "index": 300
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "fresh-transfer-h13-h17",
+   "dataset": "bitmex-xbtusd-2021-02-01",
+   "index": 301
+  },
+  {
+   "directory": "results/v08/confirm/abstention-3",
+   "note": "ran on 3734c6b; after all 38,016 large-mandate episodes (0 INVALID episodes) the OOD ensemble-disagreement score raised ValueError 'expected a positive input, got 0.0' in the fixed-share mixture predictive (math.log(0) when a zero-weight component dominated a bin). Same defect as explore-ood; fixed in 0fa4a49 with a regression test. No result was written or inspected; checkpoint retained. Rerun with the same sealed design and seeds into results/v08/confirm/abstention-4.",
+   "outcome": "INVALID",
+   "design": "confirm-abstention",
+   "dataset": null,
+   "index": 402
+  },
+  {
+   "directory": "results/v08/explore/benchmark",
+   "note": "benchmark-v08 (dev namespace, medium budget) on c48c26c failed before writing any result: the artifact-sealing timing re-sealed one temporary directory on each of its 3 repeats and the write-once checksums.json raised FileExistsError on repeat 2. Engineering defect in the benchmark harness only; no scientific input involved. Fixed with a regression test; the empty run directory is retained. Rerun into results/v08/explore/benchmark-2.",
+   "outcome": "INVALID",
+   "design": "explore-benchmark",
+   "dataset": null,
+   "index": 403
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "final-holdout-h20",
+   "dataset": "deribit-eth-perp-2021-03-01",
+   "index": 406
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "final-holdout-h20",
+   "dataset": "deribit-btc-perp-2021-03-01",
+   "index": 407
+  },
+  {
+   "directory": null,
+   "no_directory_reason": "nothing was downloaded",
+   "note": "dependent hypotheses are NOT_AVAILABLE; the holdout stays fresh",
+   "outcome": "NOT_AVAILABLE",
+   "probe": {
+    "error": "HTTPError: HTTP Error 403: Forbidden",
+    "ok": false,
+    "status": 403
+   },
+   "design": "final-holdout-h20",
+   "dataset": "bitmex-xbtusd-2021-03-01",
+   "index": 408
+  },
+  {
+   "directory": "results/v08/final",
+   "note": "final-analysis-v08 on 63e4784 was launched without the worlds input that H21 needs. The registered H20 probe ran first (entries 405-408: HTTP 403, NOT_AVAILABLE, no holdout byte requested). H21 then sealed synthetic-holdout-h21 and opened the holdout namespace (entries 409-410) before validating its inputs, and failed on the missing worlds input: no holdout seed was used for any episode, no result was written and no statistic was computed or inspected. Engineering defect fixed with regression tests: H21 validates inputs before any ledger write and does not re-open a namespace its sealed design already opened (still exactly one opening); H20 reuses the ledgered failed probe instead of probing the provider again. The empty run directory is retained. Rerun with the same inputs plus worlds into results/v08/final-2.",
+   "outcome": "INVALID",
+   "design": "final-analysis",
+   "dataset": null,
+   "index": 411
+  }
+ ],
+ "ledger_entries": 412,
+ "ledger_head": "682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+ "protocol_sha256": "b84e1e97d99b721be94be10177cc91ea81f1fa59b590ce1a68c881e6a40d9d12",
+ "amendments": [
+  {
+   "affects": [],
+   "config_sha256": {},
+   "configs": [],
+   "number": 1,
+   "protocol_sha256": "30ba4805178ce4dfdaa20b519672054981c53c8135029ee9b93394b9ef456788",
+   "index": 157
+  },
+  {
+   "affects": [],
+   "config_sha256": {
+    "configs/v08/claim-registry.json": "8f97adf92aa32c50e4f698548f6c3508175927f4f22983983e445ae823608ab1"
+   },
+   "configs": [
+    "configs/v08/claim-registry.json"
+   ],
+   "number": 2,
+   "protocol_sha256": "b84e1e97d99b721be94be10177cc91ea81f1fa59b590ce1a68c881e6a40d9d12",
+   "index": 404
+  }
+ ]
+}

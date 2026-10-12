@@ -1,0 +1,31 @@
+{
+ "data": {
+  "labels": [
+   "ESTABLISHED",
+   "NOT_ESTABLISHED",
+   "FAILED",
+   "INCONCLUSIVE",
+   "NOT_AVAILABLE",
+   "NOT_EVALUABLE",
+   "ASSUMPTION_DEPENDENT",
+   "EXPLORATORY",
+   "INVALID"
+  ],
+  "values": [
+   8,
+   6,
+   2,
+   0,
+   5,
+   0,
+   0,
+   0,
+   0
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "final",
+  "pointer": "/statuses"
+ }
+}

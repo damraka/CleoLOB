@@ -1,0 +1,21 @@
+{
+ "data": {
+  "labels": [
+   "branching_change",
+   "gradual_mix",
+   "gradual_rates",
+   "step_rate"
+  ],
+  "values": [
+   0.06781936801136533,
+   0.0844958851099608,
+   0.04912159943524181,
+   0.044121245588373804
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "results/v08/confirm/adaptive-drift",
+  "pointer": "/per_scenario/*/h1_rel"
+ }
+}

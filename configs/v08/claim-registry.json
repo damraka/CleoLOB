@@ -1,0 +1,252 @@
+{
+ "schema": "cleolob-v08-claims-1",
+ "marker_pattern": "[C08-<id>]",
+ "rule": "every sentence in README.md, docs/v08-final-report.md and docs/v08-paper.md that states a v0.8 result carries a marker; the audit resolves each marker to the claim graph and fails on unresolved markers, on a stated status that differs from the evidence, and on unqualified high-risk terms",
+ "claims": {
+  "H1": {
+   "hypothesis": "H1",
+   "test": "final-analysis-v08:H1",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H1/status",
+   "statement": "Adaptive calibration improves future predictive performance versus frozen calibration."
+  },
+  "H2": {
+   "hypothesis": "H2",
+   "test": "final-analysis-v08:H2",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H2/status",
+   "statement": "Regime-conditioned calibration improves future predictive performance versus global calibration."
+  },
+  "H3": {
+   "hypothesis": "H3",
+   "test": "final-analysis-v08:H3",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H3/status",
+   "statement": "Dynamic model averaging improves posterior predictive performance versus the best single fixed generator."
+  },
+  "H4": {
+   "hypothesis": "H4",
+   "test": "final-analysis-v08:H4",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H4/status",
+   "statement": "Simulation-based inference achieves acceptable synthetic parameter recovery under registered recovery benchmarks."
+  },
+  "H5": {
+   "hypothesis": "H5",
+   "test": "final-analysis-v08:H5",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H5/status",
+   "statement": "Material model/parameter uncertainty remains after calibration and must be propagated into execution conclusions."
+  },
+  "H6": {
+   "hypothesis": "H6",
+   "test": "final-analysis-v08:H6",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H6/status",
+   "statement": "Better execution-aware calibration is associated with lower downstream execution decision regret."
+  },
+  "H7": {
+   "hypothesis": "H7",
+   "test": "final-analysis-v08:H7",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H7/status",
+   "statement": "Completion-constrained execution materially improves actual completion without unacceptable economic-cost degradation."
+  },
+  "H8": {
+   "hypothesis": "H8",
+   "test": "final-analysis-v08:H8",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H8/status",
+   "statement": "Robust execution reduces worst-case or tail regret across plausible worlds."
+  },
+  "H9": {
+   "hypothesis": "H9",
+   "test": "final-analysis-v08:H9",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H9/status",
+   "statement": "MPC or adaptive execution improves robustness over static baselines."
+  },
+  "H10": {
+   "hypothesis": "H10",
+   "test": "final-analysis-v08:H10",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H10/status",
+   "statement": "Regime-aware policy selection improves decision performance versus a single global policy."
+  },
+  "H11": {
+   "hypothesis": "H11",
+   "test": "final-analysis-v08:H11",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H11/status",
+   "statement": "OOD-aware abstention reduces incorrect policy-selection decisions."
+  },
+  "H12": {
+   "hypothesis": "H12",
+   "test": "final-analysis-v08:H12",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H12/status",
+   "statement": "Safe fallback prevents large degradation under registered OOD conditions."
+  },
+  "H13": {
+   "hypothesis": "H13",
+   "test": "final-analysis-v08:H13",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H13/status",
+   "statement": "Synthetic execution rankings predict bounded historical ranking direction better than chance."
+  },
+  "H14": {
+   "hypothesis": "H14",
+   "test": "final-analysis-v08:H14",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H14/status",
+   "statement": "Counterfactual historical bounds are sufficiently narrow to distinguish at least some policy pairs."
+  },
+  "H15": {
+   "hypothesis": "H15",
+   "test": "final-analysis-v08:H15",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H15/status",
+   "statement": "Policy conclusions transfer across fresh temporal periods."
+  },
+  "H16": {
+   "hypothesis": "H16",
+   "test": "final-analysis-v08:H16",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H16/status",
+   "statement": "Policy conclusions transfer across instruments."
+  },
+  "H17": {
+   "hypothesis": "H17",
+   "test": "final-analysis-v08:H17",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H17/status",
+   "statement": "Policy conclusions transfer across venues when data capability permits."
+  },
+  "H18": {
+   "hypothesis": "H18",
+   "test": "final-analysis-v08:H18",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H18/status",
+   "statement": "Calibration half-life is finite and adaptive updating improves post-drift performance."
+  },
+  "H19": {
+   "hypothesis": "H19",
+   "test": "final-analysis-v08:H19",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H19/status",
+   "statement": "Conformal intervals achieve registered empirical coverage on untouched evaluation periods."
+  },
+  "H20": {
+   "hypothesis": "H20",
+   "test": "final-analysis-v08:H20",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H20/status",
+   "statement": "At least one execution conclusion survives the final untouched multi-axis real holdout under the preregistered uncertainty and practical-significance criteria."
+  },
+  "H21": {
+   "hypothesis": "H21",
+   "test": "final-analysis-v08:H21",
+   "source_analysis": "final_analysis",
+   "pointer": "/hypotheses/H21/status",
+   "statement": "At least one execution conclusion survives the sealed synthetic multi-axis holdout (unseen generator family, unseen regimes, unseen seeds)."
+  },
+  "CF-COVERAGE": {
+   "hypothesis": null,
+   "test": "counterfactual-bounds-v08 synthetic",
+   "source_analysis": "counterfactual_synthetic",
+   "pointer": "/summary",
+   "statement": "Synthetic per-path and expected-value coverage of the historical bound method."
+  },
+  "GATE": {
+   "hypothesis": null,
+   "test": "posterior_study",
+   "source_analysis": "posterior_study",
+   "pointer": "/gate/overall",
+   "statement": "Outcome of the registered generator rejection gate on the selection day."
+  },
+  "PPC": {
+   "hypothesis": null,
+   "test": "posterior_study",
+   "source_analysis": "posterior_study",
+   "pointer": "/ppc/summary",
+   "statement": "Posterior predictive check failure fractions per family and horizon."
+  },
+  "HALF-LIFE-REAL": {
+   "hypothesis": null,
+   "test": "change_point_study",
+   "source_analysis": "change_point_study",
+   "pointer": "/real/half_life",
+   "statement": "Retrospective calibration half-life on consumed days."
+  },
+  "ID-V3": {
+   "hypothesis": null,
+   "test": "identifiability",
+   "source_analysis": "identifiability",
+   "pointer": "/assessment",
+   "statement": "Identifiability v3 verdicts per family and parameter."
+  },
+  "MISSPEC": {
+   "hypothesis": null,
+   "test": "calibration_utility",
+   "source_analysis": "calibration_utility",
+   "pointer": "/misspecification/summary",
+   "statement": "Misspecification benchmark: ranking error and regret when the fitted family differs from the truth."
+  },
+  "DATA-BLOCKED": {
+   "hypothesis": null,
+   "test": "final_analysis",
+   "source_analysis": "final_analysis",
+   "pointer": "/acquisition",
+   "statement": "Fresh real holdout acquisition outcome."
+  },
+  "LATENCY": {
+   "hypothesis": null,
+   "test": "latency_study",
+   "source_analysis": "latency_study",
+   "pointer": "/summary",
+   "statement": "Latency and stale-book sensitivity of policy costs."
+  },
+  "STRESS": {
+   "hypothesis": null,
+   "test": "adversarial-stress-v08",
+   "source_analysis": "adversarial_stress",
+   "pointer": "/scenarios",
+   "statement": "Structured stress scenario outcomes (cost, completion, ranking stability)."
+  },
+  "PORTFOLIO": {
+   "hypothesis": null,
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/routing_synthetic",
+   "statement": "Synthetic cross-venue routing infrastructure results."
+  },
+  "BENCH": {
+   "hypothesis": null,
+   "test": "benchmark",
+   "source_analysis": "benchmark",
+   "pointer": "/summary",
+   "statement": "Local research-workload performance measurements (not HFT benchmarks)."
+  },
+  "STRESS-SEARCH": {
+   "hypothesis": null,
+   "test": "adversarial-stress-v08",
+   "source_analysis": "adversarial_stress",
+   "pointer": "/adversarial_search",
+   "statement": "Bounded, plausibility-constrained adversarial search outcome."
+  },
+  "PORTFOLIO-REAL": {
+   "hypothesis": null,
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/routing_real_hypothetical",
+   "statement": "Retrospective hypothetical cross-venue routing on consumed days (bounded fills)."
+  },
+  "BASKET": {
+   "hypothesis": null,
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/basket_synthetic",
+   "statement": "Synthetic basket execution infrastructure results."
+  }
+ }
+}

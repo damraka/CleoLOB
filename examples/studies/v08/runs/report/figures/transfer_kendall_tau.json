@@ -1,0 +1,46 @@
+{
+ "data": {
+  "matrix": [
+   [
+    1.0,
+    -0.5555555555555556,
+    -0.25925925925925924,
+    0.7037037037037037
+   ],
+   [
+    -0.5555555555555556,
+    1.0,
+    0.25925925925925924,
+    -0.25925925925925924
+   ],
+   [
+    -0.25925925925925924,
+    0.25925925925925924,
+    1.0,
+    0.037037037037037035
+   ],
+   [
+    0.7037037037037037,
+    -0.25925925925925924,
+    0.037037037037037035,
+    1.0
+   ]
+  ],
+  "rows": [
+   "instrument_btc",
+   "selection_eth",
+   "temporal_eth",
+   "venue_bitmex"
+  ],
+  "cols": [
+   "instrument_btc",
+   "selection_eth",
+   "temporal_eth",
+   "venue_bitmex"
+  ]
+ },
+ "provenance": {
+  "run": "results/v08/explore/transfer-retrospective",
+  "pointer": "/mandates/primary/kendall_matrix"
+ }
+}

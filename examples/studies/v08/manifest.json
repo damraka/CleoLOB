@@ -1,0 +1,342 @@
+{
+ "schema": "cleolob-v08-public-bundle-1",
+ "included_runs": [
+  "confirm/abstention-4",
+  "confirm/adaptive-drift",
+  "confirm/adaptive-regime",
+  "confirm/adaptive-switch",
+  "confirm/calibration-utility",
+  "confirm/calibration-utility-2",
+  "confirm/completion",
+  "confirm/completion-2",
+  "confirm/conformal",
+  "confirm/counterfactual",
+  "confirm/mpc",
+  "confirm/mpc-2",
+  "confirm/recovery",
+  "confirm/robust",
+  "confirm/robust-2",
+  "confirm/selection",
+  "confirm/selection-2",
+  "confirm/uncertainty",
+  "confirm/uncertainty-2",
+  "explore/adaptive-real",
+  "explore/averaging-real",
+  "explore/averaging-synthetic",
+  "explore/benchmark-2",
+  "explore/change-point",
+  "explore/counterfactual-real",
+  "explore/hierarchical",
+  "explore/identifiability",
+  "explore/latency",
+  "explore/ood-2",
+  "explore/portfolio",
+  "explore/posterior-study",
+  "explore/regime-study-2",
+  "explore/stress",
+  "explore/transfer-retrospective",
+  "final-2",
+  "inference/posterior-2",
+  "inference/worlds",
+  "report",
+  "transfer/fresh",
+  "transfer/ranking-fresh",
+  "transfer/ranking-retrospective"
+ ],
+ "excluded_runs": [
+  "dev/adaptive-drift-tiny",
+  "dev/adaptive-real-tiny",
+  "dev/adaptive-regime-tiny2",
+  "dev/adaptive-switch-tiny",
+  "dev/adversarial-stress-tiny",
+  "dev/calutil-tiny",
+  "dev/cf-synth-tiny",
+  "dev/change-point-study-v08-tiny",
+  "dev/completion-tiny",
+  "dev/conformal-study-tiny",
+  "dev/hier-tiny",
+  "dev/identifiability-v3-tiny",
+  "dev/inference-posterior-tiny",
+  "dev/latency-study-tiny",
+  "dev/model-averaging-v08-real-tiny",
+  "dev/model-averaging-v08-synthetic-tiny",
+  "dev/mpc-tiny",
+  "dev/ood-study-tiny",
+  "dev/policy-abstention-tiny",
+  "dev/policy-selection-tiny",
+  "dev/posterior-study-v08-tiny",
+  "dev/recovery-tiny",
+  "dev/regime-study-v08-tiny",
+  "dev/robust-tiny",
+  "dev/uncertainty-tiny",
+  "dev/worlds-tiny"
+ ],
+ "excluded_classes": [
+  "raw provider data (data/)",
+  "tape and frame caches",
+  "checkpoints (*.ckpt)",
+  "world-set files (regenerable)",
+  "development pilot runs (listed, not copied)"
+ ],
+ "verification_at_export": {
+  "protocol": {
+   "valid": true,
+   "issues": [],
+   "protocol_sha256": "b84e1e97d99b721be94be10177cc91ea81f1fa59b590ce1a68c881e6a40d9d12",
+   "ledger_entries": 412,
+   "ledger_head_sha256": "682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+   "fresh_unread": [
+    "bitmex-xbtusd-2021-02-01",
+    "bitmex-xbtusd-2021-03-01",
+    "deribit-btc-perp-2021-02-01",
+    "deribit-btc-perp-2021-03-01",
+    "deribit-eth-perp-2021-02-01",
+    "deribit-eth-perp-2021-03-01"
+   ],
+   "holdouts": {
+    "deribit-eth-perp-2021-02-01": {
+     "role": "fresh_temporal",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "fresh-transfer-h13-h17"
+     ]
+    },
+    "deribit-btc-perp-2021-02-01": {
+     "role": "fresh_cross_instrument",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "fresh-transfer-h13-h17"
+     ]
+    },
+    "bitmex-xbtusd-2021-02-01": {
+     "role": "fresh_cross_venue",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "fresh-transfer-h13-h17"
+     ]
+    },
+    "deribit-eth-perp-2021-03-01": {
+     "role": "final_holdout",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "final-holdout-h20"
+     ]
+    },
+    "deribit-btc-perp-2021-03-01": {
+     "role": "final_holdout",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "final-holdout-h20"
+     ]
+    },
+    "bitmex-xbtusd-2021-03-01": {
+     "role": "final_holdout",
+     "freshness": "fresh",
+     "first_access_index": null,
+     "stages": [],
+     "sealed_readers": [
+      "final-holdout-h20"
+     ]
+    }
+   },
+   "sealed_designs": [
+    "confirm-abstention",
+    "confirm-adaptive-drift",
+    "confirm-adaptive-regime",
+    "confirm-adaptive-switch",
+    "confirm-calibration-utility",
+    "confirm-completion",
+    "confirm-conformal",
+    "confirm-counterfactual",
+    "confirm-mpc",
+    "confirm-recovery",
+    "confirm-robust",
+    "confirm-selection",
+    "confirm-uncertainty",
+    "final-holdout-h20",
+    "fresh-transfer-h13-h17",
+    "synthetic-holdout-h21"
+   ],
+   "namespaces_opened": {
+    "confirm": [
+     "confirm-recovery",
+     "confirm-adaptive-drift",
+     "confirm-adaptive-regime",
+     "confirm-adaptive-switch",
+     "confirm-uncertainty",
+     "confirm-calibration-utility",
+     "confirm-completion",
+     "confirm-robust",
+     "confirm-mpc",
+     "confirm-selection",
+     "confirm-abstention",
+     "confirm-counterfactual",
+     "confirm-conformal"
+    ],
+    "holdout": [
+     "synthetic-holdout-h21"
+    ]
+   },
+   "attempts": [
+    {
+     "design": "inference-posterior",
+     "outcome": "INVALID",
+     "directory": "results/v08/inference/posterior",
+     "dataset": null,
+     "index": 72
+    },
+    {
+     "design": "confirm-abstention",
+     "outcome": "ABORTED",
+     "directory": "results/v08/confirm/abstention",
+     "dataset": null,
+     "index": 188
+    },
+    {
+     "design": "confirm-uncertainty",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/uncertainty",
+     "dataset": null,
+     "index": 201
+    },
+    {
+     "design": "confirm-calibration-utility",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/calibration-utility",
+     "dataset": null,
+     "index": 202
+    },
+    {
+     "design": "confirm-completion",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/completion",
+     "dataset": null,
+     "index": 203
+    },
+    {
+     "design": "confirm-robust",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/robust",
+     "dataset": null,
+     "index": 204
+    },
+    {
+     "design": "confirm-mpc",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/mpc",
+     "dataset": null,
+     "index": 205
+    },
+    {
+     "design": "confirm-selection",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/selection",
+     "dataset": null,
+     "index": 206
+    },
+    {
+     "design": "confirm-abstention",
+     "outcome": "ABORTED",
+     "directory": "results/v08/confirm/abstention-2",
+     "dataset": null,
+     "index": 207
+    },
+    {
+     "design": "explore-regime-study",
+     "outcome": "ABORTED",
+     "directory": "results/v08/explore/regime-study",
+     "dataset": null,
+     "index": 296
+    },
+    {
+     "design": "explore-ood",
+     "outcome": "INVALID",
+     "directory": "results/v08/explore/ood",
+     "dataset": null,
+     "index": 297
+    },
+    {
+     "design": "fresh-transfer-h13-h17",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "deribit-eth-perp-2021-02-01",
+     "index": 299
+    },
+    {
+     "design": "fresh-transfer-h13-h17",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "deribit-btc-perp-2021-02-01",
+     "index": 300
+    },
+    {
+     "design": "fresh-transfer-h13-h17",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "bitmex-xbtusd-2021-02-01",
+     "index": 301
+    },
+    {
+     "design": "confirm-abstention",
+     "outcome": "INVALID",
+     "directory": "results/v08/confirm/abstention-3",
+     "dataset": null,
+     "index": 402
+    },
+    {
+     "design": "explore-benchmark",
+     "outcome": "INVALID",
+     "directory": "results/v08/explore/benchmark",
+     "dataset": null,
+     "index": 403
+    },
+    {
+     "design": "final-holdout-h20",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "deribit-eth-perp-2021-03-01",
+     "index": 406
+    },
+    {
+     "design": "final-holdout-h20",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "deribit-btc-perp-2021-03-01",
+     "index": 407
+    },
+    {
+     "design": "final-holdout-h20",
+     "outcome": "NOT_AVAILABLE",
+     "directory": null,
+     "dataset": "bitmex-xbtusd-2021-03-01",
+     "index": 408
+    },
+    {
+     "design": "final-analysis",
+     "outcome": "INVALID",
+     "directory": "results/v08/final",
+     "dataset": null,
+     "index": 411
+    }
+   ],
+   "amendments": 2
+  },
+  "runs": {
+   "valid": true,
+   "runs": 67,
+   "invalid": [],
+   "meaning": "byte integrity plus protocol/ledger/dataset/config/result/lineage binding; not independent scientific replication"
+  }
+ },
+ "meaning": "byte integrity and binding consistency of copied evidence; not independent replication"
+}

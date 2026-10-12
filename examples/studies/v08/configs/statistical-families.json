@@ -1,0 +1,23 @@
+{
+  "schema": "cleolob-v08-families-1",
+  "note": "Within a family, members are corrected with the listed method; confidence intervals use the family-adjusted level (alpha / members for Bonferroni-style interval reporting, Holm for p-value decisions). Exploratory screens use Benjamini-Hochberg and never support ESTABLISHED.",
+  "families": {
+    "predictive": {"members": ["H1", "H2", "H3", "H18"], "alpha": 0.05, "correction": "holm", "interval_alpha": 0.0125, "kind": "confirmatory"},
+    "inference": {"members": ["H4"], "alpha": 0.05, "correction": "none", "interval_alpha": 0.05, "kind": "criterion"},
+    "uncertainty": {"members": ["H5"], "alpha": 0.05, "correction": "bonferroni", "interval_alpha": 0.0125, "kind": "confirmatory", "member_count_note": "four registered pairs"},
+    "decision": {"members": ["H6", "H7", "H8", "H9", "H10"], "alpha": 0.05, "correction": "holm", "interval_alpha": 0.01, "kind": "confirmatory"},
+    "abstention": {"members": ["H11", "H12"], "alpha": 0.05, "correction": "holm", "interval_alpha": 0.025, "kind": "confirmatory"},
+    "historical": {"members": ["H13", "H14"], "alpha": 0.05, "correction": "holm", "interval_alpha": 0.025, "kind": "confirmatory"},
+    "transfer": {"members": ["H15", "H16", "H17", "H20"], "alpha": 0.05, "correction": "holm", "interval_alpha": 0.0125, "kind": "confirmatory"},
+    "conformal": {"members": ["H19"], "alpha": 0.05, "correction": "none", "interval_alpha": 0.05, "kind": "confirmatory"},
+    "holdout": {"members": ["H21"], "alpha": 0.05, "correction": "none", "interval_alpha": 0.05, "kind": "confirmatory"},
+    "exploratory": {"members": [], "alpha": 0.1, "correction": "benjamini_hochberg", "interval_alpha": 0.05, "kind": "exploratory"}
+  },
+  "margins": {
+    "policy_equivalence_bps": 0.5,
+    "completion_noninferiority_bps": 3.0,
+    "practical_policy_effect_bps": 0.25,
+    "incorrect_decision_regret_bps": 0.5,
+    "large_degradation_regret_bps": 2.0
+  }
+}
