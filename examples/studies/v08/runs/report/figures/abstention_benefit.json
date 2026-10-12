@@ -1,0 +1,17 @@
+{
+ "data": {
+  "labels": [
+   "without abstention",
+   "with abstention"
+  ],
+  "values": [
+   0.41944444444444445,
+   0.4527777777777778
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "results/v08/confirm/abstention-4",
+  "pointer": "/mandates/primary"
+ }
+}

@@ -1,0 +1,1 @@
+{"budget":"medium","design":"confirm-adaptive-switch","namespace":"confirm","orders":[["poisson","hawkes","queue_reactive"],["hawkes","queue_reactive","regime_switching"],["queue_reactive","regime_switching","poisson"],["regime_switching","poisson","hawkes"],["poisson","regime_switching","queue_reactive"],["hawkes","poisson","regime_switching"]]}

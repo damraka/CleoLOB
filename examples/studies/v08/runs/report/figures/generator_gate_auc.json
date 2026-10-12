@@ -1,0 +1,25 @@
+{
+ "data": {
+  "labels": [
+   "hawkes",
+   "mixture",
+   "poisson",
+   "queue_reactive",
+   "regime_switching",
+   "state_dependent"
+  ],
+  "values": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.9965277777777778
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "results/v08/explore/posterior-study",
+  "pointer": "/gate/families"
+ }
+}

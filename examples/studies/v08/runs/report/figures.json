@@ -1,0 +1,98 @@
+[
+ {
+  "figure": "hypothesis_status_counts.svg",
+  "data": "hypothesis_status_counts.json",
+  "run": "final",
+  "pointer": "/statuses"
+ },
+ {
+  "figure": "calibration_drift_rolling_vs_frozen.svg",
+  "data": "calibration_drift_rolling_vs_frozen.json",
+  "run": "results/v08/confirm/adaptive-drift",
+  "pointer": "/per_scenario/*/h1_rel"
+ },
+ {
+  "figure": "calibration_half_life_curves.svg",
+  "data": "calibration_half_life_curves.json",
+  "run": "results/v08/confirm/adaptive-drift",
+  "pointer": "/per_scenario/*/curve"
+ },
+ {
+  "figure": "calibration_vs_regret.svg",
+  "data": "calibration_vs_regret.json",
+  "run": "results/v08/confirm/calibration-utility-2",
+  "pointer": "/rows"
+ },
+ {
+  "figure": "regret_by_policy_primary.svg",
+  "data": "regret_by_policy_primary.json",
+  "run": "results/v08/confirm/mpc-2",
+  "pointer": "/mandates/primary/table/policies"
+ },
+ {
+  "figure": "cost_by_policy_secondary.svg",
+  "data": "cost_by_policy_secondary.json",
+  "run": "results/v08/confirm/mpc-2",
+  "pointer": "/mandates/large/table/policies"
+ },
+ {
+  "figure": "completion_cost_pareto.svg",
+  "data": "completion_cost_pareto.json",
+  "run": "results/v08/confirm/completion-2",
+  "pointer": "/mandates/primary/pareto/points"
+ },
+ {
+  "figure": "cvar_frontier.svg",
+  "data": "cvar_frontier.json",
+  "run": "results/v08/confirm/robust-2",
+  "pointer": "/mandates/primary/out_of_sample"
+ },
+ {
+  "figure": "epistemic_share_by_pair.svg",
+  "data": "epistemic_share_by_pair.json",
+  "run": "results/v08/confirm/uncertainty-2",
+  "pointer": "/mandates/primary/decomposition/pairs"
+ },
+ {
+  "figure": "abstention_benefit.svg",
+  "data": "abstention_benefit.json",
+  "run": "results/v08/confirm/abstention-4",
+  "pointer": "/mandates/primary"
+ },
+ {
+  "figure": "counterfactual_pair_bounds.svg",
+  "data": "counterfactual_pair_bounds.json",
+  "run": "results/v08/confirm/counterfactual",
+  "pointer": "/mandates/primary/pairs"
+ },
+ {
+  "figure": "transfer_kendall_tau.svg",
+  "data": "transfer_kendall_tau.json",
+  "run": "results/v08/explore/transfer-retrospective",
+  "pointer": "/mandates/primary/kendall_matrix"
+ },
+ {
+  "figure": "latency_sensitivity.svg",
+  "data": "latency_sensitivity.json",
+  "run": "results/v08/explore/latency",
+  "pointer": "/summary"
+ },
+ {
+  "figure": "ood_detection_rates.svg",
+  "data": "ood_detection_rates.json",
+  "run": "results/v08/explore/ood-2",
+  "pointer": "/detectors/mahalanobis"
+ },
+ {
+  "figure": "generator_gate_auc.svg",
+  "data": "generator_gate_auc.json",
+  "run": "results/v08/explore/posterior-study",
+  "pointer": "/gate/families"
+ },
+ {
+  "figure": "model_weights_through_time.svg",
+  "data": "model_weights_through_time.json",
+  "run": "results/v08/explore/averaging-real",
+  "pointer": "/report/dynamic_path_every_600_bins"
+ }
+]

@@ -1,0 +1,1 @@
+{"analysis":"ranking_retrospective","inputs":[{"result_sha256":"1f6cb7cf48d8b047385ce9545c4423aa9b1e704eac8dde61564af2a8aefae473","run":"results/v08/confirm/mpc-2"},{"result_sha256":"837d42875bf06b5da1c88514067ab311793c86898876e9ba99498b9348e9f33c","run":"results/v08/explore/transfer-retrospective"}],"schema":"cleolob-v08-lineage-1"}

@@ -1,0 +1,41 @@
+{
+ "data": {
+  "labels": [
+   "ac",
+   "adaptive_pov",
+   "adaptive_twap",
+   "adaptive_vwap",
+   "dynamic_ac",
+   "heuristic",
+   "liquidity_twap",
+   "mpc",
+   "mpc_robust",
+   "pov",
+   "random",
+   "twap",
+   "volatility_aware",
+   "vwap"
+  ],
+  "values": [
+   5.021878936318631,
+   5.0225843694009535,
+   4.919469132610475,
+   4.917025822650691,
+   4.915764740309573,
+   4.742786384434455,
+   4.322037194924337,
+   4.451494518016634,
+   4.69996954491971,
+   6.699014660325277,
+   4.9851790449966735,
+   4.916115721278037,
+   5.33576113490873,
+   4.916115721278037
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "results/v08/confirm/mpc-2",
+  "pointer": "/mandates/large/table/policies"
+ }
+}
