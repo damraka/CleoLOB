@@ -1,0 +1,1 @@
+{"box":"agent intensities x U[0.5, 2]; depletion U[0.5, 2]; replenish U[0, 1]; regime switch probability U[0.002, 0.02]","carried":[{"kind":"member_vs_twap","member":"mpc","policy":"mpc","source":"H9"},{"kind":"member_vs_twap","member":"mpc_robust","policy":"mpc_robust","source":"H9"}],"seeds":32,"worlds":12}

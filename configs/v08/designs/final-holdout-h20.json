@@ -1,0 +1,1 @@
+{"hypotheses":["H20"],"reads":["deribit-eth-perp-2021-03-01","deribit-btc-perp-2021-03-01","bitmex-xbtusd-2021-03-01"],"rule":"probe, then bounded replays of carried conclusions"}
