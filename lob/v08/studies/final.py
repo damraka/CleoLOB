@@ -360,6 +360,14 @@ def _final_holdout(args, root) -> dict:
         pr.seal_design(root, design, {"hypotheses": ["H20"], "reads": list(FINAL_HOLDOUT),
                                       "rule": "probe, then bounded replays of carried conclusions"},
                        reads=list(FINAL_HOLDOUT), reason="seal the final real holdout reader before any access")
+    recorded = {a["dataset"]: a["index"] for a in state.attempts
+                if a["design"] == design and a.get("outcome") == "NOT_AVAILABLE" and a["dataset"] in FINAL_HOLDOUT}
+    if set(recorded) == set(FINAL_HOLDOUT):
+        # the registered probe already failed for every dataset: reuse that ledgered outcome, never probe again
+        return {"status": "NOT_AVAILABLE", "datasets": {ds: f"NOT_AVAILABLE: ledger entry {i}" for ds, i in
+                                                        recorded.items()},
+                "reason": "the registered availability probe failed (ledgered); no holdout byte was requested; "
+                          "the holdout stays fresh"}
     outcomes = {}
     for ds in FINAL_HOLDOUT:
         try:

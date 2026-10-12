@@ -178,3 +178,47 @@ def test_unsafe_paths_are_rejected() -> None:
     for bad in ("../x", "C:\\x", "/abs", "a//b"):
         with pytest.raises(ProtocolError):
             pr.portable(bad)
+
+
+def test_final_holdout_reuses_a_ledgered_failed_probe(root, monkeypatch) -> None:
+    # regression: every final-analysis rerun probed the provider again for the H20 holdout
+    from lob.v08.studies import final
+    protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
+    pr.seal_design(root, "final-holdout-h20", {"hypotheses": ["H20"]}, reads=list(final.FINAL_HOLDOUT))
+    for ds in final.FINAL_HOLDOUT:
+        pr.append_event(root / pr.LEDGER_PATH, "attempt", design="final-holdout-h20", dataset=ds, reason="probe",
+                        protocol=protocol, root=root,
+                        payload={"outcome": "NOT_AVAILABLE", "directory": None, "note": "403",
+                                 "no_directory_reason": "nothing was downloaded"})
+    before = len(pr.read_ledger(root / pr.LEDGER_PATH))
+
+    def no_probe(*a, **k):
+        raise AssertionError("the provider must not be probed again")
+
+    monkeypatch.setattr(realdata, "acquire", no_probe)
+    out = final._final_holdout(None, root)
+    assert out["status"] == "NOT_AVAILABLE" and set(out["datasets"]) == set(final.FINAL_HOLDOUT)
+    assert len(pr.read_ledger(root / pr.LEDGER_PATH)) == before
+
+
+def test_synthetic_holdout_validates_inputs_first_and_never_reopens(root, monkeypatch) -> None:
+    # regression: H21 opened the holdout namespace before checking its worlds input, so a rerun could never open it
+    from types import SimpleNamespace
+    from lob.v08.studies import common as C, holdout
+    args = SimpleNamespace(root=str(root), inputs={})
+    before = len(pr.read_ledger(root / pr.LEDGER_PATH))
+    with pytest.raises(ValueError, match="worlds"):
+        holdout.evaluate_holdout(args, root, [{"source": "H9"}], None, None)
+    assert len(pr.read_ledger(root / pr.LEDGER_PATH)) == before          # nothing sealed or opened
+    pr.seal_design(root, holdout.DESIGN, {"x": 1}, namespaces=["holdout"])
+    pr.open_namespace(root, "holdout", design=holdout.DESIGN, reason="retained attempt opened it")
+    opened = len(pr.read_ledger(root / pr.LEDGER_PATH))
+
+    class Reached(Exception):
+        pass
+
+    monkeypatch.setattr(C, "input_run", lambda a, k: root)
+    monkeypatch.setattr(C, "load_world_set", lambda *a: (_ for _ in ()).throw(Reached()))
+    with pytest.raises(Reached):
+        holdout.evaluate_holdout(args, root, [{"source": "H9"}], None, None)
+    assert len(pr.read_ledger(root / pr.LEDGER_PATH)) == opened          # no second open_namespace event

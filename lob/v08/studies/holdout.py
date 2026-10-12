@@ -40,16 +40,18 @@ def holdout_worlds(book, seeds: list[int]) -> list[World]:
 
 
 def evaluate_holdout(args, root, carried: list[dict], out, row) -> dict:
+    wrun = C.input_run(args, "worlds")   # validate inputs before any ledger write
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     state = pr.replay_ledger(pr.read_ledger(root / pr.LEDGER_PATH), protocol)
     if DESIGN not in state.designs:
         pr.seal_design(root, DESIGN, {"worlds": WORLDS, "seeds": SEEDS, "carried": carried,
                                       "box": protocol["worlds"]["synthetic_holdout"]["box"]},
                        namespaces=["holdout"], reason="seal the synthetic holdout reader (H21)")
-    pr.open_namespace(root, "holdout", design=DESIGN, reason="H21 opens the sealed synthetic holdout once")
+    if not any(x["design"] == DESIGN for x in state.namespaces.get("holdout", [])):
+        # opened exactly once; a retained attempt that opened it but evaluated nothing does not open it again
+        pr.open_namespace(root, "holdout", design=DESIGN, reason="H21 opens the sealed synthetic holdout once")
     seeds = pr.seeds("holdout", "h21.worlds", WORLDS, root=root, design=DESIGN)
     ep_seeds = pr.seeds("holdout", "h21.episodes", SEEDS, root=root, design=DESIGN)
-    wrun = C.input_run(args, "worlds")
     book = C.load_world_set(wrun, "selection").worlds[0].book
     worlds = holdout_worlds(book, seeds)
     registered = C.registered_policies(root)
