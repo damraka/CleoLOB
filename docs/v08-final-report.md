@@ -1,7 +1,8 @@
 # v0.8 final report: decision-focused calibration, uncertainty and adaptive execution
 
 **Branch and version.** Branch `research/v0.8-decision-uncertainty`, package version `0.8.0.dev0`.
-**This is not a release:** there is no tag, no PyPI upload and no GitHub release.
+The registered studies ran at that development version and are released unchanged as `v0.8.0`
+(release notes: [v08-release-notes.md](v08-release-notes.md)).
 
 **Protocol.** `configs/v08/protocol.json` (`b84e1e97…`), with two amendments:
 1. Amendment 1 registered a secondary 400-lot mandate before any confirmatory run. Statuses are decided on the

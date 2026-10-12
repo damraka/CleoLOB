@@ -10,4 +10,4 @@ v0.8 is a bounded research framework. Nothing in it is a live-trading system, a
 profitability claim or a measurement of real exchange latency.
 """
 
-VERSION = "0.8.0.dev0"
+VERSION = "0.8.0"

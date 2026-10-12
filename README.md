@@ -51,11 +51,11 @@ It is a research framework, not a production trading system.
 Negative, null, and failed results are retained rather than removed from the research record.
 
 <!-- v08:start -->
-### v0.8 (development, unreleased): decision uncertainty and adaptive execution
+### v0.8.0: decision uncertainty and adaptive execution (current release)
 
 v0.8 asks whether execution decisions stay reliable when models are imperfect, regimes drift and uncertainty is
-explicit. Everything was preregistered (`configs/v08/`, two amendments) on the research branch at development
-version `0.8.0.dev0`. **It is not released, and v0.7.0 remains the current release.**
+explicit. Everything was preregistered (`configs/v08/`, two amendments). The registered studies were run on the
+research branch at development version `0.8.0.dev0` and are released unchanged in `v0.8.0`.
 
 Fresh real data could not be acquired. The registered probe returned HTTP 403, so both real holdouts are unread
 ([C08-DATA-BLOCKED]). Every generator family failed the registered gate, which reports NO_ACCEPTABLE_MODEL
@@ -83,7 +83,7 @@ See the [v0.8 report](docs/v08-paper.md), the [final report](docs/v08-final-repo
 [requirement coverage](docs/v08-requirement-coverage.md). The public evidence bundle is `examples/studies/v08`.
 <!-- v08:end -->
 
-### v0.7.0: generative market dynamics, posterior calibration and robust execution (current release)
+### v0.7.0: generative market dynamics, posterior calibration and robust execution
 
 v0.7 tests whether richer generators, posterior calibration and execution-aware calibration
 close the realism gap, and which execution conclusions survive model uncertainty. Everything was
@@ -124,7 +124,8 @@ unchanged in `v0.6.0`:
 
 See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
 
-The [v0.7 final report](docs/v07-final-report.md) documents the latest release, `v0.7.0`.
+The [v0.8 final report](docs/v08-final-report.md) documents the latest release, `v0.8.0`.
+The [v0.7 final report](docs/v07-final-report.md) documents `v0.7.0`.
 The [v0.6 final report](docs/v06-final-report.md) documents `v0.6.0`.
 The [v0.5 research report](docs/v05-paper.md) and
 [v0.5 final report](docs/v05-final-report.md) document the real-market validation study
@@ -347,6 +348,8 @@ cleo verify-artifact examples/studies/v06/evidence
 cleo protocol-v06 verify
 cleo verify-v07 --bundle examples/studies/v07/evidence
 cleo protocol-v07 verify
+cleo verify-v08 --bundle examples/studies/v08
+cleo protocol-v08 verify
 ```
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
@@ -403,8 +406,8 @@ including every failed, null, vacuous, aborted and invalid outcome, are in the
 [v0.7 report](docs/v07-paper.md) and the [final report](docs/v07-final-report.md). See the
 [v0.7 roadmap](docs/v0.7-roadmap.md).
 
-v0.8, **decision uncertainty, adaptive calibration and adaptive execution**, is complete on the research branch
-and unreleased. Its preregistered results, including the FAILED, NOT_AVAILABLE and retained INVALID outcomes, are in
+v0.8, **decision uncertainty, adaptive calibration and adaptive execution**, was released as `v0.8.0`.
+Its preregistered results, including the FAILED, NOT_AVAILABLE and retained INVALID outcomes, are in
 the [v0.8 report](docs/v08-paper.md) and the [final report](docs/v08-final-report.md).
 
 ## Documentation
