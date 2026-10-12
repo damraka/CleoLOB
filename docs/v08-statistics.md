@@ -10,7 +10,7 @@
 - Wilson intervals and the exact sign test.
 
 **Decision rules.**
-- **Superiority:** the whole interval lies beyond the threshold.
+- **Superiority:** the whole interval lies beyond the registered threshold.
 - **Equivalence:** TOST through the (1 − 2α) interval.
 - **Non-inferiority:** a one-sided bound against a margin.
 

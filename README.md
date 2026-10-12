@@ -50,6 +50,39 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
+<!-- v08:start -->
+### v0.8 (development, unreleased): decision uncertainty and adaptive execution
+
+v0.8 asks whether execution decisions stay reliable when models are imperfect, regimes drift and uncertainty is
+explicit. Everything was preregistered (`configs/v08/`, two amendments) on the research branch at development
+version `0.8.0.dev0`. **It is not released, and v0.7.0 remains the current release.**
+
+Fresh real data could not be acquired. The registered probe returned HTTP 403, so both real holdouts are unread
+([C08-DATA-BLOCKED]). Every generator family failed the registered gate, which reports NO_ACCEPTABLE_MODEL
+([C08-GATE]). Every confirmatory result is therefore SYNTHETIC and says nothing direct about real markets.
+
+| Question | v0.8 result (SYNTHETIC unless stated) |
+|---|---|
+| Adaptive calibration vs frozen ([C08-H1]), regime vs global ([C08-H2]), model averaging ([C08-H3]) | ESTABLISHED: small but clear predictive gains (0.017–0.061) |
+| Synthetic parameter recovery [C08-H4] | NOT_ESTABLISHED: coverage ≥ 0.83 everywhere, but one Wilson lower bound is 0.55 < 0.60 |
+| Material model uncertainty [C08-H5] | ESTABLISHED: up to 62% of a pairwise cost variance is epistemic |
+| Calibration quality vs decision regret [C08-H6] | NOT_ESTABLISHED (ρ −0.02) |
+| Completion constraints [C08-H7] | NOT_ESTABLISHED |
+| CVaR vs nominal selection over simulated worlds [C08-H8] | NOT_ESTABLISHED |
+| MPC / adaptive execution vs TWAP on simulated tail cost [C08-H9] | ESTABLISHED: MPC and robust MPC, about 1.5–1.7 bps CVaR |
+| Regime-aware policy selection [C08-H10] | NOT_ESTABLISHED |
+| OOD-aware abstention [C08-H11] and safe fallback [C08-H12] | FAILED: both made simulated decisions worse |
+| Counterfactual bounds separate policy pairs [C08-H14] | ESTABLISHED: 1 of 5 registered pairs, bounded replays only |
+| Half-life and post-drift gain [C08-H18] | NOT_ESTABLISHED |
+| Conformal coverage [C08-H19] | ESTABLISHED under exchangeability (0.90); 0.51–0.59 under registered shifts |
+| Fresh-data transfer and ranking (H13 [C08-H13], H15 [C08-H15], H16 [C08-H16], H17 [C08-H17]) | NOT_AVAILABLE (data acquisition blocked) |
+| Final real holdout [C08-H20] | NOT_AVAILABLE (data acquisition blocked) |
+| Sealed synthetic holdout [C08-H21] | ESTABLISHED: both carried MPC conclusions survive unseen simulated worlds |
+
+See the [v0.8 report](docs/v08-paper.md), the [final report](docs/v08-final-report.md) and the
+[requirement coverage](docs/v08-requirement-coverage.md). The public evidence bundle is `examples/studies/v08`.
+<!-- v08:end -->
+
 ### v0.7.0: generative market dynamics, posterior calibration and robust execution (current release)
 
 v0.7 tests whether richer generators, posterior calibration and execution-aware calibration
@@ -370,6 +403,10 @@ including every failed, null, vacuous, aborted and invalid outcome, are in the
 [v0.7 report](docs/v07-paper.md) and the [final report](docs/v07-final-report.md). See the
 [v0.7 roadmap](docs/v0.7-roadmap.md).
 
+v0.8, **decision uncertainty, adaptive calibration and adaptive execution**, is complete on the research branch
+and unreleased. Its preregistered results, including the FAILED, NOT_AVAILABLE and retained INVALID outcomes, are in
+the [v0.8 report](docs/v08-paper.md) and the [final report](docs/v08-final-report.md).
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -407,6 +444,13 @@ including every failed, null, vacuous, aborted and invalid outcome, are in the
   [identifiability](docs/v07-identifiability.md), [realism](docs/v07-realism.md),
   [model risk](docs/v07-model-risk.md), [transfer](docs/v07-transfer.md),
   [performance](docs/v07-performance.md), [reproduction](docs/v07-reproduction.md)
+- [v0.8 research report](docs/v08-paper.md), [final report](docs/v08-final-report.md),
+  [requirement coverage](docs/v08-requirement-coverage.md) and [implementation plan](docs/v08-implementation-plan.md)
+- v0.8 details: [protocol](docs/v08-protocol.md), [statistics](docs/v08-statistics.md),
+  [generators](docs/v08-generators.md), [inference](docs/v08-inference.md), [calibration](docs/v08-calibration.md),
+  [uncertainty](docs/v08-uncertainty.md), [completion](docs/v08-completion.md),
+  [execution under uncertainty](docs/v08-robust-execution.md), [counterfactual bounds](docs/v08-counterfactual.md),
+  [transfer](docs/v08-transfer.md), [reproduction](docs/v08-reproduction.md)
 
 ## Citation
 

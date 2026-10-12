@@ -1,4 +1,4 @@
-# v0.8 robust execution, MPC and adaptive policies
+# v0.8 robust execution, MPC and adaptive policies (simulation)
 
 ## Policies (`lob/v08/execution/policies.py`, `mpc.py`)
 
@@ -32,13 +32,13 @@ MPC estimates use observed data only.
 **Robust MPC.** Takes the worst case over a registered scenario grid.
 
 **Parametric schedule family.** Urgency × passive fraction × catch-up. This family is the candidate set for
-robust selection.
+robust selection over simulated worlds.
 
 Policy parameters are fixed across worlds.
 
-## Robust selection (M24; H8)
+## Robust selection across simulated worlds (M24; H8)
 
-`cleo robust-execution-v08` runs in two stages.
+`cleo robust-execution-v08` runs in two stages on simulated worlds.
 
 **Stage 1 — selection.** Candidates are evaluated on the selection worlds with development seeds. Each
 criterion then picks one candidate:
@@ -68,7 +68,7 @@ it reports:
 
 H9 compares three members with TWAP on CVaR over worlds, with a Holm correction across the three:
 - MPC;
-- robust MPC;
+- robust MPC (worst case over the registered scenario grid);
 - the best adaptive variant on development seeds.
 
 ## Stress worlds (M28) and latency (M30)

@@ -16,7 +16,7 @@
 **Variance split.** For each policy and each registered pair, the variance is split into:
 - aleatoric (seed) and epistemic parts;
 - first-order shares of the epistemic part for model family, parameter sample, calibration window, queue,
-  latency and hidden liquidity.
+  latency and hidden liquidity (modelled assumptions, not observed).
 
 **Limits of the design.**
 - The shares describe this registered design only.

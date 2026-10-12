@@ -23,7 +23,10 @@ The full chain needs the consumed Tardis samples in `data/` (they are not redist
    A fresh rerun needs a new design name. The `confirm` namespace is opened through the ledger and recorded,
    so a rerun never silently reuses or replaces sealed evidence.
 4. The exploratory studies, in the `dev` namespace.
-5. `cleo final-analysis-v08`, then `cleo report-v08` and `cleo evidence-export-v08`.
+5. `cleo final-analysis-v08`, then `cleo report-v08` and `cleo evidence-export-v08`. The final analysis takes one
+   `--input KEY=RUN` per sealed confirmatory run, plus `worlds` (needed by the H21 synthetic holdout),
+   `transfer_fresh` and `ranking`. The sealed final analysis is `results/v08/final-2`; `results/v08/final` is a
+   retained INVALID attempt. Pass `--final results/v08/final-2` to `report-v08` and `evidence-export-v08`.
 
 ## Long runs
 
