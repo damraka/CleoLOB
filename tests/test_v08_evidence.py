@@ -183,3 +183,14 @@ def test_report_cli_rejects_unknown_or_unsealed_inputs(v08_root, capsys) -> None
         code = cli_main(["report-v08", "--root", str(v08_root), "--out", "results/v08/r", "--input", bad])
         assert code == 1 and json.loads(capsys.readouterr().out)["status"] == "INVALID"
     assert not (v08_root / "results/v08/r").exists()
+
+
+def test_benchmark_reseals_the_same_directory_on_every_repeat(tmp_path) -> None:
+    # regression: the sealing benchmark re-sealed one directory, and the write-once checksums.json failed repeat 2
+    from lob.artifacts import verify_artifacts
+    from lob.v08.studies.benchmark import _reseal, _time
+    for i in range(5):
+        (tmp_path / f"f{i}.json").write_text("{}", encoding="utf-8")
+    timing = _time(lambda: _reseal(tmp_path), 3)
+    assert timing["repeats"] == 3 and timing["units"] == 5
+    assert verify_artifacts(tmp_path)["valid"]

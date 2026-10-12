@@ -62,6 +62,12 @@ def _sim(family: str, bins: int) -> int:
     return bins
 
 
+def _reseal(directory: Path) -> int:
+    """Seal ``directory`` again; checksums.json is write-once, so a repeat removes the previous manifest first."""
+    (directory / "checksums.json").unlink(missing_ok=True)
+    return len(seal_artifacts(directory)["files"])
+
+
 def run(args) -> dict:
     d = C.design(args, DEFAULTS)
     out = C.start(args)
@@ -95,7 +101,7 @@ def run(args) -> dict:
     try:
         for i in range(200):
             (tmp / f"f{i:03d}.json").write_text("{}" * 500, encoding="utf-8")
-        results["artifact_sealing_200_files"] = _time(lambda: (seal_artifacts(tmp), 200)[1], r)
+        results["artifact_sealing_200_files"] = _time(lambda: _reseal(tmp), r)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     tasks = [Task(f"e{i:03d}", "lob.v08.studies.common:episode_task",
