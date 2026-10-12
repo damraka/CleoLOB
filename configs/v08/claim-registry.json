@@ -152,9 +152,9 @@
   },
   "CF-COVERAGE": {
    "hypothesis": null,
-   "test": "counterfactual_bounds",
-   "source_analysis": "counterfactual_bounds",
-   "pointer": "/synthetic/summary",
+   "test": "counterfactual-bounds-v08 synthetic",
+   "source_analysis": "counterfactual_synthetic",
+   "pointer": "/summary",
    "statement": "Synthetic per-path and expected-value coverage of the historical bound method."
   },
   "GATE": {
@@ -208,17 +208,17 @@
   },
   "STRESS": {
    "hypothesis": null,
-   "test": "adversarial_stress",
+   "test": "adversarial-stress-v08",
    "source_analysis": "adversarial_stress",
-   "pointer": "/summary",
-   "statement": "Structured stress and bounded adversarial search outcomes."
+   "pointer": "/scenarios",
+   "statement": "Structured stress scenario outcomes (cost, completion, ranking stability)."
   },
   "PORTFOLIO": {
    "hypothesis": null,
-   "test": "transfer_study",
-   "source_analysis": "transfer_study",
-   "pointer": "/portfolio",
-   "statement": "Cross-venue routing and basket infrastructure results (synthetic and retrospective)."
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/routing_synthetic",
+   "statement": "Synthetic cross-venue routing infrastructure results."
   },
   "BENCH": {
    "hypothesis": null,
@@ -226,6 +226,27 @@
    "source_analysis": "benchmark",
    "pointer": "/summary",
    "statement": "Local research-workload performance measurements (not HFT benchmarks)."
+  },
+  "STRESS-SEARCH": {
+   "hypothesis": null,
+   "test": "adversarial-stress-v08",
+   "source_analysis": "adversarial_stress",
+   "pointer": "/adversarial_search",
+   "statement": "Bounded, plausibility-constrained adversarial search outcome."
+  },
+  "PORTFOLIO-REAL": {
+   "hypothesis": null,
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/routing_real_hypothetical",
+   "statement": "Retrospective hypothetical cross-venue routing on consumed days (bounded fills)."
+  },
+  "BASKET": {
+   "hypothesis": null,
+   "test": "transfer-study-v08 portfolio",
+   "source_analysis": "portfolio",
+   "pointer": "/basket_synthetic",
+   "statement": "Synthetic basket execution infrastructure results."
   }
  }
 }

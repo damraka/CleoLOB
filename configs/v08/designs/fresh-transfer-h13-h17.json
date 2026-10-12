@@ -1,0 +1,1 @@
+{"hypotheses":["H13","H15","H16","H17"],"reads":["deribit-eth-perp-2021-02-01","deribit-btc-perp-2021-02-01","bitmex-xbtusd-2021-02-01"],"rule":"probe, then bounded replays of the historical-replay policies"}

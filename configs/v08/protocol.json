@@ -1043,6 +1043,13 @@
       "change": "adds the secondary 400-lot mandate (20 x the median touch) to the execution studies; no hypothesis, endpoint, margin, threshold, alpha, dataset role or primary mandate changes",
       "reason": "a development-seed pilot in worlds built from the registered development and calibration fits showed that under the primary 40-lot mandate every aggressive policy pays about the half spread plus the taker fee (decision problem nearly degenerate); a larger registered mandate is reported alongside so the contrast is visible, while statuses stay tied to the frozen primary mandate",
       "pilot_disclosure": "pilot runs used dev seeds only (results/v08/dev, results/v08/inference); no confirm or holdout namespace had been opened"
+    },
+    {
+      "number": 2,
+      "before_confirmatory_data": false,
+      "change": "claim-registry bookkeeping only: CF-COVERAGE, STRESS and PORTFOLIO named an analysis key or result pointer that the implemented studies never write (counterfactual_bounds, transfer_study, /summary); they are re-pointed to the sealed analyses' actual keys, and the multi-part STRESS and PORTFOLIO statements are split into one claim per result subtree (STRESS-SEARCH, PORTFOLIO-REAL, BASKET). No hypothesis, H1-H21 claim, rule, endpoint, margin, threshold, alpha, dataset role, design, seed or mandate changes; no status depends on the claim registry",
+      "reason": "the fail-closed claim audit could not resolve these non-hypothesis claims to any sealed run",
+      "timing_disclosure": "applied after every confirmatory run sealed so no run's protocol binding changed mid-run"
     }
   ]
 }
