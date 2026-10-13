@@ -95,6 +95,7 @@ class EpisodeResult:
     decisions: int = 0
     completion_time_s: float | None = None
     traded_volume_window: float = 0.0
+    unidentified: bool = False                          # an L1-only book could not price a child
 
 
 class DayBook:
@@ -106,6 +107,7 @@ class DayBook:
         self.deep_index = {int(s): i for i, s in enumerate(cache["deep_s"].tolist())}
         self.trade_t = cache["trade_t"]
         self.trade_bin = np.floor(cache["trade_t"] * 1000 / BIN_MS).astype(np.int64)
+        self.levels = int(cache.get("levels", 200))        # 1 = L1-only source (Binance bookTicker)
 
     def bin_of(self, t: float) -> int:
         return int(min(max(math.floor(t * 1000 / BIN_MS), 0), len(self.c["valid"]) - 1))
@@ -194,6 +196,8 @@ class Replay:
                 last = p
             if rem <= 1e-9:
                 break
+        if rem > 1e-9 and self.book.levels == 1:
+            self.res.unidentified = True
         if rem > 1e-9:
             worst = last if last is not None else (int(prices[-1]) if len(prices) else
                                                    int(self.book.touch(t)[1 if self.side > 0 else 0]))
@@ -368,7 +372,7 @@ def metrics(res: EpisodeResult, book: DayBook, fees: Fees = Fees()) -> dict:
             "maker_fraction": passive_q / float(q.sum()), "markout5s_bps": markout,
             "completion_time_s": res.completion_time_s, "decisions": res.decisions,
             "participation": float(q.sum()) / max(res.traded_volume_window + q.sum(), 1e-9),
-            "label": LABEL}
+            "identified": not res.unidentified, "label": LABEL}
 
 
 def window_quantity(book: DayBook, window: int, notional_usd: float, lot: float) -> float:

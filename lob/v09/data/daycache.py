@@ -250,6 +250,9 @@ def build_binance(l1: Path, trades: Path, *, day: str, tick: float, lot: float) 
     counters = rc.Counters(messages=len(t), deltas=len(t), ts_backwards=ts_backwards, out_of_order=u_backwards,
                            crossed=int(np.count_nonzero(bid >= ask)), off_tick=off_tick,
                            max_gap_ms=int(np.diff(t).max()) if len(t) > 1 else 0,
+                           long_gap_ms_total=int(np.diff(t)[np.diff(t) > 5_000].sum()) if len(t) > 1 else 0,
+                           gap_starts_ms=(t[:-1][np.diff(t) > 5_000] + t0_ms).astype(int).tolist() if len(t) > 1
+                           else [],
                            first_ts=int(t[0] + t0_ms) if len(t) else None, last_ts=int(t[-1] + t0_ms) if len(t) else None)
     secs = deep_seconds()
     quality = _quality(counters, trades_out, bid_px, ask_px, valid, int(np.count_nonzero(np.diff(tr_t) < 0)))

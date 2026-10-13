@@ -31,7 +31,9 @@ def decide(quality: dict, thresholds: dict | None = None) -> dict:
     r = quality["reconstruction"]
     messages = max(int(r["messages"]), 1)
     trades = max(int(quality["trades"]), 1)
-    long_gap_min = len(r.get("gap_starts_ms", [])) * 5.0 / 60.0 if r.get("gap_starts_ms") else 0.0
+    if "long_gap_ms_total" not in r:
+        raise ValueError("quality counters predate the gap-duration fix (incident 1); rebuild the cache")
+    long_gap_min = float(r["long_gap_ms_total"]) / 60_000.0
     checks = {
         "sequence": (r["sequence_gaps"] + r["duplicates"] + r["out_of_order"]) / messages
         <= th["max_sequence_problem_rate"],

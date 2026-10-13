@@ -65,7 +65,17 @@ def test_sequence_duplicates_out_of_order_crossed_and_gaps_are_counted() -> None
             _msg("delta", 9_000, 15, [(1002, 3)], []), _msg("delta", 8_000, 16, [(1002, 0)], [])]
     _, c, _ = rc.replay(msgs, tick=0.1, lot=0.001)
     assert (c.duplicates, c.sequence_gaps, c.out_of_order, c.crossed, c.ts_backwards) == (1, 1, 1, 1, 1)
-    assert c.max_gap_ms == 8_600 and c.gap_starts_ms == [400]
+    assert c.max_gap_ms == 8_600 and c.gap_starts_ms == [400] and c.long_gap_ms_total == 8_600
+
+
+def test_long_gap_duration_is_summed_not_counted() -> None:
+    """Regression (incident 1): one 20-minute gap must exceed the registered 10-minute gap budget."""
+    base = {"reconstruction": rc.Counters(messages=10_000, long_gap_ms_total=20 * 60_000).to_dict(),
+            "trades": 5_000, "trades_inconsistent_20bps": 0, "trade_side_unknown": 0, "valid_bin_fraction": 0.986}
+    out = quality.decide(base)
+    assert out["status"] == "QUALITY_REJECTED" and out["failed"] == ["gaps"]
+    ok = {**base, "reconstruction": rc.Counters(messages=10_000, long_gap_ms_total=9 * 60_000).to_dict()}
+    assert quality.decide(ok)["status"] == "AVAILABLE"
 
 
 def test_off_grid_and_negative_sizes_are_counted_not_hidden() -> None:

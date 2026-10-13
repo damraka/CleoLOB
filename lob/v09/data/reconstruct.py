@@ -43,6 +43,7 @@ class Counters:
     recenters: int = 0
     truncated_levels: int = 0
     max_gap_ms: int = 0
+    long_gap_ms_total: int = 0                          # summed duration of message gaps longer than 5 s
     first_ts: int | None = None
     last_ts: int | None = None
     gap_starts_ms: list = field(default_factory=list)
@@ -252,6 +253,7 @@ def apply_message(book, message: dict, grid: _Grid, state: dict) -> None:
             c.max_gap_ms = gap
         if gap > 5_000:
             c.gap_starts_ms.append(c.last_ts)
+            c.long_gap_ms_total += gap
     c.last_ts = max(ts, c.last_ts or ts)
     data = message["data"]
     u = int(data.get("u", -1))
