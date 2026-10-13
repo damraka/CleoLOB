@@ -242,6 +242,10 @@ def summarize(protocol: dict, days: list[dict], *, hours: float, phase: str) -> 
             v = conclusion_units(days, c, streams=flt)
             conclusions[cid][f"pilot_{name}"] = pilot_record(v["units"], v["split_half"], capabilities=caps,
                                                              hours=hours, threshold=c["threshold_bps"])
+    c5 = protocol["conclusions"]["set"].get("C5")
+    if c5 is not None:                         # H9 completion non-inferiority (registered margin 0.02)
+        comp = conclusion_units(days, {**c5, "endpoint": "completion", "direction": "increase"}, streams=l2)
+        conclusions["C5"]["completion_units"] = comp["units"]
     days_out = {d["dataset"]: {"seconds": d["seconds"], "levels": d["levels"]} for d in days}
     return {"phase": phase, "conclusions": conclusions, "days": days_out,
             "ranking": ranking(days), "label": "BOUNDED, HYPOTHETICAL, ASSUMPTION_DEPENDENT; never actual fills"}
