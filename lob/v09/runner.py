@@ -234,6 +234,9 @@ def run_tasks(tasks: list[Task], *, workers: int | None = None, checkpoint: Path
             handle.close()
     info["completed"] = len(results)
     if exhausted and len(results) < len(tasks):
-        raise ResourceExhausted(f"RESOURCE_EXHAUSTED: {len(results)}/{len(tasks)} tasks completed; the checkpoint is "
-                                f"kept for a registered resume (ceiling {contract.ram_ceiling_mb} MB)")
+        kept = "the checkpoint is kept for a registered resume" if checkpoint is not None else \
+            "no checkpoint was requested; completed tasks are lost unless they persisted their own outputs"
+        raise ResourceExhausted(f"RESOURCE_EXHAUSTED: {len(results)}/{len(tasks)} tasks completed; {kept} "
+                                f"(ceiling {contract.ram_ceiling_mb} MB, peak worker "
+                                f"{info['peak_worker_memory_mb']:.0f} MB x {n_workers} workers)")
     return [results[i] for i in sorted(by_id)], info
