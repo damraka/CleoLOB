@@ -15976,6 +15976,58 @@
         "generator_calibration",
         "realism_reference"
       ]
+    },
+    {
+      "dataset_id": "bybit-spot-btcusdt-2025-09-20",
+      "provider": "bybit public data archive",
+      "venue": "bybit-spot",
+      "instrument": "BTCUSDT",
+      "instrument_type": "spot",
+      "period": "2025-09-20",
+      "role": "development",
+      "pool": "dev",
+      "slot": 1,
+      "license_use": "public research download; provider terms apply; raw data never redistributed",
+      "access": {
+        "l2": "https://quote-saver.bycsi.com/orderbook/spot/BTCUSDT/2025-09-20_BTCUSDT_ob200.data.zip",
+        "trades": "https://public.bybit.com/spot/BTCUSDT/BTCUSDT_2025-09-20.csv.gz"
+      },
+      "raw_hashes": "recorded at access",
+      "exchange_timestamps": true,
+      "receive_timestamps": false,
+      "timestamp_resolution": "1ms",
+      "sequence_numbers": true,
+      "order_ids": false,
+      "trade_ids": true,
+      "aggressor_side": true,
+      "snapshot_support": true,
+      "incremental_l2": true,
+      "l1_quotes": true,
+      "market_by_price": true,
+      "market_by_order": false,
+      "cancel_visibility": "inferred_from_depth_minus_trades",
+      "modify_visibility": "none",
+      "hidden_liquidity_observability": "none",
+      "depth_levels": 200,
+      "queue_clearance_observable": true,
+      "tick_size": 0.01,
+      "lot_size": 1e-06,
+      "contract_multiplier": 1.0,
+      "fee_metadata": "registered mandate fees (protocol.mandates.fees)",
+      "funding_metadata": "not used (horizons are 300 s)",
+      "source_trust": "official exchange public archive; no published checksum; hashed at download",
+      "known_anomalies": "occasional snapshot re-sends inside a day; handled as new snapshots",
+      "quality_status": "PENDING (validated at access)",
+      "eligible_experiment_classes": [
+        "observational_statistics",
+        "trade_flow",
+        "l2_reconstruction",
+        "queue_clearance",
+        "bounded_counterfactual_l2",
+        "hybrid_twin_backbone",
+        "generator_calibration",
+        "realism_reference"
+      ]
     }
   ]
 }

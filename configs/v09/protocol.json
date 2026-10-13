@@ -101,11 +101,15 @@
       "count": 1,
       "backups": 0,
       "streams": [
-        "bybit-linear:BTCUSDT"
+        "bybit-linear:BTCUSDT",
+        "bybit-spot:BTCUSDT"
       ],
       "days": [
         "2023-07-15"
-      ]
+      ],
+      "format_days": {
+        "bybit-spot:BTCUSDT": "2025-09-20 (after the vault range, in no pool; spot archive format engineering only)"
+      }
     },
     "explore": {
       "role": "explore",
@@ -16067,6 +16071,56 @@
         "depth_levels": 200,
         "queue_clearance_observable": true
       }
+    },
+    {
+      "id": "bybit-spot-btcusdt-2025-09-20",
+      "provider": "bybit public data archive",
+      "venue": "bybit-spot",
+      "instrument": "BTCUSDT",
+      "instrument_type": "spot",
+      "date": "2025-09-20",
+      "data_types": [
+        "l2_snapshot_delta",
+        "trades"
+      ],
+      "role": "development",
+      "pool": "dev",
+      "slot": 1,
+      "slot_kind": "development_format",
+      "freshness_at_freeze": "fresh",
+      "added_by_amendment": 1,
+      "sources": {
+        "l2": {
+          "url": "https://quote-saver.bycsi.com/orderbook/spot/BTCUSDT/2025-09-20_BTCUSDT_ob200.data.zip",
+          "format": "bybit-ob200"
+        },
+        "trades": {
+          "url": "https://public.bybit.com/spot/BTCUSDT/BTCUSDT_2025-09-20.csv.gz",
+          "format": "bybit-trades-spot"
+        }
+      },
+      "tick_size": 0.01,
+      "lot_size": 1e-06,
+      "contract_multiplier": 1.0,
+      "capabilities": {
+        "exchange_timestamps": true,
+        "receive_timestamps": false,
+        "timestamp_resolution": "1ms",
+        "sequence_numbers": true,
+        "order_ids": false,
+        "trade_ids": true,
+        "aggressor_side": true,
+        "snapshot_support": true,
+        "incremental_l2": true,
+        "l1_quotes": true,
+        "market_by_price": true,
+        "market_by_order": false,
+        "cancel_visibility": "inferred_from_depth_minus_trades",
+        "modify_visibility": "none",
+        "hidden_liquidity_observability": "none",
+        "depth_levels": 200,
+        "queue_clearance_observable": true
+      }
     }
   ],
   "holdout_rules": {
@@ -16554,5 +16608,41 @@
   "exclusions": {
     "prior_versions": "every v0.5-v0.8 dataset and calendar period is imported as consumed",
     "claims": "no live alpha, profitability, production/HFT or exact historical fill claim"
+  },
+  "data_quality": {
+    "thresholds": {
+      "max_sequence_problem_rate": 0.001,
+      "max_crossed_rate": 0.001,
+      "min_valid_bin_fraction": 0.98,
+      "max_long_gap_minutes": 10.0,
+      "max_inconsistent_trade_rate": 0.005,
+      "max_unknown_side_rate": 0.001,
+      "max_off_grid_rate": 0.001,
+      "min_trades": 1000
+    },
+    "rule": "a day is AVAILABLE when every check passes, else QUALITY_REJECTED (retained; the slot is replaced by the next registered backup)",
+    "trade_consistency": "a print is grossly inconsistent when it lies more than 20 bps outside the touch range of its own and the neighbouring 100 ms bins (sweeps and book quantization legitimately put prints beyond the touch of their own bin; that count is reported, not used)",
+    "registered_before": "any explore, confirm or final access (development day only was read)"
+  },
+  "day_cache": {
+    "schema": "cleolob-v09-daycache-1",
+    "frames": "100 ms bins over the UTC day in the v0.8 EventFrame layout (state at bin start = book after every message with ts < bin start)",
+    "event_inference": "visible-level size increase = add; decrease explained first by passive-side prints at that price in the same or previous bin (market), remainder = cancel; market counts = prints per aggressor side",
+    "deep": "top-200 non-contiguous levels per side every second from warmup start to horizon end + 30 s of each registered window",
+    "l1_sources": "Binance caches hold L1 only; deeper levels are unobserved (0)"
+  },
+  "cost_endpoints": {
+    "primary": "is_net_bps: side x (volume-weighted execution price incl. residual valuation - arrival mid) / arrival mid x 1e4 + registered fees (taker 5.5 bps on aggressive fills, maker 2.0 bps on passive fills) + 25 bps x unfilled fraction at the horizon (hard completion: policies cross at the deadline)",
+    "secondary": "is_gross_bps (same without fees and penalty), completion, time to completion, participation",
+    "mean_is_bps": "mean of is_net_bps over the unit's registered windows",
+    "cvar90_is_bps": "CVaR at level 0.90 of is_net_bps over the unit's registered windows (mean of the worst 10%, linear interpolation)",
+    "markout5s_bps": "fill-weighted side x (mid at fill time + 5 s - fill price) / arrival mid x 1e4 over hypothetical passive fills (positive = favourable)",
+    "bounded": "under bounded replay every endpoint is an interval [optimistic, conservative]; a pairwise direction is historically identified only when both bounds agree in sign beyond the threshold",
+    "registered_before": "any explore access"
+  },
+  "grid_normalization": {
+    "rule": "the price grid used is the coarser of the registered tick and the archive's observed decimal price precision (first 2000 messages); the size grid is the finer of the registered lot and the observed size precision; every difference is recorded as a known anomaly in the dataset's quality report",
+    "reason": "the spot-format development day showed a 0.1 observed price precision against a registered 0.01 tick; a finer-than-observed tick would distort spread-in-ticks, visible-level and queue features",
+    "registered_before": "any explore, confirm or final access"
   }
 }
