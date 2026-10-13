@@ -183,3 +183,14 @@ def requirements_text(document: dict) -> str:
     """pip requirement lines for the container path."""
     return "".join(f"{name}=={version}\n" for name, version in document["pins"].items()
                    if name not in ("build", "twine", "ruff", "pytest", "hypothesis"))
+
+
+def torch_threads(default: int = 2) -> int:
+    """Cap PyTorch intra-op threads per worker (``CLEOLOB_TORCH_THREADS``) so parallel workers do not oversubscribe."""
+    try:
+        import torch
+    except ImportError:
+        return 0
+    n = int(os.environ.get("CLEOLOB_TORCH_THREADS", default))
+    torch.set_num_threads(max(1, n))
+    return n

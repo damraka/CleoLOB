@@ -263,6 +263,8 @@ class NeuralHazard:
 
     def fit(self, X, T, E):
         import torch
+        from ..runtime import torch_threads
+        torch_threads()
         torch.manual_seed(self.seed)
         Z, self.stats = _standardize(np.asarray(X, float))
         k_event = np.searchsorted(GRID, T, side="left")

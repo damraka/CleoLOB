@@ -238,6 +238,8 @@ class _NeuralTPP:
         """Adam with weight decay on half-overlapping chunks; early stopping on 15% held-out chunks (patience 3)."""
         import copy
         import torch
+        from ..runtime import torch_threads
+        torch_threads()
         torch.manual_seed(self.seed)
         self._build()
         self.build_encoder()

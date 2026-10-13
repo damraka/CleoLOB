@@ -126,3 +126,42 @@ def use_of(protocol: dict, dataset_id: str, *, posthoc: bool = False) -> str:
     role = pr.dataset_declaration(protocol, dataset_id)["role"]
     use = ROLE_DEFAULT_USE[role]
     return f"{use}_posthoc" if posthoc and role in pr.GUARDED_ROLES else use
+
+
+BYBIT_STREAMS = ["bybit-linear:BTCUSDT", "bybit-linear:ETHUSDT"]
+
+
+def explore_units(args, protocol: dict, streams=None) -> list[str]:
+    """Registered explore slots, or (namespace dev only) the explicitly listed development datasets for smoke tests."""
+    if getattr(args, "namespace", None) == "dev" and getattr(args, "dataset", None):
+        for d in args.dataset:
+            if pr.dataset_declaration(protocol, d)["role"] != "development":
+                raise ValueError("namespace dev runs accept development datasets only")
+        return list(args.dataset)
+    streams = streams or BYBIT_STREAMS
+    res = units(args, "explore", streams, protocol["pools"]["explore"]["count"])
+    return [d for s in streams for d in res[s]["datasets"]]
+
+
+def pilot_record(values, odd=None, even=None, *, caps: dict, hours: float, extra: dict | None = None) -> dict:
+    """Registered pilot record consumed by the promotion gate."""
+    from .bounds import reliability
+    vals = np.asarray([v for v in values if v is not None and np.isfinite(v)], float)
+    rel = reliability(list(odd), list(even)) if odd is not None and even is not None else None
+    return {"data_available": len(vals) > 0, "capabilities": caps, "reliability": rel, "units": int(len(vals)),
+            "effect": float(vals.mean()) if len(vals) else None,
+            "sd": float(vals.std(ddof=1)) if len(vals) > 1 else None, "compute_hours_per_unit": hours,
+            "unit_values": vals.tolist(), **(extra or {})}
+
+
+def caps_for(protocol: dict, names) -> dict:
+    from ..capabilities import provided
+    return {c: provided(protocol, "explore", c) for c in names}
+
+
+def load_cache(dataset_id: str, root: str, design: str, purpose: str):
+    from ..data import store
+    protocol = pr.load_protocol(Path(root) / pr.PROTOCOL_PATH)
+    cache, _ = store.prepare(dataset_id, use=use_of(protocol, dataset_id), design=design, root=Path(root),
+                             purpose=purpose)
+    return cache
