@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cleolob"
-version = "0.8.0"
+version = "0.9.0.dev0"
 description = "Reproducible limit-order-book execution research laboratory"
 readme = "README.md"
 license-files = ["LICENSE"]
@@ -50,4 +50,5 @@ select = ["E4", "E7", "E9", "F"]
 "tests/test_agents.py" = ["E402"]
 "tests/test_env_runner.py" = ["E402"]
 "tests/test_v08_evidence.py" = ["F811"]
+"tests/test_v09_*.py" = ["F811"]
 

@@ -1,0 +1,17 @@
+{
+  "schema": "cleolob-v09-compute-budget-1",
+  "host": "16 logical CPUs, 32 GB RAM; GPU optional (not required)",
+  "ceilings": {
+    "explore_hours": 60,
+    "confirm_hours": 120,
+    "final_hours": 30,
+    "download_gb": 40
+  },
+  "per_study_default": {
+    "ram_mb": 12000,
+    "workers_default": 6,
+    "workers_max": 8,
+    "checkpoint_every": 1
+  },
+  "rule": "exceeding a ceiling yields RESOURCE_EXHAUSTED; increases need an amendment before inspection"
+}
