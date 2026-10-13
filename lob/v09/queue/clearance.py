@@ -90,3 +90,27 @@ def queue_confidence(cache: dict) -> dict:
     return {"bins_with_add_and_decrease_fraction": float(both) if both is not None else None,
             "note": "adds and decreases inside one 100 ms bin have unknown order; queue position is never observed",
             "order_ids": False}
+
+
+def features_at(cache: dict):
+    """Callable (t, side) -> the registered clearance covariates at time t for a resting order on ``side``
+    (+1 resting bid, -1 resting ask), identical to ``events`` (observed information only)."""
+    t_tr = cache["trade_t"]
+    q, s = cache["trade_q"].astype(float), cache["trade_s"]
+    mid = cache["mid"]
+
+    def f(t: float, side: int) -> np.ndarray:
+        b = min(max(int(t * 1000 // BIN_MS), 0), len(cache["valid"]) - 1)
+        k = 0 if side > 0 else 1
+        queue = float(cache["depth"][b, k, 0])
+        opp = float(cache["depth"][b, 1 - k, 0])
+        lo, prev = int(np.searchsorted(t_tr, t, "right")), int(np.searchsorted(t_tr, t - 5.0, "right"))
+        passive_sign = -1 if side > 0 else 1
+        flow = float(q[prev:lo][s[prev:lo] == passive_sign].sum()) / max(queue, 1e-9)
+        m60 = mid[max(0, b - 600):b + 1:10]
+        vol = float(np.std(np.diff(m60))) if len(m60) > 3 else 0.0
+        hour = t / 3600.0
+        return np.asarray([math.log1p(queue), math.log1p(opp), -side * float(cache["state"][b, 1]),
+                           float(cache["ask_px"][b] - cache["bid_px"][b]), math.log1p(flow), vol,
+                           math.sin(2 * math.pi * hour / 24), math.cos(2 * math.pi * hour / 24), float(side)])
+    return f

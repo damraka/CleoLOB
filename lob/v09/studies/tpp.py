@@ -55,7 +55,7 @@ def dma(nlls: np.ndarray, share: float = SHARE) -> np.ndarray:
 
 def _fit_select(train_ev: list[dict], seed: int):
     cuts = PP.size_cuts(train_ev)
-    n_inner = max(1, int(round(0.75 * len(train_ev))))
+    n_inner = max(1, min(len(train_ev) - 1, int(round(0.75 * len(train_ev)))))
     inner = [s for e in train_ev[:n_inner] for s in PP.segments(e, cuts)]
     val = [s for e in train_ev[n_inner:] for s in PP.segments(e, cuts)]
     full = [s for e in train_ev for s in PP.segments(e, cuts)]

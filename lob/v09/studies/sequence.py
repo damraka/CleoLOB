@@ -43,7 +43,7 @@ def _stack(parts, mu, sd, cap, seed):
 def fold_task(held: str, train: list[str], root: str, design: str, seed: int) -> dict:
     parts = _data(train, root, design)
     mu, sd = S.standardizer(np.vstack([p[0] for p in parts]))
-    n_inner = max(1, int(round(0.75 * len(parts))))
+    n_inner = max(1, min(len(parts) - 1, int(round(0.75 * len(parts)))))
     Xi, yi, wi, ii = _stack(parts[:n_inner], mu, sd, MAX_TRAIN, seed)
     Xv, yv, wv, iv = _stack(parts[n_inner:], mu, sd, 40_000, seed + 1)
     val = {kind: float(S.SeqClassifier(kind, seed=seed).fit(Xi, yi, ii).nll(Xv, yv, iv).mean())

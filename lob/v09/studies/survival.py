@@ -65,7 +65,7 @@ def lodo(days: list[dict], seed: int) -> dict:
     rows = {}
     for i, held in enumerate(days):
         train = [d for j, d in enumerate(days) if j != i]
-        cut = max(1, int(round(0.75 * len(train))))
+        cut = max(1, min(len(train) - 1, int(round(0.75 * len(train)))))
         inner_tr, inner_va = train[:cut], train[cut:]
         Xa, Ta, Ea = _stack(inner_tr, seed)
         Xv, Tv, Ev = _stack(inner_va, seed + 1)

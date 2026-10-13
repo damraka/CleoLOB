@@ -180,3 +180,36 @@ def _load_v09_extensions() -> None:
 def describe_all() -> dict:
     _load_v09_extensions()
     return {name: cls().describe() for name, cls in sorted(REGISTRY.items())}
+
+
+@register
+class SurvivalPassive(_Base):
+    """Passive-first execution driven by a fill (queue-clearance) survival model supplied in the episode context.
+
+    At each decision the model's P(clearance before the deadline | observed state) decides: at or above the threshold
+    the remaining quantity rests at the touch; below it a TWAP-sized market child is sent and the rest rests. The
+    model and the feature function are supplied as ``context['survival'] = (model, features_at)``; ``model_key``
+    selects which registered model (``km`` or ``calibrated``) is used.
+    """
+    name, label = "survival_passive", "Survival-model passive-first"
+    defaults = {"model_key": "calibrated", "threshold": 0.5}
+
+    def decide(self, obs: Observation) -> list:
+        left = obs.remaining
+        if left <= 0:
+            return [cancel_all()] if obs.resting else []
+        models = obs.context.get("survival") or {}
+        entry = models.get(self.params["model_key"])
+        steps_left = max(1, obs.steps - obs.step)
+        child = int(math.ceil(left / steps_left))
+        if entry is None:
+            return [market(child)] + rest(obs, max(0, left - child))
+        model, features_at = entry
+        x = features_at(obs.observed_at, obs.side)
+        from ..queue.survival import GRID
+        S = model.predict(x[None, :])[0]
+        p_fill = 1.0 - float(np.interp(obs.remaining_time, GRID, S, left=1.0, right=S[-1]))
+        if p_fill >= self.params["threshold"]:
+            return rest(obs, left)
+        return ([cancel_all()] if obs.resting else []) + [market(child)] + ([limit(left - child)]
+                                                                            if left - child > 0 else [])

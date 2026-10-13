@@ -35,7 +35,7 @@ def fold_task(held: str, train: list[str], root: str, design: str, seed: int) ->
     parts = _paths(train, root, design)
     allp = np.concatenate(parts)
     scale = float(np.std(allp[:, -1, 0])) or 1.0
-    n_inner = max(1, int(round(0.75 * len(parts))))
+    n_inner = max(1, min(len(parts) - 1, int(round(0.75 * len(parts)))))
     inner, val = np.concatenate(parts[:n_inner]), np.concatenate(parts[n_inner:])
     val_sig = P.signature(val, scale)
     val_mmd = {}
