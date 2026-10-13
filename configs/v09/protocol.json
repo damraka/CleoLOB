@@ -16162,7 +16162,7 @@
     "shrinkage_se": 1.0,
     "min_confirm_units": 8,
     "compute_hours_ceiling": 40.0,
-    "reliability": "split-half (odd/even windows) Spearman-Brown reliability of the unit-level endpoint on pilot units",
+    "reliability": "amendment 3: split-half measurement consistency - with paired odd/even-window unit endpoints (o_i, e_i), the measurement fails when |mean(o - e)| > 2 sd(o - e)/sqrt(n) (n >= 4) or when no paired halves exist; the frozen Spearman-Brown statistic is still computed and reported",
     "order": [
       "data/capability",
       "measurement",
@@ -16171,7 +16171,11 @@
       "compute"
     ],
     "conclusions": "an execution conclusion is carried when its explore-day pilot passes the same gate (its own threshold, unit sd, the decisions family alpha divided by the number of conclusions)",
-    "transfer_candidates": "the pilot record of H32, H33, H34 and H36 is that of the carried conclusion with the largest planning effect relative to its own threshold, measured on the explore streams most like the target (BTCUSDT for H32, ETHUSDT for H33, Binance for H34, all for H36); no carried conclusion -> NOT_PROMOTED_EFFECT_TOO_SMALL"
+    "transfer_candidates": "the pilot record of H32, H33, H34 and H36 is that of the carried conclusion with the largest planning effect relative to its own threshold, measured on the explore streams most like the target (BTCUSDT for H32, ETHUSDT for H33, Binance for H34, all for H36); no carried conclusion -> NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "reliability_registered_at_freeze": "split-half (odd/even windows) Spearman-Brown reliability of the unit-level endpoint on pilot units",
+    "reliability_rule": "split_half_consistency",
+    "amendment_3_reason": "the frozen screen (Spearman-Brown of unit-level split halves) measures between-unit rank stability, not the precision of the mean effect the confirmatory test uses; it is undefined or negative for strong effects that are homogeneous across days (pilot: C3 effect 7x its threshold at about 15 SE scored -0.09). Promotion only selects which hypotheses are tested on fresh confirmatory data, so the confirmatory error control is unchanged; the promotion run also reports the decisions of the frozen screen (sensitivity)",
+    "amendment_3_timing": "after the exploratory pilots were inspected; before the promotion run, the promotion freeze and any confirmatory or vault access"
   },
   "power_rules": {
     "method": "normal approximation of the registered decision rule; planning alpha = family alpha / family size; planning effect = pilot estimate - 1 pilot SE",

@@ -148,10 +148,13 @@ def pilot_record(values, odd=None, even=None, *, caps: dict, hours: float, extra
     from .bounds import reliability
     vals = np.asarray([v for v in values if v is not None and np.isfinite(v)], float)
     rel = reliability(list(odd), list(even)) if odd is not None and even is not None else None
+    pairs = [(float(a), float(b)) for a, b in zip(odd or [], even or []) if a is not None and b is not None
+             and np.isfinite(a) and np.isfinite(b)]
     return {"data_available": len(vals) > 0, "capabilities": caps, "reliability": rel, "units": int(len(vals)),
             "effect": float(vals.mean()) if len(vals) else None,
             "sd": float(vals.std(ddof=1)) if len(vals) > 1 else None, "compute_hours_per_unit": hours,
-            "unit_values": vals.tolist(), **(extra or {})}
+            "unit_values": vals.tolist(), "odd_values": [a for a, _ in pairs], "even_values": [b for _, b in pairs],
+            **(extra or {})}
 
 
 def caps_for(protocol: dict, names) -> dict:

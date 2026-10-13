@@ -31,6 +31,26 @@ SOURCES = {"hybrid": ("H1", "H12"), "tpp": ("H2", "H5"), "sequence": ("H3",), "l
 TRANSFER = {"H32": "pilot_btc", "H33": "pilot_eth", "H34": "pilot_l1", "H36": "pilot"}
 
 
+def halves(key: str, h: str, res: dict) -> tuple[list, list] | None:
+    """Per-unit split-half values of pilot runs sealed before records stored them (read from the sealed units)."""
+    units = res.get("units") or {}
+    rows = list(units.values()) if isinstance(units, dict) else []
+    if key == "impact":
+        return [r["odd"]["effect"] for r in rows], [r["even"]["effect"] for r in rows]
+    if key == "conformal":
+        return [r["methods"]["aci"]["odd"] - 0.9 for r in rows], [r["methods"]["aci"]["even"] - 0.9 for r in rows]
+    if key == "tpp":
+        k = h.lower()
+        return [r[f"{k}_odd"] for r in rows if f"{k}_odd" in r], [r[f"{k}_even"] for r in rows if f"{k}_even" in r]
+    if key == "continual":
+        vals = res["effects"][res["selected"]]
+        n = min(len(vals[1::2]), len(vals[0::2]))
+        return vals[1::2][:n], vals[0::2][:n]
+    if rows and "odd" in rows[0]:
+        return [r["odd"] for r in rows], [r["even"] for r in rows]
+    return None
+
+
 def collect(args) -> tuple[dict, dict]:
     pilots, provenance = {}, {}
     runs = common.inputs(args)
@@ -40,9 +60,16 @@ def collect(args) -> tuple[dict, dict]:
         res = common.read_input(args, key)
         for h in hyps:
             rec = (res.get("pilot") or {}).get(h)
-            if rec is not None:
-                pilots[h] = rec
-                provenance[h] = runs[key]
+            if rec is None:
+                continue
+            if not rec.get("odd_values"):
+                hv = halves(key, h, res)
+                if hv is not None:
+                    pairs = [(a, b) for a, b in zip(*hv) if a is not None and b is not None]
+                    rec = {**rec, "odd_values": [a for a, _ in pairs], "even_values": [b for _, b in pairs],
+                           "halves_source": "reconstructed from the sealed per-unit results"}
+            pilots[h] = rec
+            provenance[h] = runs[key]
     return pilots, provenance
 
 
@@ -91,6 +118,7 @@ def run(args) -> dict:
     families = json.loads((root / pr.CONFIG_DIR / "statistical-families.json").read_text(encoding="utf-8"))
     rules = {k: protocol["promotion_rules"][k] for k in ("min_reliability", "min_pilot_units", "min_power",
                                                          "shrinkage_se", "min_confirm_units", "compute_hours_ceiling")}
+    rules["reliability_rule"] = protocol["promotion_rules"].get("reliability_rule", "spearman_brown_split_half")
     _, state = pr.state_of(root)
     if state.promotion is not None:
         raise ValueError("the confirmatory registry is already promoted; promotion runs exactly once")
@@ -107,6 +135,9 @@ def run(args) -> dict:
             provenance[h] = common.inputs(args)["bounds"]
     out = common.start(args)
     decision = P.promote(candidates, pilots, rules=rules, families=families)
+    original_rules = {**rules, "reliability_rule": "spearman_brown_split_half"}
+    original = P.promote(candidates, pilots, rules=original_rules, families=families)
+    original_concl = conclusions(protocol, bounds, original_rules, families) if bounds else {}
     units = {h: d["required_units"] for h, d in decision["decisions"].items() if d["outcome"] == "PROMOTED"}
     registry = P.confirmatory_registry(candidates, decision, extra={
         "carried_conclusions": {c: {**protocol["conclusions"]["set"][c], "confirm_units": concl[c]["required_units"]}
@@ -116,6 +147,10 @@ def run(args) -> dict:
         "rule": "each promoted hypothesis reads the first `confirm_units` registered slots (primaries in order, failed "
                 "slots replaced by ordered backups) of its pool; designs are sealed before any confirmatory access"})
     result = {"promotion": decision, "confirmatory_registry": registry, "pilot_provenance": provenance,
+              "sensitivity_original_gate": {"promoted": original["promoted"], "not_promoted": original["not_promoted"],
+                                            "carried": [c for c, d in original_concl.items()
+                                                        if d["outcome"] == "PROMOTED"],
+                                            "note": "decisions under the gate as frozen before amendment 3"},
               "conclusions": concl, "carried": carried, "rules": rules,
               "summary": {"promoted": decision["promoted"], "not_promoted": decision["not_promoted"]}}
     return common.finish(args, out, analysis=ANALYSIS, config={"inputs": common.inputs(args), "rules": rules},

@@ -171,6 +171,7 @@ def pilot_record(units: dict, split: tuple, *, capabilities: dict, hours: float,
     vals = np.asarray([u["lower"] for u in units.values()], float)
     return {"data_available": len(vals) > 0, "capabilities": capabilities,
             "reliability": reliability(*split), "units": int(len(vals)),
+            "odd_values": list(split[0]), "even_values": list(split[1]),
             "effect": float(vals.mean()) if len(vals) else None,
             "sd": float(vals.std(ddof=1)) if len(vals) > 1 else None,
             "compute_hours_per_unit": hours, "unit_values": vals.tolist(),

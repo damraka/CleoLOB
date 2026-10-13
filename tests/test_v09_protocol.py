@@ -251,3 +251,18 @@ def test_promote_is_deterministic_and_registry_lists_only_promoted() -> None:
     assert set(reg["hypotheses"]) == set(a["promoted"])
     assert "H23" in reg["hypotheses"]
     assert "H7" in reg["not_promoted"] and reg["not_promoted"]["H7"] == "NOT_PROMOTED_EFFECT_TOO_SMALL"
+
+
+def test_split_half_consistency_screen_amendment_3() -> None:
+    rules = {**RULES, "reliability_rule": "split_half_consistency"}
+    homogeneous = _pilot(effect=2.0, sd=0.5, reliability=-0.1, odd_values=[2.1, 1.9, 2.0, 2.2, 1.8, 2.0],
+                         even_values=[1.9, 2.1, 2.0, 1.8, 2.2, 2.0])
+    d = promotion.decide("Hc", _cand(), homogeneous, rules=rules, family=FAMILY, family_size=4)
+    assert d["outcome"] == "PROMOTED", d["reason"]          # strong homogeneous effect is not blocked
+    assert promotion.decide("Hc", _cand(), homogeneous, rules=RULES, family=FAMILY,
+                            family_size=4)["outcome"] == "NOT_PROMOTED_MEASUREMENT"   # the original screen would
+    inconsistent = _pilot(odd_values=[3.0, 3.1, 2.9, 3.2, 3.0, 3.1], even_values=[0.1, 0.0, -0.1, 0.2, 0.0, 0.1])
+    assert promotion.decide("Hc", _cand(), inconsistent, rules=rules, family=FAMILY,
+                            family_size=4)["outcome"] == "NOT_PROMOTED_MEASUREMENT"
+    assert promotion.decide("Hc", _cand(), _pilot(), rules=rules, family=FAMILY,
+                            family_size=4)["outcome"] == "NOT_PROMOTED_MEASUREMENT"   # no halves recorded

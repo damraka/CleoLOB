@@ -30,6 +30,8 @@ import json
 import math
 from pathlib import Path
 
+import numpy as np
+
 from ..preregistration import ProtocolError, document_sha256
 from ..v08.statistics import zq
 from . import protocol as pr
@@ -145,10 +147,16 @@ def decide(hid: str, candidate: dict, pilot: dict | None, *, rules: dict, family
     missing = [c for c in candidate["required_capabilities"] if not pilot.get("capabilities", {}).get(c, False)]
     if missing:
         return out("NOT_PROMOTED_DATA_CAPABILITY", f"required capabilities missing or rejected: {missing}")
-    reliability = pilot.get("reliability")
-    if reliability is None or not math.isfinite(reliability) or reliability < rules["min_reliability"]:
-        return out("NOT_PROMOTED_MEASUREMENT",
-                   f"measurement reliability {reliability} below the registered {rules['min_reliability']}")
+    if rules.get("reliability_rule", "spearman_brown_split_half") == "split_half_consistency":
+        ok, why = consistency(pilot)
+        record["consistency"] = why
+        if not ok:
+            return out("NOT_PROMOTED_MEASUREMENT", f"split-half measurement inconsistency: {why}")
+    else:
+        reliability = pilot.get("reliability")
+        if reliability is None or not math.isfinite(reliability) or reliability < rules["min_reliability"]:
+            return out("NOT_PROMOTED_MEASUREMENT",
+                       f"measurement reliability {reliability} below the registered {rules['min_reliability']}")
     n_pilot, effect, sd = int(pilot.get("units", 0)), pilot.get("effect"), pilot.get("sd")
     if n_pilot < rules["min_pilot_units"] or effect is None or sd is None or not math.isfinite(effect) \
             or not math.isfinite(sd):
@@ -181,6 +189,26 @@ def decide(hid: str, candidate: dict, pilot: dict | None, *, rules: dict, family
     achieved = power(test, planning, sd, n, alpha=alpha, threshold=threshold)
     return out("PROMOTED", "all registered promotion conditions pass", required_units=n, expected_power=achieved,
                expected_compute_hours=hours)
+
+
+def consistency(pilot: dict) -> tuple[bool, str]:
+    """Amendment 3 measurement screen: the odd- and even-half pilot means must not differ significantly.
+
+    With paired halves (o_i, e_i) over pilot units: d_i = o_i - e_i; the halves are inconsistent when
+    |mean(d)| > 2 * sd(d) / sqrt(n) (and n >= 4). Missing halves fail the screen (no evidence of consistency).
+    """
+    odd, even = pilot.get("odd_values"), pilot.get("even_values")
+    if not odd or not even or len(odd) != len(even) or len(odd) < 4:
+        return False, "no paired split-half values (at least 4 units) were recorded"
+    d = np.asarray(odd, float) - np.asarray(even, float)
+    d = d[np.isfinite(d)]
+    if len(d) < 4:
+        return False, "fewer than 4 finite split-half pairs"
+    se = float(d.std(ddof=1) / math.sqrt(len(d))) if len(d) > 1 else 0.0
+    m = float(d.mean())
+    if abs(m) > 2 * se and se > 0:
+        return False, f"halves differ: mean difference {m:.4g} > 2 SE {2 * se:.4g}"
+    return True, f"halves consistent: mean difference {m:.4g} within 2 SE {2 * se:.4g} (n={len(d)})"
 
 
 def promote(candidates: dict, pilots: dict[str, dict], *, rules: dict, families: dict) -> dict:
