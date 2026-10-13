@@ -86,18 +86,14 @@ def hybrid_day(day: str, train: list[str], root: str, design: str, seed: int, no
     out, ctx = {}, []
     for w in range(len(E.WINDOW_STARTS_S)):
         ctx.append(window_context(cache, float(E.WINDOW_STARTS_S[w]), E.side_of(w)).tolist())
-    for name in list(RANKING_POLICIES) + list(EXTRA):
+    for name in RANKING_POLICIES:
         rows = []
         for w in range(len(E.WINDOW_STARTS_S)):
-            pol = _policy(name)
-            r = twin.hybrid_episode(cache, pol, window=w, notional=notional, impact_model=impact,
+            r = twin.hybrid_episode(cache, _policy(name), window=w, notional=notional, impact_model=impact,
                                     persistent=persistent, seed=_seed(day, w))
-            if r["status"] == "OK" and name.startswith("survival_passive"):
-                pass
             rows.append(None if r["status"] != "OK" else [r["is_net_bps"], r["policy_completion"]])
         out[name] = rows
-    # survival policies need the context objects: rerun them with the models attached
-    for name in EXTRA:
+    for name in EXTRA:                       # survival policies receive the fitted models in the episode context
         rows = []
         for w in range(len(E.WINDOW_STARTS_S)):
             pol = _policy(name)
@@ -225,18 +221,46 @@ def analyse(train_days: list[dict], eval_days: list[dict], syn: dict | None, bou
             float(bg[~half].mean() - chosen[~half].mean())
         u["h19_odd"] = float(wrong_always[half].mean() - wrong_abst[half].mean())
         u["h19_even"] = float(wrong_always[~half].mean() - wrong_abst[~half].mean())
+
+        def sp_dis(sel):
+            if np.std(dis[sel]) > 0 and np.std(regret[sel]) > 0:
+                return float(spearman(dis[sel], regret[sel]))
+            return None
+        u["h18_odd"], u["h18_even"] = sp_dis(half), sp_dis(~half)
+
+        def win_diff(a_, b_, parity):
+            d_ = [x - y for i, (x, y) in enumerate(zip(a_, b_)) if x is not None and y is not None and i % 2 == parity]
+            return float(np.mean(d_)) if d_ else None
+        kmw = [r[0] if r else None for r in sp["survival_passive:km"]]
+        calw = [r[0] if r else None for r in sp["survival_passive:calibrated"]]
+        chw = [r[1] if r else None for r in sp["mpc_chance"]]
+        stw = [r[1] if r else None for r in sp["mpc_stochastic"]]
+        u["h8_odd"], u["h8_even"] = win_diff(kmw, calw, 1), win_diff(kmw, calw, 0)
+        u["h22_odd"], u["h22_even"] = win_diff(chw, stw, 1), win_diff(chw, stw, 0)
+        keys = sorted(hyb)
+        odd_k, even_k = set(keys[1::2]), set(keys[0::2])
+
+        def sub(dct, ks):
+            return {k: v for k, v in dct.items() if k in ks}
         if syn_dirs:
             a, n = twin.agreement(syn_dirs, hyb)
             u["h29"], u["h29_pairs"] = a, n
+            u["h29_odd"] = twin.agreement(sub(syn_dirs, odd_k), sub(hyb, odd_k))[0]
+            u["h29_even"] = twin.agreement(sub(syn_dirs, even_k), sub(hyb, even_k))[0]
         if bounds_result is not None:
             bd = _bounded_dirs(bounds_result, d["day"])
             a, n = twin.agreement(hyb, bd)
             u["h30"], u["h30_pairs"] = a, n
+            u["h30_odd"] = twin.agreement(sub(hyb, odd_k), sub(bd, odd_k))[0]
+            u["h30_even"] = twin.agreement(sub(hyb, even_k), sub(bd, even_k))[0]
             if syn_dirs:
                 cons = {k: twin.consensus({"syn": syn_dirs.get(k, 0), "hyb": hyb.get(k, 0)}) for k in hyb}
-                ac, _ = twin.agreement(cons, bd)
-                asyn, _ = twin.agreement(syn_dirs, bd)
-                u["h31"] = (ac - asyn) if ac is not None and asyn is not None else None
+
+                def h31(ks):
+                    ac, _ = twin.agreement(sub(cons, ks), sub(bd, ks))
+                    asyn, _ = twin.agreement(sub(syn_dirs, ks), sub(bd, ks))
+                    return (ac - asyn) if ac is not None and asyn is not None else None
+                u["h31"], u["h31_odd"], u["h31_even"] = h31(set(keys)), h31(odd_k), h31(even_k)
         units[d["day"]] = u
     return {"units": units, "best_global": best_global, "abstain_threshold": thr}
 
@@ -262,8 +286,7 @@ def run(args) -> dict:
     tasks = []
     for s, (tr, te) in plan.items():
         inst = s.split(":")[1]
-        lot = float(pr.datasets_by(protocol, pool="explore")[0]["lot_size"]) if False else \
-            float(next(d for d in protocol["datasets"] if d["instrument"] == inst)["lot_size"])
+        lot = float(next(d for d in protocol["datasets"] if d["instrument"] == inst)["lot_size"])
         for d in tr + te:
             tasks.append(Task(f"h|{d}", "lob.v09.studies.decisions:hybrid_day",
                               {"day": d, "train": tr, "root": str(root), "design": design_name, "seed": args.seed,
@@ -282,17 +305,13 @@ def run(args) -> dict:
     caps = common.caps_for(protocol, ("incremental_l2", "trades_with_side", "queue_clearance_observable"))
     vals = list(units.values())
 
-    def rec(key, half=True):
-        odd = [u.get(f"{key}_odd") for u in vals] if half and all(f"{key}_odd" in u for u in vals) else None
-        even = [u.get(f"{key}_even") for u in vals] if odd is not None else None
-        r = common.pilot_record([u.get(key) for u in vals], odd, even, caps=caps, hours=hours)
-        if odd is None:
-            r["reliability"] = None
-            r["reliability_note"] = "no within-unit split defined for this endpoint"
-        return r
+    def rec(key):
+        pairs = [(u.get(f"{key}_odd"), u.get(f"{key}_even")) for u in vals
+                 if u.get(f"{key}_odd") is not None and u.get(f"{key}_even") is not None]
+        return common.pilot_record([u.get(key) for u in vals], [a for a, _ in pairs], [b for _, b in pairs],
+                                   caps=caps, hours=hours)
 
-    pilot = {"H8": rec("h8", False), "H18": rec("h18", False), "H19": rec("h19"), "H22": rec("h22", False),
-             "H25": rec("h25"), "H29": rec("h29", False), "H30": rec("h30", False), "H31": rec("h31", False)}
+    pilot = {h: rec(h.lower()) for h in ("H8", "H18", "H19", "H22", "H25", "H29", "H30", "H31")}
     result = {"namespace": args.namespace, "plan": plan, "units": units,
               "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None,
               "synthetic": {s: {"qty_lots": by[f"s|{s}"]["qty_lots"]} for s in plan}, "runner": info,
