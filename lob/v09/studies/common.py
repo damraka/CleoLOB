@@ -115,3 +115,14 @@ def use_for(args) -> str:
     if use is None:
         raise ProtocolError(f"namespace {args.namespace} does not read real data")
     return use
+
+
+ROLE_DEFAULT_USE = {"development": "develop", "explore": "explore", "confirm": "confirm", "confirm_late": "confirm",
+                    "final": "final"}
+
+
+def use_of(protocol: dict, dataset_id: str, *, posthoc: bool = False) -> str:
+    """The registered access use for a dataset, from its role (posthoc designs use the *_posthoc uses)."""
+    role = pr.dataset_declaration(protocol, dataset_id)["role"]
+    use = ROLE_DEFAULT_USE[role]
+    return f"{use}_posthoc" if posthoc and role in pr.GUARDED_ROLES else use

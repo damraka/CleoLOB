@@ -205,7 +205,7 @@ def run(args) -> dict:
     l1_combos = sorted({(c[k], c["mandate"]) for c in protocol["conclusions"]["set"].values()
                         if c["identifiability"] == "L1" for k in ("treatment", "control")})
     tasks = [Task(d, "lob.v09.studies.bounds:day_task",
-                  {"dataset_id": d, "use": common.use_for(args), "design": design_name, "root": str(root),
+                  {"dataset_id": d, "use": common.use_of(protocol, d), "design": design_name, "root": str(root),
                    "combos_": combos_ if d.startswith("bybit") else l1_combos, "assumption_keys": grid_,
                    "notionals": notionals}, namespace=args.namespace)
              for d in datasets]
