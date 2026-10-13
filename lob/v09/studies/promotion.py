@@ -6,7 +6,9 @@ Inputs (``--input KEY=RUN``, every one a sealed explore-namespace pilot run): ``
 ``rare_event``, ``rl``. A missing input leaves its candidates without a pilot (NOT_PROMOTED_OTHER_REGISTERED_REASON).
 
 Execution conclusions (protocol ``conclusions``) pass the same gate (their own threshold, the decisions family alpha
-divided by the number of conclusions, 80 confirm units); the promoted ones are *carried*. Transfer candidates follow
+divided by the number of conclusions, at most the 40 BTCUSDT confirm days, piloted on the BTCUSDT explore days: the
+registered H33 statement selects conclusions on BTCUSDT and re-tests them on ETHUSDT); the promoted ones are
+*carried*. Transfer candidates follow
 the registered rule: the pilot record of H32 / H33 / H34 / H36 is that of the carried conclusion with the largest
 planning effect relative to its own threshold, on the explore streams most like the target (BTCUSDT / ETHUSDT /
 Binance L1 / all), with the effect expressed as (conclusion effect - conclusion threshold); no carried conclusion
@@ -49,14 +51,11 @@ def conclusions(protocol: dict, bounds: dict, rules: dict, families: dict) -> di
     out = {}
     n = len(protocol["conclusions"]["set"])
     for cid, c in protocol["conclusions"]["set"].items():
-        rec = bounds["conclusions"][cid]["pilot"]
-        cand = {"test": "superiority", "threshold": float(c["threshold_bps"]), "max_units": 80,
-                "required_capabilities": [k for k in ("incremental_l2", "trades_with_side")
-                                          if c["identifiability"] == "L2"] or ["l1_quotes"],
-                "family": "decisions"}
-        if c["identifiability"] == "L1":
-            rec = bounds["conclusions"][cid].get("pilot_l1", rec)
-            rec = {**rec, "capabilities": {**rec.get("capabilities", {}), "l1_quotes": True}}
+        # registered H33 statement: conclusions are selected on BTCUSDT and re-tested on ETHUSDT, so the primary
+        # (carried) test of every conclusion uses BTCUSDT confirm days only and is piloted on BTCUSDT explore days
+        rec = bounds["conclusions"][cid].get("pilot_btc") or bounds["conclusions"][cid]["pilot"]
+        cand = {"test": "superiority", "threshold": float(c["threshold_bps"]), "max_units": 40,
+                "required_capabilities": ["incremental_l2", "trades_with_side"], "family": "decisions"}
         out[cid] = P.decide(cid, cand, rec, rules=rules, family=fam, family_size=n)
     return out
 
