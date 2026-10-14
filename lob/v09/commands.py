@@ -38,10 +38,10 @@ def protocol_v09(args) -> dict:
 
 def hypothesis_promotion_v09(args) -> dict:
     from .studies import promotion as study
-    if args.operation == "run":
+    if args.operation in ("run", "feasibility"):
         if not args.out:
-            raise ValueError("run requires --out")
-        return study.run(args)
+            raise ValueError(f"{args.operation} requires --out")
+        return study.run(args) if args.operation == "run" else study.feasibility(args)
     if not args.run:
         raise ValueError("freeze requires --run")
     from . import promotion

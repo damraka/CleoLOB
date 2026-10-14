@@ -180,7 +180,7 @@ def add_commands(commands) -> None:
     c.add_argument("--root", type=Path, default=Path("."))
     c.add_argument("--base-commit", default=None, help="base commit recorded by 'build'")
     c = commands.add_parser("hypothesis-promotion-v09", help="M2 promotion gate (run) and confirmatory freeze")
-    c.add_argument("operation", choices=("run", "freeze"))
+    c.add_argument("operation", choices=("run", "freeze", "feasibility"))
     c.add_argument("--root", type=Path, default=Path("."))
     c.add_argument("--out", default=None)
     c.add_argument("--run", default=None, help="promotion run to freeze")

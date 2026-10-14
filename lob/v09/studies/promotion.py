@@ -111,7 +111,8 @@ def transfer_pilots(protocol: dict, bounds: dict, carried: list[str], rules: dic
     return out
 
 
-def run(args) -> dict:
+def gather(args) -> dict:
+    """Registered rules, candidates and every pilot record (shared by the feasibility report and the run)."""
     root = common.root_of(args)
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     candidates = json.loads((root / pr.CANDIDATES_PATH).read_text(encoding="utf-8"))
@@ -119,9 +120,6 @@ def run(args) -> dict:
     rules = {k: protocol["promotion_rules"][k] for k in ("min_reliability", "min_pilot_units", "min_power",
                                                          "shrinkage_se", "min_confirm_units", "compute_hours_ceiling")}
     rules["reliability_rule"] = protocol["promotion_rules"].get("reliability_rule", "spearman_brown_split_half")
-    _, state = pr.state_of(root)
-    if state.promotion is not None:
-        raise ValueError("the confirmatory registry is already promoted; promotion runs exactly once")
     pilots, provenance = collect(args)
     bounds = common.read_input(args, "bounds") if "bounds" in common.inputs(args) else None
     concl = conclusions(protocol, bounds, rules, families) if bounds else {}
@@ -133,6 +131,32 @@ def run(args) -> dict:
         for h, rec in transfer_pilots(protocol, bounds, carried, rules).items():
             pilots[h] = rec
             provenance[h] = common.inputs(args)["bounds"]
+    return {"root": root, "protocol": protocol, "candidates": candidates, "families": families, "rules": rules,
+            "pilots": pilots, "provenance": provenance, "bounds": bounds, "conclusions": concl, "carried": carried}
+
+
+def feasibility(args) -> dict:
+    """Sealed pre-promotion feasibility report (explore namespace): access probe, ESS, power, compute."""
+    from .. import feasibility as FE
+    g = gather(args)
+    missing = [h for h in g["candidates"]["hypotheses"] if h not in g["pilots"]]
+    out = common.start(args)
+    result = {"access": FE.probe_pools(g["root"]),
+              "power": FE.power_table(g["candidates"]["hypotheses"], g["pilots"], g["families"]["families"],
+                                      g["rules"], FE.unit_maps(g["root"], common.inputs(args))),
+              "pilot_records": sorted(g["pilots"]), "no_pilot_record": missing,
+              "label": "feasibility input to promotion (descriptive); the registered gate is unchanged"}
+    return common.finish(args, out, analysis="promotion-feasibility-v09", config={"inputs": common.inputs(args)},
+                         result=result)
+
+
+def run(args) -> dict:
+    g = gather(args)
+    root, protocol, candidates, families, rules = g["root"], g["protocol"], g["candidates"], g["families"], g["rules"]
+    pilots, provenance, bounds, concl, carried = g["pilots"], g["provenance"], g["bounds"], g["conclusions"], g["carried"]
+    _, state = pr.state_of(root)
+    if state.promotion is not None:
+        raise ValueError("the confirmatory registry is already promoted; promotion runs exactly once")
     out = common.start(args)
     decision = P.promote(candidates, pilots, rules=rules, families=families)
     original_rules = {**rules, "reliability_rule": "spearman_brown_split_half"}
