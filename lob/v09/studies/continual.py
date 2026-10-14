@@ -66,6 +66,17 @@ def sequence_task(days: list[str], root: str, design: str, seed: int) -> dict:
     return {"days": days, "methods": out}
 
 
+def units_of(rows: list[dict]) -> dict:
+    """Per (instrument, earlier day) forgetting of every method, in chronological order."""
+    units = {}
+    for r in rows:
+        f = r["methods"]
+        # task results pass through canonical JSON, so the day-position keys arrive as strings
+        for k in sorted(f["naive"]["forgetting"], key=int):
+            units[r["days"][int(k)]] = {m: f[m]["forgetting"][k] for m in f}
+    return units
+
+
 def run(args) -> dict:
     root = common.root_of(args)
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
@@ -83,12 +94,7 @@ def run(args) -> dict:
              for s, d in sequences.items()]
     rows, info = run_tasks(tasks, workers=args.workers, contract=common.contract(args))
     hours = (time.time() - t0) / 3600 / max(sum(len(r["days"]) - 1 for r in rows), 1)
-    units = {}
-    for r in rows:
-        f = r["methods"]
-        # task results pass through canonical JSON, so the day-position keys arrive as strings
-        for k in sorted(f["naive"]["forgetting"], key=int):
-            units[r["days"][int(k)]] = {m: f[m]["forgetting"][k] for m in f}
+    units = units_of(rows)
     effects = {m: [u["naive"] - u[m] for u in units.values()] for m in ("replay", "ewc")}
     selected = max(effects, key=lambda m: float(np.mean(effects[m])) if effects[m] else -np.inf)
     keys = list(units)
