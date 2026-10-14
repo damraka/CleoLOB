@@ -12,7 +12,7 @@ Usage (from a clean worktree of the repository, so the code cannot change while 
 
 Every step is idempotent: a run directory that already holds a sealed, verifying run is skipped; a directory that
 exists without a valid seal is a retained failed attempt and the next attempt uses ``<name>-2``, ``<name>-3``, ...
-(the caller records the attempt in the ledger). One study runs at a time; before each, the driver waits until at
+(lob.v09.batch ledgers the failed attempt; a nonzero child exit or a missing seal stops the step). One study runs at a time; before each, the driver waits until at
 least ``--min-free-gb`` of memory is free.
 """
 from __future__ import annotations
@@ -20,7 +20,6 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-import subprocess
 import sys
 import time
 
@@ -35,37 +34,13 @@ PHASED = {"hybrid-twin-v09", "neural-point-process-v09", "sequence-generator-v09
 ORDER = ["confirm-bounds", "confirm-bounds-late", "confirm-multifidelity-agreement"]   # inputs before consumers
 
 
-def free_gb() -> float:
-    try:
-        import ctypes
-
-        class MEM(ctypes.Structure):
-            _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
-                        ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
-                        ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
-                        ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
-                        ("sullAvailExtendedVirtual", ctypes.c_ulonglong)]
-        m = MEM()
-        m.dwLength = ctypes.sizeof(MEM)
-        ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))
-        return m.ullAvailPhys / 2 ** 30
-    except (AttributeError, OSError):
-        try:
-            import os
-            return os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 2 ** 30
-        except (ValueError, OSError, AttributeError):
-            return float("inf")
-
-
 def log(msg: str) -> None:
     print(f"=== {time.strftime('%H:%M:%S')} {msg}", flush=True)
 
 
 def sealed_ok(root: Path, run: str) -> bool:
-    from lob.v09 import artifacts
-    d = root / run
-    return (d / "binding.json").is_file() and artifacts.verify_run(d, root=root)["valid"] \
-        and artifacts.run_status(d) == "COMPLETED"
+    from lob.v09.batch import sealed_ok as ok
+    return ok(root, run)
 
 
 def target(root: Path, base: str, name: str) -> str | None:
@@ -80,16 +55,15 @@ def target(root: Path, base: str, name: str) -> str | None:
         k += 1
 
 
-def cli(root: Path, args: list[str], logfile: Path, min_free: float) -> int:
-    while free_gb() < min_free:
-        log(f"waiting for memory ({free_gb():.1f} GB free)")
-        time.sleep(60)
-    log("run " + " ".join(args))
-    with logfile.open("a", encoding="utf-8") as fh:
-        rc = subprocess.call([sys.executable, "-m", "lob.cli", *args, "--root", str(root)], stdout=fh,
-                             stderr=subprocess.STDOUT)
-    log(f"exit {rc}")
-    return rc
+def cli(root: Path, args: list[str], logfile: Path, min_free: float, out: str | None = None) -> int:
+    """One fail-closed step (lob.v09.batch): 0 only if the child exits 0 and ``out`` is sealed and valid; a failure
+    is ledgered as a retained attempt."""
+    from lob.v09.batch import run_batch
+    if out is None and "--out" in args:
+        out = args[args.index("--out") + 1]
+    step = {"name": Path(logfile).stem, "cli": args, "out": out}
+    summary = run_batch(root, [step], logdir=Path(logfile).parent, min_free_gb=min_free, echo=lambda m: print(m, flush=True))
+    return 0 if summary["valid"] else 1
 
 
 def designs(root: Path) -> dict[str, dict]:
@@ -145,7 +119,8 @@ def step_data(root: Path, ns, design: str = "confirm-data", namespace: str = "co
                 "--workers", str(ns.workers)]
         for d in missing:
             args += ["--dataset", d]
-        cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
+        if cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb) != 0:
+            raise SystemExit(f"data preparation run {out} failed (ledgered); fix and rerun")
     raise SystemExit("data preparation did not converge after 8 rounds (inspect the ledger attempts)")
 
 
@@ -265,6 +240,7 @@ def step_dryrun(root: Path, ns) -> None:
     registry = json.loads((root / pr.CONFIRMATORY_PATH).read_text(encoding="utf-8"))
     decisions = read_run(root / state.promotion["promotion_run"])["result"]["promotion"]["decisions"]
     built = {n: d["document"] for n, d in CF.build(root, registry, decisions).items()}
+    failed: list[str] = []
     for name, doc in built.items():
         if name in ("confirm-data",) or doc["study"] in ("transfer-study-v09",):
             continue
@@ -283,7 +259,10 @@ def step_dryrun(root: Path, ns) -> None:
         if study == "multifidelity-agreement-v09":
             args += ["--input", "bounds=results/v09/explore/bounds-pilot-2"]
         rc = cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
-        log(f"{dname}: exit {rc}")
+        if rc != 0:
+            failed.append(dname)
+    if failed:
+        raise SystemExit(f"dry runs failed: {failed}; fix with a regression test and rerun before sealing")
 
 
 def main() -> None:
