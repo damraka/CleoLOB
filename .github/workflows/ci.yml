@@ -48,6 +48,10 @@ jobs:
             "$PY" -m lob.cli "$c" --help > /dev/null
           done
           "$PY" -m lob.cli smoke-v08 --out "wheel-smoke-v08-${{ matrix.python-version }}"
+          for c in $("$PY" -c "from lob.v09.cli import COMMANDS; print(' '.join(COMMANDS))"); do
+            "$PY" -m lob.cli "$c" --help > /dev/null
+          done
+          "$PY" -m lob.cli smoke-v09 --out "wheel-smoke-v09-${{ matrix.python-version }}"
       - name: Verify committed compact evidence
         run: python -m lob.cli verify-artifact examples/studies/v03
       - name: Verify v0.4 compact evidence
@@ -59,12 +63,30 @@ jobs:
           python -m lob.cli verify-v08 --bundle examples/studies/v08
           python -m lob.cli claim-audit-v08 --bundle examples/studies/v08
           python -m lob.cli smoke-v08 --out "$RUNNER_TEMP/smoke-v08"
+      - name: Verify the v0.9 protocol, ledger, public bundle and claims
+        shell: bash
+        run: |
+          python -m lob.cli protocol-v09 verify
+          python -m lob.cli verify-v09 --bundle examples/studies/v09
+          python -m lob.cli claim-audit-v09 --bundle examples/studies/v09
+          python -m lob.cli smoke-v09 --out "$RUNNER_TEMP/smoke-v09"
       - name: Build and check distributions
         shell: bash
         run: |
           python -m pip install build twine
           python -m build --outdir build-dist
           python -m twine check build-dist/*
+
+  neural:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest -q tests/test_v09_neural.py
 
   container:
     runs-on: ubuntu-latest
