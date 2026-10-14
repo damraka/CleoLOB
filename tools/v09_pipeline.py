@@ -233,20 +233,73 @@ def step_final(root: Path, ns) -> None:
         raise SystemExit("final analysis failed")
 
 
+def dryrun_document(doc: dict, explore: dict[str, list[str]]) -> tuple[dict, list[str]]:
+    """A small explore-day copy of a confirmatory design (engineering check of the confirm branch only)."""
+    tr = {s: v[:2] for s, v in explore.items()}
+    te = {s: v[-1:] for s, v in explore.items()}
+    seq = {s: sorted(v[-3:], key=lambda d: d[-10:]) for s, v in explore.items()}
+    out = {k: v for k, v in doc.items() if k not in ("test_datasets", "train_datasets", "plan", "sequences",
+                                                     "datasets", "calibration_days", "reads")}
+    if "test_datasets" in doc:
+        out.update(test_datasets=[d for v in te.values() for d in v], train_datasets=[d for v in tr.values() for d in v])
+    if "plan" in doc:
+        out["plan"] = {s: {"train": tr[s], "test": te[s]} for s in explore}
+    if "sequences" in doc:
+        out["sequences"] = seq
+    if "datasets" in doc and "train_datasets" in doc:
+        out.update(datasets=[d for v in tr.values() for d in v] + [d for v in te.values() for d in v],
+                   train_datasets=[d for v in tr.values() for d in v])
+    elif "datasets" in doc:
+        out["datasets"] = [d for v in te.values() for d in v]
+    if "calibration_days" in doc:
+        out["calibration_days"] = [v[0] for v in explore.values()]
+    reads = sorted({d for v in explore.values() for d in v})
+    return {**out, "dryrun": "engineering check of the confirm branch on explore days; never evidence"}, reads
+
+
+def step_dryrun(root: Path, ns) -> None:
+    from lob.v09 import confirm as CF, protocol as pr
+    from lob.v09.artifacts import read_run
+    protocol, state = pr.state_of(root)
+    explore = CF.explore_days(protocol, state)
+    registry = json.loads((root / pr.CONFIRMATORY_PATH).read_text(encoding="utf-8"))
+    decisions = read_run(root / state.promotion["promotion_run"])["result"]["promotion"]["decisions"]
+    built = {n: d["document"] for n, d in CF.build(root, registry, decisions).items()}
+    for name, doc in built.items():
+        if name in ("confirm-data",) or doc["study"] in ("transfer-study-v09",):
+            continue
+        dname = "dryrun-" + name.removeprefix("confirm-")
+        ddoc, reads = dryrun_document(doc, explore)
+        if dname not in pr.state_of(root)[1].designs:
+            pr.seal_design(root, dname, ddoc, reads=reads, namespaces=[],
+                           reason=f"engineering dry run of the {doc['study']} confirm branch on explore days")
+        out = target(root, "results/v09/dryrun", dname)
+        if out is None:
+            log(f"{dname}: sealed")
+            continue
+        study = doc["study"]
+        args = [study] + (["confirm"] if study in PHASED else []) + ["--namespace", "explore", "--design", dname,
+                                                                     "--out", out, "--workers", str(ns.workers)]
+        if study == "multifidelity-agreement-v09":
+            args += ["--input", "bounds=results/v09/explore/bounds-pilot-2"]
+        rc = cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
+        log(f"{dname}: exit {rc}")
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--workers", type=int, default=2)
     p.add_argument("--min-free-gb", type=float, default=8.0)
     p.add_argument("--input", action="append")
-    p.add_argument("step", choices=("seal", "data", "studies", "transfer", "close", "vault", "final"))
+    p.add_argument("step", choices=("seal", "dryrun", "data", "studies", "transfer", "close", "vault", "final"))
     ns = p.parse_args()
     root = ns.root.resolve()
     if ns.step == "seal":
         from lob.v09 import confirm as CF
         print(json.dumps(CF.seal_all(root), indent=1))
     else:
-        {"data": step_data, "studies": step_studies, "transfer": step_transfer, "close": step_close,
+        {"dryrun": step_dryrun, "data": step_data, "studies": step_studies, "transfer": step_transfer, "close": step_close,
          "vault": step_vault, "final": step_final}[ns.step](root, ns)
 
 
