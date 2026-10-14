@@ -86,8 +86,9 @@ def run(args) -> dict:
     units = {}
     for r in rows:
         f = r["methods"]
-        for k in f["naive"]["forgetting"]:
-            units[r["days"][k]] = {m: f[m]["forgetting"][k] for m in f}
+        # task results pass through canonical JSON, so the day-position keys arrive as strings
+        for k in sorted(f["naive"]["forgetting"], key=int):
+            units[r["days"][int(k)]] = {m: f[m]["forgetting"][k] for m in f}
     effects = {m: [u["naive"] - u[m] for u in units.values()] for m in ("replay", "ewc")}
     selected = max(effects, key=lambda m: float(np.mean(effects[m])) if effects[m] else -np.inf)
     keys = list(units)
