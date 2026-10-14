@@ -106,10 +106,11 @@ def run(args) -> dict:
     out = common.start(args)
     notional = protocol["mandates"]["classes"]["medium"]["notional_usd"]
     tasks = []
-    for d, s in zip(days, base):
+    unique = len(set(days)) == len(days)          # confirm designs cycle calibration days over clusters
+    for i, (d, s) in enumerate(zip(days, base)):
         inst = d.split("-")[2].upper()
         lot = float(next(x for x in protocol["datasets"] if x["instrument"] == inst)["lot_size"])
-        tasks.append(Task(d, "lob.v09.studies.rl_study:world_task", {"day": d, "root": str(root), "design": design_name,
+        tasks.append(Task(d if unique else f"{i:03d}|{d}", "lob.v09.studies.rl_study:world_task", {"day": d, "root": str(root), "design": design_name,
                                                                      "base_seed": int(s), "notional": float(notional[inst]),
                                                                      "lot": lot}, seed=int(s), namespace=args.namespace))
     rows, info = run_tasks(tasks, workers=args.workers, contract=common.contract(args),
@@ -120,8 +121,8 @@ def run(args) -> dict:
                                         [r["h26_even"] for r in rows], caps=caps, hours=hours),
              "H27": common.pilot_record([r["h27"] for r in rows], [r["h27_odd"] for r in rows],
                                         [r["h27_even"] for r in rows], caps=caps, hours=hours)}
-    result = {"namespace": args.namespace, "worlds": {r["day"]: r for r in rows}, "capabilities": rl.capability_report(),
-              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None, "runner": info,
+    result = {"namespace": args.namespace, "worlds": {t.task_id: r for t, r in zip(sorted(tasks, key=lambda t: t.task_id), rows)}, "capabilities": rl.capability_report(),
+              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None, "records": pilot, "runner": info,
               "label": "SYNTHETIC (E1); OPE valid only because synthetic behaviour propensities are logged"}
     return common.finish(args, out, analysis=ANALYSIS, config={"days": days, "n_train": N_TRAIN, "n_ope": N_OPE,
                                                                "n_eval": N_EVAL}, result=result, datasets=days)

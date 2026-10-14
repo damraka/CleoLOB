@@ -51,6 +51,6 @@ def run(args) -> dict:
                                         [a["odd"] - (1 - C.ALPHA) for a in aci],
                                         [a["even"] - (1 - C.ALPHA) for a in aci], caps=caps, hours=hours)}
     result = {"phase": args.phase, "units": {r["held"]: r for r in rows},
-              "pilot": pilot if args.phase == "pilot" else None, "alpha": C.ALPHA, "gamma": C.GAMMA, "runner": info}
+              "pilot": pilot if args.phase == "pilot" else None, "records": pilot, "alpha": C.ALPHA, "gamma": C.GAMMA, "runner": info}
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "units": units}, result=result,
                          datasets=units)

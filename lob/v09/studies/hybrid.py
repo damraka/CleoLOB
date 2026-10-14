@@ -105,7 +105,7 @@ def run(args) -> dict:
                                             [r[f"{k}_even"] for r in ok], caps=caps, hours=hours)
              for k in ("h1", "h12")}
     result = {"phase": args.phase, "units": {r["held"]: r for r in rows},
-              "pilot": pilot if args.phase == "pilot" else None, "runner": info}
+              "pilot": pilot if args.phase == "pilot" else None, "records": pilot, "runner": info}
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "units": units,
                                                                "seed": args.seed, "generator_days": GEN_DAYS},
                          result=result, datasets=units)

@@ -33,9 +33,15 @@ def start(args) -> Path:
 
 
 def design_document(args) -> dict | None:
+    """The sealed design with the registered backup rule applied (substitutions are recorded in the result)."""
     if not getattr(args, "design", None):
         return None
-    return pr.sealed_design(root_of(args), args.design)
+    from .. import confirm
+    document = pr.sealed_design(root_of(args), args.design)
+    protocol, state = pr.state_of(root_of(args))
+    document, mapping = confirm.substitute(document, protocol, state)
+    args.design_substitutions = mapping
+    return document
 
 
 def seeds(args, study: str, count: int) -> list[int]:
@@ -77,6 +83,8 @@ def read_input(args, key: str) -> dict:
 def finish(args, out: Path, *, analysis: str, config: dict, result: dict, datasets=(), seed_info=None,
            status: str = "COMPLETED", status_reason: str = "", resources: dict | None = None,
            summary: Any = None, metrics: Any = None) -> dict:
+    if getattr(args, "design_substitutions", None):
+        result = {**result, "design_substitutions": args.design_substitutions}
     binding = artifacts.finalize(out, analysis=analysis, config=config, result=json_safe(result), root=root_of(args),
                                  dataset_ids=datasets, inputs=inputs(args), seeds=seed_info,
                                  namespace=getattr(args, "namespace", "dev"), status=status,

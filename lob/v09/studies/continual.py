@@ -96,7 +96,10 @@ def run(args) -> dict:
     hours = (time.time() - t0) / 3600 / max(sum(len(r["days"]) - 1 for r in rows), 1)
     units = units_of(rows)
     effects = {m: [u["naive"] - u[m] for u in units.values()] for m in ("replay", "ewc")}
-    selected = max(effects, key=lambda m: float(np.mean(effects[m])) if effects[m] else -np.inf)
+    if args.phase == "pilot":
+        selected = max(effects, key=lambda m: float(np.mean(effects[m])) if effects[m] else -np.inf)
+    else:
+        selected = design["method"]                    # fixed by the pilot in the sealed confirmatory design
     keys = list(units)
     caps = common.caps_for(protocol, ("incremental_l2", "trades_with_side", "neural_backend"))
     odd = [effects[selected][i] for i in range(len(keys)) if i % 2 == 1]
@@ -106,7 +109,7 @@ def run(args) -> dict:
                                         extra={"selected_method": selected,
                                                "note": "split-half pairs alternate units (no within-unit split)"})}
     result = {"phase": args.phase, "sequences": sequences, "units": units, "effects": effects, "selected": selected,
-              "pilot": pilot if args.phase == "pilot" else None, "runner": info}
+              "pilot": pilot if args.phase == "pilot" else None, "records": pilot, "runner": info}
     datasets = [d for v in sequences.values() for d in v]
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "sequences": sequences,
                                                                "steps_per_day": STEPS_PER_DAY, "ewc": EWC_LAMBDA},

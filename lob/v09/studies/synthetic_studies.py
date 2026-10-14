@@ -196,10 +196,11 @@ def run_for(args, hypotheses: list[str], analysis: str) -> dict:
     notional = {k: v["notional_usd"] for k, v in protocol["mandates"]["classes"].items()}
     out = common.start(args)
     tasks = []
-    for d, s in zip(days, base):
+    unique = len(set(days)) == len(days)          # confirm designs cycle calibration days over clusters
+    for i, (d, s) in enumerate(zip(days, base)):
         inst = d.split("-")[2].upper()
         lot = float(next(x for x in protocol["datasets"] if x["instrument"] == inst)["lot_size"])
-        tasks.append(Task(d, "lob.v09.studies.synthetic_studies:cluster_task",
+        tasks.append(Task(d if unique else f"{i:03d}|{d}", "lob.v09.studies.synthetic_studies:cluster_task",
                           {"day": d, "root": str(root), "design": design_name, "base_seed": int(s),
                            "notional": {k: float(v[inst]) for k, v in notional.items()}, "lot": lot,
                            "hypotheses": hypotheses}, seed=int(s), namespace=args.namespace))
@@ -218,8 +219,8 @@ def run_for(args, hypotheses: list[str], analysis: str) -> dict:
         if h == "H13":
             rec["reliability_note"] = "split-half = two independent search replicates per task (seeded)"
         pilot[h] = rec
-    result = {"namespace": args.namespace, "clusters": {r["day"]: r for r in rows},
-              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None, "runner": info,
+    result = {"namespace": args.namespace, "clusters": {t.task_id: r for t, r in zip(sorted(tasks, key=lambda t: t.task_id), rows)},
+              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None, "records": pilot, "runner": info,
               "label": "SYNTHETIC (E1/E2): calibrated generator worlds; not market evidence"}
     return common.finish(args, out, analysis=analysis, config={"days": days, "hypotheses": hypotheses},
                          result=result, datasets=days)

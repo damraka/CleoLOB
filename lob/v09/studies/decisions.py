@@ -313,7 +313,7 @@ def run(args) -> dict:
 
     pilot = {h: rec(h.lower()) for h in ("H8", "H18", "H19", "H22", "H25", "H29", "H30", "H31")}
     result = {"namespace": args.namespace, "plan": plan, "units": units,
-              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None,
+              "pilot": pilot if args.namespace in ("explore", "pilot", "dev") else None, "records": pilot,
               "synthetic": {s: {"qty_lots": by[f"s|{s}"]["qty_lots"]} for s in plan}, "runner": info,
               "label": "HYBRID (E3) and SYNTHETIC outcomes; bounded directions from the bounds run (E4/E5)"}
     datasets = [d for tr, te in plan.values() for d in tr + te]

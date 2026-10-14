@@ -185,8 +185,8 @@ def run(args) -> dict:
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     if args.phase == "pilot" and args.namespace not in ("explore", "pilot"):
         raise ValueError("the pilot phase reads explore days (namespace explore or pilot)")
-    if args.phase == "confirm" and args.namespace != "confirm":
-        raise ValueError("the confirm phase requires --namespace confirm and its sealed design")
+    if args.phase == "confirm" and args.namespace not in ("confirm", "final"):
+        raise ValueError("the confirm phase requires --namespace confirm (or final for the vault) and its sealed design")
     design = common.design_document(args)
     if args.phase == "pilot":
         n = protocol["pools"]["explore"]["count"]

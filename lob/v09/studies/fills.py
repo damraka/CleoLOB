@@ -129,7 +129,7 @@ def run(args) -> dict:
     pilot = {"H6": common.pilot_record([u["effect"] for u in vals], [u["odd"] for u in vals],
                                        [u["even"] for u in vals], caps=caps, hours=hours)}
     result = {"phase": args.phase, "plan": plan, "calibrations": by, "units": units,
-              "pilot": pilot if args.phase == "pilot" else None, "runner": info,
+              "pilot": pilot if args.phase == "pilot" else None, "records": pilot, "runner": info,
               "label": "BOUNDED clearance target; generator probabilities are SYNTHETIC predictions of real events"}
     return common.finish(args, out, analysis=ANALYSIS, config={"plan": plan, "search": SEARCH, "seed": args.seed},
                          result=result, datasets=[d for tr, te in plan.values() for d in tr + te])

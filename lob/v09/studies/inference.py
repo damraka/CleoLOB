@@ -69,6 +69,6 @@ def run(args) -> dict:
     pilot = {"H14": common.pilot_record([r["effect"] for r in rows.values()], [r["odd"] for r in rows.values()],
                                         [r["even"] for r in rows.values()], caps=caps, hours=hours)}
     result = {"phase": args.phase, "sequences": sequences, "units": rows,
-              "pilot": pilot if args.phase == "pilot" else None, "discount": B.DISCOUNT, "runner": info}
+              "pilot": pilot if args.phase == "pilot" else None, "records": pilot, "discount": B.DISCOUNT, "runner": info}
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "sequences": sequences,
                                                                "discount": B.DISCOUNT}, result=result, datasets=ids)

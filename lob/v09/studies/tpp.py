@@ -130,6 +130,7 @@ def run(args) -> dict:
 
     result = {"phase": args.phase, "units": {r["held"]: r for r in rows},
               "pilot": {"H2": record("h2"), "H5": record("h5")} if args.phase == "pilot" else None,
+              "records": {"H2": record("h2"), "H5": record("h5")},
               "runner": info}
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "units": units, "seed": args.seed,
                                                                "share": SHARE}, result=result, datasets=units)

@@ -77,7 +77,7 @@ def run(args) -> dict:
     caps = common.caps_for(protocol, ("incremental_l2", "trades_with_side", "neural_backend"))
     pilot = {"H35": common.pilot_record([r["effect"] for r in rows.values()], [r["odd"] for r in rows.values()],
                                         [r["even"] for r in rows.values()], caps=caps, hours=hours)}
-    result = {"phase": args.phase, "train": train, "units": rows, "pilot": pilot if args.phase == "pilot" else None,
+    result = {"phase": args.phase, "train": train, "units": rows, "pilot": pilot if args.phase == "pilot" else None, "records": pilot,
               "runner": info, "note": "the encoder and probes are refit identically in each chunk (seeded)"}
     return common.finish(args, out, analysis=ANALYSIS, config={"phase": args.phase, "train": train, "tests": tests,
                                                                "seed": args.seed, "max_train": MAX_TRAIN},
