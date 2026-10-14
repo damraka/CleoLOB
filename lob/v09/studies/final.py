@@ -205,7 +205,18 @@ def run(args) -> dict:
     counts = {}
     for r in table.values():
         counts[r["status"]] = counts.get(r["status"], 0) + 1
+    gate = common.read_input(args, "gate") if "gate" in given else None
     result = {"hypotheses": table, "conclusions": conclusions, "ladder": ladder, "counts": counts,
+              "promotion": {"promoted": promotion["promotion"]["promoted"],
+                            "not_promoted": promotion["promotion"]["not_promoted"],
+                            "carried": promotion["carried"], "run": state.promotion["promotion_run"]},
+              "data_availability": _availability(protocol, state),
+              "realism_gate": {"global": gate.get("global") if gate else "NOT_AVAILABLE",
+                               "run": given.get("gate")},
+              "reality_gap": _gap(ladder),
+              "incidents": [{k: i.get(k) for k in ("index", "kind", "affects_validity", "description")}
+                            for i in state.incidents],
+              "amendments": [{k: a.get(k) for k in ("index", "number")} for a in state.amendments],
               "established": [h for h, r in table.items() if r["status"] == "ESTABLISHED"],
               "promotion_sensitivity": promotion["sensitivity_original_gate"],
               "statistics": {"bootstrap": "paired percentile, 4000 resamples", "p": "one-sided centred bootstrap",
@@ -215,6 +226,30 @@ def run(args) -> dict:
                        "live-trading, profitability, HFT-readiness or exact-fill claim"}
     return common.finish(args, out, analysis=ANALYSIS, config={"closed": closed, "inputs": given},
                          result=result, summary={"counts": counts, "established": result["established"]})
+
+
+def _availability(protocol: dict, state: pr.LedgerState) -> dict:
+    out = {}
+    for d in protocol["datasets"]:
+        row = out.setdefault(d["pool"], {"declared": 0, "accessed": 0, "not_available": 0})
+        row["declared"] += 1
+        row["accessed"] += d["id"] in state.first_access
+    for a in state.attempts:
+        if a.get("outcome") == "NOT_AVAILABLE" and a.get("dataset"):
+            pool = pr.dataset_declaration(protocol, a["dataset"])["pool"]
+            out[pool]["not_available"] += 1
+    return out
+
+
+def _gap(ladder: dict) -> dict:
+    """Synthetic-world vs bounded-historical effect of each carried conclusion (descriptive reality gap)."""
+    out = {}
+    for cid, rungs in ladder.items():
+        syn = (rungs.get("synthetic") or {}).get("mean_nominal_effect_bps")
+        hist = (rungs.get("bounded historical") or {}).get("estimate")
+        out[cid] = {"synthetic_effect_bps": syn, "bounded_historical_effect_bps": hist,
+                    "gap_bps": (syn - hist) if syn is not None and hist is not None else None}
+    return out
 
 
 def _ladder(carried: dict, conclusions: dict, transfer: dict, vault: dict | None, given: dict, args) -> dict:
