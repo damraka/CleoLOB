@@ -1,0 +1,254 @@
+"""Drive the v0.9 confirmatory, vault and final steps one sealed run at a time (resumable, stability first).
+
+Usage (from a clean worktree of the repository, so the code cannot change while a run executes)::
+
+    python tools/v09_pipeline.py --root ../CleoLOB seal
+    python tools/v09_pipeline.py --root ../CleoLOB data
+    python tools/v09_pipeline.py --root ../CleoLOB studies
+    python tools/v09_pipeline.py --root ../CleoLOB transfer
+    python tools/v09_pipeline.py --root ../CleoLOB close
+    python tools/v09_pipeline.py --root ../CleoLOB vault
+    python tools/v09_pipeline.py --root ../CleoLOB final --input gate=... --input counterexample=...
+
+Every step is idempotent: a run directory that already holds a sealed, verifying run is skipped; a directory that
+exists without a valid seal is a retained failed attempt and the next attempt uses ``<name>-2``, ``<name>-3``, ...
+(the caller records the attempt in the ledger). One study runs at a time; before each, the driver waits until at
+least ``--min-free-gb`` of memory is free.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))     # the worktree's lob package
+
+CONFIRM_BASE = "results/v09/confirm"
+FINAL_BASE = "results/v09/final"
+PHASED = {"hybrid-twin-v09", "neural-point-process-v09", "sequence-generator-v09", "latent-dynamics-v09",
+          "fill-study-v09", "survival-study-v09", "impact-study-v09", "inference-v09", "meta-adaptation-v09",
+          "continual-calibration-v09", "conformal-study-v09", "representation-transfer-v09",
+          "counterfactual-bounds-v09"}
+ORDER = ["confirm-bounds", "confirm-bounds-late", "confirm-multifidelity-agreement"]   # inputs before consumers
+
+
+def free_gb() -> float:
+    try:
+        import ctypes
+
+        class MEM(ctypes.Structure):
+            _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                        ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                        ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                        ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                        ("sullAvailExtendedVirtual", ctypes.c_ulonglong)]
+        m = MEM()
+        m.dwLength = ctypes.sizeof(MEM)
+        ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))
+        return m.ullAvailPhys / 2 ** 30
+    except (AttributeError, OSError):
+        try:
+            import os
+            return os.sysconf("SC_AVPHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 2 ** 30
+        except (ValueError, OSError, AttributeError):
+            return float("inf")
+
+
+def log(msg: str) -> None:
+    print(f"=== {time.strftime('%H:%M:%S')} {msg}", flush=True)
+
+
+def sealed_ok(root: Path, run: str) -> bool:
+    from lob.v09 import artifacts
+    d = root / run
+    return (d / "binding.json").is_file() and artifacts.verify_run(d, root=root)["valid"] \
+        and artifacts.run_status(d) == "COMPLETED"
+
+
+def target(root: Path, base: str, name: str) -> str | None:
+    """The run directory to use: None when already sealed, else the first unused attempt name."""
+    k = 1
+    while True:
+        rel = f"{base}/{name}" + ("" if k == 1 else f"-{k}")
+        if not (root / rel).exists():
+            return rel
+        if sealed_ok(root, rel):
+            return None
+        k += 1
+
+
+def cli(root: Path, args: list[str], logfile: Path, min_free: float) -> int:
+    while free_gb() < min_free:
+        log(f"waiting for memory ({free_gb():.1f} GB free)")
+        time.sleep(60)
+    log("run " + " ".join(args))
+    with logfile.open("a", encoding="utf-8") as fh:
+        rc = subprocess.call([sys.executable, "-m", "lob.cli", *args, "--root", str(root)], stdout=fh,
+                             stderr=subprocess.STDOUT)
+    log(f"exit {rc}")
+    return rc
+
+
+def designs(root: Path) -> dict[str, dict]:
+    from lob.v09 import confirm as CF, protocol as pr
+    protocol, state = pr.state_of(root)
+    out = {}
+    for name in sorted(state.designs):
+        if name.startswith("confirm-"):
+            doc, _ = CF.substitute(pr.sealed_design(root, name), protocol, state)
+            out[name] = doc
+    return out
+
+
+def needed_datasets(root: Path, docs: dict[str, dict]) -> list[str]:
+    from lob.v09 import protocol as pr
+    protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
+    ids: list[str] = []
+
+    def walk(x):
+        if isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+        elif isinstance(x, str) and x not in ids:
+            try:
+                d = pr.dataset_declaration(protocol, x)
+            except Exception:                                      # noqa: BLE001 - non-dataset strings
+                return
+            if d["role"] in pr.GUARDED_ROLES:
+                ids.append(x)
+
+    for name, doc in docs.items():
+        if name != "confirm-data":
+            walk({k: v for k, v in doc.items() if k != "reads"})
+    return ids
+
+
+def step_data(root: Path, ns, design: str = "confirm-data", namespace: str = "confirm", base: str = CONFIRM_BASE):
+    from lob.v09 import protocol as pr
+    from lob.v09.data import daycache
+    for _ in range(8):
+        docs = designs(root) if namespace == "confirm" else {}
+        ids = needed_datasets(root, docs) if namespace == "confirm" else ns.datasets
+        _, state = pr.state_of(root)
+        missing = [d for d in ids if not daycache.cache_path(root, d).is_file()]
+        if not missing:
+            log(f"all {len(ids)} datasets prepared")
+            return
+        out = target(root, base, "data-prep")
+        args = ["validate-market-data-v09", "--namespace", namespace, "--design", design, "--out", out,
+                "--workers", str(ns.workers)]
+        for d in missing:
+            args += ["--dataset", d]
+        cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
+    raise SystemExit("data preparation did not converge after 8 rounds (inspect the ledger attempts)")
+
+
+def step_studies(root: Path, ns) -> None:
+    docs = designs(root)
+    names = [n for n in ORDER if n in docs] + sorted(n for n in docs if n not in ORDER and n != "confirm-data")
+    for name in names:
+        doc = docs[name]
+        out = target(root, CONFIRM_BASE, name)
+        if out is None:
+            log(f"{name}: sealed")
+            continue
+        study = doc["study"]
+        args = [study] + (["confirm"] if study in PHASED else []) + ["--namespace", "confirm", "--design", name,
+                                                                     "--out", out, "--workers", str(ns.workers)]
+        if study == "multifidelity-agreement-v09" and "confirm-bounds" in docs:
+            args += ["--input", f"bounds={latest(root, CONFIRM_BASE, 'confirm-bounds')}"]
+        rc = cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
+        if rc != 0:
+            raise SystemExit(f"{name} failed (exit {rc}); record the attempt and rerun")
+
+
+def latest(root: Path, base: str, name: str) -> str:
+    k, found = 1, None
+    while (root / (rel := f"{base}/{name}" + ("" if k == 1 else f"-{k}"))).exists():
+        if sealed_ok(root, rel):
+            found = rel
+        k += 1
+    if found is None:
+        raise SystemExit(f"no sealed run of {name}")
+    return found
+
+
+def step_transfer(root: Path, ns) -> None:
+    docs = designs(root)
+    out = target(root, CONFIRM_BASE, "confirm-transfer")
+    if out is None:
+        return log("transfer: sealed")
+    args = ["transfer-study-v09", "--namespace", "confirm", "--design", "confirm-bounds", "--out", out,
+            "--input", f"bounds={latest(root, CONFIRM_BASE, 'confirm-bounds')}"]
+    if "confirm-bounds-late" in docs:
+        args += ["--input", f"late={latest(root, CONFIRM_BASE, 'confirm-bounds-late')}"]
+    if cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb) != 0:
+        raise SystemExit("transfer failed")
+
+
+def step_close(root: Path, ns) -> None:
+    from lob.v09 import confirm as CF
+    docs = designs(root)
+    runs = {n: latest(root, CONFIRM_BASE, n) for n in docs if n != "confirm-data"}
+    if "confirm-bounds" in docs:
+        runs["confirm-transfer"] = latest(root, CONFIRM_BASE, "confirm-transfer")
+    print(json.dumps(CF.close(root, runs)["index"]))
+
+
+def step_vault(root: Path, ns) -> None:
+    from lob.v09 import confirm as CF, protocol as pr
+    _, state = pr.state_of(root)
+    if "final-vault" not in state.designs:
+        d = CF.final_design(root)
+        pr.seal_design(root, "final-vault", d["document"], reads=d["reads"], namespaces=d["namespaces"],
+                       reason="the single final-vault design (after close_confirmatory)")
+        pr.open_namespace(root, "final", design="final-vault", reason="final seeds for the vault design")
+    doc, _ = CF.substitute(pr.sealed_design(root, "final-vault"), *pr.state_of(root))
+    ns.datasets = list(doc["datasets"])
+    step_data(root, ns, design="final-vault", namespace="final", base=FINAL_BASE)
+    out = target(root, FINAL_BASE, "vault-bounds")
+    if out is None:
+        return log("vault: sealed")
+    args = ["counterfactual-bounds-v09", "confirm", "--namespace", "final", "--design", "final-vault", "--out", out,
+            "--workers", str(ns.workers)]
+    if cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb) != 0:
+        raise SystemExit("vault run failed")
+
+
+def step_final(root: Path, ns) -> None:
+    out = target(root, FINAL_BASE, "final-analysis")
+    if out is None:
+        return log("final: sealed")
+    args = ["final-analysis-v09", "--namespace", "final", "--design", "final-vault", "--out", out,
+            "--input", f"vault={latest(root, FINAL_BASE, 'vault-bounds')}"]
+    for item in ns.input or []:
+        args += ["--input", item]
+    if cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb) != 0:
+        raise SystemExit("final analysis failed")
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    p.add_argument("--root", type=Path, required=True)
+    p.add_argument("--workers", type=int, default=2)
+    p.add_argument("--min-free-gb", type=float, default=8.0)
+    p.add_argument("--input", action="append")
+    p.add_argument("step", choices=("seal", "data", "studies", "transfer", "close", "vault", "final"))
+    ns = p.parse_args()
+    root = ns.root.resolve()
+    if ns.step == "seal":
+        from lob.v09 import confirm as CF
+        print(json.dumps(CF.seal_all(root), indent=1))
+    else:
+        {"data": step_data, "studies": step_studies, "transfer": step_transfer, "close": step_close,
+         "vault": step_vault, "final": step_final}[ns.step](root, ns)
+
+
+if __name__ == "__main__":
+    main()

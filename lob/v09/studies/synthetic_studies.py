@@ -186,7 +186,7 @@ def cluster_task(day: str, root: str, design: str, base_seed: int, notional: dic
 def run_for(args, hypotheses: list[str], analysis: str) -> dict:
     root = common.root_of(args)
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
-    if args.namespace in ("explore", "pilot", "dev"):
+    if not getattr(args, "design", None):            # pilot: registered explore slots; else the sealed design
         days = common.explore_units(args, protocol)
         design_name = f"explore-{analysis}"
     else:

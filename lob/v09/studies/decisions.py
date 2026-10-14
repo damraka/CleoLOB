@@ -270,7 +270,7 @@ def run(args) -> dict:
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     t0 = time.time()
     notional = {k: v["notional_usd"] for k, v in protocol["mandates"]["classes"].items()}["medium"]
-    if args.namespace in ("explore", "pilot", "dev"):
+    if not getattr(args, "design", None):            # pilot: registered explore slots; else the sealed design
         res = common.units(args, "explore", common.BYBIT_STREAMS, protocol["pools"]["explore"]["count"])
         plan = {}
         for s in common.BYBIT_STREAMS:

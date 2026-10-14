@@ -65,7 +65,7 @@ def run(args) -> dict:
     root = common.root_of(args)
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     t0 = time.time()
-    if args.namespace in ("explore", "pilot", "dev"):
+    if not getattr(args, "design", None):            # pilot: registered explore slots; else the sealed design
         res = common.units(args, "explore", common.BYBIT_STREAMS, protocol["pools"]["explore"]["count"])
         plan = {}
         for s in common.BYBIT_STREAMS:

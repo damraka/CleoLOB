@@ -97,7 +97,7 @@ def world_task(day: str, root: str, design: str, base_seed: int, notional: float
 def run(args) -> dict:
     root = common.root_of(args)
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
-    if args.namespace in ("explore", "pilot", "dev"):
+    if not getattr(args, "design", None):            # pilot: registered explore slots; else the sealed design
         days, design_name = common.explore_units(args, protocol), "explore-offline-rl"
     else:
         design = common.design_document(args)
