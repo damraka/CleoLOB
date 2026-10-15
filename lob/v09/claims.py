@@ -49,7 +49,7 @@ def graph(root: Path, *, final: str | None = None, bundle: Path | None = None) -
         lineage = json.loads((run / "lineage.json").read_text(encoding="utf-8"))
     nodes = []
     for cid, c in registry["claims"].items():
-        node = {"claim": cid, "hypothesis": c["hypothesis"], "statement": c["statement"], "pointer": c["pointer"],
+        node = {"claim": cid, "hypothesis": c.get("hypothesis"), "statement": c["statement"], "pointer": c["pointer"],
                 "run": None, "value": None, "status": None, "resolved": False}
         if result is not None:
             value = _pointer(result, c["pointer"])

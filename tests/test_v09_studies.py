@@ -77,3 +77,12 @@ def test_final_continual_unit_order_matches_the_study_units():
     order = final.unit_order("H16", {"sequences": days}, units)
     assert order == list(units) and len(order) == 4
     assert final.first_units(order, 4, synthetic=False) == order
+
+
+def test_claim_graph_accepts_registry_claims_without_a_hypothesis(v09_root):
+    from lob.v09 import claims, protocol as pr
+    reg = json.loads((v09_root / pr.CONFIG_DIR / "claim-registry.json").read_text(encoding="utf-8"))
+    assert any("hypothesis" not in c for c in reg["claims"].values())       # e.g. GATE, LADDER (frozen registry)
+    g = claims.graph(v09_root, final="results/v09/final/none")
+    gate = next(n for n in g["claims"] if n["claim"] == "GATE")
+    assert gate["hypothesis"] is None and any(e["to"] == gate["pointer"] for e in g["edges"])
