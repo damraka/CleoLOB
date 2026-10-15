@@ -1,0 +1,52 @@
+{
+  "schema": "cleolob-v09-model-capabilities-1",
+  "families": {
+    "classical": [
+      "poisson",
+      "marked_poisson",
+      "hawkes",
+      "marked_hawkes",
+      "queue_reactive",
+      "regime_switching",
+      "semi_markov",
+      "mixture"
+    ],
+    "neural_tpp": [
+      "rmtpp",
+      "neural_hawkes",
+      "transformer_tpp",
+      "marked_neural_tpp"
+    ],
+    "sequence": [
+      "gru",
+      "lstm",
+      "causal_transformer",
+      "state_conditioned"
+    ],
+    "latent": [
+      "linear_gaussian_ssm",
+      "switching_ssm",
+      "neural_sde"
+    ],
+    "density": [
+      "conditional_flow"
+    ],
+    "hybrid": [
+      "historical_backbone_twin"
+    ],
+    "strategic": [
+      "ecology_v9"
+    ]
+  },
+  "capabilities": [
+    "spread_dynamics",
+    "depth_dynamics",
+    "event_timing",
+    "queue_survival",
+    "fill_prediction",
+    "impact",
+    "tail_behavior",
+    "strategic_response"
+  ],
+  "rule": "capability decisions are produced by realism-gate-v09 from sealed realism-benchmark runs; this file registers which families are evaluated, never their outcomes"
+}

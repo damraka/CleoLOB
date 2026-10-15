@@ -1,0 +1,2284 @@
+{
+ "schema": "cleolob-v09-dag-1",
+ "nodes": [
+  {
+   "run": "results/v09/confirm/confirm-bounds",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "07a1e047980aa79facde1391204ec7aad1178c3eca24c38f301ad991303b9151",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-04",
+    "bybit-linear-btcusdt-2023-11-12",
+    "bybit-linear-btcusdt-2023-11-15",
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2023-12-04",
+    "bybit-linear-btcusdt-2023-12-07",
+    "bybit-linear-btcusdt-2024-01-01",
+    "bybit-linear-btcusdt-2024-01-23",
+    "bybit-linear-btcusdt-2024-02-02",
+    "bybit-linear-btcusdt-2024-02-08",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-14",
+    "bybit-linear-btcusdt-2024-02-18",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-btcusdt-2024-03-08",
+    "bybit-linear-btcusdt-2024-03-10",
+    "bybit-linear-btcusdt-2024-03-11",
+    "bybit-linear-btcusdt-2024-03-14",
+    "bybit-linear-btcusdt-2024-03-15",
+    "bybit-linear-btcusdt-2024-03-18",
+    "bybit-linear-ethusdt-2023-11-12",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-02-02",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23",
+    "bybit-linear-ethusdt-2024-03-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-bounds-late",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "07feecac92f24a2787fb24ec666fae0c23337417294fd4f71b27f938f662c7fa",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2024-06-01",
+    "bybit-linear-btcusdt-2024-06-10",
+    "bybit-linear-btcusdt-2024-07-07",
+    "bybit-linear-btcusdt-2024-07-24",
+    "bybit-linear-btcusdt-2024-08-16",
+    "bybit-linear-btcusdt-2024-09-16",
+    "bybit-linear-btcusdt-2024-09-29",
+    "bybit-linear-btcusdt-2024-10-03",
+    "bybit-linear-btcusdt-2024-10-17",
+    "bybit-linear-btcusdt-2024-10-27",
+    "bybit-linear-btcusdt-2024-11-01",
+    "bybit-linear-btcusdt-2024-12-02",
+    "bybit-linear-btcusdt-2024-12-03",
+    "bybit-linear-btcusdt-2024-12-12",
+    "bybit-linear-btcusdt-2024-12-21"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-conformal-study",
+   "analysis": "conformal-study-v09",
+   "result_sha256": "ffc31e525636ce95b73249afbdf40a2d557ff41720cb90d2cea2bf869f537301",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-continual-calibration",
+   "analysis": "continual-calibration-v09",
+   "result_sha256": "edfd34fff94b59abf90fb7b7c99a627247052b7ecaa46eb50f1ca189854930f7",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2023-12-07",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-fill-study",
+   "analysis": "fill-study-v09",
+   "result_sha256": "9d67e3f06024798b290e3899b244c3128a7a4df8689afd996d9067b99c25d708",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-multifidelity-agreement",
+   "analysis": "decisions-v09",
+   "result_sha256": "9d52b2177bb671941bf0e7c927231562fefb65ef65fcbcf0703af128b799fadd",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2023-12-07",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-neural-point-process",
+   "analysis": "neural-point-process-v09",
+   "result_sha256": "6f7f5163f85e1e9e6678c1d0f7532cf40db0e30ca3dbd10b3b581300e225c3d0",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-survival-study",
+   "analysis": "survival-study-v09",
+   "result_sha256": "47df4b62e0404688004e45bcabfb2e2f73114eee68cad4411880304658b3f792",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/confirm-transfer",
+   "analysis": "transfer-study-v09",
+   "result_sha256": "8b14a2a0ec3412649393fef8bc1aa216542c2b93dd31273151e2dab2f1aae701",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2024-06-01",
+    "bybit-linear-btcusdt-2024-06-10",
+    "bybit-linear-btcusdt-2024-07-07",
+    "bybit-linear-btcusdt-2024-07-24",
+    "bybit-linear-btcusdt-2024-08-16",
+    "bybit-linear-btcusdt-2024-09-16",
+    "bybit-linear-btcusdt-2024-09-29",
+    "bybit-linear-btcusdt-2024-10-03",
+    "bybit-linear-btcusdt-2024-10-17",
+    "bybit-linear-btcusdt-2024-10-27",
+    "bybit-linear-btcusdt-2024-11-01",
+    "bybit-linear-btcusdt-2024-12-02",
+    "bybit-linear-btcusdt-2024-12-03",
+    "bybit-linear-btcusdt-2024-12-12",
+    "bybit-linear-btcusdt-2024-12-21",
+    "bybit-linear-ethusdt-2023-11-12",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-02-02",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23",
+    "bybit-linear-ethusdt-2024-03-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/data-prep",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "b0bc41097bd4b30ab529a14ac6b9c2e7007c2b5fe148b1a0fdead0b98dd2333c",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-12",
+    "bybit-linear-btcusdt-2023-11-15",
+    "bybit-linear-btcusdt-2023-11-18",
+    "bybit-linear-btcusdt-2023-12-04",
+    "bybit-linear-btcusdt-2023-12-07",
+    "bybit-linear-btcusdt-2024-02-02",
+    "bybit-linear-btcusdt-2024-02-08",
+    "bybit-linear-btcusdt-2024-02-10",
+    "bybit-linear-btcusdt-2024-02-14",
+    "bybit-linear-btcusdt-2024-02-18",
+    "bybit-linear-btcusdt-2024-02-21",
+    "bybit-linear-btcusdt-2024-02-23",
+    "bybit-linear-btcusdt-2024-03-08",
+    "bybit-linear-btcusdt-2024-03-11",
+    "bybit-linear-btcusdt-2024-03-15",
+    "bybit-linear-btcusdt-2024-06-01",
+    "bybit-linear-btcusdt-2024-07-07",
+    "bybit-linear-btcusdt-2024-07-24",
+    "bybit-linear-btcusdt-2024-08-16",
+    "bybit-linear-btcusdt-2024-09-16",
+    "bybit-linear-btcusdt-2024-09-29",
+    "bybit-linear-btcusdt-2024-10-03",
+    "bybit-linear-btcusdt-2024-10-17",
+    "bybit-linear-btcusdt-2024-10-27",
+    "bybit-linear-btcusdt-2024-11-01",
+    "bybit-linear-btcusdt-2024-12-02",
+    "bybit-linear-btcusdt-2024-12-03",
+    "bybit-linear-btcusdt-2024-12-21",
+    "bybit-linear-ethusdt-2023-11-12",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-02-02",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2024-02-23",
+    "bybit-linear-ethusdt-2024-03-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/confirm/data-prep-2",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "2ab10aebee2bebeba75c8ae98a59fc91a2c81998ec197459e13f8bf2dbfa8ae6",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-11-04",
+    "bybit-linear-btcusdt-2024-01-01",
+    "bybit-linear-btcusdt-2024-01-23",
+    "bybit-linear-btcusdt-2024-03-10",
+    "bybit-linear-btcusdt-2024-03-14",
+    "bybit-linear-btcusdt-2024-03-18",
+    "bybit-linear-btcusdt-2024-06-10",
+    "bybit-linear-btcusdt-2024-12-12"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/adversarial",
+   "analysis": "adversarial-study-v09",
+   "result_sha256": "5bfb77cfcb4165ddb09ffc4b3e91f4fc5dc065e7351b353d5f9bb045851febf4",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/benchmark",
+   "analysis": "benchmark-v09",
+   "result_sha256": "e571a248de05100c1f54aa9f3d03ec463512b0403ecece8763e82ee2e1e744cb",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-09-02"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/counterexample-2",
+   "analysis": "counterexample-study-v09",
+   "result_sha256": "75ee04b56a15bbeb6a278c0998aae309038a8b07039c786f3e19c6143ec25161",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/cross-impact",
+   "analysis": "cross-impact-v09",
+   "result_sha256": "d285b02b30494fd443924774e1af94e63590f8e997b7c7a92f8d6b6de28ce5f3",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/drift",
+   "analysis": "change-point-study-v09",
+   "result_sha256": "720f41668726db8947e4815e2f58d33f8e642be811775f2d76d5a505bdbb716d",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/generator-fit-2",
+   "analysis": "generator-fit-v09",
+   "result_sha256": "9cee1d5f45e4dff14140d4bcd23d014cdf1a906f8b3614aa5fdd04a56e199aef",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/identifiability",
+   "analysis": "identifiability-v5",
+   "result_sha256": "66b58685070f6c08471e452fedc5217316b9b7cb710ef1cc087c8fd63d886b3b",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/liquidity",
+   "analysis": "latent-liquidity-v09",
+   "result_sha256": "a98182e634dbfcdf979f0ac0d37845885f318025e98cbfd040db374036ded60b",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/ope",
+   "analysis": "ope-study-v09",
+   "result_sha256": "7d99a434c3563983d9ed2c8a88e32d136f5f6499a59311d93b8050a013817729",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/path-realism",
+   "analysis": "path-realism-v09",
+   "result_sha256": "1b39db1bc7334a7f75c4c79fd62b5a299524f0a55e646e12666cea0b52b8a196",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/portfolio",
+   "analysis": "portfolio-study-v09",
+   "result_sha256": "88d0d9edd728583853557ede9432e4cd9f57969a185d053a445e1e6f3d69ef41",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/posterior",
+   "analysis": "posterior-study-v09",
+   "result_sha256": "f055e2d6c94e2fc5229a7a561ec6e68e53e519629e3a03dcd80c04ca459b3e51",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/queue",
+   "analysis": "queue-reconstruction-v09",
+   "result_sha256": "8350a789dcc7c1fd6602229eff0f0c691f3dc48b7696bfc509e121d007cfda5b",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/ranking",
+   "analysis": "ranking-transfer-v09",
+   "result_sha256": "93369d9b96b655c2f93cd2ef0ee187a3aff113dab7f6245227a287b7ed9412eb",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/reconstruction",
+   "analysis": "event-reconstruction-v09",
+   "result_sha256": "d1a43029dec7193b54c0110b67de774e90a64f6d3de8a44fd618aec3a45036cd",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-btcusdt-2023-10-23",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "binance-um-ethusdt-2023-10-23",
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/regimes",
+   "analysis": "regime-study-v09",
+   "result_sha256": "b215713fd5a721db2dec9efb26663fd23a0cebaf604fbf0ba064922710d0db17",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/replay",
+   "analysis": "historical-replay-v09",
+   "result_sha256": "34f0245abdc1310db6f701774357b16712a0e01be023bc6bd92f6ee488bffc66",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/sbc",
+   "analysis": "sbc-v09",
+   "result_sha256": "f5c3a43e011b04de873d51b4a0fe1c31e8cde4da8867573eeff80ead6b4f9224",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/tail-realism",
+   "analysis": "tail-realism-v09",
+   "result_sha256": "7420ff66acc8e06ccb2a1f299025003d54fdb34e1b60162b756f21418d6e4948",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/toxicity",
+   "analysis": "toxicity-study-v09",
+   "result_sha256": "65ec9d296d39d3525bc9711fb58e7318b6e7439a8a752161a67537ce3aa80dc0",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/uncertainty",
+   "analysis": "uncertainty-decomposition-v09",
+   "result_sha256": "fff61c345170155655a8201b0751568f2b7909ede15d9686752960ab16da858f",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/descriptive/voi",
+   "analysis": "value-of-information-v09",
+   "result_sha256": "ecb914ba94166714bc2bb0413e2be255c469426ad10069b0359023762e43c26a",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dev/data-dev-day",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "ddb90474dc3401ce2583bf8c50ebedd0a3b7df09f08227c81645ecbe8c65dd00",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-07-15",
+    "bybit-spot-btcusdt-2025-09-20"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dev/sbc-check",
+   "analysis": "sbc-v09",
+   "result_sha256": "f5c3a43e011b04de873d51b4a0fe1c31e8cde4da8867573eeff80ead6b4f9224",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dev/toxicity-check",
+   "analysis": "toxicity-study-v09",
+   "result_sha256": "5da454b900891fd0d7707a5f31a7532b60c1cc798087c3d79c43c3b078eeeaf1",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-07-15"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-bounds",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "2e0e120af30f59b42c3450e8a4a380c1e86df19adbed8340f74be89e3ac214b5",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-bounds-late",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "d9bf325b4a1463de40109e98bd4d84b28890996e958215517bcc2a6956b1a8b8",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-conformal-study",
+   "analysis": "conformal-study-v09",
+   "result_sha256": "725cdb71fbfae43f19a1979159b37935c6d824dd33bd147e9a0537073922b517",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-continual-calibration",
+   "analysis": "continual-calibration-v09",
+   "result_sha256": "6be3fde6614fcac5db68e6607b46c5df08e0a9b21a72a4b697df5ae9126a9bd7",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-fill-study",
+   "analysis": "fill-study-v09",
+   "result_sha256": "5761b669a790bb90b36beac4ffb6eb2109310815f5d2e990f94c53edd5d075d9",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-multifidelity-agreement",
+   "analysis": "decisions-v09",
+   "result_sha256": "cf746ca09086c9045f57c1784bcd72e0eb52cc1c1452a82011ec110e35d081b0",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-neural-point-process",
+   "analysis": "neural-point-process-v09",
+   "result_sha256": "58ec2182c94ea8dcc1c3fb4d86dd7e8b65207cd93088b1677d68cc34f2686cd1",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-survival-study",
+   "analysis": "survival-study-v09",
+   "result_sha256": "c9dc9ac5c704f2e94f507a8ada330319b01ae2eea65e65ffaa028a9f9ffbfced",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/dryrun/dryrun-transfer",
+   "analysis": "transfer-study-v09",
+   "result_sha256": "ea05fad27e47069f79401e2081bd47bc4bf9352598027e180c46217edf119437",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/abstention-pilot",
+   "analysis": "abstention-study-v09",
+   "result_sha256": "7868cb091c2df5fdb6e863d3d1ba32e4c78e06a6c372f14b5c60533192a3f482",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/active-pilot",
+   "analysis": "active-calibration-v09",
+   "result_sha256": "9228a00463e466a678f5d977c8a4f758b9e5c37ca74f98a820c0676053a04f51",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/averaging-pilot",
+   "analysis": "model-averaging-v09",
+   "result_sha256": "f1ebd5903b4525199ddd09c736328a78cd47b8d494baea54777017a151b1a425",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/bounds-pilot",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "bde6685ef5eda82fb1a14b264dd4e7415f30c8488feec2975aad7ff261213256",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-btcusdt-2023-10-23",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "binance-um-ethusdt-2023-10-23",
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/bounds-pilot-2",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-btcusdt-2023-10-23",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "binance-um-ethusdt-2023-10-23",
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/completion-pilot",
+   "analysis": "completion-study-v09",
+   "result_sha256": "f97b9d53ea0b4981e478a47766d4f7a9e3fb40d1505502347032b4499544aa35",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/conformal-pilot",
+   "analysis": "conformal-study-v09",
+   "result_sha256": "b2c242cb5f784a83bdc0fe2e819d86617b37ee3407ec4569de31eb3a77ff2262",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/continual-pilot-2",
+   "analysis": "continual-calibration-v09",
+   "result_sha256": "7a8a98ce1c83795f40118f04e2d728058acab3c69d549b2f46e9aced1f9b987f",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/data-prep-2",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "b41dae6ac8f0d410e74e9df849b653b2eab409aa0cc453e2a30e9d50e32329ee",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-09-12",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-09-12",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/data-prep-3",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "d7598392204b631b61f94c5dad796c2bb51887b51be70c289ab5efd34c3179a5",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/data-prep-4",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "f7bb71c1b11c47b7950a963932af3598d8648f8a75f7aff90ddc0ddaedad0d0c",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "binance-um-btcusdt-2023-08-19",
+    "binance-um-btcusdt-2023-08-21",
+    "binance-um-btcusdt-2023-08-27",
+    "binance-um-btcusdt-2023-08-29",
+    "binance-um-btcusdt-2023-09-02",
+    "binance-um-btcusdt-2023-10-08",
+    "binance-um-btcusdt-2023-10-17",
+    "binance-um-btcusdt-2023-10-23",
+    "binance-um-ethusdt-2023-08-19",
+    "binance-um-ethusdt-2023-08-21",
+    "binance-um-ethusdt-2023-08-27",
+    "binance-um-ethusdt-2023-08-29",
+    "binance-um-ethusdt-2023-09-02",
+    "binance-um-ethusdt-2023-10-08",
+    "binance-um-ethusdt-2023-10-17",
+    "binance-um-ethusdt-2023-10-23"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/decisions-pilot",
+   "analysis": "decisions-v09",
+   "result_sha256": "1e8d035050a80cef393b2366613e440c77b54d5edb45aa8c6ba5b631178945e5",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/dro-pilot",
+   "analysis": "dro-study-v09",
+   "result_sha256": "c2e24a87d5c52265ea70f2db777de8814f9b1bda9196accf8cc22fb3a8c13503",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/ecology-pilot",
+   "analysis": "ecology-study-v09",
+   "result_sha256": "1edefea8a0893df3b4838ca08a401dd0f9fc7135839947f39318514ca5d9e386",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/fills-pilot-2",
+   "analysis": "fill-study-v09",
+   "result_sha256": "558eb4d4282b27b593de119365fe8d1b2594b06fa4b74089fdd4405728390ee0",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/hybrid-pilot",
+   "analysis": "hybrid-twin-v09",
+   "result_sha256": "1b6d9f3f21c91907a7d5b7532200ce39f31f1eb359fc1a2d3b9a773424966de7",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/impact-pilot",
+   "analysis": "impact-study-v09",
+   "result_sha256": "8da5a39a0ca51baaa2362a7d66a7345c9021ec755108bcf68d08601fcf93e129",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/inference-pilot",
+   "analysis": "inference-v09",
+   "result_sha256": "28fbbdb994795c15d574f542121caf975317402eb49901782ca0715dc554129d",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/latent-pilot",
+   "analysis": "latent-dynamics-v09",
+   "result_sha256": "94df5a3cae28c589a258adc2df3fcf71be80c99567206f47feac29b9456dd46d",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/markout-pilot",
+   "analysis": "markout-study-v09",
+   "result_sha256": "adc999b2d6441f00bdfc51d8ff7357be9fd53450e60a16a83cfb2a869db72978",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/meta-pilot",
+   "analysis": "meta-adaptation-v09",
+   "result_sha256": "7157da0433fbacb68a7661b3d03bc72fc87b036db841ba92561520d1f7363753",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/meta-policy-pilot",
+   "analysis": "meta-policy-v09",
+   "result_sha256": "808e63aad865ae3078bde6267511874aa9abaeff59dc25f4aa3de4192a625aa4",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/mpc-pilot",
+   "analysis": "mpc-study-v09",
+   "result_sha256": "1cabd0d577ce0b3e863f9c80b0e24522ce914c173a618abaf0e3094c87c79b3f",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/rare-event-pilot",
+   "analysis": "rare-event-study-v09",
+   "result_sha256": "50d15ddc4a6773ba9743884e492a1500470b3b0c3ded1a43336ca60b6e0fe1b9",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/realism-benchmark",
+   "analysis": "realism-benchmark-v09",
+   "result_sha256": "1842bd48a0643796834b5f162ab871c4d7bef9fb9eb2a32586f60601136fcffe",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/realism-gate",
+   "analysis": "realism-gate-v09",
+   "result_sha256": "c9f120792114d611cb574f3cbcc5d83f047d9d9ff5a60ab28bb3363b7c6dd93b",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/representation-pilot",
+   "analysis": "representation-transfer-v09",
+   "result_sha256": "8773219d537eba510a315a001f16697dc7d60dd4c926db2dda5d99880324fff8",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/rl-pilot",
+   "analysis": "offline-rl-v09",
+   "result_sha256": "5bcb5aed155f9a94ee511f35ab3cb4bb1aac2a1bb30437006e480284389d4089",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/safe-improvement-pilot",
+   "analysis": "safe-improvement-v09",
+   "result_sha256": "65512c9367a99493176c304a1069d9df73c3c4fc105b259f5ad3a78146a39e18",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/sequence-pilot",
+   "analysis": "sequence-generator-v09",
+   "result_sha256": "6718b9715ce28a08819cee5f38cc74f744179a178914da08ccb8adfaa84f4778",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/strategic-pilot",
+   "analysis": "strategic-response-v09",
+   "result_sha256": "bbac6a9ddce887b50728149a7d59417dee28f296d767ecd00192ac5fbc8e280e",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/survival-pilot",
+   "analysis": "survival-study-v09",
+   "result_sha256": "231f2b02630e4571ca218c802b2a8b957f197de8183fe41f5c5d187a692a736a",
+   "protocol_sha256": "7e34dd7c3090bb0eef26841baa295d087fa4aedc0c60097b058ef98b81055dae",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/explore/tpp-pilot",
+   "analysis": "neural-point-process-v09",
+   "result_sha256": "8514f3fc4cc3a09a05a96578ba276159cdbd8421beee2e83b368a2925bf4c18f",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2023-08-19",
+    "bybit-linear-btcusdt-2023-08-21",
+    "bybit-linear-btcusdt-2023-08-27",
+    "bybit-linear-btcusdt-2023-08-29",
+    "bybit-linear-btcusdt-2023-09-02",
+    "bybit-linear-btcusdt-2023-09-12",
+    "bybit-linear-btcusdt-2023-10-08",
+    "bybit-linear-btcusdt-2023-10-17",
+    "bybit-linear-ethusdt-2023-08-19",
+    "bybit-linear-ethusdt-2023-08-21",
+    "bybit-linear-ethusdt-2023-08-27",
+    "bybit-linear-ethusdt-2023-08-29",
+    "bybit-linear-ethusdt-2023-09-02",
+    "bybit-linear-ethusdt-2023-09-12",
+    "bybit-linear-ethusdt-2023-10-08",
+    "bybit-linear-ethusdt-2023-10-17"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "6ee207cfb5e3d959f0603a85a6ebca0ec610e07753dc98440f425b4a0f120403",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2025-05-06",
+    "bybit-linear-btcusdt-2025-05-21",
+    "bybit-linear-btcusdt-2025-06-14",
+    "bybit-linear-btcusdt-2025-06-20",
+    "bybit-linear-btcusdt-2025-07-07",
+    "bybit-linear-btcusdt-2025-07-10",
+    "bybit-linear-btcusdt-2025-07-20",
+    "bybit-linear-btcusdt-2025-07-21",
+    "bybit-linear-btcusdt-2025-08-03",
+    "bybit-linear-btcusdt-2025-08-19",
+    "bybit-linear-solusdt-2025-05-06",
+    "bybit-linear-solusdt-2025-05-21",
+    "bybit-linear-solusdt-2025-06-14",
+    "bybit-linear-solusdt-2025-06-20",
+    "bybit-linear-solusdt-2025-07-07",
+    "bybit-linear-solusdt-2025-07-10",
+    "bybit-linear-solusdt-2025-07-20",
+    "bybit-linear-solusdt-2025-07-21",
+    "bybit-linear-solusdt-2025-08-03",
+    "bybit-linear-solusdt-2025-08-19",
+    "bybit-spot-btcusdt-2025-05-06",
+    "bybit-spot-btcusdt-2025-05-21",
+    "bybit-spot-btcusdt-2025-06-14",
+    "bybit-spot-btcusdt-2025-06-20",
+    "bybit-spot-btcusdt-2025-07-07",
+    "bybit-spot-btcusdt-2025-07-10",
+    "bybit-spot-btcusdt-2025-07-20",
+    "bybit-spot-btcusdt-2025-07-21",
+    "bybit-spot-btcusdt-2025-08-03",
+    "bybit-spot-btcusdt-2025-08-19",
+    "bybit-spot-btcusdt-2025-08-21",
+    "bybit-spot-btcusdt-2025-08-27"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-2",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "b757e859f41ce68f2a1824f64b8b327a4801663038ec6cc764a8a09c06f96e27",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-3",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "177cd4bc5d478cb383ec932e136c4ce26cc1f645c5c1b39ae3936074070f3a37",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-4",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "7a54d2b22d103ca77e304f7a97c397d1f62eb7e17afd84f36f960bfeda51157c",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-5",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "b83b14f8580e2febfcc6ed64722ce7c27ea353124ccf7640af49f57a93539636",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-6",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "6c3bcabd5d3b617a2278278d1eccb6d19009c0f80e7e11cd227966b475f8d514",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-7",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "bde173b130df7a23d523c6e3c8dfca5c10f2894911f8c4e9dc97e77e8be6a79c",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-8",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "92de8a2a068360b4ff4cc0c9c192c9324c7be11317c8d63f457c60ef149874dc",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/data-prep-9",
+   "analysis": "validate-market-data-v09",
+   "result_sha256": "6f8528fac56b4eb93ad53df4d33613348371bf1809576434b19f9dfbfc4b6134",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2025-06-05",
+    "bybit-linear-btcusdt-2025-07-08",
+    "bybit-linear-solusdt-2025-06-05",
+    "bybit-linear-solusdt-2025-07-08"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/final-analysis",
+   "analysis": "final-analysis-v09",
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/final/vault-bounds",
+   "analysis": "counterfactual-bounds-v09",
+   "result_sha256": "a22e4425de40e710099a235d7d889ae9cb9807414598726d7bf868fa4dd66172",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [
+    "bybit-linear-btcusdt-2025-05-06",
+    "bybit-linear-btcusdt-2025-05-21",
+    "bybit-linear-btcusdt-2025-06-05",
+    "bybit-linear-btcusdt-2025-06-14",
+    "bybit-linear-btcusdt-2025-06-20",
+    "bybit-linear-btcusdt-2025-07-07",
+    "bybit-linear-btcusdt-2025-07-08",
+    "bybit-linear-btcusdt-2025-07-10",
+    "bybit-linear-btcusdt-2025-07-20",
+    "bybit-linear-btcusdt-2025-07-21",
+    "bybit-linear-btcusdt-2025-08-03",
+    "bybit-linear-btcusdt-2025-08-19",
+    "bybit-linear-solusdt-2025-05-06",
+    "bybit-linear-solusdt-2025-05-21",
+    "bybit-linear-solusdt-2025-06-05",
+    "bybit-linear-solusdt-2025-06-14",
+    "bybit-linear-solusdt-2025-06-20",
+    "bybit-linear-solusdt-2025-07-07",
+    "bybit-linear-solusdt-2025-07-08",
+    "bybit-linear-solusdt-2025-07-10",
+    "bybit-linear-solusdt-2025-07-20",
+    "bybit-linear-solusdt-2025-07-21",
+    "bybit-linear-solusdt-2025-08-03",
+    "bybit-linear-solusdt-2025-08-19",
+    "bybit-spot-btcusdt-2025-05-06",
+    "bybit-spot-btcusdt-2025-05-21",
+    "bybit-spot-btcusdt-2025-06-14",
+    "bybit-spot-btcusdt-2025-06-20",
+    "bybit-spot-btcusdt-2025-07-07",
+    "bybit-spot-btcusdt-2025-07-10",
+    "bybit-spot-btcusdt-2025-07-20",
+    "bybit-spot-btcusdt-2025-07-21",
+    "bybit-spot-btcusdt-2025-08-03",
+    "bybit-spot-btcusdt-2025-08-19",
+    "bybit-spot-btcusdt-2025-08-21",
+    "bybit-spot-btcusdt-2025-08-27"
+   ],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/promotion/feasibility",
+   "analysis": "promotion-feasibility-v09",
+   "result_sha256": "deafbf087934e7c16bc83ae16b75b075ff118aafbacc8e22b6400a89996bf692",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  },
+  {
+   "run": "results/v09/promotion/run",
+   "analysis": "hypothesis-promotion-v09",
+   "result_sha256": "dd2bf3a6cc9a365b0e185c5276125fec51227ca0c9b5491712f90cf9e0c71382",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "datasets": [],
+   "status": "COMPLETED"
+  }
+ ],
+ "edges": [
+  {
+   "from": "results/v09/confirm/confirm-bounds",
+   "to": "results/v09/confirm/confirm-multifidelity-agreement",
+   "key": "bounds",
+   "result_sha256": "07a1e047980aa79facde1391204ec7aad1178c3eca24c38f301ad991303b9151"
+  },
+  {
+   "from": "results/v09/confirm/confirm-bounds",
+   "to": "results/v09/confirm/confirm-transfer",
+   "key": "bounds",
+   "result_sha256": "07a1e047980aa79facde1391204ec7aad1178c3eca24c38f301ad991303b9151"
+  },
+  {
+   "from": "results/v09/confirm/confirm-bounds-late",
+   "to": "results/v09/confirm/confirm-transfer",
+   "key": "late",
+   "result_sha256": "07feecac92f24a2787fb24ec666fae0c23337417294fd4f71b27f938f662c7fa"
+  },
+  {
+   "from": "results/v09/explore/rl-pilot",
+   "to": "results/v09/descriptive/ope",
+   "key": "rl",
+   "result_sha256": "5bcb5aed155f9a94ee511f35ab3cb4bb1aac2a1bb30437006e480284389d4089"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/descriptive/ranking",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/descriptive/uncertainty",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/descriptive/voi",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/dryrun/dryrun-multifidelity-agreement",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/dryrun/dryrun-bounds",
+   "to": "results/v09/dryrun/dryrun-transfer",
+   "key": "bounds",
+   "result_sha256": "2e0e120af30f59b42c3450e8a4a380c1e86df19adbed8340f74be89e3ac214b5"
+  },
+  {
+   "from": "results/v09/dryrun/dryrun-bounds-late",
+   "to": "results/v09/dryrun/dryrun-transfer",
+   "key": "late",
+   "result_sha256": "d9bf325b4a1463de40109e98bd4d84b28890996e958215517bcc2a6956b1a8b8"
+  },
+  {
+   "from": "results/v09/explore/tpp-pilot",
+   "to": "results/v09/explore/averaging-pilot",
+   "key": "tpp",
+   "result_sha256": "8514f3fc4cc3a09a05a96578ba276159cdbd8421beee2e83b368a2925bf4c18f"
+  },
+  {
+   "from": "results/v09/explore/decisions-pilot",
+   "to": "results/v09/explore/completion-pilot",
+   "key": "decisions",
+   "result_sha256": "1e8d035050a80cef393b2366613e440c77b54d5edb45aa8c6ba5b631178945e5"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/explore/decisions-pilot",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/hybrid-pilot",
+   "to": "results/v09/explore/ecology-pilot",
+   "key": "hybrid",
+   "result_sha256": "1b6d9f3f21c91907a7d5b7532200ce39f31f1eb359fc1a2d3b9a773424966de7"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/explore/markout-pilot",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/decisions-pilot",
+   "to": "results/v09/explore/meta-policy-pilot",
+   "key": "decisions",
+   "result_sha256": "1e8d035050a80cef393b2366613e440c77b54d5edb45aa8c6ba5b631178945e5"
+  },
+  {
+   "from": "results/v09/explore/realism-benchmark",
+   "to": "results/v09/explore/realism-gate",
+   "key": "benchmark",
+   "result_sha256": "1842bd48a0643796834b5f162ab871c4d7bef9fb9eb2a32586f60601136fcffe"
+  },
+  {
+   "from": "results/v09/explore/rl-pilot",
+   "to": "results/v09/explore/safe-improvement-pilot",
+   "key": "rl",
+   "result_sha256": "5bcb5aed155f9a94ee511f35ab3cb4bb1aac2a1bb30437006e480284389d4089"
+  },
+  {
+   "from": "results/v09/confirm/confirm-bounds",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-bounds",
+   "result_sha256": "07a1e047980aa79facde1391204ec7aad1178c3eca24c38f301ad991303b9151"
+  },
+  {
+   "from": "results/v09/confirm/confirm-bounds-late",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-bounds-late",
+   "result_sha256": "07feecac92f24a2787fb24ec666fae0c23337417294fd4f71b27f938f662c7fa"
+  },
+  {
+   "from": "results/v09/confirm/confirm-conformal-study",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-conformal-study",
+   "result_sha256": "ffc31e525636ce95b73249afbdf40a2d557ff41720cb90d2cea2bf869f537301"
+  },
+  {
+   "from": "results/v09/confirm/confirm-continual-calibration",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-continual-calibration",
+   "result_sha256": "edfd34fff94b59abf90fb7b7c99a627247052b7ecaa46eb50f1ca189854930f7"
+  },
+  {
+   "from": "results/v09/confirm/confirm-fill-study",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-fill-study",
+   "result_sha256": "9d67e3f06024798b290e3899b244c3128a7a4df8689afd996d9067b99c25d708"
+  },
+  {
+   "from": "results/v09/confirm/confirm-multifidelity-agreement",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-multifidelity-agreement",
+   "result_sha256": "9d52b2177bb671941bf0e7c927231562fefb65ef65fcbcf0703af128b799fadd"
+  },
+  {
+   "from": "results/v09/confirm/confirm-neural-point-process",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-neural-point-process",
+   "result_sha256": "6f7f5163f85e1e9e6678c1d0f7532cf40db0e30ca3dbd10b3b581300e225c3d0"
+  },
+  {
+   "from": "results/v09/confirm/confirm-survival-study",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-survival-study",
+   "result_sha256": "47df4b62e0404688004e45bcabfb2e2f73114eee68cad4411880304658b3f792"
+  },
+  {
+   "from": "results/v09/confirm/confirm-transfer",
+   "to": "results/v09/final/final-analysis",
+   "key": "confirm:confirm-transfer",
+   "result_sha256": "8b14a2a0ec3412649393fef8bc1aa216542c2b93dd31273151e2dab2f1aae701"
+  },
+  {
+   "from": "results/v09/descriptive/counterexample-2",
+   "to": "results/v09/final/final-analysis",
+   "key": "counterexample",
+   "result_sha256": "75ee04b56a15bbeb6a278c0998aae309038a8b07039c786f3e19c6143ec25161"
+  },
+  {
+   "from": "results/v09/explore/realism-gate",
+   "to": "results/v09/final/final-analysis",
+   "key": "gate",
+   "result_sha256": "c9f120792114d611cb574f3cbcc5d83f047d9d9ff5a60ab28bb3363b7c6dd93b"
+  },
+  {
+   "from": "results/v09/final/vault-bounds",
+   "to": "results/v09/final/final-analysis",
+   "key": "vault",
+   "result_sha256": "a22e4425de40e710099a235d7d889ae9cb9807414598726d7bf868fa4dd66172"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/promotion/feasibility",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/survival-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "survival",
+   "result_sha256": "231f2b02630e4571ca218c802b2a8b957f197de8183fe41f5c5d187a692a736a"
+  },
+  {
+   "from": "results/v09/explore/impact-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "impact",
+   "result_sha256": "8da5a39a0ca51baaa2362a7d66a7345c9021ec755108bcf68d08601fcf93e129"
+  },
+  {
+   "from": "results/v09/explore/tpp-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "tpp",
+   "result_sha256": "8514f3fc4cc3a09a05a96578ba276159cdbd8421beee2e83b368a2925bf4c18f"
+  },
+  {
+   "from": "results/v09/explore/sequence-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "sequence",
+   "result_sha256": "6718b9715ce28a08819cee5f38cc74f744179a178914da08ccb8adfaa84f4778"
+  },
+  {
+   "from": "results/v09/explore/latent-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "latent",
+   "result_sha256": "94df5a3cae28c589a258adc2df3fcf71be80c99567206f47feac29b9456dd46d"
+  },
+  {
+   "from": "results/v09/explore/hybrid-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "hybrid",
+   "result_sha256": "1b6d9f3f21c91907a7d5b7532200ce39f31f1eb359fc1a2d3b9a773424966de7"
+  },
+  {
+   "from": "results/v09/explore/inference-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "inference",
+   "result_sha256": "28fbbdb994795c15d574f542121caf975317402eb49901782ca0715dc554129d"
+  },
+  {
+   "from": "results/v09/explore/meta-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "meta",
+   "result_sha256": "7157da0433fbacb68a7661b3d03bc72fc87b036db841ba92561520d1f7363753"
+  },
+  {
+   "from": "results/v09/explore/continual-pilot-2",
+   "to": "results/v09/promotion/feasibility",
+   "key": "continual",
+   "result_sha256": "7a8a98ce1c83795f40118f04e2d728058acab3c69d549b2f46e9aced1f9b987f"
+  },
+  {
+   "from": "results/v09/explore/conformal-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "conformal",
+   "result_sha256": "b2c242cb5f784a83bdc0fe2e819d86617b37ee3407ec4569de31eb3a77ff2262"
+  },
+  {
+   "from": "results/v09/explore/representation-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "representation",
+   "result_sha256": "8773219d537eba510a315a001f16697dc7d60dd4c926db2dda5d99880324fff8"
+  },
+  {
+   "from": "results/v09/explore/decisions-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "decisions",
+   "result_sha256": "1e8d035050a80cef393b2366613e440c77b54d5edb45aa8c6ba5b631178945e5"
+  },
+  {
+   "from": "results/v09/explore/fills-pilot-2",
+   "to": "results/v09/promotion/feasibility",
+   "key": "fills",
+   "result_sha256": "558eb4d4282b27b593de119365fe8d1b2594b06fa4b74089fdd4405728390ee0"
+  },
+  {
+   "from": "results/v09/explore/strategic-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "strategic",
+   "result_sha256": "bbac6a9ddce887b50728149a7d59417dee28f296d767ecd00192ac5fbc8e280e"
+  },
+  {
+   "from": "results/v09/explore/active-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "active",
+   "result_sha256": "9228a00463e466a678f5d977c8a4f758b9e5c37ca74f98a820c0676053a04f51"
+  },
+  {
+   "from": "results/v09/explore/abstention-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "abstention",
+   "result_sha256": "7868cb091c2df5fdb6e863d3d1ba32e4c78e06a6c372f14b5c60533192a3f482"
+  },
+  {
+   "from": "results/v09/explore/dro-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "dro",
+   "result_sha256": "c2e24a87d5c52265ea70f2db777de8814f9b1bda9196accf8cc22fb3a8c13503"
+  },
+  {
+   "from": "results/v09/explore/mpc-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "mpc",
+   "result_sha256": "1cabd0d577ce0b3e863f9c80b0e24522ce914c173a618abaf0e3094c87c79b3f"
+  },
+  {
+   "from": "results/v09/explore/rare-event-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "rare_event",
+   "result_sha256": "50d15ddc4a6773ba9743884e492a1500470b3b0c3ded1a43336ca60b6e0fe1b9"
+  },
+  {
+   "from": "results/v09/explore/rl-pilot",
+   "to": "results/v09/promotion/feasibility",
+   "key": "rl",
+   "result_sha256": "5bcb5aed155f9a94ee511f35ab3cb4bb1aac2a1bb30437006e480284389d4089"
+  },
+  {
+   "from": "results/v09/explore/bounds-pilot-2",
+   "to": "results/v09/promotion/run",
+   "key": "bounds",
+   "result_sha256": "da1fe5dcc38bd216e7afd9dd6d88de15f79e290b505b2fc095f31d9100d938e5"
+  },
+  {
+   "from": "results/v09/explore/survival-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "survival",
+   "result_sha256": "231f2b02630e4571ca218c802b2a8b957f197de8183fe41f5c5d187a692a736a"
+  },
+  {
+   "from": "results/v09/explore/impact-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "impact",
+   "result_sha256": "8da5a39a0ca51baaa2362a7d66a7345c9021ec755108bcf68d08601fcf93e129"
+  },
+  {
+   "from": "results/v09/explore/tpp-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "tpp",
+   "result_sha256": "8514f3fc4cc3a09a05a96578ba276159cdbd8421beee2e83b368a2925bf4c18f"
+  },
+  {
+   "from": "results/v09/explore/sequence-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "sequence",
+   "result_sha256": "6718b9715ce28a08819cee5f38cc74f744179a178914da08ccb8adfaa84f4778"
+  },
+  {
+   "from": "results/v09/explore/latent-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "latent",
+   "result_sha256": "94df5a3cae28c589a258adc2df3fcf71be80c99567206f47feac29b9456dd46d"
+  },
+  {
+   "from": "results/v09/explore/hybrid-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "hybrid",
+   "result_sha256": "1b6d9f3f21c91907a7d5b7532200ce39f31f1eb359fc1a2d3b9a773424966de7"
+  },
+  {
+   "from": "results/v09/explore/inference-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "inference",
+   "result_sha256": "28fbbdb994795c15d574f542121caf975317402eb49901782ca0715dc554129d"
+  },
+  {
+   "from": "results/v09/explore/meta-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "meta",
+   "result_sha256": "7157da0433fbacb68a7661b3d03bc72fc87b036db841ba92561520d1f7363753"
+  },
+  {
+   "from": "results/v09/explore/continual-pilot-2",
+   "to": "results/v09/promotion/run",
+   "key": "continual",
+   "result_sha256": "7a8a98ce1c83795f40118f04e2d728058acab3c69d549b2f46e9aced1f9b987f"
+  },
+  {
+   "from": "results/v09/explore/conformal-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "conformal",
+   "result_sha256": "b2c242cb5f784a83bdc0fe2e819d86617b37ee3407ec4569de31eb3a77ff2262"
+  },
+  {
+   "from": "results/v09/explore/representation-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "representation",
+   "result_sha256": "8773219d537eba510a315a001f16697dc7d60dd4c926db2dda5d99880324fff8"
+  },
+  {
+   "from": "results/v09/explore/decisions-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "decisions",
+   "result_sha256": "1e8d035050a80cef393b2366613e440c77b54d5edb45aa8c6ba5b631178945e5"
+  },
+  {
+   "from": "results/v09/explore/fills-pilot-2",
+   "to": "results/v09/promotion/run",
+   "key": "fills",
+   "result_sha256": "558eb4d4282b27b593de119365fe8d1b2594b06fa4b74089fdd4405728390ee0"
+  },
+  {
+   "from": "results/v09/explore/strategic-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "strategic",
+   "result_sha256": "bbac6a9ddce887b50728149a7d59417dee28f296d767ecd00192ac5fbc8e280e"
+  },
+  {
+   "from": "results/v09/explore/active-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "active",
+   "result_sha256": "9228a00463e466a678f5d977c8a4f758b9e5c37ca74f98a820c0676053a04f51"
+  },
+  {
+   "from": "results/v09/explore/abstention-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "abstention",
+   "result_sha256": "7868cb091c2df5fdb6e863d3d1ba32e4c78e06a6c372f14b5c60533192a3f482"
+  },
+  {
+   "from": "results/v09/explore/dro-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "dro",
+   "result_sha256": "c2e24a87d5c52265ea70f2db777de8814f9b1bda9196accf8cc22fb3a8c13503"
+  },
+  {
+   "from": "results/v09/explore/mpc-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "mpc",
+   "result_sha256": "1cabd0d577ce0b3e863f9c80b0e24522ce914c173a618abaf0e3094c87c79b3f"
+  },
+  {
+   "from": "results/v09/explore/rare-event-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "rare_event",
+   "result_sha256": "50d15ddc4a6773ba9743884e492a1500470b3b0c3ded1a43336ca60b6e0fe1b9"
+  },
+  {
+   "from": "results/v09/explore/rl-pilot",
+   "to": "results/v09/promotion/run",
+   "key": "rl",
+   "result_sha256": "5bcb5aed155f9a94ee511f35ab3cb4bb1aac2a1bb30437006e480284389d4089"
+  }
+ ],
+ "dangling_inputs": [],
+ "acyclic": true
+}

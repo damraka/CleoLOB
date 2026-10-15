@@ -1,0 +1,102 @@
+{
+  "schema": "cleolob-v09-families-1",
+  "families": {
+    "realism": {
+      "members": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H12",
+        "H35"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "fills": {
+      "members": [
+        "H6",
+        "H7",
+        "H8",
+        "H9"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "impact": {
+      "members": [
+        "H10",
+        "H11"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "adaptation": {
+      "members": [
+        "H13",
+        "H14",
+        "H15",
+        "H16",
+        "H17"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "decisions": {
+      "members": [
+        "H18",
+        "H19",
+        "H20",
+        "H21",
+        "H22",
+        "H23",
+        "H24",
+        "H25",
+        "H26",
+        "H27",
+        "H28"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "fidelity": {
+      "members": [
+        "H29",
+        "H30",
+        "H31"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    },
+    "transfer": {
+      "members": [
+        "H32",
+        "H33",
+        "H34",
+        "H36"
+      ],
+      "alpha": 0.05,
+      "correction": "holm",
+      "confirmatory": true,
+      "sided": "one-sided in the registered direction"
+    }
+  },
+  "exploratory": {
+    "correction": "benjamini_hochberg",
+    "q": 0.1,
+    "note": "exploratory discovery only; never mixed with confirmatory families"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schema": "cleolob-v09-capability-matrix-1",
+  "capabilities": {
+    "incremental_l2": "full-depth snapshot+delta book",
+    "trades_with_side": "prints with aggressor side",
+    "l1_quotes": "best bid/ask updates",
+    "update_sequence": "update ids / cross sequence",
+    "queue_clearance_observable": "price-level clearance by trades is observable",
+    "order_ids": "market-by-order identities",
+    "hidden_liquidity": "hidden/iceberg observability",
+    "neural_backend": "PyTorch available",
+    "propensities": "logged behaviour-policy propensities"
+  },
+  "required_by": {
+    "incremental_l2": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6",
+      "H7",
+      "H8",
+      "H9",
+      "H10",
+      "H12",
+      "H14",
+      "H15",
+      "H16",
+      "H17",
+      "H18",
+      "H19",
+      "H22",
+      "H23",
+      "H25",
+      "H29",
+      "H30",
+      "H31",
+      "H32",
+      "H33",
+      "H35",
+      "H36"
+    ],
+    "trades_with_side": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6",
+      "H7",
+      "H8",
+      "H9",
+      "H10",
+      "H12",
+      "H14",
+      "H15",
+      "H16",
+      "H17",
+      "H18",
+      "H19",
+      "H22",
+      "H23",
+      "H25",
+      "H29",
+      "H30",
+      "H31",
+      "H32",
+      "H33",
+      "H34",
+      "H35",
+      "H36"
+    ],
+    "l1_quotes": [
+      "H34"
+    ],
+    "update_sequence": [],
+    "queue_clearance_observable": [
+      "H6",
+      "H7",
+      "H8"
+    ],
+    "order_ids": [],
+    "hidden_liquidity": [],
+    "neural_backend": [
+      "H2",
+      "H3",
+      "H4",
+      "H16",
+      "H35"
+    ],
+    "propensities": [
+      "H26",
+      "H27"
+    ]
+  },
+  "provided_by": {
+    "bybit-linear": [
+      "incremental_l2",
+      "trades_with_side",
+      "l1_quotes",
+      "update_sequence",
+      "queue_clearance_observable"
+    ],
+    "bybit-spot": [
+      "incremental_l2",
+      "trades_with_side",
+      "l1_quotes",
+      "update_sequence",
+      "queue_clearance_observable"
+    ],
+    "binance-um": [
+      "l1_quotes",
+      "trades_with_side",
+      "update_sequence"
+    ],
+    "simulation": [
+      "propensities",
+      "order_ids",
+      "hidden_liquidity"
+    ]
+  },
+  "never_provided": {
+    "order_ids": "no public archive in v0.9 exposes order identities",
+    "hidden_liquidity": "not observable in any v0.9 source; bounded by assumption only"
+  }
+}

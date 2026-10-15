@@ -1,0 +1,25 @@
+{
+ "data": {
+  "labels": [
+   "ESTABLISHED",
+   "NOT_ESTABLISHED",
+   "FAILED",
+   "NOT_AVAILABLE",
+   "NOT_EVALUABLE",
+   "INCONCLUSIVE"
+  ],
+  "values": [
+   12,
+   24,
+   0,
+   0,
+   0,
+   0
+  ],
+  "errors": null
+ },
+ "provenance": {
+  "run": "final",
+  "pointer": "/hypotheses/*/status"
+ }
+}

@@ -1,0 +1,1471 @@
+{
+ "schema": "cleolob-v09-claim-graph-1",
+ "claims": [
+  {
+   "claim": "H1",
+   "hypothesis": "H1",
+   "statement": "Hybrid replay vs fully generative response realism",
+   "pointer": "/hypotheses/H1/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H2",
+   "hypothesis": "H2",
+   "statement": "Neural temporal point process vs classical point processes",
+   "pointer": "/hypotheses/H2/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H3",
+   "hypothesis": "H3",
+   "statement": "Sequence models vs classical conditional event models",
+   "pointer": "/hypotheses/H3/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H4",
+   "hypothesis": "H4",
+   "statement": "Latent dynamics vs classical path realism",
+   "pointer": "/hypotheses/H4/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H5",
+   "hypothesis": "H5",
+   "statement": "Multi-fidelity model averaging",
+   "pointer": "/hypotheses/H5/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H6",
+   "hypothesis": "H6",
+   "statement": "Execution-aware calibration and fill-probability calibration",
+   "pointer": "/hypotheses/H6/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H7",
+   "hypothesis": "H7",
+   "statement": "Queue-survival models vs Kaplan-Meier",
+   "pointer": "/hypotheses/H7/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H8",
+   "hypothesis": "H8",
+   "statement": "Fill calibration and execution regret",
+   "pointer": "/hypotheses/H8/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H9",
+   "hypothesis": "H9",
+   "statement": "Adverse-selection-aware passive execution",
+   "pointer": "/hypotheses/H9/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H10",
+   "hypothesis": "H10",
+   "statement": "State-dependent impact vs square-root impact",
+   "pointer": "/hypotheses/H10/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H11",
+   "hypothesis": "H11",
+   "statement": "Self-impact and large-mandate rankings",
+   "pointer": "/hypotheses/H11/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H12",
+   "hypothesis": "H12",
+   "statement": "Strategic response vs static ecology realism",
+   "pointer": "/hypotheses/H12/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H13",
+   "hypothesis": "H13",
+   "statement": "Active calibration efficiency",
+   "pointer": "/hypotheses/H13/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H14",
+   "hypothesis": "H14",
+   "statement": "Sequential posterior updating after drift",
+   "pointer": "/hypotheses/H14/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H15",
+   "hypothesis": "H15",
+   "statement": "Few-shot / meta adaptation vs full refit",
+   "pointer": "/hypotheses/H15/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H16",
+   "hypothesis": "H16",
+   "statement": "Continual calibration and forgetting",
+   "pointer": "/hypotheses/H16/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H17",
+   "hypothesis": "H17",
+   "statement": "Adaptive conformal coverage under drift",
+   "pointer": "/hypotheses/H17/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H18",
+   "hypothesis": "H18",
+   "statement": "Disagreement predicts regret",
+   "pointer": "/hypotheses/H18/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H19",
+   "hypothesis": "H19",
+   "statement": "Abstention v3 and incorrect selection",
+   "pointer": "/hypotheses/H19/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H20",
+   "hypothesis": "H20",
+   "statement": "Contextual fallback and catastrophic degradation",
+   "pointer": "/hypotheses/H20/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H21",
+   "hypothesis": "H21",
+   "statement": "Distributionally robust execution and worst-case regret",
+   "pointer": "/hypotheses/H21/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H22",
+   "hypothesis": "H22",
+   "statement": "Chance-constrained completion reliability",
+   "pointer": "/hypotheses/H22/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H23",
+   "hypothesis": "H23",
+   "statement": "Robust MPC and tail execution cost",
+   "pointer": "/hypotheses/H23/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H24",
+   "hypothesis": "H24",
+   "statement": "Adaptive MPC after regime drift",
+   "pointer": "/hypotheses/H24/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H25",
+   "hypothesis": "H25",
+   "statement": "Meta-policy vs best global policy",
+   "pointer": "/hypotheses/H25/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H26",
+   "hypothesis": "H26",
+   "statement": "Offline RL safe improvement",
+   "pointer": "/hypotheses/H26/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H27",
+   "hypothesis": "H27",
+   "statement": "Conservative gating and harmful deployments",
+   "pointer": "/hypotheses/H27/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H28",
+   "hypothesis": "H28",
+   "statement": "Rare-event-aware optimization",
+   "pointer": "/hypotheses/H28/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H29",
+   "hypothesis": "H29",
+   "statement": "Synthetic ranking predicts hybrid ranking",
+   "pointer": "/hypotheses/H29/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H30",
+   "hypothesis": "H30",
+   "statement": "Hybrid ranking predicts bounded-historical ranking",
+   "pointer": "/hypotheses/H30/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H31",
+   "hypothesis": "H31",
+   "statement": "Multi-fidelity consensus vs synthetic-only",
+   "pointer": "/hypotheses/H31/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H32",
+   "hypothesis": "H32",
+   "statement": "Transfer across time",
+   "pointer": "/hypotheses/H32/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H33",
+   "hypothesis": "H33",
+   "statement": "Transfer across instruments",
+   "pointer": "/hypotheses/H33/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H34",
+   "hypothesis": "H34",
+   "statement": "Transfer across venues",
+   "pointer": "/hypotheses/H34/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H35",
+   "hypothesis": "H35",
+   "statement": "Learned representations and transfer",
+   "pointer": "/hypotheses/H35/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "NOT_ESTABLISHED",
+   "status": "NOT_ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "H36",
+   "hypothesis": "H36",
+   "statement": "Survival of the full reality ladder and the final vault",
+   "pointer": "/hypotheses/H36/status",
+   "run": "results/v09/final/final-analysis",
+   "value": "ESTABLISHED",
+   "status": "ESTABLISHED",
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "DATA",
+   "hypothesis": null,
+   "statement": "registered data availability and consumption",
+   "pointer": "/data_availability",
+   "run": "results/v09/final/final-analysis",
+   "value": {
+    "confirm": {
+     "accessed": 35,
+     "declared": 184,
+     "not_available": 6
+    },
+    "confirm_late": {
+     "accessed": 17,
+     "declared": 48,
+     "not_available": 2
+    },
+    "dev": {
+     "accessed": 2,
+     "declared": 2,
+     "not_available": 0
+    },
+    "explore": {
+     "accessed": 34,
+     "declared": 40,
+     "not_available": 2
+    },
+    "final": {
+     "accessed": 36,
+     "declared": 45,
+     "not_available": 4
+    }
+   },
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "GATE",
+   "hypothesis": null,
+   "statement": "capability-specific realism gate outcome",
+   "pointer": "/realism_gate/global",
+   "run": "results/v09/final/final-analysis",
+   "value": {
+    "execution": "NO_ACCEPTABLE_MODEL",
+    "fill": "PARTIAL_MODEL_SET",
+    "realism": "NO_ACCEPTABLE_MODEL",
+    "strategic": "NO_ACCEPTABLE_MODEL",
+    "tail": "NO_ACCEPTABLE_MODEL"
+   },
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "PROMOTION",
+   "hypothesis": null,
+   "statement": "candidates promoted by the registered gate",
+   "pointer": "/promotion/promoted",
+   "run": "results/v09/final/final-analysis",
+   "value": [
+    "H2",
+    "H5",
+    "H6",
+    "H7",
+    "H8",
+    "H16",
+    "H17",
+    "H23",
+    "H29",
+    "H32",
+    "H33",
+    "H36"
+   ],
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "LADDER",
+   "hypothesis": null,
+   "statement": "evidence level reached by each carried execution conclusion",
+   "pointer": "/ladder",
+   "run": "results/v09/final/final-analysis",
+   "value": {
+    "C1": {
+     "adversarial stress (reported)": {
+      "flip_fraction": 0.125,
+      "status": "REPORTED"
+     },
+     "bounded historical": {
+      "estimate": 11.019920912685947,
+      "status": "ESTABLISHED",
+      "threshold": 1.0
+     },
+     "cross-instrument": {
+      "status": "ESTABLISHED"
+     },
+     "cross-time": {
+      "status": "ESTABLISHED"
+     },
+     "cross-venue (L1-identifiable only)": {
+      "status": "NOT_PROMOTED"
+     },
+     "final multi-axis vault": {
+      "status": "ESTABLISHED"
+     },
+     "hybrid twin": {
+      "note": "no registered hybrid-twin test of individual execution conclusions",
+      "status": "NOT_EVALUATED"
+     },
+     "multi-model synthetic": {
+      "evidence": "E2 (descriptive)",
+      "flip_fraction": 0.125,
+      "status": "SUPPORTS"
+     },
+     "synthetic": {
+      "evidence": "E1 (explore-day calibrated ecologies; descriptive)",
+      "mean_nominal_effect_bps": -0.6896964963091501,
+      "status": "DOES_NOT_SUPPORT"
+     }
+    },
+    "C2": {
+     "adversarial stress (reported)": {
+      "flip_fraction": 0.0,
+      "status": "REPORTED"
+     },
+     "bounded historical": {
+      "estimate": 2.1807561589312034,
+      "status": "ESTABLISHED",
+      "threshold": 1.0
+     },
+     "cross-instrument": {
+      "status": "ESTABLISHED"
+     },
+     "cross-time": {
+      "status": "ESTABLISHED"
+     },
+     "cross-venue (L1-identifiable only)": {
+      "status": "NOT_PROMOTED"
+     },
+     "final multi-axis vault": {
+      "status": "ESTABLISHED"
+     },
+     "hybrid twin": {
+      "note": "no registered hybrid-twin test of individual execution conclusions",
+      "status": "NOT_EVALUATED"
+     },
+     "multi-model synthetic": {
+      "evidence": "E2 (descriptive)",
+      "flip_fraction": 0.0,
+      "status": "SUPPORTS"
+     },
+     "synthetic": {
+      "evidence": "E1 (explore-day calibrated ecologies; descriptive)",
+      "mean_nominal_effect_bps": 6.41897438109035,
+      "status": "SUPPORTS"
+     }
+    },
+    "C3": {
+     "adversarial stress (reported)": {
+      "flip_fraction": 0.0,
+      "status": "REPORTED"
+     },
+     "bounded historical": {
+      "estimate": 2.269623259363266,
+      "status": "ESTABLISHED",
+      "threshold": 0.25
+     },
+     "cross-instrument": {
+      "status": "ESTABLISHED"
+     },
+     "cross-time": {
+      "status": "ESTABLISHED"
+     },
+     "cross-venue (L1-identifiable only)": {
+      "status": "NOT_PROMOTED"
+     },
+     "final multi-axis vault": {
+      "status": "ESTABLISHED"
+     },
+     "hybrid twin": {
+      "note": "no registered hybrid-twin test of individual execution conclusions",
+      "status": "NOT_EVALUATED"
+     },
+     "multi-model synthetic": {
+      "evidence": "E2 (descriptive)",
+      "flip_fraction": 0.0,
+      "status": "SUPPORTS"
+     },
+     "synthetic": {
+      "evidence": "E1 (explore-day calibrated ecologies; descriptive)",
+      "mean_nominal_effect_bps": 3.3701843831371985,
+      "status": "SUPPORTS"
+     }
+    }
+   },
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "GAP",
+   "hypothesis": null,
+   "statement": "reality-gap decomposition of the generators",
+   "pointer": "/reality_gap",
+   "run": "results/v09/final/final-analysis",
+   "value": {
+    "C1": {
+     "bounded_historical_effect_bps": 11.019920912685947,
+     "gap_bps": -11.709617408995097,
+     "synthetic_effect_bps": -0.6896964963091501
+    },
+    "C2": {
+     "bounded_historical_effect_bps": 2.1807561589312034,
+     "gap_bps": 4.238218222159146,
+     "synthetic_effect_bps": 6.41897438109035
+    },
+    "C3": {
+     "bounded_historical_effect_bps": 2.269623259363266,
+     "gap_bps": 1.1005611237739323,
+     "synthetic_effect_bps": 3.3701843831371985
+    }
+   },
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  },
+  {
+   "claim": "INCIDENTS",
+   "hypothesis": null,
+   "statement": "scientific incident record",
+   "pointer": "/incidents",
+   "run": "results/v09/final/final-analysis",
+   "value": [
+    {
+     "affects_validity": true,
+     "description": "The registered data-quality rule caps the total duration of book gaps longer than 5 s at 10 minutes. The implementation approximated that duration as (number of gaps x 5 s) and the Binance L1 builder recorded no gaps, so binance-um-btcusdt-2023-09-12 and binance-um-ethusdt-2023-09-12 (a ~20-minute bookTicker gap) were labelled AVAILABLE in results/v09/explore/data-prep-2. Fixed by summing gap durations in both builders (regression test test_long_gap_duration_is_summed_not_counted); every prepared cache is requalified under the fixed rule and failing days are replaced only by registered backups. No confirmatory or vault data were involved and no study outcome had been computed on these days.",
+     "index": 435,
+     "kind": "engineering_bug"
+    },
+    {
+     "affects_validity": false,
+     "description": "Promotion rule amended (amendment 3) after exploratory pilot results were inspected: the frozen measurement-reliability screen (Spearman-Brown of unit-level split halves >= 0.5) was replaced by a split-half consistency screen because the frozen statistic measures between-day rank stability rather than the reliability of the mean effect and blocked strong homogeneous effects. Affects which candidates are tested, not how they are decided; confirmatory data are untouched and decided under the frozen thresholds. The promotion run reports the frozen screen's decisions as a sensitivity analysis.",
+     "index": 475,
+     "kind": "posthoc_change"
+    },
+    {
+     "affects_validity": false,
+     "description": "Two batch-3 queues ran concurrently on 2026-10-15 08:08-08:10 local: the superseded bash queue data/v09/pilots3.sh (believed stopped on 2026-10-14; only its task wrapper had ended) began when batch 2 finished at 07:59, and the fail-closed runner lob.v09.batch was launched at 08:08 with the same 28 registered steps. Exclusive run-directory creation prevented any overwrite, the source-binding guard refused the one run whose worktree changed mid-run (generator-fit), and only the runner writes the ledger. Ledger attempts 478 and 479 are the runner's duplicate starts of generator-fit and adversarial that were refused because the bash queue already held those directories: they created nothing; results/v09/descriptive/adversarial is the bash queue's own sealed, valid run at c350b8d, not the failed attempt. 26 of 28 steps are sealed and valid (11 at a1643fb, 15 at c350b8d); generator-fit and counterexample are rerun fail-closed into -2 directories. The fills-pilot-2 run (08:02-08:08) overlapped the bash queue's lightweight descriptive steps; it is sealed and valid and its memory guard held (>= 12 GB free).",
+     "index": 483,
+     "kind": "other"
+    },
+    {
+     "affects_validity": false,
+     "description": "After close_confirmatory (entry 618) a read-only, unsealed preview of the final analysis (final-namespace seeds, no vault input, nothing written) showed H16 using 6 of its 8 registered units. Cause: final.unit_order took the last n-1 days of each continual sequence while the registered H16 unit (continual-calibration-v09: '(instrument, k) for every earlier day') and the sealed run key the first n-1 days, so one unit per stream was dropped. Fixed to the registered definition with a regression test; the final table now also reports units_registered and units_available per hypothesis. The preview had shown statuses before the fix: H16 is ESTABLISHED with both 6 and 8 units, every other promoted hypothesis already used exactly its registered unit count, and no threshold, endpoint, direction, family or decision rule changed. Disclosed because the defect was found after confirmatory outcomes were visible.",
+     "index": 619,
+     "kind": "engineering_bug"
+    },
+    {
+     "affects_validity": false,
+     "description": "Vault data preparation round 1 (results/v09/final/data-prep) prepared 32 of 36 sealed final-vault slots; 4 primaries (bybit-linear BTCUSDT and SOLUSDT 2025-08-21 and 2025-08-27) were NOT_AVAILABLE (provider HTTP 404 for the L2 file, ledger entries 641, 642, 663, 664). The driver fixed the vault dataset list once instead of re-applying the registered backup rule each round, so rounds 2-8 (data-prep-2 .. data-prep-8, sealed) re-requested the same four slots, which the data layer refused before any read; no access or attempt entry was written by those rounds. Fixed (the vault list is re-resolved through the registered backup rule every round) with a regression test; the vault design and its data are unchanged and the registered ordered backups fill the four slots.",
+     "index": 690,
+     "kind": "engineering_bug"
+    }
+   ],
+   "status": null,
+   "resolved": true,
+   "result_sha256": "d3b22061b84912f15a6765a0d3e786decd5e4d967025269ab189ad40cd647391",
+   "protocol_sha256": "eb3d3d22a428b7c1273b7317f24306e53cca6f860bffabde1098799c5cd2601b",
+   "sources": [
+    "results/v09/confirm/confirm-bounds",
+    "results/v09/confirm/confirm-bounds-late",
+    "results/v09/confirm/confirm-conformal-study",
+    "results/v09/confirm/confirm-continual-calibration",
+    "results/v09/confirm/confirm-fill-study",
+    "results/v09/confirm/confirm-multifidelity-agreement",
+    "results/v09/confirm/confirm-neural-point-process",
+    "results/v09/confirm/confirm-survival-study",
+    "results/v09/confirm/confirm-transfer",
+    "results/v09/descriptive/counterexample-2",
+    "results/v09/explore/realism-gate",
+    "results/v09/final/vault-bounds"
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "from": "H1",
+   "to": "H1"
+  },
+  {
+   "from": "H2",
+   "to": "H2"
+  },
+  {
+   "from": "H3",
+   "to": "H3"
+  },
+  {
+   "from": "H4",
+   "to": "H4"
+  },
+  {
+   "from": "H5",
+   "to": "H5"
+  },
+  {
+   "from": "H6",
+   "to": "H6"
+  },
+  {
+   "from": "H7",
+   "to": "H7"
+  },
+  {
+   "from": "H8",
+   "to": "H8"
+  },
+  {
+   "from": "H9",
+   "to": "H9"
+  },
+  {
+   "from": "H10",
+   "to": "H10"
+  },
+  {
+   "from": "H11",
+   "to": "H11"
+  },
+  {
+   "from": "H12",
+   "to": "H12"
+  },
+  {
+   "from": "H13",
+   "to": "H13"
+  },
+  {
+   "from": "H14",
+   "to": "H14"
+  },
+  {
+   "from": "H15",
+   "to": "H15"
+  },
+  {
+   "from": "H16",
+   "to": "H16"
+  },
+  {
+   "from": "H17",
+   "to": "H17"
+  },
+  {
+   "from": "H18",
+   "to": "H18"
+  },
+  {
+   "from": "H19",
+   "to": "H19"
+  },
+  {
+   "from": "H20",
+   "to": "H20"
+  },
+  {
+   "from": "H21",
+   "to": "H21"
+  },
+  {
+   "from": "H22",
+   "to": "H22"
+  },
+  {
+   "from": "H23",
+   "to": "H23"
+  },
+  {
+   "from": "H24",
+   "to": "H24"
+  },
+  {
+   "from": "H25",
+   "to": "H25"
+  },
+  {
+   "from": "H26",
+   "to": "H26"
+  },
+  {
+   "from": "H27",
+   "to": "H27"
+  },
+  {
+   "from": "H28",
+   "to": "H28"
+  },
+  {
+   "from": "H29",
+   "to": "H29"
+  },
+  {
+   "from": "H30",
+   "to": "H30"
+  },
+  {
+   "from": "H31",
+   "to": "H31"
+  },
+  {
+   "from": "H32",
+   "to": "H32"
+  },
+  {
+   "from": "H33",
+   "to": "H33"
+  },
+  {
+   "from": "H34",
+   "to": "H34"
+  },
+  {
+   "from": "H35",
+   "to": "H35"
+  },
+  {
+   "from": "H36",
+   "to": "H36"
+  },
+  {
+   "from": "DATA",
+   "to": "/data_availability"
+  },
+  {
+   "from": "GATE",
+   "to": "/realism_gate/global"
+  },
+  {
+   "from": "PROMOTION",
+   "to": "/promotion/promoted"
+  },
+  {
+   "from": "LADDER",
+   "to": "/ladder"
+  },
+  {
+   "from": "GAP",
+   "to": "/reality_gap"
+  },
+  {
+   "from": "INCIDENTS",
+   "to": "/incidents"
+  }
+ ]
+}

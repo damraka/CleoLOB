@@ -1,0 +1,1310 @@
+{
+ "H1": {
+  "evidence_level": null,
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "fidelity": [
+   "F1",
+   "F3",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_MEASUREMENT",
+  "promotion_reason": "split-half measurement inconsistency: halves differ: mean difference -0.6599 > 2 SE 0.5868",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "relative error reduction",
+  "title": "Hybrid replay vs fully generative response realism"
+ },
+ "H10": {
+  "evidence_level": null,
+  "evidence_level_target": "E4",
+  "family": "impact",
+  "fidelity": [
+   "F1"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -0.0493 does not exceed the practical threshold 0.02",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.02,
+  "threshold_units": "relative MSE reduction",
+  "title": "State-dependent impact vs square-root impact"
+ },
+ "H11": {
+  "evidence_level": null,
+  "evidence_level_target": "E2",
+  "family": "impact",
+  "fidelity": [
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.04965 does not exceed the practical threshold 0.1",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "normalized Kendall distance",
+  "title": "Self-impact and large-mandate rankings"
+ },
+ "H12": {
+  "evidence_level": null,
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "fidelity": [
+   "F1",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.00255 does not exceed the practical threshold 0.05",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.05,
+  "threshold_units": "relative error reduction",
+  "title": "Strategic response vs static ecology realism"
+ },
+ "H13": {
+  "evidence_level": null,
+  "evidence_level_target": "E1",
+  "family": "adaptation",
+  "fidelity": [
+   "F4"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.2722 does not exceed the practical threshold 0.3",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.3,
+  "threshold_units": "relative simulation saving",
+  "title": "Active calibration efficiency"
+ },
+ "H14": {
+  "evidence_level": null,
+  "evidence_level_target": "E6",
+  "family": "adaptation",
+  "fidelity": [
+   "F1",
+   "F4"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.0003094 does not exceed the practical threshold 0.005",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.005,
+  "threshold_units": "nats per event",
+  "title": "Sequential posterior updating after drift"
+ },
+ "H15": {
+  "evidence_level": null,
+  "evidence_level_target": "E6",
+  "family": "adaptation",
+  "fidelity": [
+   "F1",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "the pilot already violates the non-inferiority margin",
+  "status": "NOT_ESTABLISHED",
+  "test": "noninferiority",
+  "threshold": 0.01,
+  "threshold_units": "nats per event (non-inferiority margin)",
+  "title": "Few-shot / meta adaptation vs full refit"
+ },
+ "H16": {
+  "design": "confirm-continual-calibration",
+  "estimate": 0.01564265787601471,
+  "evidence_level": "E4",
+  "evidence_level_target": "E4",
+  "family": "adaptation",
+  "family_size": 2,
+  "fidelity": [
+   "F1",
+   "F5"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.019076892733573915,
+   "ci_low": 0.012384388968348503,
+   "estimate": 0.01564265787601471,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.0017162000734086001
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-continual-calibration",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.01564265787601471,
+  "threshold": 0.005,
+  "threshold_units": "nats per event",
+  "title": "Continual calibration and forgetting",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2023-12-07",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2023-12-07",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-21"
+  ]
+ },
+ "H17": {
+  "design": "confirm-conformal-study",
+  "estimate": 0.04405864197530862,
+  "evidence_level": "E6",
+  "evidence_level_target": "E6",
+  "family": "adaptation",
+  "family_size": 2,
+  "fidelity": [
+   "F1"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.078912037037037,
+   "ci_low": 0.04824074074074074,
+   "estimate": 0.06405864197530863,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.007836217698543209
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-conformal-study",
+  "status": "ESTABLISHED",
+  "test": "noninferiority",
+  "tested_mean": 0.06405864197530863,
+  "threshold": 0.02,
+  "threshold_units": "coverage (non-inferiority margin)",
+  "title": "Adaptive conformal coverage under drift",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H18": {
+  "evidence_level": null,
+  "evidence_level_target": "E3",
+  "family": "decisions",
+  "fidelity": [
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.09705 does not exceed the practical threshold 0.1",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "Spearman rho",
+  "title": "Disagreement predicts regret"
+ },
+ "H19": {
+  "evidence_level": null,
+  "evidence_level_target": "E3",
+  "family": "decisions",
+  "fidelity": [
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -0.2811 does not exceed the practical threshold 0.05",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.05,
+  "threshold_units": "rate (proportion)",
+  "title": "Abstention v3 and incorrect selection"
+ },
+ "H2": {
+  "design": "confirm-neural-point-process",
+  "estimate": 0.3897520848620361,
+  "evidence_level": "E4",
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "family_size": 2,
+  "fidelity": [
+   "F1",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.4548326421975938,
+   "ci_low": 0.3172741419229067,
+   "estimate": 0.3897520848620361,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.034914326742710014
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-neural-point-process",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.3897520848620361,
+  "threshold": 0.02,
+  "threshold_units": "nats per event",
+  "title": "Neural temporal point process vs classical point processes",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H20": {
+  "evidence_level": null,
+  "evidence_level_target": "E2",
+  "family": "decisions",
+  "fidelity": [
+   "F4",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0 does not exceed the practical threshold 0.02",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.02,
+  "threshold_units": "rate (proportion)",
+  "title": "Contextual fallback and catastrophic degradation"
+ },
+ "H21": {
+  "evidence_level": null,
+  "evidence_level_target": "E2",
+  "family": "decisions",
+  "fidelity": [
+   "F4",
+   "F5",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.2379 does not exceed the practical threshold 0.5",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.5,
+  "threshold_units": "bps",
+  "title": "Distributionally robust execution and worst-case regret"
+ },
+ "H22": {
+  "evidence_level": null,
+  "evidence_level_target": "E3",
+  "family": "decisions",
+  "fidelity": [
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0 does not exceed the practical threshold 0.05",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.05,
+  "threshold_units": "completion probability",
+  "title": "Chance-constrained completion reliability"
+ },
+ "H23": {
+  "design": "confirm-bounds",
+  "estimate": 11.38587308742011,
+  "evidence_level": "E5",
+  "evidence_level_target": "E5",
+  "family": "decisions",
+  "family_size": 1,
+  "fidelity": [
+   "F2",
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": true,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 14.239878809054845,
+   "ci_low": 8.75453937832527,
+   "estimate": 11.38587308742011,
+   "method": "paired percentile bootstrap",
+   "n": 12,
+   "se": 1.4275706380328255
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-bounds",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 11.38587308742011,
+  "threshold": 1.0,
+  "threshold_units": "bps of arrival price",
+  "title": "Robust MPC and tail execution cost",
+  "units": 12,
+  "units_available": 29,
+  "units_registered": 12,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-btcusdt-2023-12-07",
+   "bybit-linear-btcusdt-2024-03-08",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23",
+   "bybit-linear-ethusdt-2023-12-07",
+   "bybit-linear-ethusdt-2024-03-08"
+  ]
+ },
+ "H24": {
+  "evidence_level": null,
+  "evidence_level_target": "E2",
+  "family": "decisions",
+  "fidelity": [
+   "F4",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.007038 does not exceed the practical threshold 0.5",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.5,
+  "threshold_units": "bps",
+  "title": "Adaptive MPC after regime drift"
+ },
+ "H25": {
+  "evidence_level": null,
+  "evidence_level_target": "E3",
+  "family": "decisions",
+  "fidelity": [
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -9.929 does not exceed the practical threshold 0.25",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.25,
+  "threshold_units": "bps",
+  "title": "Meta-policy vs best global policy"
+ },
+ "H26": {
+  "evidence_level": null,
+  "evidence_level_target": "E1",
+  "family": "decisions",
+  "fidelity": [
+   "F4"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -1.541 does not exceed the practical threshold 0.25",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.25,
+  "threshold_units": "bps",
+  "title": "Offline RL safe improvement"
+ },
+ "H27": {
+  "evidence_level": null,
+  "evidence_level_target": "E1",
+  "family": "decisions",
+  "fidelity": [
+   "F4"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0.007922 does not exceed the practical threshold 0.1",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "rate (proportion)",
+  "title": "Conservative gating and harmful deployments"
+ },
+ "H28": {
+  "evidence_level": null,
+  "evidence_level_target": "E2",
+  "family": "decisions",
+  "fidelity": [
+   "F4",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect 0 does not exceed the practical threshold 0.01",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.01,
+  "threshold_units": "probability",
+  "title": "Rare-event-aware optimization"
+ },
+ "H29": {
+  "design": "confirm-multifidelity-agreement",
+  "estimate": 0.9235863850091492,
+  "evidence_level": "E3",
+  "evidence_level_target": "E3",
+  "family": "fidelity",
+  "family_size": 1,
+  "fidelity": [
+   "F3",
+   "F4",
+   "F5",
+   "F6"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.4648608505315822,
+   "ci_low": 0.3810569105691057,
+   "estimate": 0.42358638500914925,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.021826274107740372
+  },
+  "level": 0.5,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-multifidelity-agreement",
+  "status": "ESTABLISHED",
+  "test": "agreement",
+  "tested_mean": 0.42358638500914925,
+  "threshold": 0.15,
+  "threshold_units": "agreement above chance level",
+  "title": "Synthetic ranking predicts hybrid ranking",
+  "units": 8,
+  "units_available": 10,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H3": {
+  "evidence_level": null,
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "fidelity": [
+   "F1",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_MEASUREMENT",
+  "promotion_reason": "split-half measurement inconsistency: halves differ: mean difference 0.002618 > 2 SE 0.002074",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.01,
+  "threshold_units": "nats per event",
+  "title": "Sequence models vs classical conditional event models"
+ },
+ "H30": {
+  "evidence_level": null,
+  "evidence_level_target": "E5",
+  "family": "fidelity",
+  "fidelity": [
+   "F2",
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_MEASUREMENT",
+  "promotion_reason": "split-half measurement inconsistency: halves differ: mean difference -0.07349 > 2 SE 0.03256",
+  "status": "NOT_ESTABLISHED",
+  "test": "agreement",
+  "threshold": 0.15,
+  "threshold_units": "agreement above chance level",
+  "title": "Hybrid ranking predicts bounded-historical ranking"
+ },
+ "H31": {
+  "evidence_level": null,
+  "evidence_level_target": "E5",
+  "family": "fidelity",
+  "fidelity": [
+   "F2",
+   "F3",
+   "F4",
+   "F5",
+   "F6"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_MEASUREMENT",
+  "promotion_reason": "split-half measurement inconsistency: halves differ: mean difference -0.0259 > 2 SE 0.01702",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "agreement difference",
+  "title": "Multi-fidelity consensus vs synthetic-only"
+ },
+ "H32": {
+  "evidence_level": "E6",
+  "evidence_level_target": "E6",
+  "family": "transfer",
+  "fidelity": [
+   "F2",
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "status": "ESTABLISHED",
+  "test": "transfer",
+  "threshold": 0.0,
+  "threshold_units": "conclusion-specific",
+  "title": "Transfer across time",
+  "transfer": {
+   "carried": [
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "conclusions": {
+    "C1": {
+     "estimate": 9.031605595880906,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 11.289269298288831,
+      "ci_low": 6.69482924545126,
+      "estimate": 9.031605595880906,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 1.1748420776889021
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 9.182705837903438,
+     "optimistic_interval_95": {
+      "ci_high": 11.394275070289533,
+      "ci_low": 6.742284655595713,
+      "estimate": 9.182705837903438,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 1.2019142046383762
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 9.031605595880906,
+     "threshold": 1.0,
+     "units": 15
+    },
+    "C2": {
+     "estimate": 3.3266345292705473,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 4.334121542446147,
+      "ci_low": 2.3065691221533404,
+      "estimate": 3.3266345292705473,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 0.5166185855177946
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 3.481134785417052,
+     "optimistic_interval_95": {
+      "ci_high": 4.509225849788632,
+      "ci_low": 2.4784415283802783,
+      "estimate": 3.481134785417052,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 0.5148240425480967
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 3.3266345292705473,
+     "threshold": 1.0,
+     "units": 15
+    },
+    "C3": {
+     "estimate": 2.0836386169497962,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 0.9333333333333333,
+     "interval_95": {
+      "ci_high": 2.67465035393435,
+      "ci_low": 1.4802203278584114,
+      "estimate": 2.0836386169497962,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 0.30487610772807905
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 2.3116733740950064,
+     "optimistic_interval_95": {
+      "ci_high": 2.840629915719658,
+      "ci_low": 1.7770225731145122,
+      "estimate": 2.3116733740950064,
+      "method": "paired percentile bootstrap",
+      "n": 15,
+      "se": 0.2768271284818358
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 2.0836386169497962,
+     "threshold": 0.25,
+     "units": 15
+    }
+   },
+   "confirm_units": 15,
+   "p_family": 0.0007498125468632842,
+   "status": "ESTABLISHED",
+   "target_units": [
+    "bybit-linear-btcusdt-2024-12-02",
+    "bybit-linear-btcusdt-2024-06-01",
+    "bybit-linear-btcusdt-2024-07-07",
+    "bybit-linear-btcusdt-2024-12-12",
+    "bybit-linear-btcusdt-2024-07-24",
+    "bybit-linear-btcusdt-2024-10-27",
+    "bybit-linear-btcusdt-2024-10-17",
+    "bybit-linear-btcusdt-2024-12-03",
+    "bybit-linear-btcusdt-2024-09-29",
+    "bybit-linear-btcusdt-2024-12-21",
+    "bybit-linear-btcusdt-2024-06-10",
+    "bybit-linear-btcusdt-2024-10-03",
+    "bybit-linear-btcusdt-2024-09-16",
+    "bybit-linear-btcusdt-2024-08-16",
+    "bybit-linear-btcusdt-2024-11-01"
+   ]
+  }
+ },
+ "H33": {
+  "evidence_level": "E7",
+  "evidence_level_target": "E7",
+  "family": "transfer",
+  "fidelity": [
+   "F2",
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": false,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "status": "ESTABLISHED",
+  "test": "transfer",
+  "threshold": 0.0,
+  "threshold_units": "conclusion-specific",
+  "title": "Transfer across instruments",
+  "transfer": {
+   "carried": [
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "conclusions": {
+    "C1": {
+     "estimate": 11.203778308627314,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 13.87988536175724,
+      "ci_low": 8.620835519321998,
+      "estimate": 11.203778308627314,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 1.3199066156902794
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 11.337535440786535,
+     "optimistic_interval_95": {
+      "ci_high": 14.067406024921878,
+      "ci_low": 8.91579302334792,
+      "estimate": 11.337535440786535,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 1.3078626729922744
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 11.203778308627314,
+     "threshold": 1.0,
+     "units": 8
+    },
+    "C2": {
+     "estimate": 4.723947460684922,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 6.554471312671155,
+      "ci_low": 3.2786741323297024,
+      "estimate": 4.723947460684922,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 0.8498654746709254
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 5.143715657932545,
+     "optimistic_interval_95": {
+      "ci_high": 6.915120755526358,
+      "ci_low": 3.80118246047317,
+      "estimate": 5.143715657932545,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 0.817064339972623
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 4.723947460684922,
+     "threshold": 1.0,
+     "units": 8
+    },
+    "C3": {
+     "estimate": 2.3133306317998095,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 0.875,
+     "interval_95": {
+      "ci_high": 3.7218799021722067,
+      "ci_low": 0.82024245177932,
+      "estimate": 2.3133306317998095,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 0.7221769578981148
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 2.482312940088814,
+     "optimistic_interval_95": {
+      "ci_high": 3.876991710898413,
+      "ci_low": 0.9660782438916895,
+      "estimate": 2.482312940088814,
+      "method": "paired percentile bootstrap",
+      "n": 8,
+      "se": 0.7395071606005392
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 2.3133306317998095,
+     "threshold": 0.25,
+     "units": 8
+    }
+   },
+   "confirm_units": 8,
+   "p_family": 0.0007498125468632842,
+   "status": "ESTABLISHED",
+   "target_units": [
+    "bybit-linear-ethusdt-2024-02-21",
+    "bybit-linear-ethusdt-2023-11-18",
+    "bybit-linear-ethusdt-2024-02-10",
+    "bybit-linear-ethusdt-2024-02-23",
+    "bybit-linear-ethusdt-2023-12-07",
+    "bybit-linear-ethusdt-2024-03-08",
+    "bybit-linear-ethusdt-2023-11-12",
+    "bybit-linear-ethusdt-2024-02-02"
+   ]
+  }
+ },
+ "H34": {
+  "evidence_level": null,
+  "evidence_level_target": "E8",
+  "family": "transfer",
+  "fidelity": [
+   "F2"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_OTHER_REGISTERED_REASON",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_OTHER_REGISTERED_REASON",
+  "promotion_reason": "no exploratory pilot record exists for this candidate",
+  "status": "NOT_ESTABLISHED",
+  "test": "transfer",
+  "threshold": 0.0,
+  "threshold_units": "conclusion-specific",
+  "title": "Transfer across venues"
+ },
+ "H35": {
+  "evidence_level": null,
+  "evidence_level_target": "E7",
+  "family": "realism",
+  "fidelity": [
+   "F1"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -0.02318 does not exceed the practical threshold 0.005",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.005,
+  "threshold_units": "nats",
+  "title": "Learned representations and transfer"
+ },
+ "H36": {
+  "evidence_level": "E9",
+  "evidence_level_target": "E9",
+  "family": "transfer",
+  "fidelity": [
+   "F2",
+   "F3"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_MEASUREMENT",
+  "headline": true,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "status": "ESTABLISHED",
+  "test": "transfer",
+  "threshold": 0.0,
+  "threshold_units": "conclusion-specific",
+  "title": "Survival of the full reality ladder and the final vault",
+  "transfer": {
+   "carried": [
+    "C1",
+    "C2",
+    "C3"
+   ],
+   "conclusions": {
+    "C1": {
+     "estimate": 6.786856667888525,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 9.23437186704097,
+      "ci_low": 4.650890070563729,
+      "estimate": 6.786856667888525,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 1.171969335583448
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 7.1484976159773685,
+     "optimistic_interval_95": {
+      "ci_high": 9.630921426402264,
+      "ci_low": 4.975966543041147,
+      "estimate": 7.1484976159773685,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 1.1872133997654566
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 6.786856667888525,
+     "threshold": 1.0,
+     "units": 18
+    },
+    "C2": {
+     "estimate": 7.257853779881213,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 1.0,
+     "interval_95": {
+      "ci_high": 9.909295788183803,
+      "ci_low": 4.829061590853639,
+      "estimate": 7.257853779881213,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 1.2971440916906571
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 7.673367083568004,
+     "optimistic_interval_95": {
+      "ci_high": 10.371418171281295,
+      "ci_low": 5.30699950812928,
+      "estimate": 7.673367083568004,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 1.3122594788906798
+     },
+     "p_one_sided": 0.00024993751562109475,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 7.257853779881213,
+     "threshold": 1.0,
+     "units": 18
+    },
+    "C3": {
+     "estimate": 1.3111024107550648,
+     "holm_adjusted_p": 0.0007498125468632842,
+     "holm_rejected": true,
+     "identified_fraction": 0.8333333333333334,
+     "interval_95": {
+      "ci_high": 2.0652965814723303,
+      "ci_low": 0.4841522629252955,
+      "estimate": 1.3111024107550648,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 0.4062137129663526
+     },
+     "level": 0.0,
+     "meets_rule": true,
+     "opposite_determinate": false,
+     "optimistic_estimate": 1.5504023801030435,
+     "optimistic_interval_95": {
+      "ci_high": 2.339896569139926,
+      "ci_low": 0.7135254246747776,
+      "estimate": 1.5504023801030435,
+      "method": "paired percentile bootstrap",
+      "n": 18,
+      "se": 0.4145359696892384
+     },
+     "p_one_sided": 0.0004998750312421895,
+     "status": "ESTABLISHED",
+     "test": "superiority",
+     "tested_mean": 1.3111024107550648,
+     "threshold": 0.25,
+     "units": 18
+    }
+   },
+   "confirm_units": 16,
+   "p_family": 0.0007498125468632842,
+   "status": "ESTABLISHED",
+   "target_units": [
+    "bybit-linear-solusdt-2025-06-20",
+    "bybit-linear-solusdt-2025-07-07",
+    "bybit-linear-solusdt-2025-07-21",
+    "bybit-linear-solusdt-2025-07-08",
+    "bybit-linear-solusdt-2025-08-19",
+    "bybit-linear-solusdt-2025-07-20",
+    "bybit-linear-btcusdt-2025-06-20",
+    "bybit-linear-btcusdt-2025-07-07",
+    "bybit-linear-btcusdt-2025-07-21",
+    "bybit-linear-btcusdt-2025-07-08",
+    "bybit-linear-btcusdt-2025-08-19",
+    "bybit-linear-btcusdt-2025-07-20",
+    "bybit-spot-btcusdt-2025-06-20",
+    "bybit-spot-btcusdt-2025-07-07",
+    "bybit-spot-btcusdt-2025-07-21",
+    "bybit-spot-btcusdt-2025-08-21",
+    "bybit-spot-btcusdt-2025-08-19",
+    "bybit-spot-btcusdt-2025-07-20"
+   ]
+  }
+ },
+ "H4": {
+  "evidence_level": null,
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "fidelity": [
+   "F1",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -6.764e+04 does not exceed the practical threshold 0.1",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.1,
+  "threshold_units": "relative MMD reduction",
+  "title": "Latent dynamics vs classical path realism"
+ },
+ "H5": {
+  "design": "confirm-neural-point-process",
+  "estimate": 0.0764560330718825,
+  "evidence_level": "E4",
+  "evidence_level_target": "E4",
+  "family": "realism",
+  "family_size": 2,
+  "fidelity": [
+   "F1",
+   "F4",
+   "F5"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.08510710366576348,
+   "ci_low": 0.06882695327927903,
+   "estimate": 0.0764560330718825,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.004154426411775794
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-neural-point-process",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.0764560330718825,
+  "threshold": 0.005,
+  "threshold_units": "nats per event",
+  "title": "Multi-fidelity model averaging",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H6": {
+  "design": "confirm-fill-study",
+  "estimate": 0.1812485577493739,
+  "evidence_level": "E4",
+  "evidence_level_target": "E4",
+  "family": "fills",
+  "family_size": 3,
+  "fidelity": [
+   "F1",
+   "F4"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.31648477360624083,
+   "ci_low": 0.04731759736846769,
+   "estimate": 0.1812485577493739,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.06816470899818716
+  },
+  "level": 0.0,
+  "p_one_sided": 0.0049987503124218945,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-fill-study",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.1812485577493739,
+  "threshold": 0.005,
+  "threshold_units": "Brier score",
+  "title": "Execution-aware calibration and fill-probability calibration",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H7": {
+  "design": "confirm-survival-study",
+  "estimate": 0.09353339810788999,
+  "evidence_level": "E4",
+  "evidence_level_target": "E4",
+  "family": "fills",
+  "family_size": 3,
+  "fidelity": [
+   "F1"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.11654690779269168,
+   "ci_low": 0.07354285830866039,
+   "estimate": 0.09353339810788999,
+   "method": "paired percentile bootstrap",
+   "n": 8,
+   "se": 0.010987508231519613
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-survival-study",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.09353339810788999,
+  "threshold": 0.005,
+  "threshold_units": "integrated Brier score",
+  "title": "Queue-survival models vs Kaplan-Meier",
+  "units": 8,
+  "units_available": 8,
+  "units_registered": 8,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23"
+  ]
+ },
+ "H8": {
+  "design": "confirm-multifidelity-agreement",
+  "estimate": 0.47408462972096643,
+  "evidence_level": "E3",
+  "evidence_level_target": "E3",
+  "family": "fills",
+  "family_size": 3,
+  "fidelity": [
+   "F3"
+  ],
+  "frozen_screen_promotion": "PROMOTED",
+  "headline": false,
+  "holm_rejected": true,
+  "interval_95": {
+   "ci_high": 0.6173403228771839,
+   "ci_low": 0.32825052565740426,
+   "estimate": 0.47408462972096643,
+   "method": "paired percentile bootstrap",
+   "n": 10,
+   "se": 0.07327355190648845
+  },
+  "level": 0.0,
+  "p_one_sided": 0.00024993751562109475,
+  "promotion": "PROMOTED",
+  "promotion_reason": "all registered promotion conditions pass",
+  "run": "results/v09/confirm/confirm-multifidelity-agreement",
+  "status": "ESTABLISHED",
+  "test": "superiority",
+  "tested_mean": 0.47408462972096643,
+  "threshold": 0.25,
+  "threshold_units": "bps of arrival price",
+  "title": "Fill calibration and execution regret",
+  "units": 10,
+  "units_available": 10,
+  "units_registered": 10,
+  "units_used": [
+   "bybit-linear-btcusdt-2024-02-21",
+   "bybit-linear-btcusdt-2023-11-18",
+   "bybit-linear-btcusdt-2024-02-10",
+   "bybit-linear-btcusdt-2024-02-23",
+   "bybit-linear-btcusdt-2023-12-07",
+   "bybit-linear-ethusdt-2024-02-21",
+   "bybit-linear-ethusdt-2023-11-18",
+   "bybit-linear-ethusdt-2024-02-10",
+   "bybit-linear-ethusdt-2024-02-23",
+   "bybit-linear-ethusdt-2023-12-07"
+  ]
+ },
+ "H9": {
+  "evidence_level": null,
+  "evidence_level_target": "E5",
+  "family": "fills",
+  "fidelity": [
+   "F2"
+  ],
+  "frozen_screen_promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "headline": false,
+  "note": "not promoted; never tested on confirmatory data",
+  "promotion": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+  "promotion_reason": "planning effect -0.1031 does not exceed the practical threshold 0.5",
+  "status": "NOT_ESTABLISHED",
+  "test": "superiority",
+  "threshold": 0.5,
+  "threshold_units": "bps markout",
+  "title": "Adverse-selection-aware passive execution"
+ }
+}
