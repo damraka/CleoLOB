@@ -11,7 +11,9 @@ second half evaluation units. The queue-reactive family is calibrated two ways o
 Each calibrated generator simulates 8 windows; its predicted clearance probability per queue tercile is compared with
 the evaluation day's observed clearance events (same terciles, from the calibration days). Unit endpoint:
 Brier(generic) - Brier(execution-aware) (positive favours execution-aware calibration). Split-half: odd vs even
-windows of the evaluation day. Confirm: calibration on all explore days, evaluation on the design's confirm days.
+windows of the evaluation day. A tercile a generator never visits is not estimable (None); only probes whose
+tercile both calibrations predict are scored, and a unit (or half) with no such probe has effect None and is excluded
+by the pilot record. Confirm: calibration on all explore days, evaluation on the design's confirm days.
 """
 from __future__ import annotations
 
@@ -56,6 +58,27 @@ def _predicted(g, cuts, seed):
     return out
 
 
+def _probs(p) -> list:
+    """Tercile probabilities for the sealed result: a tercile the generator never visits is None (not estimable)."""
+    return [float(v) if np.isfinite(v) else None for v in np.asarray(p, float)]
+
+
+def _mean(x):
+    return float(x.mean()) if x.size else None
+
+
+def score(pg, pe, tercile, y, window) -> dict:
+    """Brier comparison on the probes whose tercile both calibrations predict; empty subsets are None."""
+    pg, pe = np.asarray(pg, float), np.asarray(pe, float)
+    ok = np.isfinite(pg[tercile]) & np.isfinite(pe[tercile])
+    a, b = (pg[tercile] - y) ** 2, (pe[tercile] - y) ** 2
+    odd = window % 2 == 1
+    ga, eb = _mean(a[ok]), _mean(b[ok])
+    oa, ob, ea, ebv = _mean(a[ok & odd]), _mean(b[ok & odd]), _mean(a[ok & ~odd]), _mean(b[ok & ~odd])
+    return {"brier_generic": ga, "brier_exec": eb, "effect": None if ga is None else ga - eb,
+            "odd": None if oa is None else oa - ob, "even": None if ea is None else ea - ebv, "probes": int(ok.sum())}
+
+
 def calibrate_task(stream: str, train: list[str], root: str, design: str, seed: int) -> dict:
     caches = [common.load_cache(d, root, design, "fill calibration") for d in train]
     allq = np.concatenate([C.events(c)["X"][:, 0] for c in caches])
@@ -82,20 +105,17 @@ def calibrate_task(stream: str, train: list[str], root: str, design: str, seed: 
         brier = float(np.mean((p[T] - Y) ** 2))
         if best is None or brier < best[0]:
             best = (brier, p, b.to_dict())
-    return {"stream": stream, "cuts": cuts.tolist(), "p_generic": p_generic.tolist(),
-            "p_exec": best[1].tolist() if best else None, "exec_book": best[2] if best else None,
+    return {"stream": stream, "cuts": cuts.tolist(), "p_generic": _probs(p_generic),
+            "p_exec": _probs(best[1]) if best else None, "exec_book": best[2] if best else None,
             "train_brier_exec": best[0] if best else None}
 
 
 def evaluate(cal: dict, day: str, root: str, design: str) -> dict:
+    if cal["p_exec"] is None:
+        return {"brier_generic": None, "brier_exec": None, "effect": None, "odd": None, "even": None, "probes": 0}
     tercile, y, window = _observed(common.load_cache(day, root, design, "fill evaluation"), np.asarray(cal["cuts"]))
-    pg, pe = np.asarray(cal["p_generic"]), np.asarray(cal["p_exec"])
-    ok = np.isfinite(pg[tercile]) & np.isfinite(pe[tercile])
-    a, b = (pg[tercile] - y) ** 2, (pe[tercile] - y) ** 2
-    odd = window % 2 == 1
-    return {"brier_generic": float(a[ok].mean()), "brier_exec": float(b[ok].mean()),
-            "effect": float(a[ok].mean() - b[ok].mean()), "odd": float(a[ok & odd].mean() - b[ok & odd].mean()),
-            "even": float(a[ok & ~odd].mean() - b[ok & ~odd].mean()), "probes": int(ok.sum())}
+    return score([np.nan if v is None else v for v in cal["p_generic"]],
+                 [np.nan if v is None else v for v in cal["p_exec"]], tercile, y, window)
 
 
 def run(args) -> dict:
