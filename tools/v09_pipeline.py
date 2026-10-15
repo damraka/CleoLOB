@@ -115,8 +115,7 @@ def step_data(root: Path, ns, design: str = "confirm-data", namespace: str = "co
     from lob.v09 import protocol as pr
     from lob.v09.data import daycache
     for _ in range(8):
-        docs = designs(root) if namespace == "confirm" else {}
-        ids = needed_datasets(root, docs) if namespace == "confirm" else ns.datasets
+        ids = needed_datasets(root, designs(root)) if namespace == "confirm" else vault_datasets(root, design)
         _, state = pr.state_of(root)
         missing = [d for d in ids if not daycache.cache_path(root, d).is_file()]
         if not missing:
@@ -130,6 +129,13 @@ def step_data(root: Path, ns, design: str = "confirm-data", namespace: str = "co
         if cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb) != 0:
             raise SystemExit(f"data preparation run {out} failed (ledgered); fix and rerun")
     raise SystemExit("data preparation did not converge after 8 rounds (inspect the ledger attempts)")
+
+
+def vault_datasets(root: Path, design: str = "final-vault") -> list[str]:
+    """The sealed vault design's datasets with the registered backup rule re-applied (failed slots -> backups)."""
+    from lob.v09 import confirm as CF, protocol as pr
+    doc, _ = CF.substitute(pr.sealed_design(root, design), *pr.state_of(root))
+    return list(doc["datasets"])
 
 
 def step_studies(root: Path, ns) -> None:
@@ -192,8 +198,6 @@ def step_vault(root: Path, ns) -> None:
         pr.seal_design(root, "final-vault", d["document"], reads=d["reads"], namespaces=d["namespaces"],
                        reason="the single final-vault design (after close_confirmatory)")
         pr.open_namespace(root, "final", design="final-vault", reason="final seeds for the vault design")
-    doc, _ = CF.substitute(pr.sealed_design(root, "final-vault"), *pr.state_of(root))
-    ns.datasets = list(doc["datasets"])
     step_data(root, ns, design="final-vault", namespace="final", base=FINAL_BASE)
     out = target(root, FINAL_BASE, "vault-bounds")
     if out is None:

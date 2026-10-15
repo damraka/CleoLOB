@@ -1,6 +1,7 @@
 """v0.9 confirmatory machinery: decision rules, design building, backup substitution, unit selection."""
 from __future__ import annotations
 
+from pathlib import Path
 import numpy as np
 import pytest
 
@@ -116,3 +117,22 @@ def test_first_units_split_evenly_over_streams() -> None:
     got = FA.first_units(order, 5, synthetic=False)
     assert len(got) == 6 and got[:3] == order[:3] and got[3:] == order[5:8]
     assert FA.first_units(["b", "a", "c"], 2, synthetic=True) == ["b", "a"]
+
+
+def test_pipeline_vault_datasets_reapply_the_backup_rule_each_round(v09_root) -> None:
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("v09_pipeline", Path(__file__).resolve().parents[1] / "tools" /
+                                                  "v09_pipeline.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    protocol = pr.load_protocol(v09_root / pr.PROTOCOL_PATH)
+    prim, back = CF.slots(protocol, "confirm", "bybit-linear:ETHUSDT")      # pool-agnostic; the vault is closed here
+    promote_dummy(v09_root)
+    pr.seal_design(v09_root, "final-vault-test", {"study": "counterfactual-bounds-v09", "datasets": prim[:3]},
+                   reads=sorted(prim + back), namespaces=[], reason="test")
+    assert mod.vault_datasets(v09_root, "final-vault-test") == prim[:3]
+    pr.append_event(v09_root / pr.LEDGER_PATH, "attempt", dataset=prim[1], role="confirm", design="final-vault-test",
+                    reason="test failure", protocol=protocol, root=v09_root,
+                    payload={"outcome": "NOT_AVAILABLE", "directory": None, "note": "HTTP 404",
+                             "no_directory_reason": "test"})
+    assert mod.vault_datasets(v09_root, "final-vault-test") == [prim[0], back[0], prim[2]]
