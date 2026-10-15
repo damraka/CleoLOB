@@ -241,6 +241,7 @@ def step_dryrun(root: Path, ns) -> None:
     decisions = read_run(root / state.promotion["promotion_run"])["result"]["promotion"]["decisions"]
     built = {n: d["document"] for n, d in CF.build(root, registry, decisions).items()}
     failed: list[str] = []
+    built_names = {"dryrun-" + n.removeprefix("confirm-") for n in built}
     for name, doc in built.items():
         if name in ("confirm-data",) or doc["study"] in ("transfer-study-v09",):
             continue
@@ -261,6 +262,14 @@ def step_dryrun(root: Path, ns) -> None:
         rc = cli(root, args, root / "data/v09" / f"{Path(out).name}.log", ns.min_free_gb)
         if rc != 0:
             failed.append(dname)
+    tr = target(root, "results/v09/dryrun", "dryrun-transfer")
+    if tr is not None and not failed:
+        args = ["transfer-study-v09", "--namespace", "explore", "--design", "dryrun-bounds", "--out", tr,
+                "--input", "bounds=" + latest(root, "results/v09/dryrun", "dryrun-bounds")]
+        if "dryrun-bounds-late" in built_names:
+            args += ["--input", "late=" + latest(root, "results/v09/dryrun", "dryrun-bounds-late")]
+        if cli(root, args, root / "data/v09" / f"{Path(tr).name}.log", ns.min_free_gb) != 0:
+            failed.append("dryrun-transfer")
     if failed:
         raise SystemExit(f"dry runs failed: {failed}; fix with a regression test and rerun before sealing")
 

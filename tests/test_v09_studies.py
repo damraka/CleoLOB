@@ -6,6 +6,8 @@ import json
 from lob.config import canonical_json
 from lob.v09.studies import continual, fills
 
+from .v09_fixtures import v09_root, v09_template  # noqa: F401
+
 
 def test_continual_units_accept_json_string_day_keys():
     row = {"days": ["d0", "d1", "d2"],
@@ -37,3 +39,17 @@ def test_fill_scores_are_json_safe_when_a_tercile_is_not_estimable():
     assert none["effect"] is None and none["probes"] == 0
     assert fills._probs([0.2, np.nan, 0.3]) == [0.2, None, 0.3]
     json.loads(canonical_json({"a": out, "b": none}))       # strict JSON: no NaN anywhere
+
+
+def test_bounds_confirm_branch_follows_the_design_not_the_namespace(v09_root):
+    from types import SimpleNamespace
+    import pytest
+    from lob.v09.studies import bounds
+    base = dict(root=str(v09_root), phase="confirm", namespace="explore", out="results/v09/dryrun/b", workers=1,
+                seed=0, dataset=None, input=[])
+    with pytest.raises(ValueError, match="requires its sealed design"):
+        bounds.run(SimpleNamespace(**base, design=None))
+    # an explore-namespace dry run with a design passes the branch check (and then needs that design to be sealed)
+    with pytest.raises(Exception) as err:
+        bounds.run(SimpleNamespace(**base, design="dryrun-bounds-missing"))
+    assert "requires" not in str(err.value)

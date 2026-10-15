@@ -185,8 +185,10 @@ def run(args) -> dict:
     protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
     if args.phase == "pilot" and args.namespace not in ("explore", "pilot"):
         raise ValueError("the pilot phase reads explore days (namespace explore or pilot)")
-    if args.phase == "confirm" and args.namespace not in ("confirm", "final"):
-        raise ValueError("the confirm phase requires --namespace confirm (or final for the vault) and its sealed design")
+    if args.phase == "confirm" and not getattr(args, "design", None):
+        # the branch follows the sealed design; access to confirm/final days is enforced by the namespace guard and
+        # the design's registered reads (an explore-day dry-run design runs this branch in the explore namespace)
+        raise ValueError("the confirm phase requires its sealed design (--design)")
     design = common.design_document(args)
     if args.phase == "pilot":
         n = protocol["pools"]["explore"]["count"]
