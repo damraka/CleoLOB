@@ -53,3 +53,13 @@ def test_bounds_confirm_branch_follows_the_design_not_the_namespace(v09_root):
     with pytest.raises(Exception) as err:
         bounds.run(SimpleNamespace(**base, design="dryrun-bounds-missing"))
     assert "requires" not in str(err.value)
+
+
+def test_transfer_cli_takes_no_phase_as_the_pipeline_invokes_it():
+    import argparse
+    from lob.v09 import cli
+    p = argparse.ArgumentParser()
+    cli.add_commands(p.add_subparsers(dest="command"))
+    a = p.parse_args(["transfer-study-v09", "--namespace", "confirm", "--design", "confirm-bounds", "--out", "x",
+                      "--input", "bounds=r", "--input", "late=s"])
+    assert a.input == [("bounds", "r"), ("late", "s")] and not hasattr(a, "phase")

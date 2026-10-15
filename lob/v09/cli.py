@@ -114,7 +114,7 @@ STUDIES: dict[str, tuple[str, str, tuple[str, ...] | None]] = {
     "counterfactual-bounds-v09": ("bounds", "M28/M78 bounded counterfactual execution and partial identification",
         ("pilot", "confirm")),
     "transfer-study-v09": ("transfer", "M86 cross-time / instrument / venue transfer of carried conclusions (H32-H34)",
-        ('time', 'instrument', 'venue')),
+        None),
     "representation-transfer-v09": ("representation", "M38-M43 learned representations and transfer (H35)",
         ("pilot", "confirm")),
     "portfolio-study-v09": ("portfolio", "M87 basket execution and cross-impact-aware scheduling",
