@@ -1,0 +1,41 @@
+# v0.9 requirement coverage (M0–M89)
+
+How to read this table:
+- **What each row shows.** Each milestone group lists:
+  - the modules that implement it (under `lob/v09/`);
+  - the command that exercises it;
+  - its sealed evidence under `results/v09/`, also in the public bundle `examples/studies/v09`;
+  - its outcome.
+- **Statuses.** Hypothesis statuses come from [v09-final-report.md](v09-final-report.md).
+- **Tests.** Tests are in `tests/test_v09_*.py`.
+- **Scope.** Where the implementation is narrower than the plan ([v09-implementation-plan.md](v09-implementation-plan.md),
+  §8 and §11), the row says so.
+
+| Milestones | Area | Modules | Command(s) | Sealed evidence | Outcome |
+|---|---|---|---|---|---|
+| M0 | audit and plan | `docs/v09-implementation-plan.md` | — | the plan | done |
+| M1, M3–M9 | protocol, ledger v2, seed namespaces, amendments, incidents, run schema v3, runtime fingerprint / SBOM / lock | `protocol.py`, `artifacts.py`, `runtime.py`, `registry.py` | `protocol-v09`, `verify-v09` | `configs/v09`, ledger (3 amendments, 5 incidents) | verifies |
+| M2 | promotion gate, feasibility report, frozen confirmatory registry | `promotion.py`, `feasibility.py`, `studies/promotion.py` | `hypothesis-promotion-v09 feasibility/run/freeze` | `promotion/feasibility`, `promotion/run`, `configs/v09/hypotheses-confirmatory.json` | 12 promoted, C1–C3 carried; original-screen sensitivity reported |
+| M10–M12 | dataset registry, capability matrix, sources | `registry.py`, `capabilities.py`, `data/sources.py`, `data/bybit.py`, `data/binance.py` | `dataset-registry-v09`, `capability-audit-v09` | `configs/v09/dataset-registry.json`, `capability-matrix.json` | done. Bybit linear/spot L2 and Binance L1 are implemented. No OKX L2 archive was found, so OKX is unused. |
+| M13–M19 | quality engine, normalization, clocks, day caches | `quality.py`, `data/normalize.py`, `data/daycache.py`, `data/store.py` | `validate-market-data-v09` | `explore/data-prep-*`, `confirm/data-prep*`, `final/data-prep*`; quality status in ledger `parsed` events | done. No silent repairs; quality rejections are replaced by registered backups (`tools/v09_data_audit.py`). |
+| M20–M24 | event reconstruction, replay, queue clearance | `data/reconstruct.py`, `replay/engine.py`, `queue/clearance.py` | `event-reconstruction-v09`, `historical-replay-v09`, `queue-reconstruction-v09` | `descriptive/{reconstruction,replay,queue}` | descriptive. Queue positions are never observed; clearance events bound fills. |
+| M25–M27 | latent / hidden liquidity (modelled, never observed), toxicity, regimes, drift | `studies/{liquidity,toxicity,regimes,drift}.py` | `latent-liquidity-v09`, `toxicity-study-v09`, `regime-study-v09`, `change-point-study-v09` | `descriptive/{liquidity,toxicity,regimes,drift}` | descriptive |
+| M28–M32 | bounded counterfactual replay and the decision hub | `twin.py`, `studies/bounds.py`, `studies/decisions.py` | `counterfactual-bounds-v09`, `multifidelity-agreement-v09` | `confirm/confirm-bounds(-late)`, `confirm/confirm-multifidelity-agreement`, `final/vault-bounds` | C1–C3 ESTABLISHED on the conservative bound (H23, H32, H33, H36); latency is part of the registered assumption grid (queue, latency, hidden fraction, impact, transient half-life); no separate race model |
+| M33–M37 | multi-fidelity twin (F2–F6 episodes, consensus, agreement) | `twin.py`, `generators/hybrid.py` | `hybrid-twin-v09`, `multifidelity-agreement-v09` | `explore/hybrid-pilot`, `confirm/confirm-multifidelity-agreement` | H8 and H29 ESTABLISHED; H30 and H31 NOT_ESTABLISHED (not promoted) |
+| M38–M43 | representations and transfer | `representations/sequence.py`, `studies/representation.py` | `representation-transfer-v09` | `explore/representation-pilot` | H35 NOT_ESTABLISHED (not promoted). Graph and contrastive encoders are limited to the registered sequence features. |
+| M44–M50 | generators: classical, point process (RMTPP, transformer TPP), sequence, latent state-space and neural latent AR, hybrid, strategic | `generators/{classical,point_process,latent,hybrid,strategic}.py` | `generator-fit-v09`, `neural-point-process-v09`, `sequence-generator-v09`, `latent-dynamics-v09`, `ecology-study-v09`, `strategic-response-v09` | `descriptive/generator-fit-2`, `explore/*-pilot`, `confirm/confirm-neural-point-process` | H2 ESTABLISHED. A Neural SDE and a conditional flow were not implemented: the latent path family is a state-space model plus a neural latent AR. |
+| M51–M55 | realism metrics, benchmark and capability gate | `realism/{benchmark,path}.py`, `studies/gate.py` | `realism-benchmark-v09`, `realism-gate-v09`, `path-realism-v09`, `tail-realism-v09` | `explore/realism-{benchmark,gate}`, `descriptive/{path,tail}-realism` | gate NO_ACCEPTABLE_MODEL except fills (PARTIAL); not weakened |
+| M56–M62 | inference: Bayesian updating, SBC, identifiability, posterior checks, active calibration, model averaging | `inference/bayes.py`, `studies/{inference,sbc,identifiability,posterior,active,averaging}.py` | `inference-v09`, `sbc-v09`, `identifiability-v5`, `posterior-study-v09`, `active-calibration-v09`, `model-averaging-v09` | `explore/*-pilot`, `descriptive/{sbc,identifiability,posterior}`, `confirm/confirm-neural-point-process` (H5) | H5 ESTABLISHED; H13 and H14 NOT_ESTABLISHED (not promoted) |
+| M63–M70 | fills, survival, markouts | `queue/{clearance,survival}.py`, `studies/{fills,survival,markout}.py` | `fill-study-v09`, `survival-study-v09`, `markout-study-v09` | `confirm/confirm-{fill,survival}-study`, `explore/markout-pilot` | H6 and H7 ESTABLISHED; H9 NOT_ESTABLISHED (not promoted) |
+| M71–M74 | impact and cross-impact | `impact/models.py`, `studies/{impact,cross_impact}.py` | `impact-study-v09`, `cross-impact-v09` | `explore/impact-pilot`, `descriptive/cross-impact` | H10 NOT_ESTABLISHED (not promoted); observational impact is not identified |
+| M75–M78 | causal estimands, DAG identification checks, sensitivity, Manski bounds | `causal.py` | inside the impact study | the causal registry report in `explore/impact-pilot` | causal claims are limited to registered estimands |
+| M79–M84 | DRO, MPC, selector, fallback, abstention, conformal, offline RL with OPE gates, meta-policy, completion | `execution/{mpc,policies,selector}.py`, `rl.py`, `uncertainty/conformal.py`, `studies/{dro,mpc,abstention,offline_rl,ope,safe_improvement,meta_policy,completion,continual,conformal,meta}.py` | the matching `*-v09` commands | `explore/*-pilot`, `descriptive/ope`, `confirm/confirm-{conformal-study,continual-calibration}` | H16 and H17 ESTABLISHED; H15 and H18–H22, H24–H28 NOT_ESTABLISHED (not promoted). OPE on real days is NOT_AVAILABLE because no propensities exist. |
+| M85 | stress: rare events, adversarial search, counterexamples | `studies/{rare_event,adversarial,counterexample}.py` | `rare-event-study-v09`, `adversarial-study-v09`, `counterexample-study-v09` | `explore/rare-event-pilot`, `descriptive/{adversarial,counterexample-2}` | H28 NOT_ESTABLISHED; adversarial stress is reported on the ladder, not decided |
+| M86–M88 | transfer, portfolio, ranking, uncertainty decomposition, value of information, reality gap | `studies/{transfer,portfolio,ranking,uncertainty,voi}.py`, `studies/final.py` | `transfer-study-v09`, `portfolio-study-v09`, `ranking-transfer-v09`, `uncertainty-decomposition-v09`, `value-of-information-v09` | `confirm/confirm-transfer`, `descriptive/{portfolio,ranking,uncertainty,voi}` | H32 and H33 ESTABLISHED; H34 NOT_ESTABLISHED (no L1 conclusion carried) |
+| M89 | final analysis, report, cards, datasheets, bundle, claim audit, verification | `studies/final.py`, `reporting.py`, `claims.py`, `verify.py`, `batch.py`, `tools/v09_pipeline.py` | `final-analysis-v09`, `report-v09`, `evidence-export-v09`, `claim-audit-v09`, `verify-v09` | `final/final-analysis`, `report-2`, `examples/studies/v09` | claim audit valid; bundle verifies offline |
+
+Engineering safeguards added during the cycle:
+- the fail-closed batch runner (`lob/v09/batch.py`): a child's exit code propagates, dependents are skipped, and
+  every failure is ledgered as a retained attempt;
+- the outcome-blind run check (`tools/v09_runcheck.py`);
+- the confirmatory data audit (`tools/v09_data_audit.py`).

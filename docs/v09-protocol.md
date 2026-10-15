@@ -81,10 +81,32 @@ exist.
 - The two days were replaced by registered backups.
 - No study outcome had been computed on them.
 
-**Failed attempts kept on record:**
-- the first explore data preparation, which hit the memory ceiling (RESOURCE_EXHAUSTED, entry 384);
-- the first continual-calibration pilot (INVALID, entry 476). It failed in result aggregation (JSON string keys)
-  before anything was sealed. It was rerun with the same design and seeds after a fix with a regression test.
+**Incident 3** (entry 483, `other`): a superseded bash queue for the explore descriptive studies survived its stop
+and ran concurrently with the fail-closed runner. Write-once directories prevented any overwrite, the source-binding
+guard refused the one run whose worktree changed mid-run, and every duplicate or aborted attempt is ledgered.
+
+**Incident 4** (entry 619, `engineering_bug`): after confirmatory close, a read-only preview of the final analysis
+showed H16 using 6 of 8 registered units. The final analysis ordered continual units by the later day instead of the
+registered earlier day. It was fixed with a regression test. It was found after outcomes were visible, so it is
+disclosed. H16 is ESTABLISHED with 6 or 8 units, and no other unit count was affected.
+
+**Incident 5** (entry 690, `engineering_bug`): four vault primaries returned provider HTTP 404 and were ledgered
+NOT_AVAILABLE. The driver did not re-apply the registered backup rule in later rounds, so rounds 2–8 re-requested
+refused slots without reading anything. Fixed with a regression test; the registered backups filled the slots.
+
+**Failed attempts kept on record** (ledger `attempt` events; directories kept where they exist):
+
+| Attempt | Entry | Outcome | Cause and replacement |
+|---|---|---|---|
+| first explore data preparation | 384 | RESOURCE_EXHAUSTED | memory ceiling; rerun |
+| first continual-calibration pilot | 476 | INVALID | JSON string keys in aggregation; rerun as `continual-pilot-2` |
+| first fill-study pilot | 477 | INVALID | NaN refused at sealing; rerun as `fills-pilot-2` |
+| descriptive generator-fit, adversarial and counterexample | 478–482 | INVALID / ABORTED | the concurrent queues of incident 3; reruns `generator-fit-2` and `counterexample-2` (adversarial: the stale queue's sealed run is the valid one) |
+| dry runs of bounds, bounds-late and transfer | 492, 494, 495 | INVALID | a namespace check and a CLI phase, fixed before any confirmatory access |
+| first report run | 699 | INVALID | claim-graph key; rerun as `report-2` |
+
+Every rerun used the same registered design and seeds. Quality and provider failures of individual days are
+ledgered as NOT_AVAILABLE and replaced by registered backups in frozen order.
 
 ## Run evidence
 

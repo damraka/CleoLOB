@@ -50,8 +50,40 @@ It is a research framework, not a production trading system.
 
 Negative, null, and failed results are retained rather than removed from the research record.
 
+<!-- v09:start -->
+### v0.9: reality-calibrated market twins, execution science and safe adaptation
+
+v0.9 asks which execution conclusions survive when reconstruction uncertainty, latent liquidity, strategic response,
+multi-fidelity simulation, drift and real historical validation are considered together. The protocol and 36
+candidate hypotheses were frozen before any exploratory access (`configs/v09/`). A registered gate promoted 12
+hypotheses and carried three execution conclusions ([C09-PROMOTION]). Confirmatory designs were sealed before any
+confirmatory day was read, and the untouched 2025 vault was opened once, after the confirmatory phase closed.
+
+| Question | v0.9 result |
+|---|---|
+| Neural point processes [C09-H2], model averaging [C09-H5], continual calibration [C09-H16] on real days | ESTABLISHED: 0.39, 0.076 and 0.016 nats/event (E4) |
+| Execution-aware fill calibration [C09-H6], survival models for queue clearance [C09-H7] | ESTABLISHED: Brier 0.18 and integrated Brier 0.094 better; bounded clearance events, not fills |
+| Adaptive conformal coverage under drift [C09-H17] | ESTABLISHED (non-inferiority, margin 0.02) |
+| Three execution conclusions on the conservative bound of bounded hypothetical replay (CVaR-MPC vs TWAP [C09-H23], TWAP vs sweep, passive-deadline vs TWAP) | ESTABLISHED on confirm days; across time [C09-H32] and instrument [C09-H33]; and on the 2025 vault [C09-H36] |
+| Realism gate for generators [C09-GATE] | NO_ACCEPTABLE_MODEL for execution, realism, strategic and tail use; PARTIAL for fills |
+| The other 24 candidates, e.g. impact [C09-H10], offline RL [C09-H26], cross-venue transfer [C09-H34] | NOT_ESTABLISHED: not promoted, never tested on confirmatory data |
+
+Before reading the table, note three caveats:
+- **Amendment 3.** The execution-conclusion results exist because Amendment 3 changed the promotion screen after the
+  pilots were seen. This is disclosed as a post-hoc change, and under the original screen they would not have been
+  tested ([C09-INCIDENTS]).
+- **Replay costs.** Replay costs are HYPOTHETICAL, under registered queue, latency, hidden-liquidity and impact
+  assumptions. Nothing here is a claim about live trading, profit or HFT use.
+- **The reality ladder** ([C09-LADDER]). The synthetic and hybrid rungs did not reproduce the replay effects, and the
+  reality gap is large ([C09-GAP]).
+
+See the [v0.9 report](docs/v09-paper.md), the [final report](docs/v09-final-report.md), the
+[requirement coverage](docs/v09-requirement-coverage.md) and the data notes ([C09-DATA], [v0.9 data](docs/v09-data.md)).
+The public evidence bundle is `examples/studies/v09`.
+<!-- v09:end -->
+
 <!-- v08:start -->
-### v0.8.0: decision uncertainty and adaptive execution (current release)
+### v0.8.0: decision uncertainty and adaptive execution
 
 v0.8 asks whether execution decisions stay reliable when models are imperfect, regimes drift and uncertainty is
 explicit. Everything was preregistered (`configs/v08/`, two amendments). The registered studies were run on the

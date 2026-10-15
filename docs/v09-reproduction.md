@@ -49,5 +49,23 @@ CPU machine. PyTorch runs on the CPU only, with threads capped by `CLEOLOB_TORCH
      counterexample=...`
    - then `cleo report-v09`, `cleo evidence-export-v09` and `cleo claim-audit-v09`
 
+**The driver used for this release.** Steps 4–7 were executed through `tools/v09_pipeline.py`, from a clean
+worktree at the committed code. It runs one study at a time through the fail-closed batch runner
+(`lob/v09/batch.py`), with workers = 2 and an 8 GB free-memory guard. The steps, in order:
+
+```bash
+python tools/v09_pipeline.py --root ../CleoLOB dryrun     # confirm branches on explore days; must all pass
+python tools/v09_pipeline.py --root ../CleoLOB seal       # seal every confirmatory design
+python tools/v09_pipeline.py --root ../CleoLOB data       # confirmatory day caches (registered backups only)
+python tools/v09_data_audit.py --root ../CleoLOB          # read-only audit of slots, failures and substitutions
+python tools/v09_pipeline.py --root ../CleoLOB studies    # confirmatory studies in registered order
+python tools/v09_pipeline.py --root ../CleoLOB transfer
+python tools/v09_pipeline.py --root ../CleoLOB close
+python tools/v09_pipeline.py --root ../CleoLOB vault      # seals final-vault, opens it once, runs the vault replay
+python tools/v09_pipeline.py --root ../CleoLOB --input gate=results/v09/explore/realism-gate \
+    --input counterexample=results/v09/descriptive/counterexample-2 final
+python tools/v09_runcheck.py --root ../CleoLOB results/v09/confirm/confirm-*   # outcome-blind seal/binding check
+```
+
 The guarded steps (4–6) can be executed only once per ledger. A fresh replication needs a fresh protocol, ledger and
 data chronology; the consumed v0.9 days are never fresh again.
