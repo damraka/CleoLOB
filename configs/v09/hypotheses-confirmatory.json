@@ -1,0 +1,600 @@
+{
+  "carried_conclusions": {
+    "C1": {
+      "confirm_units": 10,
+      "control": "twap",
+      "direction": "decrease",
+      "endpoint": "cvar90_is_bps",
+      "identifiability": "L2",
+      "mandate": "medium",
+      "threshold_bps": 1.0,
+      "treatment": "mpc_cvar"
+    },
+    "C2": {
+      "confirm_units": 21,
+      "control": "sweep",
+      "direction": "decrease",
+      "endpoint": "mean_is_bps",
+      "identifiability": "L2",
+      "mandate": "large",
+      "threshold_bps": 1.0,
+      "treatment": "twap"
+    },
+    "C3": {
+      "confirm_units": 8,
+      "control": "twap",
+      "direction": "decrease",
+      "endpoint": "mean_is_bps",
+      "identifiability": "L2",
+      "mandate": "small",
+      "threshold_bps": 0.25,
+      "treatment": "passive_deadline"
+    }
+  },
+  "conclusion_decisions": {
+    "C1": {
+      "outcome": "PROMOTED",
+      "reason": "all registered promotion conditions pass"
+    },
+    "C2": {
+      "outcome": "PROMOTED",
+      "reason": "all registered promotion conditions pass"
+    },
+    "C3": {
+      "outcome": "PROMOTED",
+      "reason": "all registered promotion conditions pass"
+    },
+    "C4": {
+      "outcome": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+      "reason": "planning effect -0.03827 does not exceed the practical threshold 0.25"
+    },
+    "C5": {
+      "outcome": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+      "reason": "planning effect -0.2329 does not exceed the practical threshold 0.5"
+    },
+    "C6": {
+      "outcome": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+      "reason": "planning effect -0.5722 does not exceed the practical threshold 0.25"
+    }
+  },
+  "confirm_units": {
+    "H16": 8,
+    "H17": 8,
+    "H2": 8,
+    "H23": 12,
+    "H29": 8,
+    "H32": 15,
+    "H33": 8,
+    "H36": 16,
+    "H5": 8,
+    "H6": 8,
+    "H7": 8,
+    "H8": 10
+  },
+  "hypotheses": {
+    "H16": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "adaptation",
+      "endpoint": "forgetting (NLL increase on earlier-day validation data after sequential training) of naive fine-tuning minus the best continual method",
+      "estimator": "per unit: forgetting difference",
+      "evidence_level_target": "E4",
+      "family": "adaptation",
+      "fidelity": [
+        "F1",
+        "F5"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h16",
+        "study": "continual-calibration-v09"
+      },
+      "planning": {
+        "alpha": 0.01,
+        "effect": 0.013911304536088128,
+        "expected_power": 0.9941820911122052,
+        "sd": 0.008113896267660856
+      },
+      "pool": "confirm",
+      "question": "Does continual calibration (replay / regularization) reduce forgetting relative to naive fine-tuning?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side",
+        "neural_backend"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Continual calibration and forgetting",
+      "unit": "sequence of registered days (one unit per instrument-day sequence position)"
+    },
+    "H17": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted lower confidence bound of the oriented effect is > -margin; FAILED iff the upper bound is < -margin; otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "adaptation",
+      "endpoint": "empirical coverage of 90% adaptive-conformal intervals for 60 s-ahead realized volatility minus 0.90",
+      "estimator": "per unit: day coverage",
+      "evidence_level_target": "E6",
+      "family": "adaptation",
+      "fidelity": [
+        "F1"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h17",
+        "study": "conformal-study-v09"
+      },
+      "planning": {
+        "alpha": 0.01,
+        "effect": -0.0005808906044910416,
+        "expected_power": 0.9100010404428228,
+        "sd": 0.014977883405618427
+      },
+      "pool": "confirm",
+      "question": "Does adaptive conformal prediction preserve the registered 90% coverage under moderate drift?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "noninferiority",
+      "threshold": 0.02,
+      "threshold_units": "coverage (non-inferiority margin)",
+      "title": "Adaptive conformal coverage under drift",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H2": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "realism",
+      "endpoint": "held-out negative log-likelihood per event (inter-arrival time + six-way mark) of the best classical point process minus the neural TPP",
+      "estimator": "per unit: mean NLL difference over the day's events",
+      "evidence_level_target": "E4",
+      "family": "realism",
+      "fidelity": [
+        "F1",
+        "F4",
+        "F5"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h2",
+        "study": "neural-point-process-v09"
+      },
+      "planning": {
+        "alpha": 0.0071428571428571435,
+        "effect": 0.3822795378478645,
+        "expected_power": 0.9999999999999997,
+        "sd": 0.1026939270332497
+      },
+      "pool": "confirm",
+      "question": "Do neural TPPs improve future predictive realism of event timing and marks?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side",
+        "neural_backend"
+      ],
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "nats per event",
+      "title": "Neural temporal point process vs classical point processes",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H23": {
+      "confirm_units": 12,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "decisions",
+      "endpoint": "CVaR90 of implementation shortfall: TWAP minus CVaR-MPC, medium mandate, bounded historical replay (both cost bounds) and hybrid twin",
+      "estimator": "per unit: CVaR difference over registered windows",
+      "evidence_level_target": "E5",
+      "family": "decisions",
+      "fidelity": [
+        "F2",
+        "F3"
+      ],
+      "headline": true,
+      "max_units": 80,
+      "pilot": {
+        "key": "h23",
+        "study": "mpc-study-v09"
+      },
+      "planning": {
+        "alpha": 0.004545454545454546,
+        "effect": 4.120503897909954,
+        "expected_power": 0.8268529652664969,
+        "sd": 4.020327474357408
+      },
+      "pool": "confirm",
+      "question": "Does robust (CVaR) MPC reduce tail execution cost relative to TWAP?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "superiority",
+      "threshold": 1.0,
+      "threshold_units": "bps of arrival price",
+      "title": "Robust MPC and tail execution cost",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H29": {
+      "agreement_level": 0.5,
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted lower bound of (agreement - agreement_level) is > 0 and the point estimate >= agreement_level + threshold; FAILED iff the upper bound is < 0",
+      "direction": "increase",
+      "domain": "fidelity",
+      "endpoint": "pairwise sign agreement between synthetic (F4-F6 consensus) and hybrid-twin directions over the registered policy pairs",
+      "estimator": "per unit: agreement over determinate pairs",
+      "evidence_level_target": "E3",
+      "family": "fidelity",
+      "fidelity": [
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h29",
+        "study": "multifidelity-agreement-v09"
+      },
+      "planning": {
+        "alpha": 0.016666666666666666,
+        "effect": 0.2887893013643945,
+        "expected_power": 0.9979801690442784,
+        "sd": 0.1365387417655511
+      },
+      "pool": "confirm",
+      "question": "Does the synthetic policy ranking predict the hybrid-replay ranking?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "agreement",
+      "threshold": 0.15,
+      "threshold_units": "agreement above chance level",
+      "title": "Synthetic ranking predicts hybrid ranking",
+      "unit": "backbone instrument-day of the hybrid twin (registered windows nested in days)"
+    },
+    "H32": {
+      "confirm_units": 15,
+      "data_roles": [
+        "confirm_late"
+      ],
+      "decision_rule": "ESTABLISHED iff at least one carried conclusion meets its own registered rule on the target pool after Holm over the carried conclusions; FAILED iff every carried conclusion is determinate in the opposite direction; NOT_AVAILABLE iff no conclusion was carried or the target data are unavailable; otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "transfer",
+      "endpoint": "carried conclusions re-tested on the confirm_late pool (2024-06 to 2024-12)",
+      "estimator": "per conclusion: its own registered estimator",
+      "evidence_level_target": "E6",
+      "family": "transfer",
+      "fidelity": [
+        "F2",
+        "F3"
+      ],
+      "headline": false,
+      "max_units": 40,
+      "pilot": {
+        "key": "h32",
+        "study": "transfer-study-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 3.5603177946507962,
+        "expected_power": 0.8235421333447517,
+        "sd": 4.3493765118790915
+      },
+      "pool": "confirm_late",
+      "question": "Does at least one promoted execution conclusion transfer across time?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "transfer",
+      "threshold": 0.0,
+      "threshold_units": "conclusion-specific",
+      "title": "Transfer across time",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H33": {
+      "confirm_units": 8,
+      "data_roles": [
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff at least one carried conclusion meets its own registered rule on the target pool after Holm over the carried conclusions; FAILED iff every carried conclusion is determinate in the opposite direction; NOT_AVAILABLE iff no conclusion was carried or the target data are unavailable; otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "transfer",
+      "endpoint": "carried conclusions (selected on BTCUSDT) re-tested on ETHUSDT confirm days",
+      "estimator": "per conclusion: its own registered estimator",
+      "evidence_level_target": "E7",
+      "family": "transfer",
+      "fidelity": [
+        "F2",
+        "F3"
+      ],
+      "headline": false,
+      "max_units": 40,
+      "pilot": {
+        "key": "h33",
+        "study": "transfer-study-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 2.0548648871287236,
+        "expected_power": 0.9999999999354177,
+        "sd": 0.6703961153341097
+      },
+      "pool": "confirm",
+      "question": "Does at least one promoted execution conclusion transfer across instruments?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "transfer",
+      "threshold": 0.0,
+      "threshold_units": "conclusion-specific",
+      "title": "Transfer across instruments",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H36": {
+      "confirm_units": 16,
+      "data_roles": [
+        "final"
+      ],
+      "decision_rule": "ESTABLISHED iff at least one carried conclusion meets its own registered rule on the target pool after Holm over the carried conclusions; FAILED iff every carried conclusion is determinate in the opposite direction; NOT_AVAILABLE iff no conclusion was carried or the target data are unavailable; otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "transfer",
+      "endpoint": "carried conclusions tested once on the final vault (2025: SOLUSDT linear, BTCUSDT linear, BTCUSDT spot) after surviving synthetic, multi-model, hybrid, bounded-historical, time, instrument and stress rungs",
+      "estimator": "per conclusion: its own registered estimator on vault days",
+      "evidence_level_target": "E9",
+      "family": "transfer",
+      "fidelity": [
+        "F2",
+        "F3"
+      ],
+      "headline": true,
+      "max_units": 36,
+      "pilot": {
+        "key": "h36",
+        "study": "final-analysis-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 3.1205038979099537,
+        "expected_power": 0.8060201480831812,
+        "sd": 4.020327474357408
+      },
+      "pool": "final",
+      "question": "Does at least one execution conclusion survive the entire available reality ladder and the final untouched multi-axis holdout?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "transfer",
+      "threshold": 0.0,
+      "threshold_units": "conclusion-specific",
+      "title": "Survival of the full reality ladder and the final vault",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H5": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "realism",
+      "endpoint": "held-out log score per event of the dynamic model average minus the single model selected on the preceding calibration data",
+      "estimator": "per unit: mean log-score difference",
+      "evidence_level_target": "E4",
+      "family": "realism",
+      "fidelity": [
+        "F1",
+        "F4",
+        "F5"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h5",
+        "study": "model-averaging-v09"
+      },
+      "planning": {
+        "alpha": 0.0071428571428571435,
+        "effect": 0.05528328420364596,
+        "expected_power": 0.9999973158157096,
+        "sd": 0.022338300162502003
+      },
+      "pool": "confirm",
+      "question": "Does dynamic model averaging improve future predictive performance over the best single model?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Multi-fidelity model averaging",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H6": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "fills",
+      "endpoint": "Brier score of P(queue clearance at the touch within 5 s) predicted by the generator calibrated on the execution-aware objective minus the generic-summary calibration (positive = better)",
+      "estimator": "per unit: Brier(generic) - Brier(execution-aware) over registered probe times",
+      "evidence_level_target": "E4",
+      "family": "fills",
+      "fidelity": [
+        "F1",
+        "F4"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h6",
+        "study": "fill-study-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 0.1983882190839627,
+        "expected_power": 0.8908285363395243,
+        "sd": 0.161598562278685
+      },
+      "pool": "confirm",
+      "question": "Does execution-aware calibration improve fill-probability calibration?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side",
+        "queue_clearance_observable"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "Brier score",
+      "title": "Execution-aware calibration and fill-probability calibration",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H7": {
+      "confirm_units": 8,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "fills",
+      "endpoint": "integrated Brier score over 0-30 s of time to queue clearance: Kaplan-Meier minus the best registered survival model (Cox, AFT, boosted, neural)",
+      "estimator": "per unit: IBS difference",
+      "evidence_level_target": "E4",
+      "family": "fills",
+      "fidelity": [
+        "F1"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h7",
+        "study": "survival-study-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 0.04628144268822759,
+        "expected_power": 0.9999688333333681,
+        "sd": 0.02096068209813901
+      },
+      "pool": "confirm",
+      "question": "Do queue-survival models improve time-to-fill (time-to-clearance) prediction?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side",
+        "queue_clearance_observable"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "integrated Brier score",
+      "title": "Queue-survival models vs Kaplan-Meier",
+      "unit": "instrument-day (Bybit linear BTCUSDT and ETHUSDT days of the pool; windows nested in days)"
+    },
+    "H8": {
+      "confirm_units": 10,
+      "data_roles": [
+        "explore",
+        "confirm"
+      ],
+      "decision_rule": "ESTABLISHED iff the Holm-adjusted one-sided lower confidence bound of the oriented effect is > 0 and the point estimate >= the practical threshold; FAILED iff the upper bound is < 0 (the opposite direction is determinate); otherwise NOT_ESTABLISHED",
+      "direction": "increase",
+      "domain": "fills",
+      "endpoint": "mean regret (bps) of the passive-first policy driven by the uncalibrated (KM) fill model minus the calibrated survival model, on the hybrid twin over real backbones",
+      "estimator": "per unit: mean over registered windows",
+      "evidence_level_target": "E3",
+      "family": "fills",
+      "fidelity": [
+        "F3"
+      ],
+      "headline": false,
+      "max_units": 80,
+      "pilot": {
+        "key": "h8",
+        "study": "fill-study-v09"
+      },
+      "planning": {
+        "alpha": 0.0125,
+        "effect": 0.3975232535649992,
+        "expected_power": 0.8069238006253958,
+        "sd": 0.4044630940109466
+      },
+      "pool": "confirm",
+      "question": "Does better fill calibration reduce execution decision regret?",
+      "required_capabilities": [
+        "incremental_l2",
+        "trades_with_side",
+        "queue_clearance_observable"
+      ],
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps of arrival price",
+      "title": "Fill calibration and execution regret",
+      "unit": "backbone instrument-day of the hybrid twin (registered windows nested in days)"
+    }
+  },
+  "not_promoted": {
+    "H1": "NOT_PROMOTED_MEASUREMENT",
+    "H10": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H11": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H12": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H13": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H14": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H15": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H18": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H19": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H20": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H21": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H22": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H24": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H25": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H26": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H27": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H28": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H3": "NOT_PROMOTED_MEASUREMENT",
+    "H30": "NOT_PROMOTED_MEASUREMENT",
+    "H31": "NOT_PROMOTED_MEASUREMENT",
+    "H34": "NOT_PROMOTED_OTHER_REGISTERED_REASON",
+    "H35": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H4": "NOT_PROMOTED_EFFECT_TOO_SMALL",
+    "H9": "NOT_PROMOTED_EFFECT_TOO_SMALL"
+  },
+  "rule": "each promoted hypothesis reads the first `confirm_units` registered slots (primaries in order, failed slots replaced by ordered backups) of its pool; designs are sealed before any confirmatory access",
+  "schema": "cleolob-v09-confirmatory-1"
+}
