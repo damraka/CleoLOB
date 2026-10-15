@@ -63,3 +63,17 @@ def test_transfer_cli_takes_no_phase_as_the_pipeline_invokes_it():
     a = p.parse_args(["transfer-study-v09", "--namespace", "confirm", "--design", "confirm-bounds", "--out", "x",
                       "--input", "bounds=r", "--input", "late=s"])
     assert a.input == [("bounds", "r"), ("late", "s")] and not hasattr(a, "phase")
+
+
+def test_final_continual_unit_order_matches_the_study_units():
+    from lob.v09.studies import final
+    days = {"bybit-linear:BTCUSDT": ["bybit-linear-btcusdt-2024-02-23", "bybit-linear-btcusdt-2023-11-18",
+                                     "bybit-linear-btcusdt-2024-02-10"],
+            "bybit-linear:ETHUSDT": ["bybit-linear-ethusdt-2023-11-18", "bybit-linear-ethusdt-2024-02-10",
+                                     "bybit-linear-ethusdt-2024-02-23"]}
+    row = lambda s: {"days": sorted(s, key=lambda d: d[-10:]),  # noqa: E731
+                     "methods": {m: {"forgetting": {"0": 0.1, "1": 0.2}} for m in ("naive", "replay")}}
+    units = continual.units_of([row(v) for v in days.values()])          # (instrument, every earlier day)
+    order = final.unit_order("H16", {"sequences": days}, units)
+    assert order == list(units) and len(order) == 4
+    assert final.first_units(order, 4, synthetic=False) == order

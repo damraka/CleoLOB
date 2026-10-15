@@ -68,8 +68,8 @@ def unit_order(h: str, design: dict, values: dict) -> list[str]:
     """Registered unit order of the sealed design."""
     if h in SYNTHETIC:
         return sorted(values)
-    if "sequences" in design:
-        return [d for s in design["sequences"].values() for d in sorted(s, key=lambda x: x[-10:])[1:]]
+    if "sequences" in design:                      # continual units: (instrument, every earlier day k)
+        return [d for s in design["sequences"].values() for d in sorted(s, key=lambda x: x[-10:])[:-1]]
     if "plan" in design:
         return [d for v in design["plan"].values() for d in v["test"]]
     if "test_datasets" in design:
@@ -136,7 +136,8 @@ def run(args) -> dict:
         vals = [values[u] for u in chosen]
         st = D.evaluate(reg["test"], vals, threshold=float(reg["threshold"]),
                         level=float(reg.get("agreement_level") or 0.0), seed=seeds[i])
-        stats[h] = {**st, "units_used": chosen, "unit_values": vals, "design": dname, "run": closed[dname]}
+        stats[h] = {**st, "units_used": chosen, "unit_values": vals, "design": dname, "run": closed[dname],
+                    "units_registered": int(reg["confirm_units"]), "units_available": len(order)}
 
     decided: dict[str, dict] = {}
     for fam_name, fam in families.items():
