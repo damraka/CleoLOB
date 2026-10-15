@@ -22,7 +22,7 @@ from ..v08 import figures
 from . import artifacts, claims, protocol as pr
 
 BASE = "results/v09"
-EXCLUDE_PARTS = ("dev", "smoke")
+EXCLUDE_PARTS = ("dev", "smoke", "dryrun")          # dry runs are engineering checks, never evidence
 FMT = lambda x: "—" if x is None else (f"{x:.4g}" if isinstance(x, float) else str(x))  # noqa: E731
 
 
@@ -49,8 +49,8 @@ def registry(root: Path) -> dict:
 
 
 def hypothesis_markdown(final: dict) -> str:
-    lines = ["| H | Title | Promotion | Status | Estimate | 95% interval | Threshold | Units | Evidence |",
-             "|---|---|---|---|---|---|---|---|---|"]
+    lines = ["| H | Title | Promotion | Status | Estimate | 95% interval of the tested quantity | Threshold | "
+             "Units (used / registered) | Evidence |", "|---|---|---|---|---|---|---|---|---|"]
     for h, r in final["hypotheses"].items():
         iv = r.get("interval_95") or {}
         interval = "—" if not iv else f"[{FMT(iv.get('ci_low'))}, {FMT(iv.get('ci_high'))}]"
@@ -59,11 +59,17 @@ def hypothesis_markdown(final: dict) -> str:
             t = r["transfer"]
             best = [f"{c}: {v.get('status')}" for c, v in (t.get("conclusions") or {}).items()]
             estimate = "; ".join(best) or "—"
-            units = len(t.get("target_units") or [])
+            units = f"{len(t.get('target_units') or [])} / {t.get('confirm_units', '—')}"
         else:
             estimate = FMT(r.get("estimate"))
+            if r.get("units_registered") is not None:
+                units = f"{units} / {r['units_registered']}"
         lines.append(f"| {h} | {r['title']} | {r['promotion']} | **{r['status']}** | {estimate} | {interval} | "
                      f"{FMT(r['threshold'])} {r['threshold_units']} | {FMT(units)} | {r.get('evidence_level') or '—'} |")
+    lines += ["", "The estimate is the mean unit value. The interval is the paired percentile bootstrap interval of the "
+              "tested quantity: the unit value (superiority), value + margin (noninferiority) or agreement - "
+              "agreement level (agreement). Transfer rows list each carried conclusion's status on the target pool; "
+              "their unit count rounds the registered count up to an equal number of days per target stream."]
     return "\n".join(lines) + "\n"
 
 
