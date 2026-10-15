@@ -67,3 +67,18 @@ def test_batch_cli_exit_code_propagates(v09_root, tmp_path) -> None:
     rc = subprocess.call([sys.executable, "-m", "lob.v09.batch", str(spec), "--root", str(v09_root),
                           "--logdir", str(tmp_path / "logs"), "--min-free-gb", "0"])
     assert rc == 1
+
+
+def test_pipeline_data_rounds_use_a_fresh_directory_after_a_sealed_round(v09_root) -> None:
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("v09_pipeline", Path(__file__).resolve().parents[1] / "tools" /
+                                                  "v09_pipeline.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    base = "results/v09/confirm"
+    assert mod.fresh(v09_root, base, "data-prep") == f"{base}/data-prep"
+    o = artifacts.new_run(v09_root / base / "data-prep")
+    artifacts.finalize(o, analysis="t", config={}, result={}, root=v09_root, check_source=False)
+    assert mod.target(v09_root, base, "data-prep") is None          # a sealed study step is skipped ...
+    assert mod.fresh(v09_root, base, "data-prep") == f"{base}/data-prep-2"   # ... a new data round is not

@@ -55,6 +55,14 @@ def target(root: Path, base: str, name: str) -> str | None:
         k += 1
 
 
+def fresh(root: Path, base: str, name: str) -> str:
+    """The first attempt name not yet used (each data-preparation round is a new sealed run)."""
+    k = 1
+    while (root / (rel := f"{base}/{name}" + ("" if k == 1 else f"-{k}"))).exists():
+        k += 1
+    return rel
+
+
 def cli(root: Path, args: list[str], logfile: Path, min_free: float, out: str | None = None) -> int:
     """One fail-closed step (lob.v09.batch): 0 only if the child exits 0 and ``out`` is sealed and valid; a failure
     is ledgered as a retained attempt."""
@@ -114,7 +122,7 @@ def step_data(root: Path, ns, design: str = "confirm-data", namespace: str = "co
         if not missing:
             log(f"all {len(ids)} datasets prepared")
             return
-        out = target(root, base, "data-prep")
+        out = fresh(root, base, "data-prep")
         args = ["validate-market-data-v09", "--namespace", namespace, "--design", design, "--out", out,
                 "--workers", str(ns.workers)]
         for d in missing:
