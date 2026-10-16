@@ -51,13 +51,15 @@ It is a research framework, not a production trading system.
 Negative, null, and failed results are retained rather than removed from the research record.
 
 <!-- v09:start -->
-### v0.9: reality-calibrated market twins, execution science and safe adaptation
+### v0.9.0: reality-calibrated market twins, execution science and safe adaptation (current release)
 
 v0.9 asks which execution conclusions survive when reconstruction uncertainty, latent liquidity, strategic response,
 multi-fidelity simulation, drift and real historical validation are considered together. The protocol and 36
 candidate hypotheses were frozen before any exploratory access (`configs/v09/`). A registered gate promoted 12
 hypotheses and carried three execution conclusions ([C09-PROMOTION]). Confirmatory designs were sealed before any
-confirmatory day was read, and the untouched 2025 vault was opened once, after the confirmatory phase closed.
+confirmatory day was read, and the untouched 2025 vault was opened once, after the confirmatory phase closed. The
+registered studies ran on the research branch at development version `0.9.0.dev0` and are released unchanged in
+`v0.9.0`.
 
 | Question | v0.9 result |
 |---|---|
@@ -156,7 +158,8 @@ unchanged in `v0.6.0`:
 
 See the [v0.6 report](docs/v06-paper.md) and the [final report and claim table](docs/v06-final-report.md).
 
-The [v0.8 final report](docs/v08-final-report.md) documents the latest release, `v0.8.0`.
+The [v0.9 final report](docs/v09-final-report.md) documents the latest release, `v0.9.0`.
+The [v0.8 final report](docs/v08-final-report.md) documents `v0.8.0`.
 The [v0.7 final report](docs/v07-final-report.md) documents `v0.7.0`.
 The [v0.6 final report](docs/v06-final-report.md) documents `v0.6.0`.
 The [v0.5 research report](docs/v05-paper.md) and
@@ -382,6 +385,8 @@ cleo verify-v07 --bundle examples/studies/v07/evidence
 cleo protocol-v07 verify
 cleo verify-v08 --bundle examples/studies/v08
 cleo protocol-v08 verify
+cleo verify-v09 --bundle examples/studies/v09
+cleo protocol-v09 verify
 ```
 
 The v0.4 release passed **817 tests**, cross-platform GitHub CI on Windows/Linux with
@@ -441,6 +446,10 @@ including every failed, null, vacuous, aborted and invalid outcome, are in the
 v0.8, **decision uncertainty, adaptive calibration and adaptive execution**, was released as `v0.8.0`.
 Its preregistered results, including the FAILED, NOT_AVAILABLE and retained INVALID outcomes, are in
 the [v0.8 report](docs/v08-paper.md) and the [final report](docs/v08-final-report.md).
+
+v0.9, **reality-calibrated market twins, execution science and safe adaptation**, was released as `v0.9.0`.
+Its preregistered results, including the 24 NOT_ESTABLISHED candidates, the post-hoc Amendment 3 and every retained
+failed attempt, are in the [v0.9 report](docs/v09-paper.md) and the [final report](docs/v09-final-report.md).
 
 ## Documentation
 
