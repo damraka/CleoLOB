@@ -1,0 +1,14 @@
+[
+ {
+  "figure": "hypothesis_status_counts.svg",
+  "data": "hypothesis_status_counts.json",
+  "run": "final",
+  "pointer": "/hypotheses/*/status"
+ },
+ {
+  "figure": "confirmatory_effects_over_threshold.svg",
+  "data": "confirmatory_effects_over_threshold.json",
+  "run": "final",
+  "pointer": "/hypotheses/*/estimate"
+ }
+]

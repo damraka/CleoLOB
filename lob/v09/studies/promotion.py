@@ -1,0 +1,181 @@
+"""hypothesis-promotion-v09 run (M2): collect the exploratory pilot records and apply the registered promotion gate.
+
+Inputs (``--input KEY=RUN``, every one a sealed explore-namespace pilot run): ``bounds``, ``survival``, ``impact``,
+``tpp``, ``sequence``, ``latent``, ``hybrid``, ``inference``, ``meta``, ``continual``, ``conformal``,
+``representation``, ``decisions``, ``fills``, ``strategic``, ``active``, ``abstention``, ``dro``, ``mpc``,
+``rare_event``, ``rl``. A missing input leaves its candidates without a pilot (NOT_PROMOTED_OTHER_REGISTERED_REASON).
+
+Execution conclusions (protocol ``conclusions``) pass the same gate (their own threshold, the decisions family alpha
+divided by the number of conclusions, at most the 40 BTCUSDT confirm days, piloted on the BTCUSDT explore days: the
+registered H33 statement selects conclusions on BTCUSDT and re-tests them on ETHUSDT); the promoted ones are
+*carried*. Transfer candidates follow
+the registered rule: the pilot record of H32 / H33 / H34 / H36 is that of the carried conclusion with the largest
+planning effect relative to its own threshold, on the explore streams most like the target (BTCUSDT / ETHUSDT /
+Binance L1 / all), with the effect expressed as (conclusion effect - conclusion threshold); no carried conclusion
+(L1-identifiable for H34) -> no pilot -> not promoted. H9 = conclusion C5 and H23 = conclusion C1 pilots.
+"""
+from __future__ import annotations
+
+import json
+import math
+
+from .. import promotion as P, protocol as pr
+from . import common
+
+ANALYSIS = "hypothesis-promotion-v09"
+SOURCES = {"hybrid": ("H1", "H12"), "tpp": ("H2", "H5"), "sequence": ("H3",), "latent": ("H4",), "fills": ("H6",),
+           "survival": ("H7",), "decisions": ("H8", "H18", "H19", "H22", "H25", "H29", "H30", "H31"),
+           "impact": ("H10",), "strategic": ("H11",), "active": ("H13",), "inference": ("H14",), "meta": ("H15",),
+           "continual": ("H16",), "conformal": ("H17",), "abstention": ("H20",), "dro": ("H21",), "mpc": ("H24",),
+           "rl": ("H26", "H27"), "rare_event": ("H28",), "representation": ("H35",)}
+TRANSFER = {"H32": "pilot_btc", "H33": "pilot_eth", "H34": "pilot_l1", "H36": "pilot"}
+
+
+def halves(key: str, h: str, res: dict) -> tuple[list, list] | None:
+    """Per-unit split-half values of pilot runs sealed before records stored them (read from the sealed units)."""
+    units = res.get("units") or {}
+    rows = list(units.values()) if isinstance(units, dict) else []
+    if key == "impact":
+        return [r["odd"]["effect"] for r in rows], [r["even"]["effect"] for r in rows]
+    if key == "conformal":
+        return [r["methods"]["aci"]["odd"] - 0.9 for r in rows], [r["methods"]["aci"]["even"] - 0.9 for r in rows]
+    if key == "tpp":
+        k = h.lower()
+        return [r[f"{k}_odd"] for r in rows if f"{k}_odd" in r], [r[f"{k}_even"] for r in rows if f"{k}_even" in r]
+    if key == "continual":
+        vals = res["effects"][res["selected"]]
+        n = min(len(vals[1::2]), len(vals[0::2]))
+        return vals[1::2][:n], vals[0::2][:n]
+    if rows and "odd" in rows[0]:
+        return [r["odd"] for r in rows], [r["even"] for r in rows]
+    return None
+
+
+def collect(args) -> tuple[dict, dict]:
+    pilots, provenance = {}, {}
+    runs = common.inputs(args)
+    for key, hyps in SOURCES.items():
+        if key not in runs:
+            continue
+        res = common.read_input(args, key)
+        for h in hyps:
+            rec = (res.get("pilot") or {}).get(h)
+            if rec is None:
+                continue
+            if not rec.get("odd_values"):
+                hv = halves(key, h, res)
+                if hv is not None:
+                    pairs = [(a, b) for a, b in zip(*hv) if a is not None and b is not None]
+                    rec = {**rec, "odd_values": [a for a, _ in pairs], "even_values": [b for _, b in pairs],
+                           "halves_source": "reconstructed from the sealed per-unit results"}
+            pilots[h] = rec
+            provenance[h] = runs[key]
+    return pilots, provenance
+
+
+def conclusions(protocol: dict, bounds: dict, rules: dict, families: dict) -> dict:
+    fam = families["families"]["decisions"]
+    out = {}
+    n = len(protocol["conclusions"]["set"])
+    for cid, c in protocol["conclusions"]["set"].items():
+        # registered H33 statement: conclusions are selected on BTCUSDT and re-tested on ETHUSDT, so the primary
+        # (carried) test of every conclusion uses BTCUSDT confirm days only and is piloted on BTCUSDT explore days
+        rec = bounds["conclusions"][cid].get("pilot_btc") or bounds["conclusions"][cid]["pilot"]
+        cand = {"test": "superiority", "threshold": float(c["threshold_bps"]), "max_units": 40,
+                "required_capabilities": ["incremental_l2", "trades_with_side"], "family": "decisions"}
+        out[cid] = P.decide(cid, cand, rec, rules=rules, family=fam, family_size=n)
+    return out
+
+
+def transfer_pilots(protocol: dict, bounds: dict, carried: list[str], rules: dict) -> dict:
+    out = {}
+    for h, key in TRANSFER.items():
+        best = None
+        for cid in carried:
+            c = protocol["conclusions"]["set"][cid]
+            if h == "H34" and c["identifiability"] != "L1":
+                continue
+            rec = bounds["conclusions"][cid].get(key)
+            if not rec or rec.get("effect") is None or rec.get("sd") is None or rec["units"] < 2:
+                continue
+            se = rec["sd"] / math.sqrt(rec["units"])
+            planning = rec["effect"] - c["threshold_bps"] - rules["shrinkage_se"] * se
+            if best is None or planning > best[0]:
+                best = (planning, cid, rec, c)
+        if best is not None:
+            _, cid, rec, c = best
+            out[h] = {**rec, "effect": rec["effect"] - c["threshold_bps"],
+                      "unit_values": [v - c["threshold_bps"] for v in rec.get("unit_values", [])],
+                      "conclusion": cid, "capabilities": {**rec.get("capabilities", {}), "l1_quotes": True,
+                                                          "incremental_l2": True, "trades_with_side": True}}
+    return out
+
+
+def gather(args) -> dict:
+    """Registered rules, candidates and every pilot record (shared by the feasibility report and the run)."""
+    root = common.root_of(args)
+    protocol = pr.load_protocol(root / pr.PROTOCOL_PATH)
+    candidates = json.loads((root / pr.CANDIDATES_PATH).read_text(encoding="utf-8"))
+    families = json.loads((root / pr.CONFIG_DIR / "statistical-families.json").read_text(encoding="utf-8"))
+    rules = {k: protocol["promotion_rules"][k] for k in ("min_reliability", "min_pilot_units", "min_power",
+                                                         "shrinkage_se", "min_confirm_units", "compute_hours_ceiling")}
+    rules["reliability_rule"] = protocol["promotion_rules"].get("reliability_rule", "spearman_brown_split_half")
+    pilots, provenance = collect(args)
+    bounds = common.read_input(args, "bounds") if "bounds" in common.inputs(args) else None
+    concl = conclusions(protocol, bounds, rules, families) if bounds else {}
+    carried = [c for c, d in concl.items() if d["outcome"] == "PROMOTED"]
+    if bounds:
+        pilots["H9"] = bounds["conclusions"]["C5"]["pilot"]
+        pilots["H23"] = bounds["conclusions"]["C1"]["pilot"]
+        provenance["H9"] = provenance["H23"] = common.inputs(args)["bounds"]
+        for h, rec in transfer_pilots(protocol, bounds, carried, rules).items():
+            pilots[h] = rec
+            provenance[h] = common.inputs(args)["bounds"]
+    return {"root": root, "protocol": protocol, "candidates": candidates, "families": families, "rules": rules,
+            "pilots": pilots, "provenance": provenance, "bounds": bounds, "conclusions": concl, "carried": carried}
+
+
+def feasibility(args) -> dict:
+    """Sealed pre-promotion feasibility report (explore namespace): access probe, ESS, power, compute."""
+    from .. import feasibility as FE
+    g = gather(args)
+    missing = [h for h in g["candidates"]["hypotheses"] if h not in g["pilots"]]
+    out = common.start(args)
+    result = {"access": FE.probe_pools(g["root"]),
+              "power": FE.power_table(g["candidates"]["hypotheses"], g["pilots"], g["families"]["families"],
+                                      g["rules"], FE.unit_maps(g["root"], common.inputs(args))),
+              "pilot_records": sorted(g["pilots"]), "no_pilot_record": missing,
+              "label": "feasibility input to promotion (descriptive); the registered gate is unchanged"}
+    return common.finish(args, out, analysis="promotion-feasibility-v09", config={"inputs": common.inputs(args)},
+                         result=result)
+
+
+def run(args) -> dict:
+    g = gather(args)
+    root, protocol, candidates, families, rules = g["root"], g["protocol"], g["candidates"], g["families"], g["rules"]
+    pilots, provenance, bounds, concl, carried = g["pilots"], g["provenance"], g["bounds"], g["conclusions"], g["carried"]
+    _, state = pr.state_of(root)
+    if state.promotion is not None:
+        raise ValueError("the confirmatory registry is already promoted; promotion runs exactly once")
+    out = common.start(args)
+    decision = P.promote(candidates, pilots, rules=rules, families=families)
+    original_rules = {**rules, "reliability_rule": "spearman_brown_split_half"}
+    original = P.promote(candidates, pilots, rules=original_rules, families=families)
+    original_concl = conclusions(protocol, bounds, original_rules, families) if bounds else {}
+    units = {h: d["required_units"] for h, d in decision["decisions"].items() if d["outcome"] == "PROMOTED"}
+    registry = P.confirmatory_registry(candidates, decision, extra={
+        "carried_conclusions": {c: {**protocol["conclusions"]["set"][c], "confirm_units": concl[c]["required_units"]}
+                                for c in carried},
+        "conclusion_decisions": {c: {k: concl[c][k] for k in ("outcome", "reason") if k in concl[c]} for c in concl},
+        "confirm_units": units,
+        "rule": "each promoted hypothesis reads the first `confirm_units` registered slots (primaries in order, failed "
+                "slots replaced by ordered backups) of its pool; designs are sealed before any confirmatory access"})
+    result = {"promotion": decision, "confirmatory_registry": registry, "pilot_provenance": provenance,
+              "sensitivity_original_gate": {"promoted": original["promoted"], "not_promoted": original["not_promoted"],
+                                            "carried": [c for c, d in original_concl.items()
+                                                        if d["outcome"] == "PROMOTED"],
+                                            "note": "decisions under the gate as frozen before amendment 3"},
+              "conclusions": concl, "carried": carried, "rules": rules,
+              "summary": {"promoted": decision["promoted"], "not_promoted": decision["not_promoted"]}}
+    return common.finish(args, out, analysis=ANALYSIS, config={"inputs": common.inputs(args), "rules": rules},
+                         result=result)

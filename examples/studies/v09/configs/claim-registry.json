@@ -1,0 +1,253 @@
+{
+  "schema": "cleolob-v09-claim-registry-1",
+  "marker_pattern": "[C09-<id>]",
+  "rule": "documents cite claims by marker; claim-audit-v09 resolves each marker to the final analysis value and fails closed on any mismatch, missing qualifier or failed source",
+  "claims": {
+    "H1": {
+      "hypothesis": "H1",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H1/status",
+      "statement": "Hybrid replay vs fully generative response realism"
+    },
+    "H2": {
+      "hypothesis": "H2",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H2/status",
+      "statement": "Neural temporal point process vs classical point processes"
+    },
+    "H3": {
+      "hypothesis": "H3",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H3/status",
+      "statement": "Sequence models vs classical conditional event models"
+    },
+    "H4": {
+      "hypothesis": "H4",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H4/status",
+      "statement": "Latent dynamics vs classical path realism"
+    },
+    "H5": {
+      "hypothesis": "H5",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H5/status",
+      "statement": "Multi-fidelity model averaging"
+    },
+    "H6": {
+      "hypothesis": "H6",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H6/status",
+      "statement": "Execution-aware calibration and fill-probability calibration"
+    },
+    "H7": {
+      "hypothesis": "H7",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H7/status",
+      "statement": "Queue-survival models vs Kaplan-Meier"
+    },
+    "H8": {
+      "hypothesis": "H8",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H8/status",
+      "statement": "Fill calibration and execution regret"
+    },
+    "H9": {
+      "hypothesis": "H9",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H9/status",
+      "statement": "Adverse-selection-aware passive execution"
+    },
+    "H10": {
+      "hypothesis": "H10",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H10/status",
+      "statement": "State-dependent impact vs square-root impact"
+    },
+    "H11": {
+      "hypothesis": "H11",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H11/status",
+      "statement": "Self-impact and large-mandate rankings"
+    },
+    "H12": {
+      "hypothesis": "H12",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H12/status",
+      "statement": "Strategic response vs static ecology realism"
+    },
+    "H13": {
+      "hypothesis": "H13",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H13/status",
+      "statement": "Active calibration efficiency"
+    },
+    "H14": {
+      "hypothesis": "H14",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H14/status",
+      "statement": "Sequential posterior updating after drift"
+    },
+    "H15": {
+      "hypothesis": "H15",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H15/status",
+      "statement": "Few-shot / meta adaptation vs full refit"
+    },
+    "H16": {
+      "hypothesis": "H16",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H16/status",
+      "statement": "Continual calibration and forgetting"
+    },
+    "H17": {
+      "hypothesis": "H17",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H17/status",
+      "statement": "Adaptive conformal coverage under drift"
+    },
+    "H18": {
+      "hypothesis": "H18",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H18/status",
+      "statement": "Disagreement predicts regret"
+    },
+    "H19": {
+      "hypothesis": "H19",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H19/status",
+      "statement": "Abstention v3 and incorrect selection"
+    },
+    "H20": {
+      "hypothesis": "H20",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H20/status",
+      "statement": "Contextual fallback and catastrophic degradation"
+    },
+    "H21": {
+      "hypothesis": "H21",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H21/status",
+      "statement": "Distributionally robust execution and worst-case regret"
+    },
+    "H22": {
+      "hypothesis": "H22",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H22/status",
+      "statement": "Chance-constrained completion reliability"
+    },
+    "H23": {
+      "hypothesis": "H23",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H23/status",
+      "statement": "Robust MPC and tail execution cost"
+    },
+    "H24": {
+      "hypothesis": "H24",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H24/status",
+      "statement": "Adaptive MPC after regime drift"
+    },
+    "H25": {
+      "hypothesis": "H25",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H25/status",
+      "statement": "Meta-policy vs best global policy"
+    },
+    "H26": {
+      "hypothesis": "H26",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H26/status",
+      "statement": "Offline RL safe improvement"
+    },
+    "H27": {
+      "hypothesis": "H27",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H27/status",
+      "statement": "Conservative gating and harmful deployments"
+    },
+    "H28": {
+      "hypothesis": "H28",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H28/status",
+      "statement": "Rare-event-aware optimization"
+    },
+    "H29": {
+      "hypothesis": "H29",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H29/status",
+      "statement": "Synthetic ranking predicts hybrid ranking"
+    },
+    "H30": {
+      "hypothesis": "H30",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H30/status",
+      "statement": "Hybrid ranking predicts bounded-historical ranking"
+    },
+    "H31": {
+      "hypothesis": "H31",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H31/status",
+      "statement": "Multi-fidelity consensus vs synthetic-only"
+    },
+    "H32": {
+      "hypothesis": "H32",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H32/status",
+      "statement": "Transfer across time"
+    },
+    "H33": {
+      "hypothesis": "H33",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H33/status",
+      "statement": "Transfer across instruments"
+    },
+    "H34": {
+      "hypothesis": "H34",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H34/status",
+      "statement": "Transfer across venues"
+    },
+    "H35": {
+      "hypothesis": "H35",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H35/status",
+      "statement": "Learned representations and transfer"
+    },
+    "H36": {
+      "hypothesis": "H36",
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/hypotheses/H36/status",
+      "statement": "Survival of the full reality ladder and the final vault"
+    },
+    "DATA": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/data_availability",
+      "statement": "registered data availability and consumption"
+    },
+    "GATE": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/realism_gate/global",
+      "statement": "capability-specific realism gate outcome"
+    },
+    "PROMOTION": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/promotion/promoted",
+      "statement": "candidates promoted by the registered gate"
+    },
+    "LADDER": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/ladder",
+      "statement": "evidence level reached by each carried execution conclusion"
+    },
+    "GAP": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/reality_gap",
+      "statement": "reality-gap decomposition of the generators"
+    },
+    "INCIDENTS": {
+      "source_analysis": "final-analysis-v09",
+      "pointer": "/incidents",
+      "statement": "scientific incident record"
+    }
+  }
+}

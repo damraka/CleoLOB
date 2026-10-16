@@ -17,3 +17,4 @@ configs/v06/** text eol=lf
 
 # v0.8 protocol inputs, designs and ledger: LF so appended ledger lines never mix line endings.
 configs/v08/** text eol=lf
+configs/v09/** text eol=lf
