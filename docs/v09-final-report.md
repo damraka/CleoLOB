@@ -1,5 +1,9 @@
 # v0.9 final report: reality-calibrated market twins, execution science and safe adaptation
 
+**Branch and version.** Branch `research/v0.9-reality-calibrated-twins`, package version `0.9.0.dev0`. The
+registered studies ran at that development version and are released unchanged as `v0.9.0` (release notes:
+[v09-release-notes.md](v09-release-notes.md)).
+
 Every status below is read mechanically from the sealed final analysis `results/v09/final/final-analysis` (bundled
 under `examples/studies/v09/runs/final/final-analysis`). Each status was decided under the frozen protocol
 (`configs/v09/protocol.json`) and the frozen confirmatory registry (`configs/v09/hypotheses-confirmatory.json`,

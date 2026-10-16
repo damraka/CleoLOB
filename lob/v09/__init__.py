@@ -9,4 +9,4 @@ v0.9 is a bounded research framework. Nothing in it is a live-trading system, a 
 historical fill or a measurement of real exchange latency.
 """
 
-VERSION = "0.9.0.dev0"
+VERSION = "0.9.0"
