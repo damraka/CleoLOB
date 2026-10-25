@@ -1,0 +1,1023 @@
+{
+  "consumed_through": "2025-08-31",
+  "dataset_count": 169,
+  "datasets": {
+    "binance-um-btcusdt-2023-08-19": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-08-21": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-08-27": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-08-29": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-09-02": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-09-12": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-10-08": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-10-17": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-btcusdt-2023-10-23": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-08-19": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-08-21": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-08-27": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-08-29": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-09-02": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-09-12": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-10-08": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-10-17": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "binance-um-ethusdt-2023-10-23": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bitmex-xbtusd-2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "bitstamp-btcusd-mbo-dev": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "bitstamp-btcusd-mbo-validation": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "bybit-linear-btcusdt-2023-07-15": {
+      "roles": [
+        "development"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-08-19": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-08-21": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-08-27": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-08-29": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-09-02": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-09-12": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-10-08": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-10-17": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-11-04": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-11-09": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-11-12": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-11-15": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-11-18": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-12-02": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-12-04": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-12-07": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2023-12-12": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-01-01": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-01-12": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-01-22": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-01-23": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-02": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-08": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-10": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-14": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-18": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-21": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-02-23": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-08": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-10": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-11": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-14": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-15": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-18": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-03-19": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-06-01": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-06-10": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-07-07": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-07-24": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-07-25": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-08-01": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-08-16": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-09-16": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-09-29": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-10-03": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-10-17": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-10-27": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-11-01": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-12-02": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-12-03": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-12-12": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2024-12-21": {
+      "roles": [
+        "confirm_late"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-05-06": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-05-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-06-05": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-06-14": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-06-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-07-07": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-07-08": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-07-10": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-07-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-07-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-08-03": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-btcusdt-2025-08-19": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-08-19": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-08-21": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-08-27": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-08-29": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-09-02": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-09-12": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-10-08": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-10-17": {
+      "roles": [
+        "explore"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-11-12": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-11-18": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2023-12-07": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2024-02-02": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2024-02-10": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2024-02-21": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2024-02-23": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-ethusdt-2024-03-08": {
+      "roles": [
+        "confirm"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-05-06": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-05-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-06-05": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-06-14": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-06-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-07-07": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-07-08": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-07-10": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-07-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-07-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-08-03": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-linear-solusdt-2025-08-19": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-05-06": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-05-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-06-14": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-06-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-07-07": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-07-10": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-07-20": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-07-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-08-03": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-08-19": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-08-21": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-08-27": {
+      "roles": [
+        "final"
+      ],
+      "version": "v0.9"
+    },
+    "bybit-spot-btcusdt-2025-09-20": {
+      "roles": [
+        "development"
+      ],
+      "version": "v0.9"
+    },
+    "deribit-btc-perp-2020-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-btc-perp-2020-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-btc-perp-2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-04-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-05-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-06-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-10-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2020-12-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit-eth-perp-2021-01-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:BTC-PERPETUAL:2026-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:BTC-PERPETUAL:2026-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:BTC-PERPETUAL:2026-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2020-04-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2020-05-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2020-06-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2026-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2026-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "deribit:ETH-PERPETUAL:2026-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:bitmex:xbtusd:2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2020-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2020-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2026-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2026-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:btc-perpetual:2026-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-04-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-05-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-06-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-10-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-11-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2020-12-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2021-01-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2026-07-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2026-08-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    },
+    "period:deribit:eth-perpetual:2026-09-01": {
+      "evidence": "configs/v08/consumption-ledger.jsonl@411:682d234b46211483c02118631aa0d3788b9db156c0ab6424cf5c1c979d803433",
+      "version": "v0.5-v0.8"
+    }
+  },
+  "dates_with_reads": [
+    "2020-04-01",
+    "2020-05-01",
+    "2020-06-01",
+    "2020-07-01",
+    "2020-08-01",
+    "2020-09-01",
+    "2020-10-01",
+    "2020-11-01",
+    "2020-12-01",
+    "2021-01-01",
+    "2023-07-15",
+    "2023-08-19",
+    "2023-08-21",
+    "2023-08-27",
+    "2023-08-29",
+    "2023-09-02",
+    "2023-09-12",
+    "2023-10-08",
+    "2023-10-17",
+    "2023-10-23",
+    "2023-11-04",
+    "2023-11-09",
+    "2023-11-12",
+    "2023-11-15",
+    "2023-11-18",
+    "2023-12-02",
+    "2023-12-04",
+    "2023-12-07",
+    "2023-12-12",
+    "2024-01-01",
+    "2024-01-12",
+    "2024-01-22",
+    "2024-01-23",
+    "2024-02-02",
+    "2024-02-08",
+    "2024-02-10",
+    "2024-02-14",
+    "2024-02-18",
+    "2024-02-21",
+    "2024-02-23",
+    "2024-03-08",
+    "2024-03-10",
+    "2024-03-11",
+    "2024-03-14",
+    "2024-03-15",
+    "2024-03-18",
+    "2024-03-19",
+    "2024-06-01",
+    "2024-06-10",
+    "2024-07-07",
+    "2024-07-24",
+    "2024-07-25",
+    "2024-08-01",
+    "2024-08-16",
+    "2024-09-16",
+    "2024-09-29",
+    "2024-10-03",
+    "2024-10-17",
+    "2024-10-27",
+    "2024-11-01",
+    "2024-12-02",
+    "2024-12-03",
+    "2024-12-12",
+    "2024-12-21",
+    "2025-05-06",
+    "2025-05-21",
+    "2025-06-05",
+    "2025-06-14",
+    "2025-06-20",
+    "2025-07-07",
+    "2025-07-08",
+    "2025-07-10",
+    "2025-07-20",
+    "2025-07-21",
+    "2025-08-03",
+    "2025-08-19",
+    "2025-08-21",
+    "2025-08-27",
+    "2025-09-20",
+    "2026-07-01",
+    "2026-08-01",
+    "2026-09-01"
+  ],
+  "excluded_dates": {
+    "2025-09-20": "v0.9 Bybit spot BTCUSDT format day (development access)",
+    "2026-07-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample",
+    "2026-08-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample",
+    "2026-09-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample"
+  },
+  "rule": "dates <= consumed_through are period-consumed for every venue; excluded dates likewise",
+  "schema": "cleolob-v1-consumed-inventory-1",
+  "source": "configs/v09/consumption-ledger.jsonl"
+}
