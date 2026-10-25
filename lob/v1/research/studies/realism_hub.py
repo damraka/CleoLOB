@@ -93,7 +93,6 @@ def mmd(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def fold(held: str, held_path: str, train_paths: list[str], seed: int) -> dict:
-    from ....v09.generators import classical as G9
     from ...data import daycache as DC
     from ...realism import gate as GT, metrics as MT
     from ...runtime import cap_threads
