@@ -138,3 +138,14 @@ def test_vault_dates_are_last_and_untouched():
             e = json.loads(line)
             if e["event"] == "access" and e["dataset"] and e["dataset"][-10:] in vault:
                 raise AssertionError(f"vault dataset accessed: {e['dataset']}")
+
+
+def test_controls_module_negative_positive_falsification():
+    from lob.v1.research import controls as CT
+    rng = np.random.default_rng(11)
+    cv = vals(rng.standard_normal(12))
+    assert CT.negative_self({"a": 0.0, "b": 0.0})["passed"] and not CT.negative_self({"a": 1e-3})["passed"]
+    assert CT.negative_placebo(cv, reps=100)["passed"]
+    assert CT.positive_injection(cv, 2.0, reps=50)["passed"]
+    assert CT.falsification(vals(rng.standard_normal(12) * 0.1))["passed"]
+    assert not CT.falsification(vals(3 + rng.standard_normal(12) * 0.1))["passed"]
