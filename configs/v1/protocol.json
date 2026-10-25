@@ -1,0 +1,553 @@
+{
+  "amendment_policy": "numbered, hashed amendments; after any guarded access every amendment is posthoc, disclosed as an incident with both analyses reported",
+  "base_commit": "164cda59f6c1ed13dceed3008a29ed252591a5f2",
+  "carried_from_v09": {
+    "completion_constraints": {
+      "catastrophe_bps": 25.0,
+      "decision_dt_s": 5.0,
+      "horizon_s": 300.0,
+      "lexicographic": [
+        "complete within the horizon",
+        "hard risk constraints",
+        "minimize tail cost (CVaR90)",
+        "minimize mean cost"
+      ],
+      "residual": "unfinished quantity is valued by walking the end-of-horizon book plus the registered 25 bps penalty; reported separately",
+      "warmup_s": 30.0
+    },
+    "conclusions": {
+      "C1": {
+        "control": "twap",
+        "direction": "decrease",
+        "endpoint": "cvar90_is_bps",
+        "mandate": "medium",
+        "threshold_bps": 1.0,
+        "treatment": "mpc_cvar"
+      },
+      "C2": {
+        "control": "sweep",
+        "direction": "decrease",
+        "endpoint": "mean_is_bps",
+        "mandate": "large",
+        "threshold_bps": 1.0,
+        "treatment": "twap"
+      },
+      "C3": {
+        "control": "twap",
+        "direction": "decrease",
+        "endpoint": "mean_is_bps",
+        "mandate": "small",
+        "threshold_bps": 0.25,
+        "treatment": "passive_deadline"
+      }
+    },
+    "cost_endpoints": {
+      "bounded": "under bounded replay every endpoint is an interval [optimistic, conservative]; a pairwise direction is historically identified only when both bounds agree in sign beyond the threshold",
+      "cvar90_is_bps": "CVaR at level 0.90 of is_net_bps over the unit's registered windows (mean of the worst 10%, linear interpolation)",
+      "markout5s_bps": "fill-weighted side x (mid at fill time + 5 s - fill price) / arrival mid x 1e4 over hypothetical passive fills (positive = favourable)",
+      "mean_is_bps": "mean of is_net_bps over the unit's registered windows",
+      "primary": "is_net_bps: side x (volume-weighted execution price incl. residual valuation - arrival mid) / arrival mid x 1e4 + registered fees (taker 5.5 bps on aggressive fills, maker 2.0 bps on passive fills) + 25 bps x unfilled fraction at the horizon (hard completion: policies cross at the deadline)",
+      "registered_before": "any explore access",
+      "secondary": "is_gross_bps (same without fees and penalty), completion, time to completion, participation"
+    },
+    "counterfactual_assumptions": {
+      "hidden_fraction": [
+        0.0,
+        0.5
+      ],
+      "identification": "a pairwise direction is IDENTIFIED when the cost intervals separate on the unit; INDETERMINATE otherwise; nothing is an exact fill",
+      "impact": [
+        "none",
+        "transient",
+        "persistent"
+      ],
+      "latency_s": [
+        0.0,
+        0.05,
+        0.25
+      ],
+      "queue": [
+        "optimistic",
+        "neutral",
+        "conservative"
+      ],
+      "transient_half_life_s": 10.0
+    },
+    "data_quality_thresholds": {
+      "max_crossed_rate": 0.001,
+      "max_inconsistent_trade_rate": 0.005,
+      "max_long_gap_minutes": 10.0,
+      "max_off_grid_rate": 0.001,
+      "max_sequence_problem_rate": 0.001,
+      "max_unknown_side_rate": 0.001,
+      "min_trades": 1000,
+      "min_valid_bin_fraction": 0.98
+    },
+    "grid_normalization": {
+      "reason": "the spot-format development day showed a 0.1 observed price precision against a registered 0.01 tick; a finer-than-observed tick would distort spread-in-ticks, visible-level and queue features",
+      "registered_before": "any explore, confirm or final access",
+      "rule": "the price grid used is the coarser of the registered tick and the archive's observed decimal price precision (first 2000 messages); the size grid is the finer of the registered lot and the observed size precision; every difference is recorded as a known anomaly in the dataset's quality report"
+    },
+    "mandate_notionals": {
+      "large": {
+        "notional_usd": {
+          "BTCUSDT": 5000000,
+          "ETHUSDT": 5000000,
+          "SOLUSDT": 2500000
+        }
+      },
+      "medium": {
+        "notional_usd": {
+          "BTCUSDT": 1000000,
+          "ETHUSDT": 1000000,
+          "SOLUSDT": 500000
+        }
+      },
+      "small": {
+        "notional_usd": {
+          "BTCUSDT": 100000,
+          "ETHUSDT": 100000,
+          "SOLUSDT": 50000
+        }
+      }
+    },
+    "mandates": {
+      "classes": {
+        "large": {
+          "notional_usd": {
+            "BTCUSDT": 5000000,
+            "ETHUSDT": 5000000,
+            "SOLUSDT": 2500000
+          }
+        },
+        "medium": {
+          "notional_usd": {
+            "BTCUSDT": 1000000,
+            "ETHUSDT": 1000000,
+            "SOLUSDT": 500000
+          }
+        },
+        "small": {
+          "notional_usd": {
+            "BTCUSDT": 100000,
+            "ETHUSDT": 100000,
+            "SOLUSDT": 50000
+          }
+        }
+      },
+      "decision_dt_s": 5.0,
+      "fees": {
+        "maker_bps": 2.0,
+        "note": "registered retail-tier fees; costs are reported gross and net of fees separately",
+        "taker_bps": 5.5
+      },
+      "horizon_s": 300.0,
+      "quantity_rule": "notional / arrival mid, rounded down to the lot size",
+      "side_rule": "buy on even registered windows, sell on odd windows",
+      "windows": "24 per day starting at HH:10:00 UTC (HH = 0..23), each with a 30 s warmup"
+    },
+    "risk_measures": {
+      "cvar_level": 0.9,
+      "markout_horizons_s": [
+        0.01,
+        0.05,
+        0.1,
+        0.5,
+        1.0,
+        5.0
+      ],
+      "survival_horizons_s": [
+        0.05,
+        0.1,
+        0.5,
+        1.0,
+        5.0,
+        30.0
+      ]
+    }
+  },
+  "data_quality": {
+    "gap_rule": "a sequence gap invalidates the book until the next snapshot",
+    "thresholds": "lob.v1.data.daycache.QUALITY (v0.9 thresholds plus max_unreliable_message_rate 0.001)"
+  },
+  "evidence_levels": {
+    "E0": "engineering verification only",
+    "E1": "synthetic (F4-F6) only",
+    "E10": "prospective read-only shadow support",
+    "E2": "multi-model synthetic consensus",
+    "E3": "hybrid historical twin (F3)",
+    "E4": "observed or reconstructed real-data prediction (F0/F1)",
+    "E5": "bounded historical counterfactual, direction identified (F2)",
+    "E6": "cross-time real support on fresh data",
+    "E7": "cross-instrument real support on fresh data",
+    "E8": "cross-venue real support on fresh data",
+    "E9": "untouched final vault support"
+  },
+  "fidelities": {
+    "F0": "observational evidence",
+    "F1": "exact historical replay",
+    "F2": "bounded counterfactual replay",
+    "F3": "hybrid historical twin",
+    "F4": "classical generative market",
+    "F5": "neural generative market",
+    "F6": "strategic multi-agent market"
+  },
+  "firewall": {
+    "consumed_through": "2025-08-31",
+    "excluded_dates": {
+      "2025-09-20": "v0.9 Bybit spot BTCUSDT format day (development access)",
+      "2026-07-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample",
+      "2026-08-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample",
+      "2026-09-01": "v0.8 Deribit BTC/ETH-PERPETUAL first-of-month sample"
+    },
+    "rule": "dates on or before consumed_through and the excluded dates are never fresh; one date belongs to one v1 pool across every stream"
+  },
+  "mbo_pools": {
+    "confirm_days_max": 16,
+    "explore_days": 5,
+    "first_day": "2026-10-26",
+    "min_coverage": 0.95,
+    "rule": "complete UTC capture days of the prospective Bitstamp capture (>= 95% of seconds covered by COMPLETE segments, at least two censuses), in calendar order from 2026-10-26: days 1-5 explore, days 6 onward confirm (registered maximum 16 confirm days); no capture day is ever reassigned",
+    "streams": [
+      "bitstamp-exchange:btcusd",
+      "bitstamp-exchange:ethusd"
+    ]
+  },
+  "namespaces": [
+    "dev",
+    "explore",
+    "calibrate",
+    "confirm",
+    "replicate",
+    "vault"
+  ],
+  "pools": {
+    "calibrate": {
+      "backups": 4,
+      "dates": [
+        "2025-12-11",
+        "2025-12-22",
+        "2025-12-21",
+        "2025-12-20",
+        "2025-12-17",
+        "2025-12-02",
+        "2025-12-12",
+        "2025-12-10",
+        "2025-12-08",
+        "2025-12-25",
+        "2025-12-24",
+        "2025-12-13"
+      ],
+      "end": "2025-12-31",
+      "primaries": 8,
+      "role": "calibrate",
+      "start": "2025-12-01",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ]
+    },
+    "confirm": {
+      "backups": 12,
+      "dates": [
+        "2026-03-03",
+        "2026-05-20",
+        "2026-03-01",
+        "2026-03-31",
+        "2026-01-29",
+        "2026-03-06",
+        "2026-05-15",
+        "2026-02-26",
+        "2026-02-19",
+        "2026-05-14",
+        "2026-01-27",
+        "2026-05-24",
+        "2026-05-09",
+        "2026-01-19",
+        "2026-01-28",
+        "2026-03-17",
+        "2026-03-29",
+        "2026-03-30",
+        "2026-04-19",
+        "2026-01-08",
+        "2026-04-09",
+        "2026-01-22",
+        "2026-04-02",
+        "2026-03-05",
+        "2026-01-02",
+        "2026-03-20",
+        "2026-03-13",
+        "2026-01-17",
+        "2026-05-25",
+        "2026-02-18",
+        "2026-04-29",
+        "2026-01-25",
+        "2026-04-15",
+        "2026-05-05",
+        "2026-03-25",
+        "2026-01-03",
+        "2026-04-21",
+        "2026-02-11",
+        "2026-05-31",
+        "2026-05-13",
+        "2026-05-19",
+        "2026-01-07",
+        "2026-04-05",
+        "2026-03-12",
+        "2026-05-12",
+        "2026-05-22",
+        "2026-05-16",
+        "2026-04-14",
+        "2026-02-25",
+        "2026-02-03",
+        "2026-03-16",
+        "2026-04-06"
+      ],
+      "end": "2026-05-31",
+      "primaries": 40,
+      "role": "confirm",
+      "start": "2026-01-01",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ]
+    },
+    "explore": {
+      "backups": 6,
+      "dates": [
+        "2025-11-08",
+        "2025-09-02",
+        "2025-11-02",
+        "2025-09-07",
+        "2025-11-26",
+        "2025-10-01",
+        "2025-11-17",
+        "2025-10-09",
+        "2025-11-22",
+        "2025-11-28",
+        "2025-11-13",
+        "2025-10-25",
+        "2025-10-28",
+        "2025-09-01",
+        "2025-09-14",
+        "2025-11-04",
+        "2025-10-29",
+        "2025-10-18",
+        "2025-10-12",
+        "2025-10-07",
+        "2025-09-09",
+        "2025-11-05"
+      ],
+      "end": "2025-11-30",
+      "primaries": 16,
+      "role": "explore",
+      "start": "2025-09-01",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ]
+    },
+    "replicate": {
+      "backups": 8,
+      "dates": [
+        "2026-07-28",
+        "2026-07-21",
+        "2026-08-30",
+        "2026-07-25",
+        "2026-08-09",
+        "2026-07-19",
+        "2026-06-22",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-08-18",
+        "2026-08-04",
+        "2026-07-12",
+        "2026-08-13",
+        "2026-08-29",
+        "2026-06-21",
+        "2026-08-17",
+        "2026-07-20",
+        "2026-07-27",
+        "2026-06-17",
+        "2026-07-15",
+        "2026-07-18",
+        "2026-06-16",
+        "2026-07-26",
+        "2026-07-10",
+        "2026-08-05",
+        "2026-08-31",
+        "2026-08-07",
+        "2026-07-30",
+        "2026-08-16",
+        "2026-06-15",
+        "2026-08-21",
+        "2026-08-02"
+      ],
+      "end": "2026-08-31",
+      "primaries": 24,
+      "role": "replicate",
+      "start": "2026-06-01",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ]
+    },
+    "vault": {
+      "backups": 8,
+      "dates": [
+        "2026-10-06",
+        "2026-09-22",
+        "2026-09-10",
+        "2026-10-04",
+        "2026-09-15",
+        "2026-10-19",
+        "2026-09-27",
+        "2026-09-12",
+        "2026-10-17",
+        "2026-09-30",
+        "2026-09-05",
+        "2026-10-13",
+        "2026-09-26",
+        "2026-09-14",
+        "2026-09-25",
+        "2026-09-18",
+        "2026-09-28",
+        "2026-10-02",
+        "2026-10-03",
+        "2026-09-09",
+        "2026-10-09",
+        "2026-10-18",
+        "2026-10-12",
+        "2026-10-20",
+        "2026-09-04",
+        "2026-10-23",
+        "2026-10-07",
+        "2026-10-22"
+      ],
+      "end": "2026-10-24",
+      "primaries": 20,
+      "role": "vault",
+      "start": "2026-09-02",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ]
+    }
+  },
+  "promotion_rules": {
+    "compute_ceiling_hours": 60.0,
+    "direct_replication": "H1-H12, H45, H46, H48 are promoted without pilot-dependent selection; their confirm cluster count is fixed here (12 dates); pilots inform only feasibility reporting",
+    "frozen_before": "any v1 pilot outcome is read",
+    "max_confirm_clusters": 40,
+    "min_pilot_clusters": 6,
+    "min_power": 0.8,
+    "no_split_half_screen": "v0.9 amendment 3 is not carried; neither split-half statistic is used",
+    "pilot": "every other candidate is promoted iff (a) its required capabilities exist in the registered pools, (b) an exploratory pilot on >= 6 explore date clusters exists, (c) the planning effect (pilot cluster mean - 1 cluster SE, oriented) exceeds the practical threshold, (d) cluster-t power at the planning effect is >= 0.8 with G <= the pool's primaries and G >= min_clusters, and (e) expected compute is within the ceiling",
+    "planning_effect": "pilot cluster mean - 1 cluster SE"
+  },
+  "protocol_id": "cleolob-v1.0-market-reality-lab",
+  "realism_gate": {
+    "acceptable": "the generator's metric lies inside the reference band for every metric of the capability and the real-vs-generated classifier AUC <= 0.65",
+    "capabilities": [
+      "spread_dynamics",
+      "depth_dynamics",
+      "event_timing",
+      "queue_survival",
+      "fill_prediction",
+      "impact",
+      "tail_behavior",
+      "conditional_response"
+    ],
+    "execution_capabilities": [
+      "spread_dynamics",
+      "depth_dynamics",
+      "queue_survival",
+      "fill_prediction",
+      "impact"
+    ],
+    "fail_closed": "a REJECTED capability never supports a claim that needs it",
+    "frozen": "thresholds are never moved to create an ACCEPTABLE generator",
+    "partial": "every metric within twice the band half-width of the band centre",
+    "reference": "per metric, the 5-95% range of the same metric over the calibrate-pool days (>= 8 real days), widened by the metric's bootstrap SE on the test day; the 4-day pair reference of v0.9 is retired",
+    "rejected": "otherwise"
+  },
+  "referenced_configs": [
+    "hypotheses-candidates.json",
+    "statistical-families.json",
+    "dataset-registry.json",
+    "consumed-inventory.json"
+  ],
+  "research_question": "Do the v0.9 conclusions replicate independently on genuinely fresh market data under correct date clustering, and can repaired and new generator families reproduce observed dynamics and execution-decision rankings under frozen capability-specific criteria?",
+  "resources": {
+    "concurrent_heavy_families": 1,
+    "gpu_memory_fraction": 0.8,
+    "min_free_gb": 8.0,
+    "on_exceed": "RESOURCE_EXHAUSTED; checkpoints kept; budget changes need an amendment before outcome inspection",
+    "profiles": [
+      "smoke",
+      "small",
+      "medium",
+      "full",
+      "replication"
+    ],
+    "ram_mb_per_study": 12000,
+    "workers_default": 2
+  },
+  "roles": [
+    "consumed",
+    "development",
+    "explore",
+    "calibrate",
+    "confirm",
+    "replicate",
+    "vault"
+  ],
+  "schema": "cleolob-v1-protocol-1",
+  "statistics": {
+    "agreement": "value - level tested against threshold",
+    "alpha": 0.05,
+    "correction": "holm",
+    "equivalence": "TOST with the registered margin on cluster-t intervals",
+    "heterogeneity": "per-stream means and a date x stream two-way cluster interval are reported, not decided",
+    "independent_unit": "calendar date; values of the streams of one date form one cluster",
+    "interval": "two-sided 95% cluster-t interval of the mean (reported with every estimate)",
+    "min_clusters": 8,
+    "noninferiority": "value + margin tested against 0",
+    "primary_test": "cluster_t: one-sided test of H0 mean <= threshold with the CR1 cluster-robust SE, Student t on G - 1 df; Holm within the registered family at alpha 0.05",
+    "secondary_test": "exact cluster sign-flip of (value - threshold); ESTABLISHED requires both the primary Holm rejection and the sign-flip p <= the same Holm-adjusted alpha",
+    "strictest_family_alpha": 0.00625,
+    "terminal_rule": {
+      "ESTABLISHED": "registered rejection (above)",
+      "FAILED": "the upper 95% cluster-t bound lies below the threshold (effect below practical size)",
+      "INCONCLUSIVE": "tested, neither established nor failed",
+      "NOT_AVAILABLE": "registered data unavailable after every backup",
+      "NOT_ESTABLISHED": "not promoted (never tested on guarded data)",
+      "NOT_EVALUABLE": "a registered precondition is unmet (e.g. H47 without an accepted generator)"
+    },
+    "transfer": "every carried conclusion meets its threshold (Holm over the conclusions)",
+    "transfer_any": "at least one carried conclusion meets its threshold (Holm over the conclusions)"
+  },
+  "statuses": [
+    "ESTABLISHED",
+    "FAILED",
+    "NOT_ESTABLISHED",
+    "INCONCLUSIVE",
+    "NOT_AVAILABLE",
+    "NOT_EVALUABLE"
+  ]
+}
