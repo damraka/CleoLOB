@@ -12,7 +12,7 @@ import traceback
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from lob.v1.research.studies import common as CM, replication as RP, tpp  # noqa: E402
+from lob.v1.research.studies import common as CM, decisions as DS, replication as RP, tpp  # noqa: E402
 
 DAYS = ("2023-08-19", "2023-08-21", "2023-08-27", "2023-08-29", "2023-09-02", "2023-09-12", "2023-10-08",
         "2023-10-17")
@@ -47,6 +47,8 @@ def main(argv=None) -> int:
                 r = RP.continual(ctx, target, sequence=ds, seed=1, workers=a.workers)
             elif study == "conformal":
                 r = RP.conformal(ctx, target, evaluate=ds, train=None, workers=a.workers)
+            elif study == "decisions":
+                r = DS.run(ctx, target, evaluate=ds, train=None, seed=1, workers=a.workers)
             elif study == "bounds":
                 r = RP.bounds(ctx, target, evaluate=ds, conclusions=["C1", "C2", "C3"], workers=a.workers)
             else:
