@@ -33,3 +33,7 @@ configs/v08/*.lock
 # v0.9 local raw data and day caches (provider terms; never committed)
 data/v09/
 configs/v09/*.lock
+
+# v1.0 local raw data, captures and caches (provider terms; never committed)
+data/v1/
+configs/v1/*.lock

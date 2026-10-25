@@ -1,0 +1,1251 @@
+{
+  "alpha": 0.05,
+  "hypotheses": {
+    "H16": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.02031382918357849,
+        "ci_low": 0.01077859103679657,
+        "clusters": 4,
+        "estimate": 0.01564265787601471,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.023946240901332988,
+        "ci_low": 0.007339074850696431,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.01564265787601471,
+        "method": "cluster_t",
+        "p_one_sided": 0.013304422559711725,
+        "se": 0.0026091824429315003,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 0.08514126300811768,
+        "threshold": 0.005
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 0.045419171030017844,
+        "ci_low": -0.014133855277988428,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.01564265787601471,
+        "method": "multiway_t",
+        "p_one_sided": 0.06898937266635796,
+        "se": 0.0023434624085057615,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.8242483179038862,
+        "effective_units": 4.385367891796787,
+        "icc": 0.8242483179038862,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.01564265787601471,
+      "min_unit": 0.008960604667663574,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.014236807823181152,
+        "bybit-linear-ethusdt": 0.017048507928848267
+      },
+      "registered_v09_interval": [
+        0.012384388968348503,
+        0.019076892733573915
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "units": 8
+    },
+    "H17": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.08257716049382716,
+        "ci_low": 0.046697530864197534,
+        "clusters": 4,
+        "estimate": 0.06405864197530863,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.09634912271816587,
+        "ci_low": 0.03176816123245138,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.06405864197530863,
+        "method": "cluster_t",
+        "p_one_sided": 0.0040156026904115405,
+        "se": 0.010146433795048548,
+        "threshold": 0.0,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 0.512469135802469,
+        "threshold": 0.0
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 0.22346167956504925,
+        "ci_low": -0.09534439561443199,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.06405864197530863,
+        "method": "multiway_t",
+        "p_one_sided": 0.061558929464052184,
+        "se": 0.012545291131341464,
+        "threshold": 0.0,
+        "units": 8
+      },
+      "decision_quantity": "noninferiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.376907763769078,
+        "effective_units": 5.810120481927709,
+        "icc": 0.3769077637690781,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.06405864197530863,
+      "min_unit": 0.02740740740740742,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.05287037037037036,
+        "bybit-linear-ethusdt": 0.07524691358024689
+      },
+      "registered_v09_interval": [
+        0.04824074074074074,
+        0.078912037037037
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "noninferiority",
+      "threshold": 0.0,
+      "units": 8
+    },
+    "H2": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.47137252659864,
+        "ci_low": 0.2952485940526163,
+        "clusters": 4,
+        "estimate": 0.3897520848620361,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.5456815567958837,
+        "ci_low": 0.2338226129281885,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.3897520848620361,
+        "method": "cluster_t",
+        "p_one_sided": 0.0024122148352965175,
+        "se": 0.048996733008493124,
+        "threshold": 0.02,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 2.9580166788962887,
+        "threshold": 0.02
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 1.0662214553249283,
+        "ci_low": -0.286717285600856,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.3897520848620361,
+        "method": "multiway_t",
+        "p_one_sided": 0.04551946307054121,
+        "se": 0.05323929407000501,
+        "threshold": 0.02,
+        "units": 8
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.5836263383921512,
+        "effective_units": 5.051696733032594,
+        "icc": 0.5836263383921512,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.3897520848620361,
+      "min_unit": 0.2034652518353235,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.43245207616357495,
+        "bybit-linear-ethusdt": 0.34705209356049727
+      },
+      "registered_v09_interval": [
+        0.3172741419229067,
+        0.4548326421975938
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.02,
+      "units": 8
+    },
+    "H23": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 14.941010681069978,
+        "ci_low": 8.053127934158843,
+        "clusters": 6,
+        "estimate": 11.38587308742011,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 16.50487263786947,
+        "ci_low": 6.26687353697075,
+        "clusters": 6,
+        "df": 5.0,
+        "estimate": 11.38587308742011,
+        "method": "cluster_t",
+        "p_one_sided": 0.001711440374746065,
+        "se": 1.9913777805024704,
+        "threshold": 1.0,
+        "units": 12
+      },
+      "date_sign_flip": {
+        "clusters": 6,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.015625,
+        "p_one_sided": 0.015625,
+        "statistic": 124.63047704904133,
+        "threshold": 1.0
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 27.94456308560997,
+        "ci_low": -5.172816910769749,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 11.38587308742011,
+        "method": "multiway_t",
+        "p_one_sided": 0.03973318388574375,
+        "se": 1.3031971656372867,
+        "threshold": 1.0,
+        "units": 12
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 6,
+        "design_effect": 1.6416970274037304,
+        "effective_units": 7.309509489078784,
+        "icc": 0.6416970274037304,
+        "units": 12
+      },
+      "distinct_dates": 6,
+      "mean": 11.38587308742011,
+      "min_unit": 5.598401320945966,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 11.471690221464725,
+        "bybit-linear-ethusdt": 11.300055953375498
+      },
+      "registered_v09_interval": [
+        8.75453937832527,
+        14.239878809054845
+      ],
+      "sign_flip_reaches_alpha": true,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 1.0,
+      "units": 12
+    },
+    "H29": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.4313242651657286,
+        "ci_low": 0.41284327009936767,
+        "clusters": 4,
+        "estimate": 0.42358638500914925,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.440550360941742,
+        "ci_low": 0.4066224090765565,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.42358638500914925,
+        "method": "cluster_t",
+        "p_one_sided": 8.144488229701536e-06,
+        "se": 0.005330483001214633,
+        "threshold": 0.15,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 2.188691080073194,
+        "threshold": 0.15
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 1.1392293281199959,
+        "ci_low": -0.2920565581016975,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.42358638500914925,
+        "method": "multiway_t",
+        "p_one_sided": 0.0646265143558731,
+        "se": 0.05632232109981724,
+        "threshold": 0.15,
+        "units": 8
+      },
+      "decision_quantity": "agreement",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.0,
+        "effective_units": 8.0,
+        "icc": -0.9424795717523698,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.42358638500914925,
+      "min_unit": 0.3533333333333334,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.48444919278252613,
+        "bybit-linear-ethusdt": 0.3627235772357723
+      },
+      "registered_v09_interval": [
+        0.3810569105691057,
+        0.4648608505315822
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "agreement",
+      "threshold": 0.15,
+      "units": 8
+    },
+    "H32": {
+      "conclusions": {
+        "C1": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 11.315052918672961,
+            "ci_low": 6.651385054726821,
+            "clusters": 15,
+            "estimate": 9.031605595880906,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 11.690433029617216,
+            "ci_low": 6.372778162144593,
+            "clusters": 15,
+            "df": 14.0,
+            "estimate": 9.031605595880905,
+            "method": "cluster_t",
+            "p_one_sided": 7.258588019944157e-06,
+            "se": 1.239669869602526,
+            "threshold": 1.0,
+            "units": 15
+          },
+          "date_sign_flip": {
+            "clusters": 15,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 3.0517578125e-05,
+            "p_one_sided": 6.103515625e-05,
+            "statistic": 120.47408393821355,
+            "threshold": 1.0
+          },
+          "dependence": {
+            "clusters": 15,
+            "design_effect": null,
+            "effective_units": 15.0,
+            "icc": null,
+            "units": 15
+          },
+          "distinct_dates": 15,
+          "mean": 9.031605595880905,
+          "min_unit": 0.8998989890519518,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 9.031605595880905
+          },
+          "registered_v09_interval": [
+            6.69482924545126,
+            11.289269298288831
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-btcusdt"
+          ],
+          "threshold": 1.0,
+          "units": 15
+        },
+        "C2": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 4.353430730338943,
+            "ci_low": 2.3403390877805275,
+            "clusters": 15,
+            "estimate": 3.3266345292705473,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 4.4712342206231925,
+            "ci_low": 2.182034837917902,
+            "clusters": 15,
+            "df": 14.0,
+            "estimate": 3.3266345292705473,
+            "method": "cluster_t",
+            "p_one_sided": 0.00032680976600205156,
+            "se": 0.5336659807711864,
+            "threshold": 1.0,
+            "units": 15
+          },
+          "date_sign_flip": {
+            "clusters": 15,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 3.0517578125e-05,
+            "p_one_sided": 0.00054931640625,
+            "statistic": 34.89951793905821,
+            "threshold": 1.0
+          },
+          "dependence": {
+            "clusters": 15,
+            "design_effect": null,
+            "effective_units": 15.0,
+            "icc": null,
+            "units": 15
+          },
+          "distinct_dates": 15,
+          "mean": 3.3266345292705473,
+          "min_unit": 0.8629022005396125,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 3.3266345292705473
+          },
+          "registered_v09_interval": [
+            2.3065691221533404,
+            4.334121542446147
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-btcusdt"
+          ],
+          "threshold": 1.0,
+          "units": 15
+        },
+        "C3": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 2.6780732175834316,
+            "ci_low": 1.4798542275363207,
+            "clusters": 15,
+            "estimate": 2.0836386169497962,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 2.7616679936296276,
+            "ci_low": 1.4056092402699651,
+            "clusters": 15,
+            "df": 14.0,
+            "estimate": 2.0836386169497962,
+            "method": "cluster_t",
+            "p_one_sided": 2.3004713628504484e-05,
+            "se": 0.31612904933593666,
+            "threshold": 0.25,
+            "units": 15
+          },
+          "date_sign_flip": {
+            "clusters": 15,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 3.0517578125e-05,
+            "p_one_sided": 9.1552734375e-05,
+            "statistic": 27.504579254246945,
+            "threshold": 0.25
+          },
+          "dependence": {
+            "clusters": 15,
+            "design_effect": null,
+            "effective_units": 15.0,
+            "icc": null,
+            "units": 15
+          },
+          "distinct_dates": 15,
+          "mean": 2.0836386169497962,
+          "min_unit": -0.11710299655448297,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 2.0836386169497962
+          },
+          "registered_v09_interval": [
+            1.4802203278584114,
+            2.67465035393435
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-btcusdt"
+          ],
+          "threshold": 0.25,
+          "units": 15
+        }
+      },
+      "status_v09": "ESTABLISHED",
+      "test": "transfer"
+    },
+    "H33": {
+      "conclusions": {
+        "C1": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 13.940615367105103,
+            "ci_low": 8.728014576400486,
+            "clusters": 8,
+            "estimate": 11.203778308627314,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 14.57657393183745,
+            "ci_low": 7.830982685417178,
+            "clusters": 8,
+            "df": 7.0,
+            "estimate": 11.203778308627314,
+            "method": "cluster_t",
+            "p_one_sided": 9.237770944807479e-05,
+            "se": 1.4263558453053484,
+            "threshold": 1.0,
+            "units": 8
+          },
+          "date_sign_flip": {
+            "clusters": 8,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.00390625,
+            "p_one_sided": 0.00390625,
+            "statistic": 81.63022646901851,
+            "threshold": 1.0
+          },
+          "dependence": {
+            "clusters": 8,
+            "design_effect": null,
+            "effective_units": 8.0,
+            "icc": null,
+            "units": 8
+          },
+          "distinct_dates": 8,
+          "mean": 11.203778308627314,
+          "min_unit": 5.598401320945966,
+          "per_stream_mean": {
+            "bybit-linear-ethusdt": 11.203778308627314
+          },
+          "registered_v09_interval": [
+            8.620835519321998,
+            13.87988536175724
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-ethusdt"
+          ],
+          "threshold": 1.0,
+          "units": 8
+        },
+        "C2": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 6.534321620679979,
+            "ci_low": 3.3154968480837526,
+            "clusters": 8,
+            "estimate": 4.723947460684922,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 6.8553228179039145,
+            "ci_low": 2.5925721034659284,
+            "clusters": 8,
+            "df": 7.0,
+            "estimate": 4.723947460684921,
+            "method": "cluster_t",
+            "p_one_sided": 0.002197910860618593,
+            "se": 0.9013590027182259,
+            "threshold": 1.0,
+            "units": 8
+          },
+          "date_sign_flip": {
+            "clusters": 8,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.00390625,
+            "p_one_sided": 0.00390625,
+            "statistic": 29.79157968547937,
+            "threshold": 1.0
+          },
+          "dependence": {
+            "clusters": 8,
+            "design_effect": null,
+            "effective_units": 8.0,
+            "icc": null,
+            "units": 8
+          },
+          "distinct_dates": 8,
+          "mean": 4.723947460684921,
+          "min_unit": 2.3857704904211623,
+          "per_stream_mean": {
+            "bybit-linear-ethusdt": 4.723947460684921
+          },
+          "registered_v09_interval": [
+            3.2786741323297024,
+            6.554471312671155
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-ethusdt"
+          ],
+          "threshold": 1.0,
+          "units": 8
+        },
+        "C3": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 3.6667769776381727,
+            "ci_low": 0.8248846434639355,
+            "clusters": 8,
+            "estimate": 2.3133306317998095,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 4.137915988872544,
+            "ci_low": 0.4887452747270744,
+            "clusters": 8,
+            "df": 7.0,
+            "estimate": 2.3133306317998095,
+            "method": "cluster_t",
+            "p_one_sided": 0.01590657800130169,
+            "se": 0.7716174592406062,
+            "threshold": 0.25,
+            "units": 8
+          },
+          "date_sign_flip": {
+            "clusters": 8,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.00390625,
+            "p_one_sided": 0.01953125,
+            "statistic": 16.506645054398476,
+            "threshold": 0.25
+          },
+          "dependence": {
+            "clusters": 8,
+            "design_effect": null,
+            "effective_units": 8.0,
+            "icc": null,
+            "units": 8
+          },
+          "distinct_dates": 8,
+          "mean": 2.3133306317998095,
+          "min_unit": -1.7448211410836456,
+          "per_stream_mean": {
+            "bybit-linear-ethusdt": 2.3133306317998095
+          },
+          "registered_v09_interval": [
+            0.82024245177932,
+            3.7218799021722067
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-ethusdt"
+          ],
+          "threshold": 0.25,
+          "units": 8
+        }
+      },
+      "status_v09": "ESTABLISHED",
+      "test": "transfer"
+    },
+    "H36": {
+      "conclusions": {
+        "C1": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 9.283906264446763,
+            "ci_low": 4.3577898759616325,
+            "clusters": 7,
+            "estimate": 6.786856667888526,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 10.132735926707761,
+            "ci_low": 3.440977409069289,
+            "clusters": 7,
+            "df": 6.0,
+            "estimate": 6.786856667888525,
+            "method": "cluster_t",
+            "p_one_sided": 0.0027438510238340427,
+            "se": 1.3673885543745736,
+            "threshold": 1.0,
+            "units": 18
+          },
+          "date_sign_flip": {
+            "clusters": 7,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.0078125,
+            "p_one_sided": 0.0078125,
+            "statistic": 104.16342002199346,
+            "threshold": 1.0
+          },
+          "date_x_stream_multiway_t": {
+            "ci_high": 14.57944601831921,
+            "ci_low": -1.0057326825421589,
+            "clusters": 3,
+            "df": 2.0,
+            "estimate": 6.786856667888525,
+            "method": "multiway_t",
+            "p_one_sided": 0.042782882466495545,
+            "se": 1.8111127808552023,
+            "threshold": 1.0,
+            "units": 18
+          },
+          "dependence": {
+            "clusters": 7,
+            "design_effect": 1.2022698651216648,
+            "effective_units": 14.971680254315011,
+            "icc": 0.12871718689560488,
+            "units": 18
+          },
+          "distinct_dates": 7,
+          "mean": 6.786856667888525,
+          "min_unit": 0.8046519728528727,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 4.714353254685107,
+            "bybit-linear-solusdt": 10.148045680477702,
+            "bybit-spot-btcusdt": 5.49817106850277
+          },
+          "registered_v09_interval": [
+            4.650890070563729,
+            9.23437186704097
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-btcusdt",
+            "bybit-linear-solusdt",
+            "bybit-spot-btcusdt"
+          ],
+          "threshold": 1.0,
+          "units": 18
+        },
+        "C2": {
+          "cluster_t_lower_exceeds_threshold": true,
+          "date_cluster_bootstrap": {
+            "ci_high": 8.979431537058565,
+            "ci_low": 5.499179383709994,
+            "clusters": 7,
+            "estimate": 7.257853779881213,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 9.592016836702934,
+            "ci_low": 4.923690723059492,
+            "clusters": 7,
+            "df": 6.0,
+            "estimate": 7.257853779881213,
+            "method": "cluster_t",
+            "p_one_sided": 0.0003004399906677087,
+            "se": 0.9539220040678769,
+            "threshold": 1.0,
+            "units": 18
+          },
+          "date_sign_flip": {
+            "clusters": 7,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.0078125,
+            "p_one_sided": 0.0078125,
+            "statistic": 112.64136803786185,
+            "threshold": 1.0
+          },
+          "date_x_stream_multiway_t": {
+            "ci_high": 21.02010040426064,
+            "ci_low": -6.504392844498211,
+            "clusters": 3,
+            "df": 2.0,
+            "estimate": 7.257853779881213,
+            "method": "multiway_t",
+            "p_one_sided": 0.0947793843165211,
+            "se": 3.198549241314426,
+            "threshold": 1.0,
+            "units": 18
+          },
+          "dependence": {
+            "clusters": 7,
+            "design_effect": 1.0,
+            "effective_units": 18.0,
+            "icc": -0.31672364317325374,
+            "units": 18
+          },
+          "distinct_dates": 7,
+          "mean": 7.257853779881213,
+          "min_unit": 0.684987543259683,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 2.3270665373448587,
+            "bybit-linear-solusdt": 5.859715190962156,
+            "bybit-spot-btcusdt": 13.586779611336624
+          },
+          "registered_v09_interval": [
+            4.829061590853639,
+            9.909295788183803
+          ],
+          "sign_flip_reaches_alpha": true,
+          "streams": [
+            "bybit-linear-btcusdt",
+            "bybit-linear-solusdt",
+            "bybit-spot-btcusdt"
+          ],
+          "threshold": 1.0,
+          "units": 18
+        },
+        "C3": {
+          "cluster_t_lower_exceeds_threshold": false,
+          "date_cluster_bootstrap": {
+            "ci_high": 2.3642354846027547,
+            "ci_low": 0.24684079557682384,
+            "clusters": 7,
+            "estimate": 1.311102410755065,
+            "method": "cluster_bootstrap_percentile",
+            "n_boot": 20000,
+            "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+          },
+          "date_cluster_t": {
+            "ci_high": 2.7488234647451675,
+            "ci_low": -0.12661864323503735,
+            "clusters": 7,
+            "df": 6.0,
+            "estimate": 1.311102410755065,
+            "method": "cluster_t",
+            "p_one_sided": 0.060477444613800384,
+            "se": 0.5875655280828007,
+            "threshold": 0.25,
+            "units": 18
+          },
+          "date_sign_flip": {
+            "clusters": 7,
+            "exact": true,
+            "method": "cluster_sign_flip",
+            "p_floor": 0.0078125,
+            "p_one_sided": 0.0625,
+            "statistic": 19.099843393591172,
+            "threshold": 0.25
+          },
+          "date_x_stream_multiway_t": {
+            "ci_high": 4.679921897058565,
+            "ci_low": -2.0577170755484353,
+            "clusters": 3,
+            "df": 2.0,
+            "estimate": 1.311102410755065,
+            "method": "multiway_t",
+            "p_one_sided": 0.1540538526164025,
+            "se": 0.7829633711804815,
+            "threshold": 0.25,
+            "units": 18
+          },
+          "dependence": {
+            "clusters": 7,
+            "design_effect": 1.7491554182636868,
+            "effective_units": 10.290680754868452,
+            "icc": 0.4767352661678007,
+            "units": 18
+          },
+          "distinct_dates": 7,
+          "mean": 1.311102410755065,
+          "min_unit": -3.127501662936665,
+          "per_stream_mean": {
+            "bybit-linear-btcusdt": 1.6915803386115973,
+            "bybit-linear-solusdt": 0.011681140203497383,
+            "bybit-spot-btcusdt": 2.2300457534501006
+          },
+          "registered_v09_interval": [
+            0.4841522629252955,
+            2.0652965814723303
+          ],
+          "sign_flip_reaches_alpha": false,
+          "streams": [
+            "bybit-linear-btcusdt",
+            "bybit-linear-solusdt",
+            "bybit-spot-btcusdt"
+          ],
+          "threshold": 0.25,
+          "units": 18
+        }
+      },
+      "status_v09": "ESTABLISHED",
+      "test": "transfer"
+    },
+    "H5": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.08396647436977803,
+        "ci_low": 0.06768752673650308,
+        "clusters": 4,
+        "estimate": 0.07645603307188252,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.09253082802876378,
+        "ci_low": 0.06038123811500123,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.0764560330718825,
+        "method": "cluster_t",
+        "p_one_sided": 0.00038257757844916085,
+        "se": 0.00505108127989252,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 0.5716482645750601,
+        "threshold": 0.005
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 0.1099246676893277,
+        "ci_low": 0.04298739845443732,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.0764560330718825,
+        "method": "multiway_t",
+        "p_one_sided": 0.011728346161061377,
+        "se": 0.0026340386694824604,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.269228868983964,
+        "effective_units": 6.303039739715435,
+        "icc": 0.2692288689839639,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.0764560330718825,
+      "min_unit": 0.05827408871745199,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.07732385913949444,
+        "bybit-linear-ethusdt": 0.07558820700427059
+      },
+      "registered_v09_interval": [
+        0.06882695327927903,
+        0.08510710366576348
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "units": 8
+    },
+    "H6": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.2322485249504786,
+        "ci_low": 0.1284003558633703,
+        "clusters": 4,
+        "estimate": 0.18124855774937387,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.2828393895255035,
+        "ci_low": 0.07965772597324429,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.1812485577493739,
+        "method": "cluster_t",
+        "p_one_sided": 0.005851855453275926,
+        "se": 0.031922245351779906,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 1.409988461994991,
+        "threshold": 0.005
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 2.2320675016450813,
+        "ci_low": -1.8695703861463335,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.1812485577493739,
+        "method": "multiway_t",
+        "p_one_sided": 0.23601379907241446,
+        "se": 0.1614029512728544,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.0,
+        "effective_units": 8.0,
+        "icc": -0.7816826000019377,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.1812485577493739,
+      "min_unit": 0.006369060431590912,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.007407345136454524,
+        "bybit-linear-ethusdt": 0.3550897703622933
+      },
+      "registered_v09_interval": [
+        0.04731759736846769,
+        0.31648477360624083
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "units": 8
+    },
+    "H7": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.12070239433582802,
+        "ci_low": 0.06838507222129972,
+        "clusters": 4,
+        "estimate": 0.09353339810788999,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.14564102457724878,
+        "ci_low": 0.04142577163853119,
+        "clusters": 4,
+        "df": 3.0,
+        "estimate": 0.09353339810788999,
+        "method": "cluster_t",
+        "p_one_sided": 0.006201425756361414,
+        "se": 0.016373450318029715,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "date_sign_flip": {
+        "clusters": 4,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.0625,
+        "p_one_sided": 0.0625,
+        "statistic": 0.7082671848631199,
+        "threshold": 0.005
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 0.27359320507742824,
+        "ci_low": -0.08652640886164825,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.09353339810788999,
+        "method": "multiway_t",
+        "p_one_sided": 0.050521416670944924,
+        "se": 0.01417101413901406,
+        "threshold": 0.005,
+        "units": 8
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 4,
+        "design_effect": 1.7084367207172204,
+        "effective_units": 4.6826434382898965,
+        "icc": 0.7084367207172203,
+        "units": 8
+      },
+      "distinct_dates": 4,
+      "mean": 0.09353339810788999,
+      "min_unit": 0.05568613153346991,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.08494458657289117,
+        "bybit-linear-ethusdt": 0.10212220964288883
+      },
+      "registered_v09_interval": [
+        0.07354285830866039,
+        0.11654690779269168
+      ],
+      "sign_flip_reaches_alpha": false,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.005,
+      "units": 8
+    },
+    "H8": {
+      "cluster_t_lower_exceeds_threshold": true,
+      "date_cluster_bootstrap": {
+        "ci_high": 0.5801426481373808,
+        "ci_low": 0.3737275050988838,
+        "clusters": 5,
+        "estimate": 0.47408462972096654,
+        "method": "cluster_bootstrap_percentile",
+        "n_boot": 20000,
+        "note": "percentile cluster bootstrap under-covers with few clusters; read with cluster_t and sign_flip"
+      },
+      "date_cluster_t": {
+        "ci_high": 0.6453390320214138,
+        "ci_low": 0.30283022742051907,
+        "clusters": 5,
+        "df": 4.0,
+        "estimate": 0.47408462972096643,
+        "method": "cluster_t",
+        "p_one_sided": 0.011051040908340415,
+        "se": 0.061681177121005355,
+        "threshold": 0.25,
+        "units": 10
+      },
+      "date_sign_flip": {
+        "clusters": 5,
+        "exact": true,
+        "method": "cluster_sign_flip",
+        "p_floor": 0.03125,
+        "p_one_sided": 0.03125,
+        "statistic": 2.240846297209665,
+        "threshold": 0.25
+      },
+      "date_x_stream_multiway_t": {
+        "ci_high": 2.775866125443134,
+        "ci_low": -1.827696866001201,
+        "clusters": 2,
+        "df": 1.0,
+        "estimate": 0.47408462972096643,
+        "method": "multiway_t",
+        "p_one_sided": 0.21640395033408524,
+        "se": 0.18115413245065867,
+        "threshold": 0.25,
+        "units": 10
+      },
+      "decision_quantity": "superiority",
+      "dependence": {
+        "clusters": 5,
+        "design_effect": 1.0,
+        "effective_units": 10.0,
+        "icc": -0.3367497060766939,
+        "units": 10
+      },
+      "distinct_dates": 5,
+      "mean": 0.47408462972096643,
+      "min_unit": 0.12760713670058665,
+      "per_stream_mean": {
+        "bybit-linear-btcusdt": 0.6610689346972347,
+        "bybit-linear-ethusdt": 0.2871003247446984
+      },
+      "registered_v09_interval": [
+        0.32825052565740426,
+        0.6173403228771839
+      ],
+      "sign_flip_reaches_alpha": true,
+      "status_v09": "ESTABLISHED",
+      "streams": [
+        "bybit-linear-btcusdt",
+        "bybit-linear-ethusdt"
+      ],
+      "test": "superiority",
+      "threshold": 0.25,
+      "units": 10
+    }
+  },
+  "inputs": {
+    "runs/confirm/confirm-bounds-late/result.json": "840dafd651f1a6c914979e4d1267c4fe985f5e7718bb1c2dca4813a63e1e2b9c",
+    "runs/confirm/confirm-bounds/result.json": "df1e17fdfe74bcdd5bd7d07380461833b57ded7a85b9859e68951bd6dd67a633",
+    "runs/confirm/confirm-conformal-study/result.json": "3eb300bd506ca9ac28cd01277604efbf66d2805fae5a21f5868f4ac578120006",
+    "runs/confirm/confirm-continual-calibration/result.json": "1ccbc086edaea4a6f4974acc033d43c95350f67c2dd05dbd60cacbc335710272",
+    "runs/confirm/confirm-fill-study/result.json": "68a3d92432748a48e4272200c2ba4da603b1cfc417265cd101ab22fb4d236907",
+    "runs/confirm/confirm-multifidelity-agreement/result.json": "bdaa85ab8b9895ee8a1e3f1cf9d9d55df0439bf5d570900f110f65b99d1a04cf",
+    "runs/confirm/confirm-neural-point-process/result.json": "ff8abec9c92225586a088a7625b21c676a381dd33b7e47219d23c3c04f70a43d",
+    "runs/confirm/confirm-survival-study/result.json": "bbd1be1d825b70338255b656ce73996121fd7c4ef9a86c3b9a37066c1ef0fd3e",
+    "runs/final/final-analysis/result.json": "e37d80869ea0f59fb53434d31ee955587b9a90acd2c71c1e194150c33ba326ab",
+    "runs/final/vault-bounds/result.json": "fea056dc9de9b5d159092b1b4beaa0c5f876d3819b1c14550e7857e86c03ac61"
+  },
+  "label": "RETROSPECTIVE diagnostic of sealed v0.9 evidence; not a preregistered test and not a v0.9 status change",
+  "method": {
+    "independent_unit": "calendar date (all streams of a date move together)",
+    "primary": "cluster-robust mean, CR1 SE, Student t on G-1 df",
+    "randomization": "exact cluster sign-flip (floor 2^-G)",
+    "secondary": "percentile cluster bootstrap; two-way date x stream CGM where both vary"
+  }
+}
