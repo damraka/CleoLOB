@@ -1,0 +1,101 @@
+{
+  "families": {
+    "execution_learning": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H37",
+        "H38",
+        "H39",
+        "H40",
+        "H41",
+        "H42",
+        "H43",
+        "H44"
+      ]
+    },
+    "external_validation": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H45",
+        "H46",
+        "H47",
+        "H48"
+      ]
+    },
+    "generators": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H21",
+        "H22",
+        "H23",
+        "H24",
+        "H25",
+        "H26",
+        "H27",
+        "H28"
+      ]
+    },
+    "reconstruction_realism": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H13",
+        "H14",
+        "H15",
+        "H16",
+        "H17",
+        "H18",
+        "H19",
+        "H20"
+      ]
+    },
+    "replication_execution": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H8",
+        "H10",
+        "H11",
+        "H12"
+      ]
+    },
+    "replication_fidelity": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H9"
+      ]
+    },
+    "replication_prediction": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6",
+        "H7"
+      ]
+    },
+    "twins_agreement": {
+      "alpha": 0.05,
+      "correction": "holm",
+      "members": [
+        "H29",
+        "H30",
+        "H31",
+        "H32",
+        "H33",
+        "H34",
+        "H35",
+        "H36"
+      ]
+    }
+  },
+  "schema": "cleolob-v1-families-1"
+}

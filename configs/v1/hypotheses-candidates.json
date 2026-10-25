@@ -1,0 +1,1795 @@
+{
+  "hypotheses": [
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "held-out NLL per aggressive order",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H1",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "tpp",
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "nats per event",
+      "title": "Replicate neural TPP vs classical point processes",
+      "unit_value": "NLL(selected classical) - NLL(selected neural), nats/event, models fitted on the calibrate pool with the v0.9 selection rule",
+      "v09_reference": "H2"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "held-out NLL per aggressive order",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H2",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "tpp",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Replicate dynamic model averaging vs best single model",
+      "unit_value": "NLL(single model selected by inner validation) - NLL(fixed-share DMA, share 0.01)",
+      "v09_reference": "H5"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side",
+        "queue_clearance"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "Brier score of back-of-queue touch clearance within 5 s",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0",
+        "F4"
+      ],
+      "id": "H3",
+      "level": null,
+      "margin": null,
+      "notes": "audit: the v0.9 generic baseline was degenerate on ETHUSDT; per-stream values are reported",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "fills",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "Brier score",
+      "title": "Replicate execution-aware fill-probability calibration",
+      "unit_value": "Brier(generic) - Brier(execution-aware), v0.9 estimator, calibrated on the calibrate pool; also reported against the v1 corrected book",
+      "v09_reference": "H6"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side",
+        "queue_clearance"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "integrated Brier score of touch-clearance time",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H4",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "survival",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "integrated Brier score",
+      "title": "Replicate queue-survival models vs Kaplan-Meier",
+      "unit_value": "IBS(Kaplan-Meier) - IBS(best registered survival model), trained on the calibrate pool",
+      "v09_reference": "H7"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "regret of passive-mandate decisions inside the F3 twin",
+      "evidence_level_target": "E3",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F3"
+      ],
+      "id": "H5",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "fills",
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps of arrival price",
+      "title": "Replicate fill calibration to execution regret on the hybrid twin",
+      "unit_value": "regret(generic fills) - regret(calibrated fills), bps",
+      "v09_reference": "H8"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "NLL per event on earlier days after sequential updates",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H6",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "continual",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Replicate continual calibration against forgetting",
+      "unit_value": "NLL(naive fine-tuning) - NLL(replay-based continual calibration) on every earlier day of the sequence",
+      "v09_reference": "H16"
+    },
+    {
+      "capability": [
+        "l1"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "coverage of 90% adaptive conformal intervals of 10 s mid moves",
+      "evidence_level_target": "E4",
+      "family": "replication_prediction",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H7",
+      "level": null,
+      "margin": 0.02,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "conformal",
+      "test": "noninferiority",
+      "threshold": 0.0,
+      "threshold_units": "coverage",
+      "title": "Replicate adaptive conformal coverage under drift (non-inferiority)",
+      "unit_value": "coverage - 0.90",
+      "v09_reference": "H17"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "conservative-bound CVaR90 implementation shortfall difference (C1)",
+      "evidence_level_target": "E5",
+      "family": "replication_execution",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H8",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "superiority",
+      "threshold": 1.0,
+      "threshold_units": "bps of arrival price",
+      "title": "Replicate CVaR-MPC vs TWAP tail cost in bounded replay",
+      "unit_value": "conservative bound over the registered assumption grid of CVaR90(TWAP) - CVaR90(MPC-CVaR), medium mandate",
+      "v09_reference": "H23"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": 12,
+      "endpoint": "pairwise policy-ranking sign agreement between F4 and F3 on the same day",
+      "evidence_level_target": "E3",
+      "family": "replication_fidelity",
+      "fidelity": [
+        "F3",
+        "F4"
+      ],
+      "id": "H9",
+      "level": 0.5,
+      "margin": null,
+      "notes": "new conditions: generators use the corrected v1 book model",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "agreement",
+      "threshold": 0.15,
+      "threshold_units": "agreement",
+      "title": "Replicate synthetic-to-hybrid ranking agreement under new conditions",
+      "unit_value": "agreement - 0.5",
+      "v09_reference": "H29"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "conservative-bound C1-C3 effects on a later period",
+      "evidence_level_target": "E6",
+      "family": "replication_execution",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H10",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "replicate"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "Replicate temporal transfer of the carried execution conclusions",
+      "unit_value": "per conclusion, the registered conservative-bound unit value on the replicate pool (BTCUSDT linear)",
+      "v09_reference": "H32"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "conservative-bound C1-C3 effects on an instrument never used in v0.9 confirmation",
+      "evidence_level_target": "E7",
+      "family": "replication_execution",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H11",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "confirm"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:SOLUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "Replicate cross-instrument transfer independently",
+      "unit_value": "per conclusion, the conservative-bound unit value on SOLUSDT linear, confirm pool",
+      "v09_reference": "H33"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "C1-C3 on the untouched v1 vault, all L2 streams, date clusters",
+      "evidence_level_target": "E9",
+      "family": "replication_execution",
+      "fidelity": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "id": "H12",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "vault"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "Reevaluate v0.9 H36 with date clustering, new data and the full fidelity ladder",
+      "unit_value": "per conclusion, the date-cluster mean of the conservative bound over the vault streams; the ladder status (F2, F3, F4) of each conclusion is reported and F3 must not contradict (sign) for ESTABLISHED",
+      "v09_reference": "H36"
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "absolute error of the simulated mean spread against the day",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F4"
+      ],
+      "id": "H13",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.6931,
+      "threshold_units": "log error ratio (log 2 = halving)",
+      "title": "Corrected spread-improvement estimation materially reduces spread mismatch",
+      "unit_value": "log(|spread_v09 book - real| / |spread_v1 book - real|), generators fitted on the calibrate pool, same counts and seeds",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "log loss of next-1 s mid-move sign classifier",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H14",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "reconstruction",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats",
+      "title": "Event-level reconstruction improves prediction over coarser aggregation",
+      "unit_value": "logloss(1 s aggregated order-flow features) - logloss(100 ms event-level features)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l3",
+        "queue_position"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "relative width of the L2 size-ahead interval of hypothetical back-of-queue touch orders 30 s after joining, where MBO identifies the exact position",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H15",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "mbo_explore",
+        "mbo_confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bitstamp-exchange:btcusd",
+        "bitstamp-exchange:ethusd"
+      ],
+      "study": "mbo",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "fraction of queue",
+      "title": "Genuine MBO information narrows queue-position uncertainty versus L2",
+      "unit_value": "mean (ahead_pessimistic - ahead_optimistic) / initial ahead under L2 aggregation of the same MBO day",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "held-out conditional log-likelihood of per-bin cancel counts",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H16",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per bin",
+      "title": "State-dependent cancellation improves conditional market realism",
+      "unit_value": "NLL(constant-rate cancel model) - NLL(state-dependent Poisson GLM on queue size, imbalance, spread)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side",
+        "queue_clearance"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "coverage of nominal 90% clearance-probability intervals",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H17",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "liquidity",
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "coverage",
+      "title": "Latent-liquidity uncertainty improves calibrated fill-interval coverage",
+      "unit_value": "|coverage(point model, hidden = 0) - 0.9| - |coverage(evidence-based hidden interval) - 0.9|",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "width of the F2 interval of C1-C3 unit effects",
+      "evidence_level_target": "E5",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H18",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "bps",
+      "title": "Better market reconstruction reduces historical counterfactual ambiguity",
+      "unit_value": "width(v0.9 hidden-fraction grid {0, 0.5}) - width(evidence-based hidden interval from M27), mean over C1-C3",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "share of generator x capability cells passing marginal tests but failing conditional tests",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F4",
+        "F5"
+      ],
+      "id": "H19",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "proportion",
+      "title": "Conditional metrics detect failures missed by marginal distribution scores",
+      "unit_value": "fraction of registered cells (generators x capabilities) accepted by the marginal test and rejected by the conditional/temporal test, per date",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "Kendall agreement of F4 and F2 policy rankings",
+      "evidence_level_target": "E4",
+      "family": "reconstruction_realism",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H20",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "Kendall tau",
+      "title": "Execution-aware realism gates predict ranking reliability better than distribution-only gates",
+      "unit_value": "agreement(generators accepted by the execution-aware gate) - agreement(generators accepted by the distribution-only gate)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "held-out NLL per aggressive order including the size mark",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H21",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "tpp",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Marked Hawkes improves conditional event realism over unmarked baselines",
+      "unit_value": "NLL(unmarked Hawkes + independent marks) - NLL(marked Hawkes with mark-dependent excitation)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "held-out NLL per aggressive order",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H22",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "tpp",
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "nats per event",
+      "title": "Neural point processes improve held-out event likelihood on new instruments",
+      "unit_value": "NLL(best classical incl. v1 marked Hawkes) - NLL(best neural), SOLUSDT linear and BTC/ETH spot",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "error of trade-count dispersion at 1, 10 and 60 s",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F4",
+        "F5"
+      ],
+      "id": "H23",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "log error ratio",
+      "title": "Autoregressive sequence generators improve multiscale event consistency",
+      "unit_value": "log(mean relative dispersion error of the best classical generator / that of the autoregressive neural generator)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "signature MMD of 5 min mid paths against the day",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F4",
+        "F5"
+      ],
+      "id": "H24",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "log MMD ratio",
+      "title": "Latent stochastic models improve path realism",
+      "unit_value": "log(MMD(best classical) / MMD(latent SDE))",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "max normalized error of spread/depth capability metrics",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F4",
+        "F5"
+      ],
+      "id": "H25",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "log error ratio",
+      "title": "State-conditioned neural generators improve spread and depth dynamics",
+      "unit_value": "log(error(corrected classical) / error(state-conditioned neural))",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "held-out NLL per aggressive order, out of time",
+      "evidence_level_target": "E6",
+      "family": "generators",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H26",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "replicate"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "tpp",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Model averaging improves out-of-time predictive performance",
+      "unit_value": "NLL(best single model selected on calibrate) - NLL(fixed-share DMA), replicate-pool days",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "held-out NLL of per-bin event counts on days of a regime other than the training majority",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F0",
+        "F4"
+      ],
+      "id": "H27",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "regimes",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per bin",
+      "title": "Multi-regime calibration improves cross-regime generalization",
+      "unit_value": "NLL(pooled calibration) - NLL(regime-conditioned calibration)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "per date, whether the generator pre-selected on the calibrate pool is ACCEPTABLE on every execution capability",
+      "evidence_level_target": "E4",
+      "family": "generators",
+      "fidelity": [
+        "F4",
+        "F5"
+      ],
+      "id": "H28",
+      "level": 0.5,
+      "margin": null,
+      "notes": "the gate thresholds are frozen here and never moved",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "realism",
+      "test": "agreement",
+      "threshold": 0.0,
+      "threshold_units": "pass rate",
+      "title": "At least one generator satisfies pre-frozen execution-relevant realism requirements on independent holdout data",
+      "unit_value": "pass indicator - 0.5",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "absolute gap to the F2 effect of C1-C3",
+      "evidence_level_target": "E3",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "id": "H29",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.5,
+      "threshold_units": "bps",
+      "title": "Hybrid replay reduces the reality gap against fully synthetic replay",
+      "unit_value": "mean over C1-C3 of |F4 - F2| - |F3 - F2|",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "pairwise ranking sign agreement with F2",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H30",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "agreement",
+      "title": "Realism improvements increase synthetic-to-historical policy sign agreement",
+      "unit_value": "agreement(F4, corrected v1 book) - agreement(F4, v0.9 book)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "accuracy of predicted F2 pairwise directions",
+      "evidence_level_target": "E3",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "id": "H31",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "accuracy",
+      "title": "Multi-fidelity consensus predicts the bounded historical direction better than synthetic-only",
+      "unit_value": "accuracy(F3+F4 consensus) - accuracy(F4 only)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "F2 regret of the selected policy",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H32",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps",
+      "title": "Realism-gated policy selection has lower regret than ungated selection",
+      "unit_value": "regret(policy selected by all generators) - regret(policy selected by gate-accepted generators only)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "|F4 - F2| effect gap of C1-C3",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H33",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps",
+      "title": "Historical-synthetic disagreement is partially explained by queue or impact assumptions",
+      "unit_value": "gap(F4 default) - gap(F4 with F2-matched conservative queue and transient impact)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "Spearman correlation between ensemble disagreement and F2 sign flips across policy pairs",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H34",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "Spearman rho",
+      "title": "Model-class uncertainty predicts policy-ranking instability",
+      "unit_value": "rho(disagreement, flip indicator)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "rate of synthetic pairwise claims contradicted by F2",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H35",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "rate",
+      "title": "Capability-specific acceptance reduces invalid downstream claims",
+      "unit_value": "contradiction rate(all generators) - contradiction rate(capability-accepted generators)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "F2 regret difference of the policies chosen by two generator classes with different predictive fit",
+      "evidence_level_target": "E4",
+      "family": "twins_agreement",
+      "fidelity": [
+        "F2",
+        "F4",
+        "F5"
+      ],
+      "id": "H36",
+      "level": null,
+      "margin": 0.5,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "equivalence",
+      "threshold": 0.5,
+      "threshold_units": "bps",
+      "title": "Decision-equivalent generator classes give stable execution choices",
+      "unit_value": "|regret(class A choice) - regret(class B choice)|",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "completion fraction under soft completion with a 1 bps cost margin",
+      "evidence_level_target": "E5",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H37",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "completion fraction",
+      "title": "Completion-constrained policies improve completion without violating cost margins",
+      "unit_value": "completion(completion-aware adaptive) - completion(TWAP), with mean-cost non-inferiority (1 bps) required on the same units",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "conservative CVaR90 difference on high-volatility dates",
+      "evidence_level_target": "E5",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H38",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "superiority",
+      "threshold": 1.0,
+      "threshold_units": "bps",
+      "title": "Robust MPC improves out-of-regime tail cost versus TWAP",
+      "unit_value": "CVaR90(TWAP) - CVaR90(DRO-MPC), dates whose realized volatility exceeds the calibrate-pool 75th percentile",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "probability of completing a soft-completion mandate",
+      "evidence_level_target": "E5",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H39",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "superiority",
+      "threshold": 0.02,
+      "threshold_units": "probability",
+      "title": "Chance constraints improve completion reliability",
+      "unit_value": "P(complete | chance-constrained MPC) - P(complete | stochastic MPC)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "F2 regret against the per-window best registered policy",
+      "evidence_level_target": "E5",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H40",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "learning",
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps",
+      "title": "Contextual fallback improves on the failed v0.8/v0.9 abstention behaviour",
+      "unit_value": "regret(best global policy on calibrate) - regret(contextual fallback)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "rate of deployments worse than TWAP by more than 1 bps",
+      "evidence_level_target": "E5",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H41",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "learning",
+      "test": "superiority",
+      "threshold": 0.1,
+      "threshold_units": "rate",
+      "title": "Safe offline policy selection reduces harmful changes versus ungated learned policies",
+      "unit_value": "harm rate(ungated offline RL) - harm rate(conservatively gated)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "NLL on post-drift days with a forgetting margin on pre-drift days",
+      "evidence_level_target": "E4",
+      "family": "execution_learning",
+      "fidelity": [
+        "F0"
+      ],
+      "id": "H42",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "continual",
+      "test": "superiority",
+      "threshold": 0.005,
+      "threshold_units": "nats per event",
+      "title": "Continual adaptation improves post-drift recovery without unacceptable forgetting",
+      "unit_value": "NLL(frozen calibrate model) - NLL(continually adapted), with forgetting non-inferiority 0.01",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "F2 regret of the policy chosen inside the calibrated F4",
+      "evidence_level_target": "E4",
+      "family": "execution_learning",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H43",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "decision_calibration",
+      "test": "superiority",
+      "threshold": 0.25,
+      "threshold_units": "bps",
+      "title": "Decision-focused calibration improves decision utility over likelihood-only calibration",
+      "unit_value": "regret(likelihood-calibrated) - regret(decision-focused calibrated)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C2"
+      ],
+      "confirm_clusters": null,
+      "endpoint": "|C2 effect with self-impact feedback - without| in F3",
+      "evidence_level_target": "E3",
+      "family": "execution_learning",
+      "fidelity": [
+        "F3"
+      ],
+      "id": "H44",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "explore",
+        "calibrate",
+        "confirm"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "superiority",
+      "threshold": 1.0,
+      "threshold_units": "bps",
+      "title": "Explicit endogenous self-impact changes execution conclusions at registered mandate scales",
+      "unit_value": "|effect(F3 with fitted impact) - effect(F3 without impact)|, large mandate",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "C1-C3 on the replicate pool, all L2 linear streams",
+      "evidence_level_target": "E6",
+      "family": "external_validation",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H45",
+      "level": null,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "replicate"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer_any",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "At least one execution effect replicates across independently sourced time periods",
+      "unit_value": "per conclusion, the date-cluster conservative bound; ESTABLISHED when at least one conclusion meets its rule after Holm",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "C1-C3 on spot BTCUSDT and ETHUSDT (a different venue segment and order book)",
+      "evidence_level_target": "E8",
+      "family": "external_validation",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H46",
+      "level": null,
+      "margin": null,
+      "notes": "Binance offers no fresh order book (bookTicker ended 2024-03-30); cross-venue is cross-segment",
+      "pools": [
+        "replicate"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer_any",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "At least one effect replicates across instruments and venue segments",
+      "unit_value": "per conclusion, the date-cluster conservative bound on spot streams",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": null,
+      "confirm_clusters": null,
+      "endpoint": "pairwise ranking sign agreement of the H28-accepted generator with F2",
+      "evidence_level_target": "E6",
+      "family": "external_validation",
+      "fidelity": [
+        "F2",
+        "F4"
+      ],
+      "id": "H47",
+      "level": 0.5,
+      "margin": null,
+      "notes": "",
+      "pools": [
+        "calibrate",
+        "replicate"
+      ],
+      "promotion": "pilot",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT"
+      ],
+      "study": "multifidelity",
+      "test": "agreement",
+      "threshold": 0.15,
+      "threshold_units": "agreement",
+      "title": "At least one realism-accepted generator preserves a preregistered execution ranking across fidelities",
+      "unit_value": "agreement - 0.5 (NOT_EVALUABLE when no generator is accepted)",
+      "v09_reference": null
+    },
+    {
+      "capability": [
+        "l2",
+        "trade_side"
+      ],
+      "cluster": "calendar date (cluster); stream values of one date are averaged into one cluster value",
+      "conclusions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "confirm_clusters": 12,
+      "endpoint": "C1-C3 on the v1 vault, date clusters",
+      "evidence_level_target": "E9",
+      "family": "external_validation",
+      "fidelity": [
+        "F2"
+      ],
+      "id": "H48",
+      "level": null,
+      "margin": null,
+      "notes": "aspirational headline; a negative result is reported as such",
+      "pools": [
+        "vault"
+      ],
+      "promotion": "direct_replication",
+      "streams": [
+        "bybit-linear:BTCUSDT",
+        "bybit-linear:ETHUSDT",
+        "bybit-linear:SOLUSDT",
+        "bybit-spot:BTCUSDT",
+        "bybit-spot:ETHUSDT"
+      ],
+      "study": "bounds",
+      "test": "transfer_any",
+      "threshold": null,
+      "threshold_units": "per conclusion (bps)",
+      "title": "At least one previously established execution conclusion survives the untouched vault under correct clustering",
+      "unit_value": "per conclusion, the date-cluster conservative bound over all vault L2 streams; ESTABLISHED when at least one meets its rule after Holm",
+      "v09_reference": null
+    }
+  ],
+  "schema": "cleolob-v1-candidates-1"
+}
