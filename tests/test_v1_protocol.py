@@ -185,3 +185,22 @@ def test_incident_and_attempt_records(ws):
         D.record_attempt(ws, study="tpp", run="r", outcome="GREAT", namespace="explore")
     st = ws.state()
     assert len(st.incidents) == 1 and len(st.attempts) == 1
+
+
+def test_ledger_cache_sees_external_appends_and_tampering(ws):
+    ws.append("declare_fresh", dataset="a", reason="slot", payload={"role": "explore", "pool": "p"})
+    # an external writer appends a valid entry without going through this process's cache
+    state = L.replay(L.read(ws.ledger_path))
+    e = {"schema": L.SCHEMA, "index": state.entries, "at": L.utc_now(), "event": "declare_fresh", "dataset": "b",
+         "reason": "external", "payload": {"role": "explore", "pool": "p"}, "git_commit": None, "git_dirty": True,
+         "prev_sha256": state.head}
+    e["sha256"] = L.entry_hash(e)
+    with ws.ledger_path.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(L.canonical(e) + "\n")
+    third = ws.append("declare_fresh", dataset="c", reason="slot", payload={"role": "explore", "pool": "p"})
+    assert third["index"] == 2 and third["prev_sha256"] == e["sha256"]
+    assert L.verify(ws.ledger_path)["valid"]
+    with ws.ledger_path.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(L.canonical({**e, "index": 3, "dataset": "forged"}) + "\n")
+    with pytest.raises(L.LedgerError):
+        ws.append("declare_fresh", dataset="d", reason="slot", payload={"role": "explore", "pool": "p"})

@@ -265,22 +265,56 @@ def append(path: Path, event: str, *, reason: str, payload: dict | None = None, 
     payload = dict(payload or {})
     path.parent.mkdir(parents=True, exist_ok=True)
     with _lock(path):
-        entries = read(path)
-        state = replay(entries)
+        _, state = _cached_state(path)
         git = git_state(root or path.parent)
         guarded = event in GUARDED_EVENTS or (event == "access" and payload.get("namespace") in namespaces.GUARDED)
         if guarded and git["dirty"] and not allow_dirty:
             raise LedgerError("guarded ledger events require a clean git tree (commit first)")
-        entry = {"schema": SCHEMA, "index": len(entries), "at": utc_now(), "event": event, "dataset": dataset,
+        entry = {"schema": SCHEMA, "index": state.entries, "at": utc_now(), "event": event, "dataset": dataset,
                  "reason": reason, "payload": payload, "git_commit": git["commit"], "git_dirty": git["dirty"],
                  "prev_sha256": state.head}
         entry["sha256"] = entry_hash(entry)
-        apply(state, entry, namespaces)                      # raises before anything is written
+        import copy
+        trial = copy.deepcopy(state)
+        apply(trial, entry, namespaces)                      # raises before anything is written
         with path.open("a", encoding="utf-8", newline="\n") as f:
             f.write(canonical(entry) + "\n")
             f.flush()
             os.fsync(f.fileno())
+        trial.head, trial.entries = entry["sha256"], state.entries + 1
+        _CACHE[str(path.resolve())] = (path.stat().st_size, trial.entries, trial)
         return entry
+
+
+# per-process cache of the replayed state: (file size, entries, state); every new line is still verified
+_CACHE: dict[str, tuple] = {}
+
+
+def _cached_state(path: Path) -> tuple[None, LedgerState]:
+    """Replay only lines appended since the cached state (hash chain and rules verified for each of them)."""
+    import copy
+    from . import namespaces
+    key = str(path.resolve())
+    size = path.stat().st_size if path.exists() else 0
+    hit = _CACHE.get(key)
+    if hit is None or size < hit[0]:
+        state = replay(read(path))
+        _CACHE[key] = (size, state.entries, state)
+        return None, copy.deepcopy(state)
+    _, n, state = hit
+    state = copy.deepcopy(state)
+    if size > hit[0]:
+        with path.open("r", encoding="utf-8") as f:
+            f.seek(hit[0])
+            tail = [json.loads(x) for x in f.read().splitlines() if x.strip()]
+        for e in tail:
+            if e.get("schema") != SCHEMA or e.get("index") != state.entries or e.get("prev_sha256") != state.head \
+                    or entry_hash(e) != e.get("sha256"):
+                raise LedgerError(f"entry {state.entries}: chain or hash mismatch")
+            apply(state, e, namespaces)
+            state.head, state.entries = e["sha256"], state.entries + 1
+        _CACHE[key] = (size, state.entries, copy.deepcopy(state))
+    return None, state
 
 
 __all__ = ["SCHEMA", "EVENTS", "STAGES", "INCIDENT_KINDS", "ATTEMPT_OUTCOMES", "LedgerError", "LedgerState",
