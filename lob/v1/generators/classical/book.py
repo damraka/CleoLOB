@@ -149,6 +149,43 @@ def improvement_table(events: dict) -> ImprovementTable:
     return ImprovementTable(probs, counts, ident, depth_p)
 
 
+def improvement_table_hazard(bid_px, ask_px, counts, valid) -> ImprovementTable:
+    """State-dependent improvement probability identified from the spread-closing hazard (registered default).
+
+    The event-sample estimator (``improvement_table``) only sees gaps that persist across a 100 ms boundary; on the
+    real development day it gave 0.16 / 0.19 / 0.22 against 0.64 / 0.59 / 0.57 here, and with the hazard table the
+    simulated mean spread fell from 5.4 to about 2.3 ticks (real 1.05). On synthetic frames with a known
+    probability of 0.6 both estimators recover about 0.3, so neither is unbiased; the residual spread excess is a
+    replenishment question (M75), not hidden. The hazard estimator uses two observed moments per spread class s: the per-bin probability ``h_s``
+    that a spread of s ticks at a bin start has narrowed by the next bin start without a touch-depleting print
+    explaining it, and the mean number ``a_s`` of inferred additions per bin in those bins. In the simulator each
+    addition independently improves with probability p_s, so 1 - (1 - p_s)^{a_s} = h_s, i.e.
+    p_s = 1 - (1 - h_s)^{1 / a_s}. Classes with fewer than ``MIN_EVENTS`` bins pool, flagged ``identified=False``.
+    """
+    bid_px, ask_px = np.asarray(bid_px), np.asarray(ask_px)
+    counts, valid = np.asarray(counts), np.asarray(valid, bool)
+    sp = (ask_px - bid_px).astype(int)
+    ok = valid[:-1] & valid[1:] & (sp[:-1] >= 2)
+    narrowed = sp[1:] < sp[:-1]
+    adds = (counts[:-1, 2] + counts[:-1, 3]).astype(float)
+    probs, cnt, ident = {}, {}, {}
+    pooled_h = narrowed[ok].mean() if ok.any() else 0.0
+    pooled_a = max(adds[ok].mean(), 1.0) if ok.any() else 1.0
+    pooled = 1 - (1 - min(pooled_h, 0.999)) ** (1 / pooled_a)
+    for c in SPREAD_CLASSES:
+        m = ok & ((sp[:-1] >= c) if c == SPREAD_CLASSES[-1] else (sp[:-1] == c))
+        n = int(m.sum())
+        cnt[c] = (int(narrowed[m].sum()), n)
+        ident[c] = n >= MIN_EVENTS
+        if ident[c]:
+            h = min(float(narrowed[m].mean()), 0.999)
+            a = max(float(adds[m].mean()), 1.0)
+            probs[c] = float(1 - (1 - h) ** (1 / a))
+        else:
+            probs[c] = float(pooled)
+    return ImprovementTable(probs, cnt, ident, 0.99)
+
+
 @dataclass(frozen=True)
 class BookModelV1(BookModel):
     """v0.8 ``BookModel`` plus the state-dependent improvement table (M70)."""
@@ -162,7 +199,8 @@ class BookModelV1(BookModel):
         return float(dict(self.improve_by_spread)[_spread_class(spread)])
 
 
-def fit_book_model(events: dict, *, market_sizes, refill_depths, mid_ticks: int, **fixed) -> BookModelV1:
+def fit_book_model(events: dict, *, market_sizes, refill_depths, mid_ticks: int, table: ImprovementTable | None = None,
+                   **fixed) -> BookModelV1:
     """Moment estimates from corrected events (levels >= 0 for placement, negative levels for improvement)."""
     d = BookModel().to_dict()
     lv = events["add_level"]
@@ -183,12 +221,16 @@ def fit_book_model(events: dict, *, market_sizes, refill_depths, mid_ticks: int,
     rd = rd[rd > 0]
     if len(rd):
         d["refill_mean"] = float(max(1.0, np.median(rd)))
-    table = improvement_table(events)
+    event_table = improvement_table(events)
+    if table is None:
+        table = event_table
+    else:          # hazard-identified probabilities with the improvement-depth law of the event samples
+        table = ImprovementTable(table.probs, table.counts, table.identified, event_table.depth_p)
     # the v0.8 scalar is kept consistent (probability for a 2-tick spread) for code that only reads it
     d["improve_prob"] = float(table.probs[2])
     d["mid_ticks"] = int(max(mid_ticks, 100))
     d.update(fixed)
-    calibration = {"improvement": table.to_dict(),
+    calibration = {"improvement": table.to_dict(), "event_sample_table": event_table.to_dict(),
                    "events": {k: int(len(v)) for k, v in events.items() if isinstance(v, np.ndarray)},
                    "label": events.get("label", "")}
     return BookModelV1(**{k: v for k, v in d.items() if k in BookModel.__dataclass_fields__},

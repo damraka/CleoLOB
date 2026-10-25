@@ -105,3 +105,15 @@ def test_round_trip_identifies_positive_improvement_probability():
     assert fitted.improve(2) > 0.0 and fitted.improve(1) == 0.0
     # 100 ms aggregation merges events, so the recovered rate is biased; it must not be the v0.9 zero
     assert 0.05 < fitted.improve(2) < 0.95
+
+
+def test_hazard_estimator_identifies_improvement_from_closing_rates():
+    _, v1 = _sim_pair(seed=21)
+    tab = B.improvement_table_hazard(v1.bid_px, v1.ask_px, v1.counts, v1.valid)
+    assert tab.identified[2] and 0.2 < tab.probs[2] <= 1.0
+    # with a known per-addition probability of 0.6 both aggregate-frame estimators recover about half of it on
+    # synthetic frames (documented bias of 100 ms aggregation); neither is claimed unbiased
+    assert tab.probs[2] < 0.6
+    m = B.fit_book_model(B.infer_book_events(v1.bid_px, v1.ask_px, v1.depth, v1.volume, v1.valid),
+                         market_sizes=[2.0] * 50, refill_depths=[6.0], mid_ticks=4000, table=tab)
+    assert m.improve(2) == pytest.approx(tab.probs[2]) and "event_sample_table" in m.calibration

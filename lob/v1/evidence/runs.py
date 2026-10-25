@@ -44,7 +44,7 @@ def _portable(value: Any, where: str = "$") -> None:
     if isinstance(value, float) and not math.isfinite(value):
         raise RunError(f"non-finite number at {where}")
     if isinstance(value, str) and len(value) < 4096 and _ABSOLUTE.search(value):
-        raise RunError(f"absolute path at {where}: {value[:80]}")
+        raise RunError(f"absolute path at {where}")
     if isinstance(value, dict):
         for k, v in value.items():
             if not isinstance(k, str):
@@ -104,7 +104,28 @@ def environment() -> dict:
     return env
 
 
+def normalize(value: Any) -> Any:
+    """Lossless JSON normalisation: non-string keys -> str, numpy scalars/arrays -> Python; NaN/inf stay errors."""
+    import numpy as np
+    if isinstance(value, dict):
+        return {str(k): normalize(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [normalize(v) for v in value]
+    if isinstance(value, np.ndarray):
+        return normalize(value.tolist())
+    if isinstance(value, np.bool_):
+        return bool(value)
+    if isinstance(value, np.integer):
+        return int(value)
+    if isinstance(value, np.floating):
+        return float(value)
+    if isinstance(value, Path):
+        return value.as_posix()
+    return value
+
+
 def write_json(path: Path, value: Any) -> None:
+    value = normalize(value)
     _portable(value)
     path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) + "\n",
                     encoding="utf-8")
@@ -134,16 +155,21 @@ class Binding:
     upstream: dict[str, dict]
 
 
-def bind(*, ws, namespace: str, design: str | None, datasets: list[str], upstream: dict[str, Path],
+def bind(*, ws, namespace: str, design: str | None, datasets, upstream: dict[str, Path],
          root: Path) -> dict:
-    """Binding of a run to the protocol, ledger, design, datasets and upstream runs (verified, never trusted)."""
+    """Binding of a run to the protocol, ledger, design, datasets and upstream runs (verified, never trusted).
+
+    ``datasets`` is a list (all read in ``namespace``) or a mapping {dataset: namespace it was read in}.
+    """
     from ..protocol import document as D
     state = ws.state() if ws is not None else None
+    ns_of = dict(datasets) if isinstance(datasets, dict) else {d: namespace for d in datasets}
+    datasets = list(ns_of)
     if state is not None:
-        for d in datasets:
-            ok = any(a["namespace"] == namespace for a in state.accesses.get(d, []))
+        for d, ns in ns_of.items():
+            ok = any(a["namespace"] == ns for a in state.accesses.get(d, []))
             if not ok:
-                raise RunError(f"dataset {d} has no ledgered access in namespace {namespace}")
+                raise RunError(f"dataset {d} has no ledgered access in namespace {ns}")
         if design is not None and design not in state.designs:
             raise RunError(f"design {design} is not sealed")
     up = {}
@@ -157,7 +183,8 @@ def bind(*, ws, namespace: str, design: str | None, datasets: list[str], upstrea
             "ledger_head": state.head if state else L.GENESIS, "ledger_entries": state.entries if state else 0,
             "namespace": namespace, "design": design,
             "design_sha256": state.designs[design]["sha256"] if (state and design) else None,
-            "datasets": {d: {"source_sha256": dict(state.acquired.get(d, {})) if state else {}} for d in datasets},
+            "datasets": {d: {"source_sha256": dict(state.acquired.get(d, {})) if state else {}, "namespace": ns_of[d]}
+                         for d in datasets},
             "upstream": up}
 
 
@@ -171,9 +198,19 @@ def finalize(out: Path, *, analysis: str, config: dict, result: Any, binding: di
     if (out / "status.json").exists():
         raise RunError(f"{out} is already finalised")
     git = L.git_state(root or out)
-    write_json(out / "config.json", {"analysis": analysis, **config})
-    write_json(out / "result.json", result)
-    write_json(out / "binding.json", binding)
+    config_n = normalize({"analysis": analysis, **config})
+    _portable(config_n)
+    binding_n = normalize(binding)
+    _portable(binding_n)
+    try:                                   # an unserialisable result seals the run INVALID with the reason
+        result_n = normalize(result)
+        _portable(result_n)
+    except RunError as exc:
+        result_n = {"error": f"result not portable: {exc}"}
+        status, reason = "INVALID", f"result not portable: {exc}"
+    write_json(out / "config.json", config_n)
+    write_json(out / "result.json", result_n)
+    write_json(out / "binding.json", binding_n)
     write_json(out / "provenance.json", {"schema": SCHEMA, "analysis": analysis, "git_commit": git["commit"],
                                          "git_dirty": git["dirty"], "code_sha256": code_digest(),
                                          "environment": environment(), "finalized_at": L.utc_now(),

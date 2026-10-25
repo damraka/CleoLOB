@@ -137,7 +137,7 @@ def apply(state: LedgerState, e: dict, namespaces) -> None:
             raise LedgerError(f"{ds} declared twice")
         state.fresh[ds] = p
     elif ev == "acquire":
-        if ds not in state.fresh and p.get("role") != "development":
+        if ds not in state.fresh and ds not in state.consumed and p.get("role") != "development":
             raise LedgerError(f"acquire of undeclared dataset {ds}")
         prev = state.acquired.get(ds, {})
         for name, digest in p.get("sha256", {}).items():

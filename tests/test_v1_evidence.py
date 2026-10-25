@@ -28,14 +28,17 @@ def test_provenance_run_roundtrip_and_tamper(ws):
 
 
 def test_provenance_portability_rules(tmp_path):
+    for name, bad in (("nan", {"v": float("nan")}), ("abs", {"path": "C:\\Users\\someone\\data"})):
+        out = R.new_run(tmp_path / name)
+        info = R.finalize(out, analysis="x", config={}, result=bad, binding={})
+        assert info["status"] == "INVALID" and R.verify_run(out)["status"] == "INVALID"   # sealed, never lost
+    with pytest.raises(R.RunError):
+        R.finalize(R.new_run(tmp_path / "cfg"), analysis="x", config={"v": float("inf")}, result={}, binding={})
+    import numpy as np
     out = R.new_run(tmp_path / "r")
-    with pytest.raises(R.RunError):
-        R.finalize(out, analysis="x", config={}, result={"v": float("nan")}, binding={})
-    with pytest.raises(R.RunError):
-        R.finalize(out, analysis="x", config={}, result={"path": "C:\\Users\\someone\\data"}, binding={})
-    R.finalize(out, analysis="x", config={}, result={"url": "https://quote-saver.bycsi.com/a", "ratio": "1:2"},
-               binding={})
-    assert R.verify_run(out)["valid"]
+    R.finalize(out, analysis="x", config={}, result={"url": "https://quote-saver.bycsi.com/a", "ratio": "1:2",
+                                                     1: np.int64(3), "a": np.arange(2)}, binding={})
+    assert R.verify_run(out)["valid"] and R.read_json(out / "result.json")["1"] == 3
 
 
 def test_provenance_binding_requires_ledgered_access(ws):
