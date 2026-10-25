@@ -182,7 +182,7 @@ def bounds(ctx: CM.Context, out: Path, *, evaluate: list[str], conclusions: list
     a = carried["counterfactual_assumptions"]
     grid = E.grid(latencies=tuple(a["latency_s"]), hidden=tuple(hidden_grid or a["hidden_fraction"]),
                   impacts=tuple(a["impact"]))
-    keys = [g.key() for g in grid]
+    keys = [json.dumps(E.assumption_dict(g), sort_keys=True) for g in grid]       # the v0.9 task input format
     notionals = {k: v["notional_usd"] for k, v in carried["mandates"]["classes"].items()}
     prep = ctx.prepare(evaluate, use="bounds-v1 (v0.9 replay engine)", workers=workers)
     mp = _mapping(prep)
